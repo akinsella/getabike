@@ -1,6 +1,6 @@
 package org.helyx.app.j2me.lib.reflect;
 
-import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
+import java.util.Hashtable;
 
 public class FieldType {
 

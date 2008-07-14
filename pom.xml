@@ -35,8 +35,8 @@
 
 
 	<scm>
-		<connection>https://r13491.ovh.net/svn/VeloCite/trunk</connection>
-		<developerConnection>https://r13491.ovh.net/svn/VeloCite/trunk</developerConnection>
+		<connection>scm:svn:https://r13491.ovh.net/svn/VeloCite/trunk</connection>
+		<developerConnection>scm:svn:https://r13491.ovh.net/svn/VeloCite/trunk</developerConnection>
 		<tag>HEAD</tag>
 		<url>http://r13491.ovh.net/websvn/velocite.org/listing.php?repname=VeloCite&amp;path=%2Ftrunk%2F#_trunk_</url>
 	</scm>

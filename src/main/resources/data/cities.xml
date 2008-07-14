@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<cities default="PARIS">
+	<city key="AIX_EN_PROVENCE" name="Aix-en-Provence" type="DEFAULT" active="true" stationList="http://www.vhello.fr/service/carto/" stationDetails="http://www.vhello.fr/service/stationdetails/" offlineStationList="/carto_aix_en_provence.xml" />
+	<city key="BESANCON" name="Besançon" type="DEFAULT" active="false" stationList="" stationDetails="" offlineStationList="" />
+	<city key="BRUXELLES" name="Bruxelles" type="DEFAULT" active="false" stationList="" stationDetails="" offlineStationList="" />
+	<city key="DIJON" name="Dijon" type="DEFAULT" active="false" stationList="" stationDetails="" offlineStationList="" />
+	<city key="LYON" name="Lyon" type="LYON" active="true" stationList="http://www.velov.grandlyon.com/velovmap/zhp/inc/StationsParArrondissement.php?arrondissement=" stationDetails="http://www.velov.grandlyon.com/velovmap/zhp/inc/DispoStationsParId.php?id=" offlineStationList="" />
+	<city key="MARSEILLE" name="Marseille" type="DEFAULT" active="true" stationList="http://www.levelo-mpm.fr/service/carto/" stationDetails="http://www.levelo-mpm.fr/service/stationdetails/" offlineStationList="/carto_marseille.xml" />
+	<city key="MONTPELLIER" name="Montpellier" type="DEFAULT" active="false" stationList="" stationDetails="" offlineStationList="" />
+	<city key="MULHOUSE" name="Mulhouse" type="DEFAULT" active="false" stationList="" stationDetails="" offlineStationList="" />
+	<city key="ORLEANS" name="Orléans" type="ORLEANS" active="true" stationList="http://www.agglo-veloplus.fr/component/data.xml" stationDetails="http://www.agglo-veloplus.fr/getStatusBorne?idBorne=" offlineStationList="/carto_orleans.xml" />
+	<city key="PARIS" name="Paris" type="DEFAULT" default="true" active="true" stationList="http://www.velib.paris.fr/service/carto/" stationDetails="http://www.velib.paris.fr/service/stationdetails/" offlineStationList="/carto_paris.xml" />
+	<city key="RENNES" name="Rennes" type="DEFAULT" active="false" stationList="http://www.velib.paris.fr/service/carto/" stationDetails="http://www.velib.paris.fr/service/stationdetails/" offlineStationList="" />
+	<city key="SEVILLE" name="Seville" type="DEFAULT" active="true" stationList="http://www.sevici.es/service/carto/" stationDetails="http://www.sevici.es/service/stationdetails/" offlineStationList="/carto_seville.xml" />
+	<city key="TOULOUSE" name="Toulouse" type="DEFAULT" active="true" stationList="http://www.velo.toulouse.fr/service/carto/" stationDetails="http://www.velo.toulouse.fr/service/stationdetails/" offlineStationList="/carto_toulouse.xml" />
+</cities>

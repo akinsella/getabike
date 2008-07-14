@@ -1,0 +1,138 @@
+package org.helyx.app.j2me.velocite.data.city.manager;
+
+import java.util.Enumeration;
+import java.util.Vector;
+
+import javax.microedition.midlet.MIDlet;
+
+import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
+import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
+import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
+import org.helyx.app.j2me.lib.content.provider.IContentProvider;
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.manager.TaskManager;
+import org.helyx.app.j2me.lib.pref.Pref;
+import org.helyx.app.j2me.lib.pref.PrefManager;
+import org.helyx.app.j2me.lib.task.IProgressTask;
+import org.helyx.app.j2me.lib.ui.displayable.IAbstractDisplayable;
+import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener;
+import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
+import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
+
+public class CityManager {
+
+	private static final String CAT = "CITY_MANAGER";
+	
+	private static boolean isInit = false;
+	
+	private CityManager() {
+		super();
+	}
+	
+	public static void init(final MIDlet midlet, final IAbstractDisplayable currentDisplayable, final IAbstractDisplayable targetDisplayable) {
+		if (!isInit) {
+			isInit = true;
+		}
+		if (countCities() <= 0) {
+			refreshDataWithDefaults(midlet, currentDisplayable, targetDisplayable);
+		}
+	}
+
+	private static void refreshDataWithDefaults(final MIDlet midlet, final IAbstractDisplayable currentDisplayable, final IAbstractDisplayable targetDisplayable) {
+		
+		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://www.velocite.org/cities.xml");
+		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
+		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
+		progressTask.addProgressListener(new CityLoaderProgressListener(progressTask.getProgressDispatcher()));
+
+		TaskManager.runLoadTaskView("Mise à jour des villes", progressTask, midlet, currentDisplayable, targetDisplayable);
+	}
+
+	public static City findSelectedCity() throws CityManagerException {
+		Vector cityList = findAllCities();
+		City selectedCity = findSelectedCity(cityList);
+		
+		return selectedCity;
+	}
+	
+	public static City findSelectedCity(Vector cityList) throws CityManagerException {
+		City selectedCity = null;
+
+		Pref citySelectedKeyPref = PrefManager.readPref(PrefConstants.CITY_SELECTED_KEY);
+		Log.info(CAT, "Selected City key: " + citySelectedKeyPref);
+		Pref cityDefaultKeyPref = PrefManager.readPref(PrefConstants.CITY_DEFAULT_KEY);
+		Log.info(CAT, "Default City key: " + citySelectedKeyPref);
+		
+		Enumeration _enum = cityList.elements();
+		while(_enum.hasMoreElements()) {
+			City city = (City)_enum.nextElement();
+			if (citySelectedKeyPref != null && citySelectedKeyPref!= null && citySelectedKeyPref.value.equals(city.key)) {
+				selectedCity = city;
+				break;
+			}
+		}
+
+		if (selectedCity == null) {
+			_enum = cityList.elements();
+			while(_enum.hasMoreElements()) {
+				City city = (City)_enum.nextElement();
+				if (city.active && cityDefaultKeyPref != null && cityDefaultKeyPref.value.equals(city.key)) {
+					selectedCity = city;
+					PrefManager.writePref(PrefConstants.CITY_SELECTED_KEY, selectedCity.key);
+					break;
+				}
+			}
+		}
+		
+		if (selectedCity == null) {
+			throw new CityManagerException("No default/active city exception");
+		}
+
+		Log.debug("Selected city: " + selectedCity);
+		
+		return selectedCity;
+	}
+
+	public static Vector findAllCities() {
+		CityPersistenceService cityPersistenceService = new CityPersistenceService();
+		try {
+			Vector cityList = cityPersistenceService.findAllCities();
+			
+			return cityList;
+		}
+		finally {
+			cityPersistenceService.dispose();
+		}
+	}
+
+	public static int countCities() {
+		CityPersistenceService cityPersistenceService = new CityPersistenceService();
+		try {
+			int count = cityPersistenceService.countCities();
+			
+			return count;
+		}
+		finally {
+			cityPersistenceService.dispose();
+		}
+	}
+
+	public static void saveSelectedCity(City city) {
+		PrefManager.writePref(PrefConstants.CITY_SELECTED_KEY, city.key);
+	}
+	
+	public static void cleanUpSavedData() {
+		PrefManager.removePref(PrefConstants.CITY_DEFAULT_KEY);
+		PrefManager.removePref(PrefConstants.CITY_SELECTED_KEY);
+		CityPersistenceService cityPersistenceService = new CityPersistenceService();
+		try {
+			cityPersistenceService.removeAllCities();
+		}
+		finally {
+			cityPersistenceService.dispose();
+		}
+	}
+	
+}

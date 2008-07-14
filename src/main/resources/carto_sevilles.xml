@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carto>
+  <markers>
+    <marker name="20020 - PYRENEES RENOUVIER" number="20020" address="183 RUE DES PYRENEES -" fullAddress="183 RUE DES PYRENEES - 75020 PARIS" lat="48.8610788427" lng="2.40036207188" open="1"/>
+    <marker name="14007 - SAINT JACQUES FERRUS" number="14007" address="1 RUE FERRUS -" fullAddress="1 RUE FERRUS - 75014 PARIS" lat="48.8313378576" lng="2.3410800734" open="1"/>
+    <marker name="20023 - PELLEPORT BELGRAND" number="20023" address="44 RUE PELLEPORT -" fullAddress="44 RUE PELLEPORT - 75020 PARIS" lat="48.8648425741" lng="2.40400379852" open="1"/>
+    <marker name="20022 - PORTE DE BAGNOLET" number="20022" address="1 RUE GEO CHAVEZ -" fullAddress="1 RUE GEO CHAVEZ - 75020 PARIS" lat="48.864687291" lng="2.40832184554" open="1"/>
+    <marker name="20021 - PRAIRIE L INDRE" number="20021" address="2 RUE DE L INDRE -" fullAddress="2 RUE DE L INDRE - 75020 PARIS" lat="48.8626230337" lng="2.40338796563" open="1"/>
+  </markers>
+  <arrondissements>
+    <arrondissement number="" minLat="27.1409733745" minLng="-3.40456062425" maxLat="48.9013208418" maxLng="2.41596437539"/>
+  </arrondissements>
+</carto>

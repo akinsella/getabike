@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<markers>
+	<marker id="1" lat="47.927011" lng="1.907435" name="GARE DES AUBRAIS"/>
+	<marker id="2" lat="47.915510" lng="1.899200" name="COLIGNY"/>
+	<marker id="3" lat="47.912537" lng="1.900009" name="BANNIER A COULMIERS"/>
+	<marker id="4" lat="47.911573" lng="1.903608" name="ANTIGNA"/>
+	<marker id="5" lat="47.907698" lng="1.893349" name="PLACE DUNOIS"/>
+	<marker id="6" lat="47.9075" lng="1.900833" name="MEDIATHEQUE"/>
+	<marker id="7" lat="47.907725" lng="1.904136" name="GARE D'ORLEANS - PARVIS"/>
+	<marker id="8" lat="47.906775" lng="1.904455" name="GARE D'ORLEANS - TRAM"/>
+	<marker id="9" lat="47.906137" lng="1.906347" name="PLACE D'ARC"/>
+	<marker id="10" lat="47.904501" lng="1.909351" name="HALMAGRAND"/>
+	<marker id="11" lat="47.904059" lng="1.918249" name="CENTRE DE CONFERENCES"/>
+	<marker id="12" lat="47.903878" lng="1.904326" name="REPUBLIQUE"/>
+	<marker id="13" lat="47.902607" lng="1.904560" name="PLACE DU MARTROI"/>
+	<marker id="14" lat="47.902330" lng="1.908889" name="LA CATHEDRALE"/>
+	<marker id="15" lat="47.903205" lng="1.893328" name="PATINOIRE"/>
+	<marker id="16" lat="47.901801" lng="1.897007" name="PLACE CROIX MORIN"/>
+	<marker id="17" lat="47.901289" lng="1.903094" name="PLACE DE GAULLE"/>
+	<marker id="18" lat="47.900601" lng="1.905979" name="PLACE LOUIS XI"/>
+	<marker id="19" lat="47.900487" lng="1.913899" name="BOURGOGNE"/>
+	<marker id="20" lat="47.898969" lng="1.902809" name="PLACE DU VIEUX MARCHE"/>
+	<marker id="21" lat="47.898636" lng="1.904959" name="PLACE DU CHATELET"/>
+	<marker id="22" lat="47.898531" lng="1.907769" name="PLACE DE LA LOIRE"/>
+	<marker id="23" lat="47.894686" lng="1.904185" name="TOURELLES - DAUPHINE"/>
+	<marker id="24" lat="47.892997" lng="1.899376" name="JARDIN DES PLANTES"/>
+	<marker id="25" lat="47.893965" lng="1.913107" name="PLACE SAINT CHARLES"/>
+	<marker id="26" lat="47.892981" lng="1.916483" name="MAIRIE ST JEAN LE BLANC"/>
+	<marker id="27" lat="47.889381" lng="1.908466" name="PARC LEON CHENAULT"/>
+	<marker id="28" lat="47.888613" lng="1.905020" name="CROIX SAINT MARCEAU"/>
+</markers>

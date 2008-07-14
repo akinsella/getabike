@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<metadata name="city">
+	<field index="1" name="key" type="STRING" />
+	<field index="2" name="name" type="STRING" />
+	<field index="3" name="type" type="STRING" />
+	<field index="4" name="active" type="BOOLEAN" />
+	<field index="5" name="webSite" type="STRING" />
+	<field index="6" name="stationList" type="STRING" />
+	<field index="7" name="stationDetails" type="STRING" />
+	<field index="8" name="offlineStationList" type="STRING" />
+</metadata>

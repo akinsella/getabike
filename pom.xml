@@ -33,27 +33,25 @@
 
 	<inceptionYear>2007</inceptionYear>
 
+
 	<scm>
-		<connection>scm:svn:svn://localhost/VeloCite/trunk</connection>
-		<developerConnection>scm:svn:svn://localhost/VeloCite/trunk</developerConnection>
+		<connection>https://r13491.ovh.net/svn/VeloCite/trunk</connection>
+		<developerConnection>https://r13491.ovh.net/svn/VeloCite/trunk</developerConnection>
 		<tag>HEAD</tag>
-		<url>http://localhost:8080/svn/repobrowser.svn?name=localhost</url>
+		<url>http://r13491.ovh.net/websvn/velocite.org/listing.php?repname=VeloCite&amp;path=%2Ftrunk%2F#_trunk_</url>
 	</scm>
 
 	<distributionManagement>
-		<!-- no-deployment -->
 		<repository>
-			<id>velocite.org-no-deployment</id>
-			<url>file:///C:/Workspace/Maven/repository-manual</url>
+			<id>velocite</id>
+			<url>file:///var/maven/repository-install</url>
 		</repository>
 	</distributionManagement>
 
-
 	<issueManagement>
 		<system>jtrac</system>
-		<url>http://localhost:8080/jtrac/app/</url>
+		<url>http://r13491.ovh.net/jtrac/app/</url>
 	</issueManagement>
-
 
 	<developers>
 		<developer>

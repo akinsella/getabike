@@ -30,12 +30,12 @@ public class DefaultStationContentProviderTest extends TestCase {
 		
 		final Vector stationList = new Vector();
 		
-		stationContentLoader.addProgressListener(new ProgressAdapter() {
+		stationContentLoader.addProgressListener(new ProgressAdapter(CAT) {
 			
 			public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
 				if (eventType == CartoConstants.ON_STATION_LOADED) {
 					
-						Log.info(CAT, "ON_STATION_LOADED: " + eventData);
+						Log.info(getCat(), "ON_STATION_LOADED: " + eventData);
 						assertEquals(Station.class.getName(), eventData.getClass().getName());
 						stationList.addElement(eventData);
 				}
@@ -50,7 +50,7 @@ public class DefaultStationContentProviderTest extends TestCase {
 			}
 
 			public void onSuccess(String eventMessage, Object eventData) {
-				Log.info(CAT, "ON_SUCCESS");
+				Log.info(getCat(), "ON_SUCCESS");
 			}
 
 		});

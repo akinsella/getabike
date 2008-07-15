@@ -4,34 +4,52 @@ import org.helyx.app.j2me.lib.log.Log;
 
 public class ProgressAdapter implements ProgressListener {
 
-	private static final String CAT = "PROGRESS_ADAPTER";
+	protected static String CAT = "PROGRESS_ADAPTER";
 	
-	public ProgressAdapter() {
+	private String eventName;
+	private String catName;
+	private String progressAdapterCat;
+	
+	public ProgressAdapter(String progressAdapterCat) {
 		super();
+		this.progressAdapterCat = progressAdapterCat;
+	}
+	
+	protected String getCat() {
+//		if (catName == null) {
+			catName = CAT + "[" + progressAdapterCat + "[" + eventName + "]]";
+//		}
+		return catName;
 	}
 	
 	public void onEvent(int eventType, String eventMessage, Object eventData) {
 		logEventMessage(eventType, eventMessage, eventData);
 		if (eventType == ProgressEventType.ON_START) {
+			eventName = ProgressEventType.ON_START_STR;
 	   		onStart(eventMessage, eventData);
 		}
 		if (eventType == ProgressEventType.ON_PROGRESS) {
+			eventName = ProgressEventType.ON_PROGRESS_STR;
 	   		onProgress(eventMessage, eventData);
 		}
 		else if (eventType >= ProgressEventType.ON_CUSTOM) {
+			eventName = ProgressEventType.ON_CUSTOM_STR + "[" + eventType + "]";
 	   		onCustomEvent(eventType, eventMessage, eventData);
 		}
 		else if (eventType == ProgressEventType.ON_SUCCESS) {
+			eventName = ProgressEventType.ON_SUCCESS_STR;
 			onBeforeCompletion(eventType, eventMessage, eventData);
 	   		onSuccess(eventMessage, eventData);
 	   		onAfterCompletion(eventType, eventMessage, eventData);
 		}
 		else if (eventType == ProgressEventType.ON_CANCEL) {
+			eventName = ProgressEventType.ON_CANCEL_STR;
 			onBeforeCompletion(eventType, eventMessage, eventData);
 	   		onCancel(eventMessage, eventData);
 	   		onAfterCompletion(eventType, eventMessage, eventData);
 		}
 		else if (eventType == ProgressEventType.ON_ERROR) {
+			eventName = ProgressEventType.ON_ERROR_STR;
 			onBeforeCompletion(eventType, eventMessage, eventData);
 	   		onError(eventMessage, eventData);
 	   		onAfterCompletion(eventType, eventMessage, eventData);
@@ -53,7 +71,7 @@ public class ProgressAdapter implements ProgressListener {
 				messageSb.append(" data: " + eventData);
 			}
 		}
-		Log.debug(CAT, messageSb.toString());
+		Log.debug(getCat(), messageSb.toString());
 	}
 
 	public void onStart(String eventMessage, Object eventData) {

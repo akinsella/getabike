@@ -88,21 +88,21 @@ public class SplashScreenView extends AbstractCanvas {
 				
 				MultiTaskProgressTask multiTaskProgressTask = new MultiTaskProgressTask(initTasks);
 				
-				multiTaskProgressTask.addProgressListener(new ProgressAdapter() {
+				multiTaskProgressTask.addProgressListener(new ProgressAdapter(CAT + "[" + multiTaskProgressTask.getDescription() + "]") {
 					
 					public void onSuccess(String eventMessage, Object eventData) {
 						String newVersion = getMidlet().getAppProperty(PrefConstants.MIDLET_VERSION);
-						Log.info(CAT, "Writing new version to prefs: '" + newVersion + "'");
+						Log.info(getCat(), "Writing new version to prefs: '" + newVersion + "'");
 						PrefManager.writePref(PrefConstants.MIDLET_VERSION, newVersion);
 					}
 					
 					public void onError(String eventMessage, Object eventData) {
-						Log.info(CAT, "Writing reset demand to prefs");
+						Log.info(getCat(), "Writing reset demand to prefs");
 						PrefManager.writePref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 					}
 					
 					public void onCancel(String eventMessage, Object eventData) {
-						Log.info(CAT, "Writing reset demand to prefs");
+						Log.info(getCat(), "Writing reset demand to prefs");
 						PrefManager.writePref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 					}
 					

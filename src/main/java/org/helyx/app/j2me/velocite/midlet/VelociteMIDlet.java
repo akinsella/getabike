@@ -37,6 +37,7 @@ public class VelociteMIDlet extends MIDlet {
 	protected void startApp() throws MIDletStateChangeException {
 		try { 
 			PrefManager.writePref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
+			Log.setThresholdLevel(Log.INFO);
 //			openFileLogWriter();
 			logPlatformInfos();
 			

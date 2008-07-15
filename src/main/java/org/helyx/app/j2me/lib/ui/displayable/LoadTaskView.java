@@ -26,6 +26,8 @@ public class LoadTaskView extends AbstractCanvas {
 	private Timer timer;
 	private int counter;
 	
+	private String catName;
+	
 	private String label;
 	
 	private Image[] images;
@@ -71,25 +73,31 @@ public class LoadTaskView extends AbstractCanvas {
 				images[i] = ImageUtil.createImageFromClassPath("/images/wheel/wheel_" + (i + 1) + ".png");
 			}
 			catch (IOException e) { 
-				Log.warn(CAT, e);
+				Log.warn(getCat(), e);
 			}
 		}
 	}
 	
+	protected String getCat() {
+		if (catName == null) {
+			catName = CAT + "[" + progressTask.getDescription() + "]";
+		}
+		return catName;
+	}
+	
 	private void initListeners() {
 		
-		progressTask.addProgressListener(new ProgressAdapter() {
+		progressTask.addProgressListener(new ProgressAdapter(CAT + "[" + progressTask.getDescription() + "]") {
 
 			public void onStart(String eventMessage, Object eventData) {
 				hasStarted = true;
-				Log.info(CAT, "ON_START");
 				canvas.repaint();
 				timer.scheduleAtFixedRate(repaintTimerTask, 0, 100);
 			}
 			
 			public void onProgress(String eventMessage, Object eventData) {
 				if (eventData != null) {
-					Log.info(CAT, eventData.toString());
+					Log.info(this.getCat(), eventData.toString());
 				}
 				label = eventMessage;
 				canvas.repaint();

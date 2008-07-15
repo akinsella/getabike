@@ -5,6 +5,8 @@ import org.helyx.app.j2me.lib.task.ProgressAdapter;
 
 public class Future {
 	
+	private static final String CAT = "FUTURE";
+	
 	protected Object response;
 	protected boolean failed = false;
 	protected RuntimeException exception;
@@ -22,7 +24,7 @@ public class Future {
 
 	public static Object get(IProgressTask progressTask) {
 		final Future future = new Future();
-		progressTask.addProgressListener(new ProgressAdapter() {
+		progressTask.addProgressListener(new ProgressAdapter(CAT + "[" + progressTask.getDescription() + "]") {
 
 			public void onCancel(String eventMessage, Object eventData) {
 				future.exceptionMessage = eventMessage != null ? eventMessage : "ON_CANCEL";

@@ -18,7 +18,7 @@ public class KeyMapConfig {
 	public String toString() {
 		StringBuffer sb = new StringBuffer("[KeyMapConfig]");
 		sb.append(" modelKey=" + modelKey);
-		sb.append(", keyMapArray= [");
+		sb.append(", keyMapArray=[");
 		int length = keyMapArray.length;
 		for (int i = 0 ; i < length ; i++) {
 			sb.append("[").append(keyMapArray[i]).append("]");

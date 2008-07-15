@@ -23,7 +23,7 @@ public class TaskManager {
 		final LoadTaskView loadTaskView = new LoadTaskView(midlet, taskDescription, progressTask);
 		loadTaskView.setPreviousDisplayable(targetDisplayable);
 
-		progressTask.addProgressListener(new ProgressAdapter() {
+		progressTask.addProgressListener(new ProgressAdapter(CAT + "[" + progressTask.getDescription() + "]") {
 
 			public void onCancel(String eventMessage, Object eventData) {
 				loadTaskView.returnToPreviousDisplayable();

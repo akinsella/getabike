@@ -297,7 +297,7 @@ public class StationListView extends AbstractCanvas {
 		canvas.repaint();
 	}
 	
-	private ProgressListener loadStationListProgressListener = new ProgressAdapter() {
+	private ProgressListener loadStationListProgressListener = new ProgressAdapter(CAT) {
 
 		public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
 			switch (eventType) {
@@ -311,7 +311,7 @@ public class StationListView extends AbstractCanvas {
 	
 				case ProgressEventType.ON_ERROR:
 					Throwable throwable = (Throwable)eventData;
-					Log.warn(CAT, throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
+					Log.warn(getCat(), throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
 					DialogUtil.showAlertMessage(getMidlet(), getDisplayable(), "Erreur", throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
 					showDisplayable(StationListView.this, true);
 					break;

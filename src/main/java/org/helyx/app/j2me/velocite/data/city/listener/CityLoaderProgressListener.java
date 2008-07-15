@@ -24,7 +24,7 @@ public class CityLoaderProgressListener extends ProgressAdapter {
 	private IProgressDispatcher progressDispatcher;
 
 	public CityLoaderProgressListener(IProgressDispatcher progressDispatcher) {
-		super();
+		super(CAT + "[" + progressDispatcher.getName() + "]");
 		this.progressDispatcher = progressDispatcher;
 	}
 

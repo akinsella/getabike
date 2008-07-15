@@ -26,18 +26,18 @@ public class DefaultCityContentProviderTest extends TestCase {
 		
 		final Vector cityList = new Vector();
 		
-		cityContentProvider.addProgressListener(new ProgressAdapter() {
+		cityContentProvider.addProgressListener(new ProgressAdapter(CAT) {
 
 			public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
 				if (eventType == CityConstants.ON_CITY_LOADED) {
-					Log.info(CAT, "ON_CITY_LOADED: " + eventData);
+					Log.info(getCat(), "ON_CITY_LOADED: " + eventData);
 					assertEquals(City.class.getName(), eventData.getClass().getName());
 					cityList.addElement(eventData);
 				}
 			}
 
 			public void onSuccess(String eventMessage, Object eventData) {
-				Log.info(CAT, "ON_SUCCESS");
+				Log.info(getCat(), "ON_SUCCESS");
 			}
 
 			public void onError(String eventMessage, Object eventData) {
@@ -70,18 +70,18 @@ public class DefaultCityContentProviderTest extends TestCase {
 		
 		final Vector cityList = new Vector();
 		
-		cityContentLoader.addProgressListener(new ProgressAdapter() {
+		cityContentLoader.addProgressListener(new ProgressAdapter(CAT) {
 
 			public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
 				if (eventType == CityConstants.ON_CITY_LOADED) {
-					Log.info(CAT, "ON_CITY_LOADED: " + eventData);
+					Log.info(getCat(), "ON_CITY_LOADED: " + eventData);
 					assertEquals(City.class.getName(), eventData.getClass().getName());
 					cityList.addElement(eventData);
 				}
 			}
 
 			public void onSuccess(String eventMessage, Object eventData) {
-				Log.info(CAT, "ON_SUCCESS");
+				Log.info(getCat(), "ON_SUCCESS");
 			}
 
 			public void onError(String eventMessage, Object eventData) {

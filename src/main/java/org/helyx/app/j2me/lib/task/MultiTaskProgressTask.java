@@ -16,7 +16,7 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 	}
 
 	public String getDescription() {
-		return getName();
+		return CAT;
 	}
 
 	public boolean isCancellable() {
@@ -31,7 +31,7 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 			Log.info(CAT, i + " - " + progressTasks[i].getDescription());
 		}
 
-		internaleProgressListener = new InternalProgressMultiTaskListener();
+		internaleProgressListener = new InternalProgressMultiTaskListener(CAT + "[" + this.getDescription() + "]");
 		progressDispatcher.fireEvent(ProgressEventType.ON_START);
 
 		startCurrentTask();
@@ -81,7 +81,11 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 	}
 
 	class InternalProgressMultiTaskListener extends ProgressAdapter {
-
+	
+		public InternalProgressMultiTaskListener(String progressAdapterCat) {
+			super(progressAdapterCat);
+		}
+		
 		public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, eventMessage);
 		}
@@ -89,10 +93,9 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 		public void onProgress(String eventMessage, Object eventData) {
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, eventMessage);
 		}
-
+		
 		public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
 			if (eventType == ProgressEventType.ON_SUCCESS) {
-				Log.info(CAT, "ON_SUCCESS");
 				cleanUpCurrentTask();
 				currentIndex++;
 				startCurrentTask();

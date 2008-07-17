@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<cities>
+	<city key="PARIS" name="Paris" type="DEFAULT" default="true" active="true" stationList="http://www.velib.paris.fr/service/carto/" stationDetails="http://www.velib.paris.fr/service/stationdetails/" offlineStationList="/carto_paris.xml" />
+</cities>

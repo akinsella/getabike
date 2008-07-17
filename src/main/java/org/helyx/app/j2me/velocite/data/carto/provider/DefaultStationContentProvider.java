@@ -91,7 +91,7 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 					station.localization.lat = xppAttributeProcessor.getAttrValueAsDouble(LAT);
 					station.localization.lng = xppAttributeProcessor.getAttrValueAsDouble(LNG);
 					station.hasLocalization = LocalizationUtil.isSet(station.localization);
-					findComplementaryInfo(station);
+					processComplementaryInfo(station);
 					
 					progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 				}
@@ -108,7 +108,7 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 		}
 	}
 
-	private void findComplementaryInfo(Station station) {
+	private void processComplementaryInfo(Station station) {
 		int index = station.fullAddress.indexOf(" - 750");
 		
 		if (index >= 0) {

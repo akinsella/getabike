@@ -31,10 +31,10 @@ public class HttpConnectionInputStreamProvider implements IInputStreamProvider {
         httpConnection.setRequestMethod(HttpConnection.GET);
         httpConnection.setRequestProperty("User-Agent", "Profile/MIDP-1.0 Configuration/CLDC-1.0");
         
-        Log.info(CAT, "About to open connection");
+        Log.debug(CAT, "About to open connection");
         
 		if (httpConnection.getResponseCode() != HttpConnection.HTTP_OK) {
-			Log.debug(CAT, "Closing connecting: " + httpConnection.getResponseMessage());
+			Log.debug(CAT, "Closing connection: " + httpConnection.getResponseMessage());
 		    throw new IOException(httpConnection.getResponseMessage());		 
 		}		
 

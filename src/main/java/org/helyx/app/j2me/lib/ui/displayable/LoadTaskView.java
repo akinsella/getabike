@@ -113,7 +113,7 @@ public class LoadTaskView extends AbstractCanvas {
 	}
 
 	public void startTask() {
-		progressTask.execute();
+		progressTask.start();
 	}
 
 	protected void paint(Graphics g) {

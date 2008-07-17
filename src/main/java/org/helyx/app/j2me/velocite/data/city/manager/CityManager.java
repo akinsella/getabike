@@ -3,18 +3,14 @@ package org.helyx.app.j2me.velocite.data.city.manager;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.microedition.midlet.MIDlet;
-
 import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.manager.TaskManager;
 import org.helyx.app.j2me.lib.pref.Pref;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.ui.displayable.IAbstractDisplayable;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener;
@@ -25,29 +21,17 @@ public class CityManager {
 
 	private static final String CAT = "CITY_MANAGER";
 	
-	private static boolean isInit = false;
-	
 	private CityManager() {
 		super();
 	}
-	
-	public static void init(final MIDlet midlet, final IAbstractDisplayable currentDisplayable, final IAbstractDisplayable targetDisplayable) {
-		if (!isInit) {
-			isInit = true;
-		}
-		if (countCities() <= 0) {
-			refreshDataWithDefaults(midlet, currentDisplayable, targetDisplayable);
-		}
-	}
 
-	private static void refreshDataWithDefaults(final MIDlet midlet, final IAbstractDisplayable currentDisplayable, final IAbstractDisplayable targetDisplayable) {
+	public static IProgressTask refreshDataWithDefaults() {
 		
 		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://www.velocite.org/cities.xml");
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
-		progressTask.addProgressListener(new CityLoaderProgressListener(progressTask.getProgressDispatcher()));
 
-		TaskManager.runLoadTaskView("Mise à jour des villes", progressTask, midlet, currentDisplayable, targetDisplayable);
+		return progressTask;
 	}
 
 	public static City findSelectedCity() throws CityManagerException {

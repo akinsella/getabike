@@ -44,7 +44,7 @@ public class XppAttributeProcessor {
 	}
 	
 	public boolean attrExists(String attributeName) {
-		return attributeMap.contains(attributeName);
+		return attributeMap.containsKey(attributeName);
 	}
 	
 	public boolean getAttrValueAsBoolean(String attributeName) {
@@ -121,8 +121,9 @@ public class XppAttributeProcessor {
 		for (int i = 0 ; i < attrCount ; i++) {
 			String attributeName = xpp.getAttributeName(i);
 			if (attributeList.contains(attributeName)) {
-				Log.debug(CAT, "Element[" + i + "] '" + xpp.getName() + "' attribute name: '" + attributeName + "'");
+				Log.debug(CAT, "Attribute[" + i + "] for Element[" + xpp.getName() + "] name: '" + attributeName + "'");
 				String attributeValue = xpp.getAttributeValue(i);
+				Log.debug(CAT, "Associating value: '" +  attributeValue + "' to attribute name='" + attributeName + "'");
 				attributeMap.put(attributeName, attributeValue);
 			}
 		}

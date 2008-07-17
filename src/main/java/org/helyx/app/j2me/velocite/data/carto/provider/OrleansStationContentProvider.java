@@ -7,10 +7,12 @@ import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.stream.IInputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.xml.XppAttributeProcessor;
 import org.helyx.app.j2me.lib.xml.XppUtil;
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
 import org.xmlpull.v1.XmlPullParser;
 
 public class OrleansStationContentProvider extends AbstractContentProvider {
@@ -61,6 +63,10 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, UTF_8);
 	
 				Log.debug(CAT, "Parsing simple sample XML");
+
+				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
+				xppAttributeProcessor.addAll(new String[] { ID, NAME, LNG, LAT });
+
 				
 				while (XppUtil.readToNextElement(xpp, MARKER)) {
 					if (cancel) {
@@ -68,45 +74,19 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 						return ;
 					}
 					Station station = new Station();
-					station.hasLocalization = true;
-					Point localization = new Point();
-	
-					for (int i = 0 ; i < xpp.getAttributeCount() ; i++) {
-						String attributeName = xpp.getAttributeName(i);
-						if (attributeName.equals(ID)) {
-							station.number = Integer.parseInt(xpp.getAttributeValue(i));
-						}
-						else if (attributeName.equals(NAME)) {
-							String name = xpp.getAttributeValue(i);
-	
-							station.name = name;
-						}
-						else if (attributeName.equals(LNG)) {
-							try {
-								localization.lng = Double.parseDouble(xpp.getAttributeValue(i));
-							}
-							catch(Throwable t) {
-								station.hasLocalization = false;
-								Log.warn(CAT, t);
-							}
-						}
-						else if (attributeName.equals(LAT)) {
-							try {
-								localization.lat = Double.parseDouble(xpp.getAttributeValue(i));
-							}
-							catch(Throwable t) {
-								station.hasLocalization = false;
-								Log.warn(CAT, t);
-							}
-						}
-					}
-	
-					station.localization = localization;
-									
-					if (station.hasLocalization) {
-						station.localization.lat = 0;
-						station.localization.lng = 0;
-					}
+					station.localization = new Point();
+					
+					xppAttributeProcessor.processNode(xpp);
+
+					station.number = xppAttributeProcessor.getAttrValueAsInt(ID);
+					station.name = xppAttributeProcessor.getAttrValueAsString(NAME);
+					station.open = true;
+					station.address = "";
+					station.fullAddress = "";
+					station.localization.lat = xppAttributeProcessor.getAttrValueAsDouble(LAT);
+					station.localization.lng = xppAttributeProcessor.getAttrValueAsDouble(LNG);
+					station.hasLocalization = LocalizationUtil.isSet(station.localization);
+					processComplementaryInfo(station);
 	
 					progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 				}
@@ -120,6 +100,10 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
     		Log.warn(CAT, t);
 			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
 		}
+	}
+
+	private void processComplementaryInfo(Station station) {
+
 	}
 
 	public void cancel() {

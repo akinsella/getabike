@@ -19,6 +19,8 @@ public class EachRunTaskFactory implements ITaskFactory {
 	
 	public ITask[] getTasks() {
 		
+		
+		
 		ITask[] tasks = new ITask[] {
 			new SoftKeyConfigurationTask(canvas)
 		};

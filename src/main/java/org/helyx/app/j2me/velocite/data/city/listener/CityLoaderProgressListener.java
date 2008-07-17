@@ -30,7 +30,7 @@ public class CityLoaderProgressListener extends ProgressAdapter {
 
 	public void onStart(String eventMessage, Object eventData) {
 		this.cityPersistenceService = new CityPersistenceService();
-		this.cityList = new Vector(4096);
+		this.cityList = new Vector();
 
 //		progressDispatcher.fireEvent(ProgressEventType.ON_START);
    		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Suppression des villes");
@@ -55,20 +55,24 @@ public class CityLoaderProgressListener extends ProgressAdapter {
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, cityListSize + " villes chargées");
 			cityArray = new City[cityListSize];
 			cityList.copyInto(cityArray);
-			cityList = null;
+
+//			cityList = null;
 			System.gc();
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Tri des données");
 			try { new FastQuickSort(new CityNameComparator()).sort(cityArray); } catch (Exception e) { Log.warn(CAT, e); }
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Sauvegarde des villes");
+//			Log.debug("About to save cities");
 			cityPersistenceService.saveCityArray(cityArray);
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Chargement terminé");
+//			Log.debug("Cities saved");
 			cityArray = null;
 			System.gc();
 	
 			// Notify end of progress 
-			progressDispatcher.fireEvent(eventType, eventMessage, eventData);
+//			progressDispatcher.fireEvent(eventType, eventMessage, eventData);
 		}
 		finally {
+			Log.debug("Disposing cityPersistenceService");
 			cityPersistenceService.dispose();
 		}
 	}

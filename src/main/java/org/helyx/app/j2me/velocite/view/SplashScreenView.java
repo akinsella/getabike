@@ -7,10 +7,15 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
+import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
+import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
+import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
+import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.manager.TaskManager;
 import org.helyx.app.j2me.lib.pref.Pref;
 import org.helyx.app.j2me.lib.pref.PrefManager;
+import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ITask;
 import org.helyx.app.j2me.lib.task.MultiTaskProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
@@ -23,6 +28,9 @@ import org.helyx.app.j2me.lib.ui.widget.IAction;
 import org.helyx.app.j2me.lib.ui.widget.action.ActionItem;
 import org.helyx.app.j2me.lib.util.VectorUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener;
+import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
+import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 import org.helyx.app.j2me.velocite.task.factory.ApplicationUpdateTaskFactory;
 import org.helyx.app.j2me.velocite.task.factory.DataCleanUpTaskFactory;
 import org.helyx.app.j2me.velocite.task.factory.EachRunTaskFactory;
@@ -61,8 +69,7 @@ public class SplashScreenView extends AbstractCanvas {
 				String oldVersion = oldVersionPref == null ? null : oldVersionPref.value;
 				String newVersion = getMidlet().getAppProperty(PrefConstants.MIDLET_VERSION);
 				Pref applicationDataCleanUpNeededPref = PrefManager.readPref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED);
-				Log.info("applicationDataCleanUpNeededPref: " + applicationDataCleanUpNeededPref);
-				
+
 				if (applicationDataCleanUpNeededPref != null && applicationDataCleanUpNeededPref.value.equals(BooleanConstants.TRUE)) {
 					Log.info(CAT, "Application data need to be reseted");
 					VectorUtil.addElementsToVector(tasksToRun, new DataCleanUpTaskFactory().getTasks());
@@ -94,6 +101,21 @@ public class SplashScreenView extends AbstractCanvas {
 						String newVersion = getMidlet().getAppProperty(PrefConstants.MIDLET_VERSION);
 						Log.info(getCat(), "Writing new version to prefs: '" + newVersion + "'");
 						PrefManager.writePref(PrefConstants.MIDLET_VERSION, newVersion);
+						if (CityManager.countCities() <= 0) {
+							IProgressTask progressTask = CityManager.refreshDataWithDefaults();
+							progressTask.addProgressListener(new CityLoaderProgressListener(progressTask.getProgressDispatcher()));
+							progressTask.addProgressListener(new ProgressAdapter(SplashScreenView.CAT) {
+
+								public void onSuccess(String eventMessage, Object eventData) {
+									showDisplayable(new MenuView(getMidlet()));
+								}
+								
+							});
+							TaskManager.runLoadTaskView("Chargement des villes ...", progressTask, getMidlet(), SplashScreenView.this);
+						}
+						else {
+							showDisplayable(new MenuView(getMidlet()));
+						}
 					}
 					
 					public void onError(String eventMessage, Object eventData) {
@@ -107,8 +129,8 @@ public class SplashScreenView extends AbstractCanvas {
 					}
 					
 				});
-				
-				TaskManager.runLoadTaskView("Chargement de l'application...", multiTaskProgressTask, getMidlet(), SplashScreenView.this, new MenuView(getMidlet()));
+								
+				TaskManager.runLoadTaskView("Chargement de l'application...", multiTaskProgressTask, getMidlet(), SplashScreenView.this);
 			}
 			
 			

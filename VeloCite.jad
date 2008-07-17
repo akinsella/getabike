@@ -1,12 +1,12 @@
 MIDlet-1: VeloCite,,org.helyx.app.j2me.velocite.midlet.VelociteMIDlet
-MIDlet-Jar-URL: velocite.jar
-MIDlet-Permissions-Opt: javax.microedition.media.control.VideoControl.getSnapshot, javax.wireless.messaging.sms.receive, javax.wireless.messaging.sms.send
-MIDlet-Icon: /vcIcon.png
-MicroEdition-Configuration: CLDC-1.1
-MIDlet-Version: 1.0.87
-MIDlet-Info-URL: http://m.velocite.org
 MIDlet-Description: VeloCite
+MIDlet-Icon: /vcIcon.png
+MIDlet-Info-URL: http://m.velocite.org
+MIDlet-Jar-URL: velocite.jar
 MIDlet-Name: VeloCite
-MIDlet-Vendor: Helyx.org
 MIDlet-Permissions: javax.microedition.io.Connector, javax.microedition.io.file.FileConnection
+MIDlet-Permissions-Opt: javax.microedition.media.control.VideoControl.getSnapshot, javax.wireless.messaging.sms.receive, javax.wireless.messaging.sms.send
+MIDlet-Vendor: Helyx.org
+MIDlet-Version: 1.0.88
+MicroEdition-Configuration: CLDC-1.1
 MicroEdition-Profile: MIDP-2.0

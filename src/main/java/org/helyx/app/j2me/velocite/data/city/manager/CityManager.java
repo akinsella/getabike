@@ -13,7 +13,6 @@ import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
 
@@ -27,7 +26,7 @@ public class CityManager {
 
 	public static IProgressTask refreshDataWithDefaults() {
 		
-		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://m.velocite.org/cities.xml");
+		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://www.velocite.org/cities.xml");
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 

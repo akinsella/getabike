@@ -26,7 +26,7 @@ public class CityManager {
 
 	public static IProgressTask refreshDataWithDefaults() {
 		
-		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://www.velocite.org/cities.xml");
+		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://m.velocite.org/cities.xml");
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 

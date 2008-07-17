@@ -17,7 +17,7 @@ public class DefaultCityContentAccessorTest extends TestCase {
 
 	public void testDefaultCityContentAccessor() throws ContentAccessorException, IOException {
 
-		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://www.velocite.org/cities.xml");
+		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://m.velocite.org/cities.xml");
 		IInputStreamProvider inputStreamProvider = cityContentAccessor.getInputStreamProvider();
 		
 		assertNotNull(inputStreamProvider);

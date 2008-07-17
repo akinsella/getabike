@@ -7,6 +7,6 @@ MIDlet-Name: VeloCite
 MIDlet-Permissions: javax.microedition.io.Connector, javax.microedition.io.file.FileConnection
 MIDlet-Permissions-Opt: javax.microedition.media.control.VideoControl.getSnapshot, javax.wireless.messaging.sms.receive, javax.wireless.messaging.sms.send
 MIDlet-Vendor: Helyx.org
-MIDlet-Version: 1.0.90
+MIDlet-Version: 1.0.91
 MicroEdition-Configuration: CLDC-1.1
 MicroEdition-Profile: MIDP-2.0

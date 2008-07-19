@@ -12,20 +12,24 @@ public class KeyUtil {
 
 	private static final String CAT = "KEY_UTIL";
 	
-	private static final String SOFT_KEY_DETECTION_PLATFORM = "PLATFORM";
-	private static final String SOFT_KEY_DETECTION_AUTO_DETECTION = "AUTO_DETECTION";
-	private static final String SOFT_KEY_DETECTION_DEFAULT = "DEFAULT";
+	public static final String SOFT_KEY_DETECTION_PLATFORM = "PLATFORM";
+	public static final String SOFT_KEY_DETECTION_AUTO_DETECTION = "AUTO_DETECTION";
+	public static final String SOFT_KEY_DETECTION_DEFAULT = "DEFAULT";
 	
-	private static final int SOFT_1_DEFAULT = -6;
-	private static final int SOFT_2_DEFAULT = -7;
+	public static final int SOFT_1_DEFAULT = -6;
+	public static final int SOFT_2_DEFAULT = -7;
 	
-	private static final String MICROEDITION_PLATFORM = "microedition.platform";
+	public static final String MICROEDITION_PLATFORM = "microedition.platform";
 	
-	private static final KeyMapConfig DEFAULT_KEY_MAP = new KeyMapConfig("AUTO", new KeyMap[] { new KeyMap(SOFT_1_DEFAULT, SOFT_2_DEFAULT) });
+	public static final KeyMapConfig DEFAULT_KEY_MAP = new KeyMapConfig("AUTO", new KeyMap[] { new KeyMap(SOFT_1_DEFAULT, SOFT_2_DEFAULT) });
 	
-	private static KeyMapConfig keyMapConfig;
+	public static final String SOFT = "SOFT";
+	public static final String ONE = "1";
+	public static final String TWO = "2";
+	
+	public static KeyMapConfig keyMapConfig;
 		
-	private static KeyMapConfig[] keyMapArray = new KeyMapConfig[] {
+	public static KeyMapConfig[] keyMapArray = new KeyMapConfig[] {
 		new KeyMapConfig("LG", new KeyMap[] { new KeyMap(-202, -203) }),
 		new KeyMapConfig("SAGEM", new KeyMap[] { new KeyMap(-7, -6) }),
 		new KeyMapConfig("SIEMENS", new KeyMap[] { new KeyMap(-1, -4), new KeyMap(105, 106) }),
@@ -71,126 +75,14 @@ public class KeyUtil {
 		}
 		return false;
 	}
-	
-	private static final String SOFT = "SOFT";
-	private static final String ONE = "1";
-	private static final String TWO = "2";
-	
-	public synchronized static void initKeyMapConfiguration(Canvas canvas) {
-
-		if (keyMapConfig != null) {
-			return;
-		}
-	
-		Pref softKeyDetectionType = PrefManager.readPref(PrefConstants.SOFT_KEY_DETECTION_TYPE);
 		
-		if (softKeyDetectionType != null && SOFT_KEY_DETECTION_PLATFORM.equals(softKeyDetectionType.value)) {
-			Log.info(CAT, "[SoftKey detection] Attempting to associate softkeys by platform");
-			
-			KeyMapConfig platformKeyMapConfig = findPlatformKeyMapConfig();
-			
-			if (platformKeyMapConfig == null) {
-				cleanUpSoftKeyPref();
-			}
-			else {
-				keyMapConfig = platformKeyMapConfig;
-				return ;
-			}
-		}
-		
-		Pref leftSoftKeyPref = PrefManager.readPref(PrefConstants.SOFT_KEY_LEFT);
-		Pref rightSoftKeyPref = PrefManager.readPref(PrefConstants.SOFT_KEY_RIGHT);
-		
-		if (leftSoftKeyPref != null && rightSoftKeyPref != null) {
-			try {
-				String leftSoftKeyStr = leftSoftKeyPref.value;
-				int leftSoftKey = Integer.parseInt(leftSoftKeyStr);
-				String rightSoftKeyStr = rightSoftKeyPref.value;
-				int rightSoftKey = Integer.parseInt(rightSoftKeyStr);
-				
-				keyMapConfig = new KeyMapConfig("CACHED_VALUES", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
-				Log.info(CAT, "[SoftKey detection] Associating softkeys from cached values: " + keyMapConfig);
-				return ;
-			}
-			catch(Throwable t) {
-				Log.warn(CAT, t);
-			}
-		}
-		
-		int leftSoftKey = 0;
-		int rightSoftKey = 0;
-
-		for (int i = 0 ; i <= 65536 ; i++) {
-			String positiveKeyName = null;
-			String negativeKeyName = null;
-			try {			
-				positiveKeyName = canvas.getKeyName(i);
-
-				if (positiveKeyName != null && positiveKeyName.toUpperCase().indexOf(SOFT) >= 0) {
-					if (positiveKeyName.indexOf(ONE) >= 0) {
-						leftSoftKey = i;
-					}
-					else if (positiveKeyName.indexOf(TWO) >= 0) {
-						rightSoftKey = i;
-					}
-				}	
-			}
-			catch(Throwable t) { }
-
-			try {
-				negativeKeyName = canvas.getKeyName(-i);
-
-				if (negativeKeyName != null && negativeKeyName.toUpperCase().indexOf(SOFT) >= 0) {
-					if (negativeKeyName.indexOf(ONE) >= 0) {
-						leftSoftKey = -i;
-					}
-					else if (negativeKeyName.indexOf(TWO) >= 0) {
-						rightSoftKey = -i;
-					}
-				}
-			}
-			catch(Throwable t) { }
-			
-			if (positiveKeyName != null || negativeKeyName != null) {
-				Log.info(CAT, "[SoftKey detection] index=" + i + ", positiveKeyName='" + positiveKeyName + "', negativeKeyName='" + negativeKeyName + "', leftSoftKey=" + leftSoftKey + ", rightSoftKey=" + rightSoftKey);
-			}
-			
-			if (leftSoftKey != 0 && rightSoftKey != 0) {
-				keyMapConfig = new KeyMapConfig("AUTO_DETECTION", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
-				Log.info(CAT, "[SoftKey detection] Associating softkeys by automatic detection: " + keyMapConfig);
-
-				writeSoftKeyPref(SOFT_KEY_DETECTION_AUTO_DETECTION, leftSoftKey, rightSoftKey);
-				return ;
-			}	
-		}
-		
-		Log.info(CAT, "[SoftKey detection] Automatic detection failed");
-		Log.info(CAT, "[SoftKey detection] Attempting to associate softkeys by platform");
-		
-		KeyMapConfig platformKeyMapConfig = findPlatformKeyMapConfig();
-		
-		if (platformKeyMapConfig != null) {
-			cleanUpSoftKeyPref();
-			PrefManager.writePref(PrefConstants.SOFT_KEY_DETECTION_TYPE, SOFT_KEY_DETECTION_DEFAULT);
-			keyMapConfig = platformKeyMapConfig;
-			return ;
-		}
-		
-		Log.info(CAT, "[SoftKey detection]  Softkeys association by platform failed");
-		
-		keyMapConfig = DEFAULT_KEY_MAP;
-
-		writeSoftKeyPref(SOFT_KEY_DETECTION_DEFAULT, keyMapConfig.keyMapArray[0].softKeyLeft, keyMapConfig.keyMapArray[0].softKeyRight);
-		Log.info(CAT, "[SoftKey detection] Associating softkeys to defaults: " + keyMapConfig);
-	}
-		
-	private static void cleanUpSoftKeyPref() {
+	public static void cleanUpSoftKeyPref() {
 		PrefManager.removePref(PrefConstants.SOFT_KEY_DETECTION_TYPE);
 		PrefManager.removePref(PrefConstants.SOFT_KEY_LEFT);
 		PrefManager.removePref(PrefConstants.SOFT_KEY_RIGHT);
 	}
 	
-	private static void writeSoftKeyPref(String softKeyDetectionType, int softKeyLeft, int softKeyRight) {
+	public static void writeSoftKeyPref(String softKeyDetectionType, int softKeyLeft, int softKeyRight) {
 		Log.info(CAT, "Writing softkey infos: ");
 		
 		Log.info(CAT, "SOFT_KEY_DETECTION_TYPE: " + softKeyDetectionType);
@@ -199,25 +91,6 @@ public class KeyUtil {
 		PrefManager.writePref(PrefConstants.SOFT_KEY_DETECTION_TYPE, softKeyDetectionType);
 		PrefManager.writePref(PrefConstants.SOFT_KEY_LEFT, String.valueOf(softKeyLeft));
 		PrefManager.writePref(PrefConstants.SOFT_KEY_RIGHT, String.valueOf(softKeyRight));
-	}
-
-	private static KeyMapConfig findPlatformKeyMapConfig() {
-		
-		String platformName = System.getProperty(MICROEDITION_PLATFORM).toUpperCase();
-
-		Log.info(CAT, "[SoftKey detection] Platform name: " + platformName);
-
-		int length = keyMapArray.length;
-		for (int i = 0 ; i < length ; i++) {
-			if (platformName.indexOf(keyMapArray[i].modelKey) >= 0) {
-				KeyMapConfig keyMapConfig = keyMapArray[i];
-				Log.info(CAT, "[SoftKey detection] Associating softkeys to platform '" + platformName + "': " + keyMapConfig);
-				return keyMapConfig;
-			}
-		}
-		
-		return null;
-
 	}
 	
 }

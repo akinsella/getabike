@@ -23,7 +23,9 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 	}
 	
 	public void execute() {
-		
+		try {
+			progressDispatcher.fireEvent(ProgressEventType.ON_START);
+	
 			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recerche de config. existante...");
 			String softKeyDetectionTypeValue = PrefManager.readPrefValue(PrefConstants.SOFT_KEY_DETECTION_TYPE);
 			
@@ -36,8 +38,9 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 					KeyUtil.cleanUpSoftKeyPref();
 				}
 				else {
-					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
 					KeyUtil.keyMapConfig = platformKeyMapConfig;
+					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
+					progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 					return ;
 				}
 			}
@@ -51,8 +54,9 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 					int rightSoftKey = Integer.parseInt(rightSoftKeyStr);
 					
 					KeyUtil.keyMapConfig = new KeyMapConfig("CACHED_VALUES", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
-					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
 					Log.info(CAT, "[SoftKey detection] Associating softkeys from cached values: " + KeyUtil.keyMapConfig);
+					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
+					progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 					return ;
 				}
 				catch(Throwable t) {
@@ -127,6 +131,7 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 				PrefManager.writePref(PrefConstants.SOFT_KEY_DETECTION_TYPE, KeyUtil.SOFT_KEY_DETECTION_DEFAULT);
 				KeyUtil.keyMapConfig = platformKeyMapConfig;
 				progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
+				progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 				return ;
 			}
 			
@@ -134,10 +139,17 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 			
 			KeyUtil.keyMapConfig = KeyUtil.DEFAULT_KEY_MAP;
 
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Config. par défaut");
 			KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_DEFAULT, KeyUtil.keyMapConfig.keyMapArray[0].softKeyLeft, KeyUtil.keyMapConfig.keyMapArray[0].softKeyRight);
 			Log.info(CAT, "[SoftKey detection] Associating softkeys to defaults: " + KeyUtil.keyMapConfig);
+			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Config. par défaut");
+			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 		}
+		catch(Throwable t) {
+			Log.warn(CAT, t);
+			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t.getMessage(), t);
+		}
+		
+	}
 
 		private static KeyMapConfig findPlatformKeyMapConfig() {
 			

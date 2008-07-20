@@ -104,7 +104,7 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 						progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Touche détectée: '" + positiveKeyName + "'");
 					}
 					if (negativeKeyName != null) {
-						progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Touche détectée: '" + positiveKeyName + "'");
+						progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Touche détectée: '" + negativeKeyName + "'");
 					}
 					Log.info(CAT, "[SoftKey detection] index=" + i + ", positiveKeyName='" + positiveKeyName + "', negativeKeyName='" + negativeKeyName + "', leftSoftKey=" + leftSoftKey + ", rightSoftKey=" + rightSoftKey);
 				}
@@ -113,8 +113,9 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 					KeyUtil.keyMapConfig = new KeyMapConfig("AUTO_DETECTION", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
 					Log.info(CAT, "[SoftKey detection] Associating softkeys by automatic detection: " + KeyUtil.keyMapConfig);
 
-					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
 					KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_AUTO_DETECTION, leftSoftKey, rightSoftKey);
+					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
+					progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 					return ;
 				}	
 			}

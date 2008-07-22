@@ -18,6 +18,16 @@ public class XppAttributeProcessor {
 		init();
 	}
 	
+	public XppAttributeProcessor(String attributeName) {
+		this();
+		add(attributeName);
+	}
+	
+	public XppAttributeProcessor(String[] attributeNames) {
+		this();
+		addAll(attributeNames);
+	}
+	
 	private void init() {
 		attributeList = new Vector();
 		attributeMap = new Hashtable();

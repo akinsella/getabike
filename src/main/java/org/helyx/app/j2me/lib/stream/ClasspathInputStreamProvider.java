@@ -3,7 +3,7 @@ package org.helyx.app.j2me.lib.stream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ClasspathInputStreamProvider implements IInputStreamProvider {
+public class ClasspathInputStreamProvider implements InputStreamProvider {
 
 	private static final String CAT = "CLASSPATH_INPUT_STREAM_PROVIDER";
 	

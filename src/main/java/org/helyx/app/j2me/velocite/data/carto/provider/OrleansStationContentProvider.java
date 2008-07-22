@@ -5,7 +5,7 @@ import java.io.InputStream;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.stream.IInputStreamProvider;
+import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.XppAttributeProcessor;
 import org.helyx.app.j2me.lib.xml.XppUtil;
@@ -50,7 +50,7 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 		Log.debug(CAT, "Loading carto info ...");
 		
 		InputStream inputStream = null;
-		IInputStreamProvider cartoInputStreamProvider = null;
+		InputStreamProvider cartoInputStreamProvider = null;
 		
 		try {
 

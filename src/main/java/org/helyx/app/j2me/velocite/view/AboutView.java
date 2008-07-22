@@ -36,13 +36,13 @@ public class AboutView extends AbstractCanvas {
 	}
 	
 	private void initActions() {
-		secondaryAction = new ActionItem("Retour", true, new IAction() {
+		setSecondaryAction(new ActionItem("Retour", true, new IAction() {
 
 			public void run(Object data) {
 				returnToPreviousDisplayable();
 			}
 			
-		});
+		}));
 	}
 	
 	private void loadLogoImage() {

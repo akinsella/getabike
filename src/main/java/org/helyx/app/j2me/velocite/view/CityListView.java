@@ -7,7 +7,7 @@ import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
-import org.helyx.app.j2me.lib.ui.displayable.MenuListView;
+import org.helyx.app.j2me.lib.ui.view.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.IAction;
 import org.helyx.app.j2me.lib.ui.widget.action.ActionItem;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
@@ -46,13 +46,13 @@ public class CityListView extends MenuListView {
 	
 	private void initActions() {
 
-		secondaryAction = new ActionItem("Retour", true, new IAction() {
+		setSecondaryAction(new ActionItem("Retour", true, new IAction() {
 
 			public void run(Object data) {
 				returnToPreviousDisplayable();
 			}
 			
-		});
+		}));
 	}
 
 	private void initData() throws CityManagerException {

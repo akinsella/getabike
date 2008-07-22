@@ -8,7 +8,7 @@ import javax.microedition.io.HttpConnection;
 
 import org.helyx.app.j2me.lib.log.Log;
 
-public class HttpConnectionInputStreamProvider implements IInputStreamProvider {
+public class HttpConnectionInputStreamProvider implements InputStreamProvider {
 
 	private static final String CAT = "HTTP_CONNECTION_INPUT_STREAM_PROVIDER";
 	

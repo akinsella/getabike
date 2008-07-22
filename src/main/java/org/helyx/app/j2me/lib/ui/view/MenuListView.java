@@ -1,10 +1,12 @@
-package org.helyx.app.j2me.lib.ui.displayable;
+package org.helyx.app.j2me.lib.ui.view;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
 import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
+import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
 import org.helyx.app.j2me.lib.ui.util.GraphicsUtil;
@@ -55,7 +57,7 @@ public class MenuListView extends AbstractCanvas {
 		Log.debug(CAT, "Menu List View Checkable: " + checkable);
 		
 		if (checkable) {
-			primaryAction = new ActionItem("Sélectionner", true, new IAction() {
+			setPrimaryAction(new ActionItem("Sélectionner", true, new IAction() {
 
 				public void run(Object data) {
 					MenuItem menuItem = getMenu().getSelectedMenuItem();
@@ -65,16 +67,16 @@ public class MenuListView extends AbstractCanvas {
 					}
 				}
 				
-			});
+			}));
 		}
 		
-		secondaryAction = new ActionItem("Retour", true, new IAction() {
+		setSecondaryAction(new ActionItem("Retour", true, new IAction() {
 
 			public void run(Object data) {
 				returnToPreviousDisplayable();
 			}
 			
-		});
+		}));
 	}
 
 	public Menu getMenu() {

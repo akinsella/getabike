@@ -5,7 +5,7 @@ import java.io.InputStream;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.stream.IInputStreamProvider;
+import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;
@@ -50,7 +50,7 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 			
 			for (int i = 0 ; i < 11 ; i++) {
 				InputStream inputStream = null;
-				IInputStreamProvider cartoInputStreamProvider = null;
+				InputStreamProvider cartoInputStreamProvider = null;
 
 				if (cancel) {
 					progressDispatcher.fireEvent(ProgressEventType.ON_CANCEL);

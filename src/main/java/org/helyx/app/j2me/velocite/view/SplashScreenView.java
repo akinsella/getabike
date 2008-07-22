@@ -55,7 +55,7 @@ public class SplashScreenView extends AbstractCanvas {
 		setTitle("VeloCite");
 		loadLogoImage();
 		
-		primaryAction = new ActionItem("Ok", true, new IAction() {
+		setPrimaryAction(new ActionItem("Ok", true, new IAction() {
 			public void run(Object data) {
 
 				processApplicationStartupTasks();
@@ -134,7 +134,7 @@ public class SplashScreenView extends AbstractCanvas {
 			}
 			
 			
-		});
+		}));
 //		
 //		secondaryAction = new ActionItem("Quitter", true, new IAction() {
 //			public void run(Object data) {

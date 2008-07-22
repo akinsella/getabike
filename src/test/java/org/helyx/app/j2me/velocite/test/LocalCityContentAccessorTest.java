@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.ContentAccessorException;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.stream.IInputStreamProvider;
+import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 
 public class LocalCityContentAccessorTest extends TestCase {
 
@@ -16,7 +16,7 @@ public class LocalCityContentAccessorTest extends TestCase {
 
 	public void testLocalCityContentAccessor() throws ContentAccessorException, IOException {
 		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/cities.xml");
-		IInputStreamProvider inputStreamProvider = cityContentAccessor.getInputStreamProvider();
+		InputStreamProvider inputStreamProvider = cityContentAccessor.getInputStreamProvider();
 		
 		assertNotNull(inputStreamProvider);
 		

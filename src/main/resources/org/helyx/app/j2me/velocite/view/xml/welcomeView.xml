@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<canvas title="VeloCite - Bienvenue">
+
+	<command type="PRIMARY" title="Menu" />
+	<command type="SECONDARY" title="Retour" />
+	<command type="THIRD" title="Sélectionner" />
+	
+</canvas>

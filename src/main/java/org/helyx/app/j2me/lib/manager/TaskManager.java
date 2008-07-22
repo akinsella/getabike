@@ -5,7 +5,7 @@ import javax.microedition.midlet.MIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.ui.displayable.IAbstractDisplayable;
-import org.helyx.app.j2me.lib.ui.displayable.LoadTaskView;
+import org.helyx.app.j2me.lib.ui.view.LoadTaskView;
 
 public class TaskManager {
 

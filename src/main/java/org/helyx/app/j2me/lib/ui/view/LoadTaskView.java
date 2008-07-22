@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.displayable;
+package org.helyx.app.j2me.lib.ui.view;
 
 import java.io.IOException;
 import java.util.Timer;
@@ -11,6 +11,7 @@ import javax.microedition.midlet.MIDlet;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.widget.ColorUtil;
@@ -51,13 +52,13 @@ public class LoadTaskView extends AbstractCanvas {
 		initGraphics();
 		
 		if (progressTask.isCancellable()) {
-			secondaryAction = new ActionItem("Retour", true, new IAction() {
+			setSecondaryAction(new ActionItem("Retour", true, new IAction() {
 				public void run(Object data) {
 					if (progressTask.isCancellable()) {
 						progressTask.cancel();
 					}
 				}
-			});
+			}));
 
 		}
 		

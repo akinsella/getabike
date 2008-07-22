@@ -22,11 +22,11 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 	private static final String CAT = "ABSTRACT_CANVAS";
 	
 	protected String title;
-	protected boolean isFullScreenMode = false;
+	protected boolean fullScreenMode = false;
 	
-	protected ActionItem primaryAction;
-	protected ActionItem secondaryAction;
-	protected ActionItem thirdAction;
+	private ActionItem primaryAction;
+	private ActionItem secondaryAction;
+	private ActionItem thirdAction;
 	
 	protected boolean titleEnabled = true;
 	protected boolean menuEnabled = true;
@@ -123,12 +123,12 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 	}
 
 	public boolean isFullScreenMode() {
-		return isFullScreenMode;
+		return fullScreenMode;
 	}
 	
-	public void setFullScreenMode(boolean isFullScreenMode) {
-		this.isFullScreenMode = isFullScreenMode;
-		canvas.setFullScreenMode(isFullScreenMode);
+	public void setFullScreenMode(boolean fullScreenMode) {
+		this.fullScreenMode = fullScreenMode;
+		canvas.setFullScreenMode(fullScreenMode);
 	}
 
 	public Canvas getCanvas() {
@@ -293,6 +293,18 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 
 	protected abstract void paint(Graphics graphics);
 	
+	public void setPrimaryAction(ActionItem primaryAction) {
+		this.primaryAction = primaryAction;
+	}
+
+	public void setSecondaryAction(ActionItem secondaryAction) {
+		this.secondaryAction = secondaryAction;
+	}
+
+	public void setThirdAction(ActionItem thirdAction) {
+		this.thirdAction = thirdAction;
+	}
+
 	public static final class AbstractGameCanvas extends GameCanvas {
 
 		private boolean keyEventEnabled = true;

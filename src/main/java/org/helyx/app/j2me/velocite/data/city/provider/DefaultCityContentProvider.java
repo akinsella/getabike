@@ -8,7 +8,7 @@ import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.stream.IInputStreamProvider;
+import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.XppAttributeProcessor;
 import org.helyx.app.j2me.lib.xml.XppUtil;
@@ -58,7 +58,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 		Log.debug(CAT, "Loading cities informations ...");
 		
 		InputStream inputStream = null;
-		IInputStreamProvider cityInputStreamProvider = null;
+		InputStreamProvider cityInputStreamProvider = null;
 		
 		try {
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);

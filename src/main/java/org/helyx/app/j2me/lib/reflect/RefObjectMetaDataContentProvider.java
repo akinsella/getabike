@@ -2,11 +2,12 @@ package org.helyx.app.j2me.lib.reflect;
 
 import java.io.InputStream;
 
+import org.helyx.app.j2me.lib.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.stream.IInputStreamProvider;
+import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.XppUtil;
 import org.xmlpull.v1.XmlPullParser;
@@ -18,12 +19,10 @@ public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 	private static final String INDEX = "index";
 	private static final String NAME = "name";
 	private static final String TYPE = "type";
-	private static final String IS_ACTIVE = "active";
 	
 	private static final String METADATA = "metadata";
 	private static final String FIELD = "field";
 		
-	private static final String UTF_8 = "UTF-8";
 
 	private static final String INVALID_CONTENT = "Xml content is invalid";
 
@@ -40,7 +39,7 @@ public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 		Log.debug(CAT, "Loading metadata info ...");
 		
 		InputStream inputStream = null;
-		IInputStreamProvider metadataInputStreamProvider = null;
+		InputStreamProvider metadataInputStreamProvider = null;
 		
 		try {
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
@@ -50,7 +49,7 @@ public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 				metadataInputStreamProvider = metadataContentAccessor.getInputStreamProvider();
 				inputStream = metadataInputStreamProvider.createInputStream();
 				
-				XmlPullParser xpp = XppUtil.createXpp(inputStream, UTF_8);
+				XmlPullParser xpp = XppUtil.createXpp(inputStream,  EncodingConstants.UTF_8);
 	
 				Log.debug(CAT, "Parsing XML Document: '" + metadataContentAccessor.getPath() + "'");
 				

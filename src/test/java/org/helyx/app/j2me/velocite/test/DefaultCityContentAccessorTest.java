@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 import org.helyx.app.j2me.lib.content.accessor.ContentAccessorException;
 import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.stream.IInputStreamProvider;
+import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 
 public class DefaultCityContentAccessorTest extends TestCase {
 
@@ -18,7 +18,7 @@ public class DefaultCityContentAccessorTest extends TestCase {
 	public void testDefaultCityContentAccessor() throws ContentAccessorException, IOException {
 
 		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://m.velocite.org/cities.xml");
-		IInputStreamProvider inputStreamProvider = cityContentAccessor.getInputStreamProvider();
+		InputStreamProvider inputStreamProvider = cityContentAccessor.getInputStreamProvider();
 		
 		assertNotNull(inputStreamProvider);
 		

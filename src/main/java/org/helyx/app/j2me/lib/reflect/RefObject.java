@@ -13,6 +13,18 @@ public class RefObject {
 		super();
 	}
 
+	public Object getObject(String fieldName) {
+		Object object = (Boolean)fieldMap.get(fieldName);
+
+		return object;
+	}
+	
+	public Object getRefObject(String fieldName) {
+		RefObject refObject = (RefObject)fieldMap.get(fieldName);
+
+		return refObject;
+	}
+
 	public boolean getBoolean(String fieldName) {
 		Boolean boolObject = (Boolean)fieldMap.get(fieldName);
 
@@ -125,6 +137,14 @@ public class RefObject {
 	}
 
 
+	public void setRefObject(String fieldName, RefObject refObject) {
+		fieldMap.put(fieldName, refObject);
+	}
+
+	public void setObject(String fieldName, Object object) {
+		fieldMap.put(fieldName, object);
+	}
+
 	public void setBoolean(String fieldName, boolean booleanValue) {
 		fieldMap.put(fieldName, new Boolean(booleanValue));
 	}
@@ -172,6 +192,14 @@ public class RefObject {
 	
 	public String toString() {
 		return fieldMap.toString();
+	}
+
+	public void clear() {
+		fieldMap.clear();
+	}
+
+	public boolean containsKey(String key) {
+		return fieldMap.containsKey(key);
 	}
 
 }

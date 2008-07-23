@@ -4,16 +4,16 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
 import javax.microedition.midlet.MIDlet;
 
+import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
+import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.GraphicsUtil;
-import org.helyx.app.j2me.lib.ui.widget.ColorUtil;
-import org.helyx.app.j2me.lib.ui.widget.FontUtil;
-import org.helyx.app.j2me.lib.ui.widget.IAction;
-import org.helyx.app.j2me.lib.ui.widget.action.item.ActionItem;
+import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
+import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
@@ -57,7 +57,7 @@ public class MenuListView extends AbstractCanvas {
 		Log.debug(CAT, "Menu List View Checkable: " + checkable);
 		
 		if (checkable) {
-			setPrimaryAction(new ActionItem("Sélectionner", true, new IAction() {
+			setPrimaryAction(new Command("Sélectionner", true, new IAction() {
 
 				public void run(Object data) {
 					MenuItem menuItem = getMenu().getSelectedMenuItem();
@@ -70,7 +70,7 @@ public class MenuListView extends AbstractCanvas {
 			}));
 		}
 		
-		setSecondaryAction(new ActionItem("Retour", true, new IAction() {
+		setSecondaryAction(new Command("Retour", true, new IAction() {
 
 			public void run(Object data) {
 				returnToPreviousDisplayable();
@@ -130,17 +130,17 @@ public class MenuListView extends AbstractCanvas {
 		if (length == 0 || length <= visibleItemCount) {
 			return;
 		}
-		g.setColor(ColorUtil.WIDGET_SCROLL_BACKGROUND);
+		g.setColor(DEFAULT_THEME.WIDGET_SCROLL_BACKGROUND);
 		g.fillRect(clientArea.location.x + clientArea.size.width - 4, clientArea.location.y, 4, clientArea.size.height);
 		
 		int yHeight = Math.max(clientArea.size.height / 8, clientArea.size.height * visibleItemCount / length);
 		int yPos = clientArea.location.y + (int)((clientArea.size.height - yHeight) * ((double)selectedOffset / ((double)length - 1)));
 		
-		Shade shade = new Shade(ColorUtil.WIDGET_SCROLL_SHADE_DARK, ColorUtil.WIDGET_SCROLL_SHADE_LIGHT);
+		Shade shade = new Shade(DEFAULT_THEME.WIDGET_SCROLL_SHADE_DARK, DEFAULT_THEME.WIDGET_SCROLL_SHADE_LIGHT);
 		Rectangle area = new Rectangle(clientArea.location.x + clientArea.size.width - 4, yPos, 4, yHeight);
 		GraphicsUtil.fillShade(g, area, shade, true);
 
-		g.setColor(ColorUtil.WIDGET_SCROLL_BORDER);
+		g.setColor(DEFAULT_THEME.WIDGET_SCROLL_BORDER);
 		g.drawLine(clientArea.location.x + clientArea.size.width - 5, clientArea.location.y, clientArea.location.x + clientArea.size.width - 5, clientArea.location.y + clientArea.size.height);
 	}
 
@@ -153,22 +153,22 @@ public class MenuListView extends AbstractCanvas {
     	boolean isSelected = selectedOffset == topOffset + offset;
     	
     	if (isSelected) {
-    		Shade shade = new Shade(ColorUtil.WIDGET_LIST_SELECTED_SHADE_LIGHT, ColorUtil.WIDGET_LIST_SELECTED_SHADE_DARK);
+    		Shade shade = new Shade(DEFAULT_THEME.WIDGET_LIST_SELECTED_SHADE_LIGHT, DEFAULT_THEME.WIDGET_LIST_SELECTED_SHADE_DARK);
     		GraphicsUtil.fillShade(g, itemClientArea, shade, false);
      	}
     	else {
-    		g.setColor(ColorUtil.WIDGET_LIST);
+    		g.setColor(DEFAULT_THEME.WIDGET_LIST);
     		g.fillRect(itemClientArea.location.x, itemClientArea.location.y, itemClientArea.size.width, itemClientArea.size.height);
     	}
     	
-    	g.setColor(ColorUtil.WIDGET_LIST_SEPARATOR);
+    	g.setColor(DEFAULT_THEME.WIDGET_LIST_SEPARATOR);
     	g.drawLine(itemClientArea.location.x, itemClientArea.location.y + itemClientArea.size.height - 1, itemClientArea.location.x + itemClientArea.size.width, itemClientArea.location.y + itemClientArea.size.height - 1);
 	
     	if (isSelected) {
-    		g.setColor(ColorUtil.WIDGET_MENU_LIST_FONT_SELECTED);
+    		g.setColor(DEFAULT_THEME.WIDGET_MENU_LIST_FONT_SELECTED);
     	}
     	else {
-    		g.setColor(ColorUtil.WIDGET_MENU_LIST_FONT);
+    		g.setColor(DEFAULT_THEME.WIDGET_MENU_LIST_FONT);
     	}
 
         g.setFont(FontUtil.MEDIUM_BOLD);

@@ -2,7 +2,7 @@ package org.helyx.app.j2me.lib.reflect;
 
 import java.io.InputStream;
 
-import org.helyx.app.j2me.lib.EncodingConstants;
+import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderException;

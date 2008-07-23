@@ -1,6 +1,6 @@
 package org.helyx.app.j2me.lib.ui.widget.menu;
 
-import org.helyx.app.j2me.lib.ui.widget.IAction;
+import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.ui.widget.ImageSet;
 
 public class MenuItem {

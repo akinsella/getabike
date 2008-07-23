@@ -8,16 +8,16 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.midlet.MIDlet;
 
+import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
-import org.helyx.app.j2me.lib.ui.widget.ColorUtil;
-import org.helyx.app.j2me.lib.ui.widget.FontUtil;
-import org.helyx.app.j2me.lib.ui.widget.IAction;
-import org.helyx.app.j2me.lib.ui.widget.action.item.ActionItem;
+import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
+import org.helyx.app.j2me.lib.ui.widget.Command;
 
 public class LoadTaskView extends AbstractCanvas {
 	
@@ -52,7 +52,7 @@ public class LoadTaskView extends AbstractCanvas {
 		initGraphics();
 		
 		if (progressTask.isCancellable()) {
-			setSecondaryAction(new ActionItem("Retour", true, new IAction() {
+			setSecondaryAction(new Command("Retour", true, new IAction() {
 				public void run(Object data) {
 					if (progressTask.isCancellable()) {
 						progressTask.cancel();
@@ -133,12 +133,12 @@ public class LoadTaskView extends AbstractCanvas {
        			textYPos += image.getHeight() / 2 + FontUtil.SMALL_BOLD.getBaselinePosition();
        		}
 
-           	g.setColor(ColorUtil.WIDGET_WAITING_TITLE_FONT);
+           	g.setColor(DEFAULT_THEME.WIDGET_WAITING_TITLE_FONT);
     		g.setFont(FontUtil.SMALL_BOLD);
     		g.drawString(label, x + width / 2, y + textYPos, Graphics.HCENTER | Graphics.BASELINE);
        	}
 
-       	g.setColor(ColorUtil.WIDGET_WAITING_MESSAGE_FONT);
+       	g.setColor(DEFAULT_THEME.WIDGET_WAITING_MESSAGE_FONT);
         g.setFont(FontUtil.MEDIUM_BOLD);
    		int  textYPos = height / 2;
    		if (image != null) {

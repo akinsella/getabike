@@ -2,8 +2,8 @@
 
 <canvas title="VeloCite - Bienvenue">
 
-	<command type="PRIMARY" title="Menu" />
-	<command type="SECONDARY" title="Retour" />
-	<command type="THIRD" title="Sélectionner" />
+	<command position="PRIMARY" text="Sélectionner" action="action.empty" />
+	<command position="SECONDARY" text="Retour" action="action.empty" />
+	<command position="THIRD" text="Menu" action="action.empty" />
 	
 </canvas>

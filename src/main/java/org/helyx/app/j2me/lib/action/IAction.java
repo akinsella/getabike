@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.widget;
+package org.helyx.app.j2me.lib.action;
 
 public interface IAction {
 

@@ -6,14 +6,15 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 import javax.microedition.midlet.MIDlet;
 
+import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.util.ColorUtil;
 import org.helyx.app.j2me.lib.ui.util.DialogUtil;
+import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
-import org.helyx.app.j2me.lib.ui.widget.ColorUtil;
-import org.helyx.app.j2me.lib.ui.widget.FontUtil;
-import org.helyx.app.j2me.lib.ui.widget.IAction;
+import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
@@ -80,10 +81,10 @@ public class MenuView extends AbstractCanvas {
 	    	    int color = 0;
 	    	    boolean isMenuEnabled = menuItem.isEnabled();
 	    	    if (i == selectedIndex) {
-	    	    	color = isMenuEnabled ? ColorUtil.WIDGET_MENU_FONT_SELECTED : ColorUtil.WIDGET_MENU_FONT_SELECTED_DISABLED;
+	    	    	color = isMenuEnabled ? DEFAULT_THEME.WIDGET_MENU_FONT_SELECTED : DEFAULT_THEME.WIDGET_MENU_FONT_SELECTED_DISABLED;
 	    	    }
 	    	    else {
-	    	    	color = isMenuEnabled ? ColorUtil.WIDGET_MENU_FONT : ColorUtil.WIDGET_MENU_FONT_DISABLED;
+	    	    	color = isMenuEnabled ? DEFAULT_THEME.WIDGET_MENU_FONT : DEFAULT_THEME.WIDGET_MENU_FONT_DISABLED;
 	    	    }
 	    	    	
 	    	    g.setColor(color);

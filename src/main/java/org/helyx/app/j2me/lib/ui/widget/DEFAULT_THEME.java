@@ -1,14 +1,6 @@
 package org.helyx.app.j2me.lib.ui.widget;
 
-public class ColorUtil {
-
-	public static final int WHITE = 0xFFFFFF;
-	public static final int BLACK = 0x000000;
-	public static final int RED = 0xCC0000;
-	public static final int DARK_GREY = 0x404040;
-	public static final int LIGHT_GREY = 0xE0E0E0;
-	public static final int GREY = 0x909090;
-	public static final int DARK_RED = 0x990000;
+public class DEFAULT_THEME {
 	
 	public static final int WIDGET_TITLE_BG_SHADE_LIGHT = 0x2E2F31;
 	public static final int WIDGET_TITLE_BG_SHADE_DARK = 0x2E2F31;

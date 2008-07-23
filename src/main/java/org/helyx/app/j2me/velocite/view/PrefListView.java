@@ -2,10 +2,10 @@ package org.helyx.app.j2me.velocite.view;
 
 import javax.microedition.midlet.MIDlet;
 
+import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.MenuListView;
-import org.helyx.app.j2me.lib.ui.widget.IAction;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;

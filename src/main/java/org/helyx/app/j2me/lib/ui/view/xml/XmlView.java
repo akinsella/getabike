@@ -1,0 +1,53 @@
+package org.helyx.app.j2me.lib.ui.view.xml;
+
+import java.io.IOException;
+import java.util.Hashtable;
+
+import javax.microedition.lcdui.Graphics;
+import javax.microedition.midlet.MIDlet;
+
+import org.helyx.app.j2me.lib.action.ActionRegistry;
+import org.helyx.app.j2me.lib.action.EmptyAction;
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
+import org.helyx.app.j2me.lib.ui.xml.CanvasNodeProcessor;
+import org.kxml2.kdom.Document;
+import org.xmlpull.v1.XmlPullParserException;
+
+public class XmlView extends AbstractCanvas {
+
+	private static final String CAT = "XML_VIEW";
+	
+	private static final String CANVAS = "canvas";
+	
+	private static final String EMPTY_ACTION = "empty.action";
+	
+	private ActionRegistry actionRegistry; 
+	
+	public XmlView(MIDlet midlet) {
+		super(midlet);
+		init();
+	}
+	
+	private void init() {
+		actionRegistry = new ActionRegistry();
+		actionRegistry.put(EMPTY_ACTION, new EmptyAction());
+	}
+
+	public ActionRegistry getActionRegistry() {
+		return actionRegistry;
+	}
+
+	public void configure(Document doc) throws XmlPullParserException, IOException, XmlCanvasProcessingException, XmlCanvasException {
+		CanvasNodeProcessor canvasNodeProcessor = new CanvasNodeProcessor();
+		Hashtable data = new Hashtable();
+		
+		data.put(CANVAS, this);
+		canvasNodeProcessor.processNode(doc, doc.getRootElement(), data);
+	}
+
+	protected void paint(Graphics graphics) {
+		Log.debug(CAT, "paint");
+	}
+
+}

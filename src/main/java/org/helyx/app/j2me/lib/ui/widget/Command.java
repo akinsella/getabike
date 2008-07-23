@@ -1,18 +1,19 @@
-package org.helyx.app.j2me.lib.ui.widget.action.item;
+package org.helyx.app.j2me.lib.ui.widget;
 
-import org.helyx.app.j2me.lib.ui.widget.IAction;
+import org.helyx.app.j2me.lib.action.IAction;
 
-public class ActionItem {
+
+public class Command {
 
 	private IAction action;
 	private String text;
 	private boolean enabled = true;
 	
-	public ActionItem() {
+	public Command() {
 		super();
 	}
 	
-	public ActionItem(String text, boolean enabled, IAction action) {
+	public Command(String text, boolean enabled, IAction action) {
 		super();
 		
 		this.text = text;
@@ -42,6 +43,17 @@ public class ActionItem {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("[Command]");
+		sb.append(" text='" + text + "'");
+		sb.append(", enabled=" + enabled);
+		
+		String result = sb.toString();
+		
+		return result;
 	}
 
 }

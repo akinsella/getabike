@@ -5,14 +5,14 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 import javax.microedition.midlet.MIDlet;
 
+import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
-import org.helyx.app.j2me.lib.ui.widget.ColorUtil;
-import org.helyx.app.j2me.lib.ui.widget.FontUtil;
-import org.helyx.app.j2me.lib.ui.widget.IAction;
-import org.helyx.app.j2me.lib.ui.widget.action.item.ActionItem;
+import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
+import org.helyx.app.j2me.lib.ui.widget.Command;
 
 public class AboutView extends AbstractCanvas {
 
@@ -36,7 +36,7 @@ public class AboutView extends AbstractCanvas {
 	}
 	
 	private void initActions() {
-		setSecondaryAction(new ActionItem("Retour", true, new IAction() {
+		setSecondaryAction(new Command("Retour", true, new IAction() {
 
 			public void run(Object data) {
 				returnToPreviousDisplayable();
@@ -73,7 +73,7 @@ public class AboutView extends AbstractCanvas {
 		int width = clientArea.size.width;
         int height = clientArea.size.height;
         
-        g.setColor(ColorUtil.WIDGET_ABOUT_FONT);
+        g.setColor(DEFAULT_THEME.WIDGET_ABOUT_FONT);
 
         if (logoImage != null) {
         	g.drawImage(logoImage, x + width / 2, y + height / 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.VCENTER);

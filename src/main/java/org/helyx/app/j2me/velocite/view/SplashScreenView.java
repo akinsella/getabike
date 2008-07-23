@@ -6,6 +6,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.midlet.MIDlet;
 
+import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
 import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
@@ -21,11 +22,10 @@ import org.helyx.app.j2me.lib.task.MultiTaskProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
-import org.helyx.app.j2me.lib.ui.widget.ColorUtil;
-import org.helyx.app.j2me.lib.ui.widget.FontUtil;
-import org.helyx.app.j2me.lib.ui.widget.IAction;
-import org.helyx.app.j2me.lib.ui.widget.action.item.ActionItem;
+import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
+import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.util.VectorUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener;
@@ -55,7 +55,7 @@ public class SplashScreenView extends AbstractCanvas {
 		setTitle("VeloCite");
 		loadLogoImage();
 		
-		setPrimaryAction(new ActionItem("Ok", true, new IAction() {
+		setPrimaryAction(new Command("Ok", true, new IAction() {
 			public void run(Object data) {
 
 				processApplicationStartupTasks();
@@ -164,7 +164,7 @@ public class SplashScreenView extends AbstractCanvas {
 		int width = clientArea.size.width;
         int height = clientArea.size.height;
                
-        g.setColor(ColorUtil.WIDGET_SPLASH_FONT);
+        g.setColor(DEFAULT_THEME.WIDGET_SPLASH_FONT);
         g.setFont(FontUtil.SMALL);
         
         if (logoImage != null) {

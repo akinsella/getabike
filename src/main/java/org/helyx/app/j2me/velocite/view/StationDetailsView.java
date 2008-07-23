@@ -8,15 +8,15 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 import javax.microedition.midlet.MIDlet;
 
+import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.rms.DefaultRecordEnumeration;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
-import org.helyx.app.j2me.lib.ui.widget.ColorUtil;
-import org.helyx.app.j2me.lib.ui.widget.FontUtil;
-import org.helyx.app.j2me.lib.ui.widget.IAction;
-import org.helyx.app.j2me.lib.ui.widget.action.item.ActionItem;
+import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
+import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.velocite.data.carto.service.IStationPersistenceService;
@@ -47,7 +47,7 @@ public class StationDetailsView extends AbstractCanvas {
 		
 	private void initActions() {
 		
-		setSecondaryAction(new ActionItem("Retour", true, new IAction() {
+		setSecondaryAction(new Command("Retour", true, new IAction() {
 
 			public void run(Object data) {
 				returnToPreviousDisplayable();
@@ -123,10 +123,10 @@ public class StationDetailsView extends AbstractCanvas {
 		        titleZoneHeight = iconImageHeight;
 	        }
 	        
-	        g.setColor(ColorUtil.WIDGET_DETAILS_BACKGROUND);
+	        g.setColor(DEFAULT_THEME.WIDGET_DETAILS_BACKGROUND);
 	        g.fillRect(0, 0, canvasWidth, height + titleZoneHeight + 1);
 
-	        g.setColor(ColorUtil.WIDGET_DETAILS_FONT_TITLE);
+	        g.setColor(DEFAULT_THEME.WIDGET_DETAILS_FONT_TITLE);
 	        
 	        g.drawImage(iconImage, width + iconImageWidth / 2, height + titleZoneHeight / 2, Graphics.VCENTER | Graphics.HCENTER);
 	        g.setFont(mediumFont);
@@ -136,25 +136,25 @@ public class StationDetailsView extends AbstractCanvas {
 	        g.drawString(stationNumber, width + iconImageWidth + 5, height + titleZoneHeight / 2 + mediumFontHeight - mediumBoldFont.getBaselinePosition() + smallFontHeight / 2, Graphics.BASELINE | Graphics.LEFT);
 	        
 	        if (!station.open) {
-	        	g.setColor(ColorUtil.WIDGET_DETAILS_ERROR);
+	        	g.setColor(DEFAULT_THEME.WIDGET_DETAILS_ERROR);
 	        	g.setFont(smallBoldFont);
 		        g.drawString(" - Station fermée", width + iconImageWidth + 5 + smallFont.stringWidth(stationNumber), height + titleZoneHeight / 2 + mediumFontHeight - mediumBoldFont.getBaselinePosition() + smallFontHeight / 2, Graphics.BASELINE | Graphics.LEFT);
 	        }
 	        height += titleZoneHeight + 2;
 		}
 		else {
-	        g.setColor(ColorUtil.WIDGET_DETAILS_BACKGROUND);
+	        g.setColor(DEFAULT_THEME.WIDGET_DETAILS_BACKGROUND);
 	        g.fillRect(0, 0, canvasWidth, height + mediumFontHeight + 1 + smallFontHeight + 1);
 
 	        
-			g.setColor(ColorUtil.WIDGET_DETAILS_FONT_MESSAGE);
+			g.setColor(DEFAULT_THEME.WIDGET_DETAILS_FONT_MESSAGE);
 	        g.setFont(mediumFont);
 	        g.drawString(station.name, width, height, Graphics.TOP | Graphics.HCENTER); 
         	g.setFont(smallBoldFont);
 	        g.drawString(String.valueOf(station.number), width, height + mediumFontHeight + 1, Graphics.TOP | Graphics.HCENTER); 
 	        
 	        if (!station.open) {
-	        	g.setColor(ColorUtil.WIDGET_DETAILS_ERROR);
+	        	g.setColor(DEFAULT_THEME.WIDGET_DETAILS_ERROR);
 		        g.drawString(" - Station fermée", width + smallFont.stringWidth(stationNumber), height + mediumFontHeight + 1, Graphics.BASELINE | Graphics.LEFT);
 	        }
 
@@ -175,10 +175,10 @@ public class StationDetailsView extends AbstractCanvas {
         }
         
 
-        g.setColor(ColorUtil.WIDGET_DETAILS_BACKGROUND);
+        g.setColor(DEFAULT_THEME.WIDGET_DETAILS_BACKGROUND);
         g.fillRect(5, height, canvasWidth - 10, 5 + addressFont.getHeight() + 1 + smallFontHeight + 5);
 
-        g.setColor(ColorUtil.WIDGET_DETAILS_FONT_MESSAGE);
+        g.setColor(DEFAULT_THEME.WIDGET_DETAILS_FONT_MESSAGE);
 
         height += 5;
         g.setFont(addressFont);
@@ -198,12 +198,12 @@ public class StationDetailsView extends AbstractCanvas {
         
         height += smallFontHeight + 5;
 
-        g.setColor(ColorUtil.WIDGET_DETAILS_BACKGROUND);
+        g.setColor(DEFAULT_THEME.WIDGET_DETAILS_BACKGROUND);
         g.fillRect(5, height + 5, canvasWidth - 10, 5 + (mediumFontHeight + 1) * 3 + 5);
         
         height += 5 + 2;
         
-        g.setColor(ColorUtil.WIDGET_DETAILS_FONT_MESSAGE);
+        g.setColor(DEFAULT_THEME.WIDGET_DETAILS_FONT_MESSAGE);
         g.setFont(mediumFont);
         int veloDispoWidth = mediumFont.stringWidth("Vélos disponibles: ") + 5 + mediumFont.stringWidth(String.valueOf("20"));
         

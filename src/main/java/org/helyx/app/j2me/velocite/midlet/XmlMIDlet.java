@@ -3,20 +3,16 @@ package org.helyx.app.j2me.velocite.midlet;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
-import org.helyx.app.j2me.lib.EncodingConstants;
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
+import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
-import org.helyx.app.j2me.lib.ui.view.XmlView;
-import org.helyx.app.j2me.lib.ui.xml.widget.XmlCanvas;
+import org.helyx.app.j2me.lib.ui.view.xml.XmlView;
 import org.helyx.app.j2me.lib.xml.dom.DomUtil;
-import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.kxml2.kdom.Document;
-import org.xmlpull.v1.XmlPullParser;
-
 
 public class XmlMIDlet extends MIDlet {
 
@@ -31,7 +27,7 @@ public class XmlMIDlet extends MIDlet {
 		
 	}
 	
-	protected void destroyApp(boolean arg0) {
+	protected void destroyApp(boolean flag) {
 	}
 
 	protected void pauseApp() {

@@ -4,8 +4,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.ui.xml.XmlCanvasException;
-import org.helyx.app.j2me.lib.ui.xml.XmlCanvasProcessingException;
+import org.helyx.app.j2me.lib.ui.view.xml.XmlCanvasException;
+import org.helyx.app.j2me.lib.ui.view.xml.XmlCanvasProcessingException;
 import org.helyx.app.j2me.lib.util.MapUtil;
 import org.helyx.app.j2me.lib.xml.dom.DomNodeProcessor;
 import org.helyx.app.j2me.lib.xml.dom.DomUtil;
@@ -16,29 +16,29 @@ public abstract class AbstractDomNodeProcessor implements DomNodeProcessor {
 	
 	private static final String CAT = "ABSTRACT_XML_NODE_PROCESSOR";
 	
-	private Hashtable nodeProcessorMap = new Hashtable();
+	private Hashtable childNodeProcessorMap = new Hashtable();
 	
 	public AbstractDomNodeProcessor() {
 		super();
 	}
 	
-	public boolean containsNodeProcessorForNodeName(String nodeName) {
-		return nodeProcessorMap.containsKey(nodeName);
+	public boolean containsChildNodeProcessor(String nodeName) {
+		return childNodeProcessorMap.containsKey(nodeName);
 	}
 	
-	public void setNodeProcessor(String nodePath, DomNodeProcessor dnp) {
+	public void putNodeProcessor(String nodePath, DomNodeProcessor dnp) {
 		Log.debug(CAT, "Associating NodePath '" + nodePath + "' to XppNodeProcessor: '" + dnp + "'");
-		nodeProcessorMap.put(nodePath, dnp);
+		childNodeProcessorMap.put(nodePath, dnp);
 	}
 	
 	public void removeNodeProcessor(String nodeName) {
 		Log.debug(CAT, "Removing NodePath association '" + nodeName + "'");
-		nodeProcessorMap.remove(nodeName);
+		childNodeProcessorMap.remove(nodeName);
 	}
 	
 	public void removeAllNodeProcessors() {
 		Log.debug(CAT, "Removing All NodePath associations");
-		nodeProcessorMap.clear();
+		childNodeProcessorMap.clear();
 	}
 	
 	public void processChildrenNodes(Document doc, Element parentElt, Hashtable dataMap) throws XmlCanvasProcessingException, XmlCanvasException {
@@ -47,9 +47,9 @@ public abstract class AbstractDomNodeProcessor implements DomNodeProcessor {
 		while (_enum.hasMoreElements()) {
 			Element childElt = (Element)_enum.nextElement();
 			String childEltname = childElt.getName();
-			if (containsNodeProcessorForNodeName(childEltname)) {
+			if (containsChildNodeProcessor(childEltname)) {
 				Hashtable clonedDataMap = MapUtil.duplicate(dataMap);
-				DomNodeProcessor dnp = (DomNodeProcessor)nodeProcessorMap.get(childEltname);
+				DomNodeProcessor dnp = (DomNodeProcessor)childNodeProcessorMap.get(childEltname);
 				dnp.processNode(doc, childElt, clonedDataMap);
 			}
 		}

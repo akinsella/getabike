@@ -1,7 +1,6 @@
-package org.helyx.app.j2me.lib.ui.widget.action;
+package org.helyx.app.j2me.lib.action;
 
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.ui.widget.BasicAction;
 
 public class EmptyAction extends BasicAction {
 	

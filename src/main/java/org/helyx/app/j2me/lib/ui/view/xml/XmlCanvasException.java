@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.xml;
+package org.helyx.app.j2me.lib.ui.view.xml;
 
 public class XmlCanvasException extends Exception {
 

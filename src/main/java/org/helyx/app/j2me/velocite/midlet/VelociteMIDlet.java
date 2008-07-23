@@ -26,7 +26,7 @@ public class VelociteMIDlet extends MIDlet {
 		
 	}
 	
-	protected void destroyApp(boolean arg0) {
+	protected void destroyApp(boolean flag) {
 //		closeFileLogWriter();
 	}
 

@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.widget.action;
+package org.helyx.app.j2me.lib.ui.widget.action.item;
 
 import org.helyx.app.j2me.lib.ui.widget.IAction;
 

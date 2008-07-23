@@ -3,26 +3,23 @@ package org.helyx.app.j2me.lib.ui.xml;
 import java.util.Hashtable;
 
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.reflect.RefObject;
 import org.helyx.app.j2me.lib.ui.xml.widget.XmlCanvas;
-import org.helyx.app.j2me.lib.xml.AbstractXmlNodeProcessor;
+import org.helyx.app.j2me.lib.ui.xml.widget.Command;
+import org.helyx.app.j2me.lib.xml.AbstractDomNodeProcessor;
 import org.helyx.app.j2me.lib.xml.dom.DomAttributeProcessor;
-import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
 import org.kxml2.kdom.Document;
 import org.kxml2.kdom.Element;
-import org.xmlpull.v1.XmlPullParser;
 
-public class CommandNodeProcessor extends AbstractXmlNodeProcessor {
+public class CommandNodeProcessor extends AbstractDomNodeProcessor {
 
 	private static final String CAT = "COMMAND_NODE_PROCESSOR";
 	
+	private static final String CANVAS = "canvas";
+	
 	private static final String TEXT = "text";
 	private static final String ENABLED = "enabled";
-	private static final String TYPE = "type";
+	private static final String POSITION = "position";
 	
-	private static final String PRIMARY = "PRIMARY";
-	private static final String SECONDARY = "SECONDARY";
-	private static final String THIRD = "THIRD";
 	
 	private DomAttributeProcessor xap;
 
@@ -32,29 +29,38 @@ public class CommandNodeProcessor extends AbstractXmlNodeProcessor {
 	}
 
 	private void init() {
-		xap = new DomAttributeProcessor(new String[] { TEXT, ENABLED, TYPE });
+		xap = new DomAttributeProcessor(new String[] { TEXT, ENABLED, POSITION });
 	}
 
-	public void processNode(Document doc, Element elt, Hashtable data) throws XmlCanvasProcessingException {
+	public void processNode(Document doc, Element elt, Hashtable dataMap) throws XmlCanvasProcessingException, XmlCanvasException {
 		Log.debug(CAT, "Processing node start: 'command'");
 		xap.processNode(doc, elt);
 		
-		RefObject commandRef = new RefObject();
+		XmlCanvas xmlCanvas = (XmlCanvas)dataMap.get(CANVAS);
 		
-		commandRef.setString(TEXT, xap.attrExists(TEXT) ? xap.getAttrValueAsString(TEXT) : "");
-		commandRef.setBoolean(ENABLED, xap.attrExists(ENABLED) ? xap.getAttrValueAsBoolean(ENABLED) : true);
+		Command command = new Command();
+		command.text = xap.attrExists(TEXT) ? xap.getAttrValueAsString(TEXT) : "";
+		command.enabled = xap.attrExists(ENABLED) ? xap.getAttrValueAsBoolean(ENABLED) : true;
 
-		if (!xap.attrExists(TYPE)) {
+		if (!xap.attrExists(POSITION)) {
 			throw new XmlCanvasProcessingException("Command type is not provided");
 		}
 		
-		String type = xap.getAttrValueAsString(TYPE);
-		if (!type.equals(PRIMARY) && 
-				!type.equals(SECONDARY) && 
-				!type.equals(THIRD)) {
-			throw new XmlCanvasProcessingException("Command type is not supported: '" + type + "'");			
+		String position = xap.getAttrValueAsString(POSITION);
+
+		command.position = Command.convertPositionToInt(position);
+		
+		switch (command.position) {
+			case Command.PRIMARY:
+				xmlCanvas.primaryAction = command;
+				break;
+			case Command.SECONDARY:
+				xmlCanvas.secondaryAction = command;
+				break;
+			case Command.THIRD:
+				xmlCanvas.thirdAction = command;
+				break;
 		}
-		commandRef.setString(TYPE, type);
 	}
 	
 }

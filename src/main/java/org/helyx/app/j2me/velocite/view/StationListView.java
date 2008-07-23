@@ -21,7 +21,7 @@ import org.helyx.app.j2me.lib.ui.view.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.ColorUtil;
 import org.helyx.app.j2me.lib.ui.widget.FontUtil;
 import org.helyx.app.j2me.lib.ui.widget.IAction;
-import org.helyx.app.j2me.lib.ui.widget.action.ActionItem;
+import org.helyx.app.j2me.lib.ui.widget.action.item.ActionItem;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;

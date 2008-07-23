@@ -16,7 +16,7 @@ import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.widget.ColorUtil;
 import org.helyx.app.j2me.lib.ui.widget.FontUtil;
 import org.helyx.app.j2me.lib.ui.widget.IAction;
-import org.helyx.app.j2me.lib.ui.widget.action.ActionItem;
+import org.helyx.app.j2me.lib.ui.widget.action.item.ActionItem;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.velocite.data.carto.service.IStationPersistenceService;

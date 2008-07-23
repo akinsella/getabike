@@ -8,7 +8,10 @@ import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
+import org.helyx.app.j2me.lib.ui.widget.action.EmptyAction;
+import org.helyx.app.j2me.lib.ui.widget.action.item.ActionItem;
 import org.helyx.app.j2me.lib.ui.xml.CanvasNodeProcessor;
+import org.helyx.app.j2me.lib.ui.xml.XmlCanvasException;
 import org.helyx.app.j2me.lib.ui.xml.XmlCanvasProcessingException;
 import org.helyx.app.j2me.lib.ui.xml.widget.XmlCanvas;
 import org.kxml2.kdom.Document;
@@ -46,7 +49,7 @@ public class XmlView extends AbstractCanvas {
 	private void init() {
 	}
 
-	public void configure(Document doc) throws XmlPullParserException, IOException, XmlCanvasProcessingException {
+	public void configure(Document doc) throws XmlPullParserException, IOException, XmlCanvasProcessingException, XmlCanvasException {
 		clear();
 		
 		CanvasNodeProcessor canvasNodeProcessor = new CanvasNodeProcessor();
@@ -67,6 +70,19 @@ public class XmlView extends AbstractCanvas {
 		setFullScreenMode(xmlCanvas.fullScreen);
 		setTitleEnabled(xmlCanvas.titleEnabled);
 		setMenuEnabled(xmlCanvas.menuEnabled);
+		
+		if (xmlCanvas.primaryAction != null) {
+			Log.debug(CAT, "Binding primaryAction");
+			setPrimaryAction(new ActionItem(xmlCanvas.primaryAction.text, xmlCanvas.primaryAction.enabled, new EmptyAction()));
+		}
+		if (xmlCanvas.secondaryAction != null) {
+			Log.debug(CAT, "Binding secondaryAction");
+			setPrimaryAction(new ActionItem(xmlCanvas.secondaryAction.text, xmlCanvas.secondaryAction.enabled, new EmptyAction()));
+		}
+		if (xmlCanvas.thirdAction != null) {
+			Log.debug(CAT, "Binding thirdAction");
+			setPrimaryAction(new ActionItem(xmlCanvas.thirdAction.text, xmlCanvas.thirdAction.enabled, new EmptyAction()));
+		}
 		
 		canvas.repaint();
 	}

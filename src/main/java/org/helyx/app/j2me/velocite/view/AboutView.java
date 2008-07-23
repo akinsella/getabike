@@ -12,7 +12,7 @@ import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.widget.ColorUtil;
 import org.helyx.app.j2me.lib.ui.widget.FontUtil;
 import org.helyx.app.j2me.lib.ui.widget.IAction;
-import org.helyx.app.j2me.lib.ui.widget.action.ActionItem;
+import org.helyx.app.j2me.lib.ui.widget.action.item.ActionItem;
 
 public class AboutView extends AbstractCanvas {
 

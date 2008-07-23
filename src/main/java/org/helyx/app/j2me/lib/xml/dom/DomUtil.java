@@ -35,8 +35,14 @@ public class DomUtil {
         return document;
 	}
 	
-	public static Enumeration elementIterator(final Element parentElt, final String name) {
+	public static Enumeration elementIterator(final Element parentElt) {
+		Enumeration enumeration = elementIterator(parentElt, null); 
 		
+		return enumeration;
+	}
+	
+	public static Enumeration elementIterator(final Element parentElt, final String name) {
+	
 		Enumeration it = new Enumeration() {
 
 			private Element nextElt;
@@ -73,7 +79,7 @@ public class DomUtil {
 					int type = parentElt.getType(counter);
 					if (type == Node.ELEMENT) {
 						Element elt = (Element)node;
-						if (name.equals(elt.getName())) {
+						if (name == null || name.equals(elt.getName())) {
 							counter++;
 							return elt;
 						}

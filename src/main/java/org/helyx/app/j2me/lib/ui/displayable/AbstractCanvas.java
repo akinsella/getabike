@@ -15,7 +15,7 @@ import org.helyx.app.j2me.lib.ui.util.GraphicsUtil;
 import org.helyx.app.j2me.lib.ui.util.KeyUtil;
 import org.helyx.app.j2me.lib.ui.widget.ColorUtil;
 import org.helyx.app.j2me.lib.ui.widget.FontUtil;
-import org.helyx.app.j2me.lib.ui.widget.action.ActionItem;
+import org.helyx.app.j2me.lib.ui.widget.action.item.ActionItem;
 
 public abstract class AbstractCanvas extends AbstractDisplayable {
 

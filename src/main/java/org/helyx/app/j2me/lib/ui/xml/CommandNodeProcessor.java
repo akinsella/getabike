@@ -1,11 +1,18 @@
 package org.helyx.app.j2me.lib.ui.xml;
 
+import java.util.Hashtable;
+
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.reflect.RefObject;
-import org.helyx.app.j2me.lib.xml.XppAttributeProcessor;
+import org.helyx.app.j2me.lib.ui.xml.widget.XmlCanvas;
+import org.helyx.app.j2me.lib.xml.AbstractXmlNodeProcessor;
+import org.helyx.app.j2me.lib.xml.dom.DomAttributeProcessor;
+import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
+import org.kxml2.kdom.Document;
+import org.kxml2.kdom.Element;
 import org.xmlpull.v1.XmlPullParser;
 
-public class CommandNodeProcessor extends AbstractXmlCanvasNodeProcessor {
+public class CommandNodeProcessor extends AbstractXmlNodeProcessor {
 
 	private static final String CAT = "COMMAND_NODE_PROCESSOR";
 	
@@ -17,20 +24,20 @@ public class CommandNodeProcessor extends AbstractXmlCanvasNodeProcessor {
 	private static final String SECONDARY = "SECONDARY";
 	private static final String THIRD = "THIRD";
 	
-	private XppAttributeProcessor xap;
-	
-	public CommandNodeProcessor(RefObject canvasRef) {
-		super(canvasRef);
+	private DomAttributeProcessor xap;
+
+	public CommandNodeProcessor() {
+		super();
 		init();
 	}
 
 	private void init() {
-		xap = new XppAttributeProcessor(new String[] { TEXT, ENABLED, TYPE });
+		xap = new DomAttributeProcessor(new String[] { TEXT, ENABLED, TYPE });
 	}
-	
-	public void processNodeStart(XmlPullParser xpp) throws XmlCanvasProcessingException {
+
+	public void processNode(Document doc, Element elt, Hashtable data) throws XmlCanvasProcessingException {
 		Log.debug(CAT, "Processing node start: 'command'");
-		xap.processNode(xpp);
+		xap.processNode(doc, elt);
 		
 		RefObject commandRef = new RefObject();
 		
@@ -48,7 +55,6 @@ public class CommandNodeProcessor extends AbstractXmlCanvasNodeProcessor {
 			throw new XmlCanvasProcessingException("Command type is not supported: '" + type + "'");			
 		}
 		commandRef.setString(TYPE, type);
-	
 	}
 	
 }

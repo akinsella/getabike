@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.xml;
+package org.helyx.app.j2me.lib.xml.xpp;
 
 import org.helyx.app.j2me.lib.ui.xml.XmlCanvasProcessingException;
 import org.xmlpull.v1.XmlPullParser;

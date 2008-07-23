@@ -12,12 +12,6 @@ public class RefObject {
 	public RefObject() {
 		super();
 	}
-
-	public Object getObject(String fieldName) {
-		Object object = (Boolean)fieldMap.get(fieldName);
-
-		return object;
-	}
 	
 	public Object getRefObject(String fieldName) {
 		RefObject refObject = (RefObject)fieldMap.get(fieldName);
@@ -139,10 +133,6 @@ public class RefObject {
 
 	public void setRefObject(String fieldName, RefObject refObject) {
 		fieldMap.put(fieldName, refObject);
-	}
-
-	public void setObject(String fieldName, Object object) {
-		fieldMap.put(fieldName, object);
 	}
 
 	public void setBoolean(String fieldName, boolean booleanValue) {

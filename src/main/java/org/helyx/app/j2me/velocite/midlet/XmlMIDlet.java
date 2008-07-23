@@ -10,8 +10,11 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.ui.view.XmlView;
-import org.helyx.app.j2me.lib.xml.XppUtil;
+import org.helyx.app.j2me.lib.ui.xml.widget.XmlCanvas;
+import org.helyx.app.j2me.lib.xml.dom.DomUtil;
+import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
+import org.kxml2.kdom.Document;
 import org.xmlpull.v1.XmlPullParser;
 
 
@@ -44,10 +47,13 @@ public class XmlMIDlet extends MIDlet {
 			InputStreamProvider isp = cca.getInputStreamProvider();
 			
 			try {
-				XmlPullParser xpp = XppUtil.createXpp(isp.createInputStream(), EncodingConstants.UTF_8);
-
+//				XmlPullParser xpp = XppUtil.createXpp(isp.createInputStream(), EncodingConstants.UTF_8);
+				Document doc = DomUtil.parseDoc(isp.createInputStream(), EncodingConstants.UTF_8);
+				
 				XmlView xmlView = new XmlView(this);
-				xmlView.configure(xpp);
+				xmlView.configure(doc);
+
+				
 				xmlView.show();
 			}
 			finally {

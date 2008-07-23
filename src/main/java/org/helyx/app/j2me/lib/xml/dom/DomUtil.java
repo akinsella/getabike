@@ -1,7 +1,8 @@
-package org.helyx.app.j2me.lib.xml;
+package org.helyx.app.j2me.lib.xml.dom;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Reader;
 import java.util.Enumeration;
 
 import org.kxml2.io.KXmlParser;
@@ -10,17 +11,19 @@ import org.kxml2.kdom.Element;
 import org.kxml2.kdom.Node;
 import org.xmlpull.v1.XmlPullParserException;
 
-public class XmlUtil {
+public class DomUtil {
 
-//	public static Document parseDoc(Reader reader) throws XmlPullParserException, IOException {
-//		KXmlParser parser = new KXmlParser();
-//		
-//		parser.setInput(reader);
-//		Document document = new Document();
-//        document.parse(parser);			
-//        
-//        return document;
-//	}
+	private static final String CAT = "DOM_UTIL";
+
+	public static Document parseDoc(Reader reader) throws XmlPullParserException, IOException {
+		KXmlParser parser = new KXmlParser();
+		
+		parser.setInput(reader);
+		Document document = new Document();
+        document.parse(parser);			
+        
+        return document;
+	}
 
 	public static Document parseDoc(InputStream inputStream, String encoding) throws XmlPullParserException, IOException {
 		KXmlParser parser = new KXmlParser();

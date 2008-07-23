@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.xml;
+package org.helyx.app.j2me.lib.xml.xpp;
 
 import java.io.IOException;
 import java.io.InputStream;

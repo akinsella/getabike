@@ -4,26 +4,24 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
-import org.helyx.app.j2me.lib.log.Log;
-import org.xmlpull.v1.XmlPullParser;
 
-public class XppAttributeProcessor {
+public class AbstractXmlAttributeProcessor {
 	
-	private static final String CAT = "XPP_ATTRIBUTE_PROCESSOR";
+	private static final String CAT = "ABSTRACT_XML_ATTRIBUTE_PROCESSOR";
 		
-	private Hashtable attributeMap;
-	private Vector attributeList;
+	protected Hashtable attributeMap;
+	protected Vector attributeList;
 	
-	public XppAttributeProcessor() {
+	public AbstractXmlAttributeProcessor() {
 		init();
 	}
 	
-	public XppAttributeProcessor(String attributeName) {
+	public AbstractXmlAttributeProcessor(String attributeName) {
 		this();
 		add(attributeName);
 	}
 	
-	public XppAttributeProcessor(String[] attributeNames) {
+	public AbstractXmlAttributeProcessor(String[] attributeNames) {
 		this();
 		addAll(attributeNames);
 	}
@@ -122,21 +120,6 @@ public class XppAttributeProcessor {
 	
 	public String getAttrValueAsString(String attributeName) {
 		return (String)attributeMap.get(attributeName);
-	}
-
-	public void processNode(XmlPullParser xpp) {
-		attributeMap.clear();
-		int attrCount = xpp.getAttributeCount();
-		Log.debug(CAT, "Element '" + xpp.getName() + "' attribute count: " + attrCount);
-		for (int i = 0 ; i < attrCount ; i++) {
-			String attributeName = xpp.getAttributeName(i);
-			if (attributeList.contains(attributeName)) {
-				Log.debug(CAT, "Attribute[" + i + "] for Element[" + xpp.getName() + "] name: '" + attributeName + "'");
-				String attributeValue = xpp.getAttributeValue(i);
-				Log.debug(CAT, "Associating value: '" +  attributeValue + "' to attribute name='" + attributeName + "'");
-				attributeMap.put(attributeName, attributeValue);
-			}
-		}
 	}
 
 }

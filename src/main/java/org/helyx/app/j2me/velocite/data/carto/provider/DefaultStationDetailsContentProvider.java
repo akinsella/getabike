@@ -9,7 +9,7 @@ import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
-import org.helyx.app.j2me.lib.xml.XppUtil;
+import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 import org.xmlpull.v1.XmlPullParser;
 

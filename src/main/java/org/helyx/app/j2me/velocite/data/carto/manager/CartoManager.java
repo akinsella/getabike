@@ -1,15 +1,17 @@
 package org.helyx.app.j2me.velocite.data.carto.manager;
 
+import java.util.Hashtable;
+
 import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
-import org.helyx.app.j2me.lib.content.provider.IContentProviderFactory;
 import org.helyx.app.j2me.lib.manager.TaskManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.ui.displayable.IAbstractDisplayable;
 import org.helyx.app.j2me.velocite.data.carto.listener.StationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.DefaultStationContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.factory.ICityContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.LyonStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.OrleansStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.StationContentProviderFactoryNoFoundExcepton;
@@ -31,7 +33,7 @@ public class CartoManager {
 	public static void refreshAll(City city, final MIDlet midlet, final IAbstractDisplayable currentDisplayable, final IAbstractDisplayable targetDisplayable) throws CartoManagerException {
 
 		try {
-			IContentProviderFactory cpf = null;
+			ICityContentProviderFactory cpf = null;
 			if (DEFAULT.equals(city.contentProviderFactory)) {
 				cpf = new DefaultStationContentProviderFactory();
 			}
@@ -44,7 +46,6 @@ public class CartoManager {
 			else {
 				throw new StationContentProviderFactoryNoFoundExcepton("ContentProviderFactory searched for city key: '" + city.key + "'");
 			}
-	
 			
 			IContentProvider cp = cpf.getContentProviderFactory(city);
 			

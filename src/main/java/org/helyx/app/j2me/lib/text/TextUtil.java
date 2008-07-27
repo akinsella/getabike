@@ -24,7 +24,29 @@ public class TextUtil {
 		return stringArray;
 	}
 
-	public static String replace(String haystack, String needle, String replacement) {
+	public static String replaceAll(String haystack, char needle, char replacement) {
+		int length = haystack.length();
+		
+		StringBuffer sb = new StringBuffer( length );
+
+		for (int i=0 ; i < length ; i++) {
+	
+			char c = haystack.charAt(i);
+			switch( c )
+			{
+				case '.':
+					sb.append( '/' );
+					break;
+		
+				default:
+					sb.append( c );
+			}
+		}
+
+		return sb.toString();
+	}
+	
+	public static String replaceAll(String haystack, String needle, String replacement) {
 		int needleLength = needle.length();
 		
 		if (needle == null || needleLength == 0) {

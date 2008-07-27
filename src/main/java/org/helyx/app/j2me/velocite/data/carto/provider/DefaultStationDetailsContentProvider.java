@@ -3,6 +3,7 @@ package org.helyx.app.j2me.velocite.data.carto.provider;
 import java.io.InputStream;
 import java.util.Date;
 
+import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
@@ -25,8 +26,6 @@ public class DefaultStationDetailsContentProvider extends AbstractContentProvide
 	private static final String FREE = "free";
 	private static final String TOTAL = "total";
 	private static final String TICKET = "ticket";
-	
-	private static final String UTF_8 = "UTF-8";
 	
 	
 	private static final String INVALID_CONTENT = "Xml content is invalid";
@@ -64,7 +63,7 @@ public class DefaultStationDetailsContentProvider extends AbstractContentProvide
 				
 				inputStream = stationDetailsInputStreamReaderProvider.createInputStream();
 				
-				XmlPullParser xpp = XppUtil.createXpp(inputStream, UTF_8);
+				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
 				
 				StationDetails stationDetails = new StationDetails();
 				stationDetails.dateCreation = new Date();

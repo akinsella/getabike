@@ -2,6 +2,7 @@ package org.helyx.app.j2me.velocite.data.carto.provider;
 
 import java.io.InputStream;
 
+import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
@@ -25,8 +26,6 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 	private static final String NAME = "name";
 	private static final String LNG = "lng";
 	private static final String LAT = "lat";
-	
-	private static final String UTF_8 = "UTF-8";
 	
 	
 	private static final String INVALID_CONTENT = "Xml content is invalid";
@@ -60,7 +59,7 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 				cartoInputStreamProvider = stationContentAccessor.getInputStreamProvider();
 				inputStream = cartoInputStreamProvider.createInputStream();
 				
-				XmlPullParser xpp = XppUtil.createXpp(inputStream, UTF_8);
+				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
 	
 				Log.debug(CAT, "Parsing simple sample XML");
 

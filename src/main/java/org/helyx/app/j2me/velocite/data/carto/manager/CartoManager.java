@@ -7,7 +7,7 @@ import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.ui.displayable.IAbstractDisplayable;
 import org.helyx.app.j2me.velocite.data.carto.listener.StationLoaderProgressListener;
-import org.helyx.app.j2me.velocite.data.carto.provider.factory.DefaultStationContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.factory.HttpStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.ICityContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.LyonStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.OrleansStationContentProviderFactory;
@@ -32,7 +32,7 @@ public class CartoManager {
 		try {
 			ICityContentProviderFactory cpf = null;
 			if (DEFAULT.equals(city.contentProviderFactory)) {
-				cpf = new DefaultStationContentProviderFactory();
+				cpf = new HttpStationContentProviderFactory();
 			}
 			else if (LYON.equals(city.contentProviderFactory)) {
 				cpf = new LyonStationContentProviderFactory();

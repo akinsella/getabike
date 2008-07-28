@@ -5,11 +5,11 @@ import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.text.TextUtil;
 
-public class DefaultResourceBundleContentProviderFactory {
+public class ClasspathResourceBundleFactory {
 
 	private static final String CAT = "DEFAULT_RESOURCE_BUNDLE_CONTENT_PROVIDER_FACTORY";
 	
-	public DefaultResourceBundleContentProviderFactory() {
+	public ClasspathResourceBundleFactory() {
 		super();
 	}
 	

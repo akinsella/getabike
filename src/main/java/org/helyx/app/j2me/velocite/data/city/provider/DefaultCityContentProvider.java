@@ -67,8 +67,6 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 				inputStream = cityInputStreamProvider.createInputStream();
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
-	
-				Log.debug(CAT, "Parsing simple sample XML");
 				
 				if (!XppUtil.readToNextElement(xpp, CITIES)) {
 					throw new ContentProviderException(INVALID_CONTENT);

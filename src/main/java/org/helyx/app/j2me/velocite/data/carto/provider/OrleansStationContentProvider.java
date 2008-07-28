@@ -60,8 +60,6 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 				inputStream = cartoInputStreamProvider.createInputStream();
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
-	
-				Log.debug(CAT, "Parsing simple sample XML");
 
 				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
 				xppAttributeProcessor.addAll(new String[] { ID, NAME, LNG, LAT });

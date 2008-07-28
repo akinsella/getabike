@@ -5,11 +5,11 @@ import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.velocite.data.carto.provider.DefaultStationContentProvider;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 
-public class DefaultStationContentProviderFactory implements ICityContentProviderFactory {
+public class HttpStationContentProviderFactory implements ICityContentProviderFactory {
 
 	private static final String CAT = "DEFAULT_STATION_CONTENT_PROVIDER_FACTORY";
 	
-	public DefaultStationContentProviderFactory() {
+	public HttpStationContentProviderFactory() {
 		super();
 	}
 	

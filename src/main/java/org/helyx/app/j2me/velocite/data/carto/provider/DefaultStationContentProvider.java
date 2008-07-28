@@ -32,9 +32,6 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 	
 	private static final String UTF_8 = "UTF-8";
 	
-	
-	private static final String INVALID_CONTENT = "Xml content is invalid";
-	
 	private boolean cancel = false;
 
 	private IContentAccessor stationContentAccessor;
@@ -65,8 +62,6 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 				inputStream = cartoInputStreamProvider.createInputStream();
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, UTF_8);
-	
-				Log.debug(CAT, "Parsing simple sample XML");
 
 				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
 				xppAttributeProcessor.addAll(new String[] { NUMBER, NAME, OPEN, ADDRESS, FULL_ADDRESS, LNG, LAT });

@@ -1,6 +1,8 @@
 package org.helyx.app.j2me.lib.serializer;
 
-public class SerializerException extends Exception {
+import org.helyx.app.j2me.lib.exception.NestedException;
+
+public class SerializerException extends NestedException {
 
 	public SerializerException() {
 		super();
@@ -10,8 +12,12 @@ public class SerializerException extends Exception {
 		super(message);
 	}
 
-	public SerializerException(Throwable t) {
-		super(t == null ? null : t.getMessage());
+	public SerializerException(Throwable throwable) {
+		super(throwable);
+	}
+
+	public SerializerException(String message, Throwable throwable) {
+		super(message, throwable);
 	}
 
 }

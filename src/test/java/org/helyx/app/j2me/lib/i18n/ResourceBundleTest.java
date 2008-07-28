@@ -22,7 +22,7 @@ public class ResourceBundleTest extends TestCase {
 		IContentProvider contentProvider = drbcpf.getContentProviderFactory(new Locale("fr", "FR"), "org.helyx.app.j2me.velocite", "messages");
 		
 		Future future = new Future();
-		ResourceBundle resourceBundle = (ResourceBundle)future.get(new ContentProviderProgressTaskAdapter(contentProvider));
+		Theme resourceBundle = (Theme)future.get(new ContentProviderProgressTaskAdapter(contentProvider));
 		Enumeration _enum = resourceBundle.getMessageKeys();
 		while (_enum.hasMoreElements()) {
 			String key = (String)_enum.nextElement();

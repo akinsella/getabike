@@ -1,7 +1,9 @@
 package org.helyx.app.j2me.lib.content.accessor;
 
+import org.helyx.app.j2me.lib.exception.NestedException;
 
-public class ContentAccessorException extends Exception {
+
+public class ContentAccessorException extends NestedException {
 
 	public ContentAccessorException() {
 		super();
@@ -12,8 +14,11 @@ public class ContentAccessorException extends Exception {
 	}
 
 	public ContentAccessorException(Throwable throwable) {
-		super(throwable == null ? null : throwable.getMessage());
+		super(throwable);
 	}
 
+	public ContentAccessorException(String message, Throwable throwable) {
+		super(message, throwable);
+	}
 
 }

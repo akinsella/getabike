@@ -17,11 +17,7 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 	
 	private boolean cancel = false;
 
-	private IContentAccessor messageContentAccessor;
-
-	public PropertiesResourceBundleContentProvider() {
-		super();
-	}
+	protected IContentAccessor messageContentAccessor;
 
 	public PropertiesResourceBundleContentProvider(IContentAccessor messageContentAccessor) {
 		super();
@@ -31,12 +27,12 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 
 	public void loadData() {
 		
-		Log.debug(CAT, "Loading carto info ...");
+		Log.debug(CAT, "Loading messages ...");
 		
 		InputStream inputStream = null;
 		InputStreamProvider cartoInputStreamProvider = null;
 		
-		ResourceBundle resourceBundle = null;
+		Theme theme = null;
 		try {
 
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
@@ -46,15 +42,15 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 				inputStream = cartoInputStreamProvider.createInputStream();
 				Properties properties = new Properties();
 				properties.load(inputStream);
-				resourceBundle = new ResourceBundle();
-				resourceBundle.putAll(properties);
+				theme = new Theme();
+				theme.putAll(properties);
 						
-				progressDispatcher.fireEvent(I18nConstants.ON_MESSAGES_LOADED, resourceBundle);
+				progressDispatcher.fireEvent(I18nConstants.ON_MESSAGES_LOADED, theme);
 			}
 			finally {
 				cartoInputStreamProvider.dispose();
 			}
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, resourceBundle);
+			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, theme);
 		}
 		catch (Throwable t) {
     		Log.warn(CAT, t);

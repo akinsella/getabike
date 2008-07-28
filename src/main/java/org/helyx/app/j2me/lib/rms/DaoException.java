@@ -1,16 +1,23 @@
 package org.helyx.app.j2me.lib.rms;
 
-public class DaoException extends RuntimeException {
+import org.helyx.app.j2me.lib.exception.NestedRuntimeException;
+
+public class DaoException extends NestedRuntimeException {
 
 	public DaoException() {
 		super();
 	}
 
-	public DaoException(String s) {
-		super(s);
+	public DaoException(String message) {
+		super(message);
 	}
-	public DaoException(Exception e) {
-		super(e.getMessage());
+
+	public DaoException(Throwable throwable) {
+		super(throwable);
+	}
+
+	public DaoException(String message, Throwable throwable) {
+		super(message, throwable);
 	}
 
 }

@@ -1,16 +1,23 @@
 package org.helyx.app.j2me.lib.rms.exception;
 
-public class MultiRecordDaoException extends RuntimeException {
+import org.helyx.app.j2me.lib.exception.NestedRuntimeException;
+
+public class MultiRecordDaoException extends NestedRuntimeException {
 
 	public MultiRecordDaoException() {
 		super();
 	}
 
-	public MultiRecordDaoException(String s) {
-		super(s);
+	public MultiRecordDaoException(String message) {
+		super(message);
 	}
-	public MultiRecordDaoException(Exception e) {
-		super(e.getMessage());
+
+	public MultiRecordDaoException(Throwable throwable) {
+		super(throwable);
+	}
+
+	public MultiRecordDaoException(String message, Throwable throwable) {
+		super(message, throwable);
 	}
 
 }

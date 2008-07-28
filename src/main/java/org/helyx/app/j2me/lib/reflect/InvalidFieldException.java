@@ -1,6 +1,8 @@
 package org.helyx.app.j2me.lib.reflect;
 
-public class InvalidFieldException extends RuntimeException {
+import org.helyx.app.j2me.lib.exception.NestedRuntimeException;
+
+public class InvalidFieldException extends NestedRuntimeException {
 
 	public InvalidFieldException() {
 		super();
@@ -8,6 +10,14 @@ public class InvalidFieldException extends RuntimeException {
 
 	public InvalidFieldException(String message) {
 		super(message);
+	}
+
+	public InvalidFieldException(Throwable throwable) {
+		super(throwable);
+	}
+
+	public InvalidFieldException(String message, Throwable throwable) {
+		super(message, throwable);
 	}
 
 }

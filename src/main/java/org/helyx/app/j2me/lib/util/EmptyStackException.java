@@ -1,6 +1,8 @@
 package org.helyx.app.j2me.lib.util;
 
-public class EmptyStackException extends RuntimeException {
+import org.helyx.app.j2me.lib.exception.NestedRuntimeException;
+
+public class EmptyStackException extends NestedRuntimeException {
 
 	public EmptyStackException() {
 		super();
@@ -11,7 +13,11 @@ public class EmptyStackException extends RuntimeException {
 	}
 
 	public EmptyStackException(Throwable throwable) {
-		super(throwable == null ? null : throwable.getMessage());
+		super(throwable);
+	}
+
+	public EmptyStackException(String message, Throwable throwable) {
+		super(message, throwable);
 	}
 
 }

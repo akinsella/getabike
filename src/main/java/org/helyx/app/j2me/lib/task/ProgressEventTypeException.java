@@ -1,6 +1,8 @@
 package org.helyx.app.j2me.lib.task;
 
-public 	class ProgressEventTypeException extends RuntimeException {
+import org.helyx.app.j2me.lib.exception.NestedRuntimeException;
+
+public 	class ProgressEventTypeException extends NestedRuntimeException {
 
 	public ProgressEventTypeException() {
 		super();
@@ -8,6 +10,14 @@ public 	class ProgressEventTypeException extends RuntimeException {
 
 	public ProgressEventTypeException(String message) {
 		super(message);
+	}
+
+	public ProgressEventTypeException(Throwable throwable) {
+		super(throwable);
+	}
+
+	public ProgressEventTypeException(String message, Throwable throwable) {
+		super(message, throwable);
 	}
 	
 }

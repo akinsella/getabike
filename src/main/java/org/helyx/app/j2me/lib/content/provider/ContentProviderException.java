@@ -1,7 +1,9 @@
 package org.helyx.app.j2me.lib.content.provider;
 
+import org.helyx.app.j2me.lib.exception.NestedException;
 
-public class ContentProviderException extends Exception {
+
+public class ContentProviderException extends NestedException {
 
 	public ContentProviderException() {
 		super();
@@ -12,8 +14,11 @@ public class ContentProviderException extends Exception {
 	}
 
 	public ContentProviderException(Throwable throwable) {
-		super(throwable == null ? null : throwable.getMessage());
+		super(throwable);
 	}
 
+	public ContentProviderException(String message, Throwable throwable) {
+		super(message, throwable);
+	}
 
 }

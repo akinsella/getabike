@@ -32,9 +32,9 @@ public class Future {
 
 			public void onError(String eventMessage, Object eventData) {
 				future.exceptionMessage = eventMessage != null ? eventMessage : "ON_ERROR";
-				if (eventData instanceof RuntimeException) {
-					future.exception = (RuntimeException)eventData;
-				}	
+				if (eventData instanceof FutureException) {
+					future.exception = (FutureException)eventData;
+				}
 			}
 
 			public void onSuccess(String eventMessage, Object eventData) {
@@ -59,7 +59,7 @@ public class Future {
 				}
 			}
 			catch(InterruptedException ie) {
-				throw new RuntimeException(ie.getMessage() != null ? ie.getMessage() : "Interrupted Exception");
+				throw new FutureException(ie.getMessage() != null ? ie.getMessage() : "Interrupted Exception");
 			}			
 		}
 		
@@ -68,7 +68,7 @@ public class Future {
 				throw future.exception;
 			}
 			else {
-				throw new RuntimeException(future.exceptionMessage);
+				throw new FutureException(future.exceptionMessage);
 			}
 		}
 		

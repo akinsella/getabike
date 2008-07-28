@@ -25,11 +25,7 @@ public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 	
 	private boolean cancel = false;
 
-	private IContentAccessor messageContentAccessor;
-
-	public XmlResourceBundleContentProvider() {
-		super();
-	}
+	protected IContentAccessor messageContentAccessor;
 
 	public XmlResourceBundleContentProvider(IContentAccessor messageContentAccessor) {
 		super();
@@ -39,12 +35,12 @@ public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 
 	public void loadData() {
 		
-		Log.debug(CAT, "Loading carto info ...");
+		Log.debug(CAT, "Loading messages ...");
 		
 		InputStream inputStream = null;
 		InputStreamProvider cartoInputStreamProvider = null;
 		
-		ResourceBundle resourceBundle = null;
+		Theme resourceBundle = null;
 		try {
 
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
@@ -58,7 +54,7 @@ public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
 				xppAttributeProcessor.addAll(new String[] { KEY, MESSAGE });
 
-				resourceBundle = new ResourceBundle();
+				resourceBundle = new Theme();
 				while (XppUtil.readToNextElement(xpp, ENTRY)) {
 					if (cancel) {
 						progressDispatcher.fireEvent(ProgressEventType.ON_CANCEL);

@@ -1,6 +1,8 @@
 package org.helyx.app.j2me.velocite.data.carto.provider.factory;
 
-public class StationContentProviderFactoryNoFoundExcepton extends Exception {
+import org.helyx.app.j2me.lib.exception.NestedException;
+
+public class StationContentProviderFactoryNoFoundExcepton extends NestedException {
 
 	public StationContentProviderFactoryNoFoundExcepton() {
 		super();
@@ -11,7 +13,11 @@ public class StationContentProviderFactoryNoFoundExcepton extends Exception {
 	}
 
 	public StationContentProviderFactoryNoFoundExcepton(Throwable throwable) {
-		super(throwable == null ? null : throwable.getMessage());
+		super(throwable);
+	}
+
+	public StationContentProviderFactoryNoFoundExcepton(String message, Throwable throwable) {
+		super(message, throwable);
 	}
 
 }

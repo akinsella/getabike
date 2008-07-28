@@ -1,18 +1,23 @@
 package org.helyx.app.j2me.velocite.data.carto.manager;
 
-public class CartoManagerException extends Exception {
+import org.helyx.app.j2me.lib.exception.NestedException;
+
+public class CartoManagerException extends NestedException {
 
 	public CartoManagerException() {
 		super();
 	}
 
-	public CartoManagerException(String s) {
-		super(s);
+	public CartoManagerException(String message) {
+		super(message);
 	}
 
 	public CartoManagerException(Throwable throwable) {
-		super(throwable == null ? null : throwable.getMessage());
+		super(throwable);
 	}
-	
-	
+
+	public CartoManagerException(String message, Throwable throwable) {
+		super(message, throwable);
+	}
+
 }

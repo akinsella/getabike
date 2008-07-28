@@ -1,6 +1,8 @@
 package org.helyx.app.j2me.lib.ui.view.xml;
 
-public class XmlCanvasException extends Exception {
+import org.helyx.app.j2me.lib.exception.NestedException;
+
+public class XmlCanvasException extends NestedException {
 
 	public XmlCanvasException() {
 		super();
@@ -11,7 +13,11 @@ public class XmlCanvasException extends Exception {
 	}
 
 	public XmlCanvasException(Throwable throwable) {
-		super(throwable == null ? null : throwable.getMessage());
+		super(throwable);
+	}
+
+	public XmlCanvasException(String message, Throwable throwable) {
+		super(message, throwable);
 	}
 
 }

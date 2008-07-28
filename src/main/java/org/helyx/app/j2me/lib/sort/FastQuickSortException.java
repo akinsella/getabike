@@ -1,6 +1,8 @@
 package org.helyx.app.j2me.lib.sort;
 
-public class FastQuickSortException extends RuntimeException {
+import org.helyx.app.j2me.lib.exception.NestedRuntimeException;
+
+public class FastQuickSortException extends NestedRuntimeException {
 
 	public FastQuickSortException() {
 		super();
@@ -10,8 +12,12 @@ public class FastQuickSortException extends RuntimeException {
 		super(message);
 	}
 
-	public FastQuickSortException(Throwable t) {
-		super(t == null ? null : t.getMessage());
+	public FastQuickSortException(Throwable throwable) {
+		super(throwable);
+	}
+
+	public FastQuickSortException(String message, Throwable throwable) {
+		super(message, throwable);
 	}
 
 }

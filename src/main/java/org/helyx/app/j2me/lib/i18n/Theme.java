@@ -5,13 +5,13 @@ import java.util.Hashtable;
 
 import org.helyx.app.j2me.lib.properties.Properties;
 
-public class ResourceBundle {
+public class Theme {
 	
 	private static final String CAT = "RESOURCE_BUNDLE";
 
 	private Hashtable messageMap;
 	
-	public ResourceBundle() {
+	public Theme() {
 		super();
 		init();
 	}

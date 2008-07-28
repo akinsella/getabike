@@ -1,13 +1,23 @@
 package org.helyx.app.j2me.velocite.data.carto.service;
 
-public class StationNotFoundException extends Exception {
+import org.helyx.app.j2me.lib.exception.NestedException;
+
+public class StationNotFoundException extends NestedException {
 
 	public StationNotFoundException() {
 		super();
 	}
 
-	public StationNotFoundException(String detailMessage) {
-		super(detailMessage);
+	public StationNotFoundException(String message) {
+		super(message);
+	}
+
+	public StationNotFoundException(Throwable throwable) {
+		super(throwable);
+	}
+
+	public StationNotFoundException(String message, Throwable throwable) {
+		super(message, throwable);
 	}
 
 }

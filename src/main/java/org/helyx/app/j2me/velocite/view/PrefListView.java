@@ -1,9 +1,8 @@
 package org.helyx.app.j2me.velocite.view;
 
-import javax.microedition.midlet.MIDlet;
-
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
@@ -18,12 +17,12 @@ public class PrefListView extends MenuListView {
 
 	private static final String CAT = "PREF_LIST_VIEW";
 	
-	public PrefListView(MIDlet midlet, IDisplayableReturnCallback displayableReturnCallback) {
+	public PrefListView(AbstractMIDlet midlet, IDisplayableReturnCallback displayableReturnCallback) {
 		super(midlet, false, displayableReturnCallback);
 		init();
 	}
 
-	public PrefListView(MIDlet midlet) {
+	public PrefListView(AbstractMIDlet midlet) {
 		super(midlet, false);
 		init();
 	}

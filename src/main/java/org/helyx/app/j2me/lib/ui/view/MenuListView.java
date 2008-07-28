@@ -2,18 +2,18 @@ package org.helyx.app.j2me.lib.ui.view;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
-import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.GraphicsUtil;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.ui.widget.Command;
+import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
@@ -30,13 +30,13 @@ public class MenuListView extends AbstractCanvas {
 	
 	private Menu menu;
 
-	public MenuListView(MIDlet midlet, boolean checkable) {
+	public MenuListView(AbstractMIDlet midlet, boolean checkable) {
 		super(midlet);
 		this.checkable = checkable;
 		init();
 	}
 
-	public MenuListView(MIDlet midlet, boolean checkable, IDisplayableReturnCallback displayableReturnCallback) {
+	public MenuListView(AbstractMIDlet midlet, boolean checkable, IDisplayableReturnCallback displayableReturnCallback) {
 		super(midlet);
 		
 		this.displayableReturnCallback = displayableReturnCallback;

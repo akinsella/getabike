@@ -18,9 +18,9 @@ public class DefaultResourceBundleContentProviderFactory {
 		String classpath = "/" + TextUtil.replaceAll(_package, '.', '/') + "/" + prefix + "_" + locale.getName() + ".properties";
 		Log.debug(CAT, "classpath: '" + classpath + "'");
 		ClasspathContentAccessor classpathContentAccessor = new ClasspathContentAccessor(classpath);
-		IContentProvider stationContentProvider = new PropertiesResourceBundleContentProvider(classpathContentAccessor);
+		IContentProvider resourceBundleContentProvider = new PropertiesResourceBundleContentProvider(classpathContentAccessor);
 		
-		return stationContentProvider;
+		return resourceBundleContentProvider;
 	}
 
 }

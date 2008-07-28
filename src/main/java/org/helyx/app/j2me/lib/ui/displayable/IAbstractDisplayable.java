@@ -1,7 +1,8 @@
 package org.helyx.app.j2me.lib.ui.displayable;
 
 import javax.microedition.lcdui.Displayable;
-import javax.microedition.midlet.MIDlet;
+
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 
 public interface IAbstractDisplayable {
 
@@ -15,7 +16,7 @@ public interface IAbstractDisplayable {
 
 	Displayable getDisplayable();
 	
-	MIDlet getMidlet();
+	AbstractMIDlet getMidlet();
 	
 	void setPreviousDisplayable(IAbstractDisplayable previousDisplayable);
 

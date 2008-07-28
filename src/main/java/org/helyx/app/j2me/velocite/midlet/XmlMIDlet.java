@@ -1,12 +1,12 @@
 package org.helyx.app.j2me.velocite.midlet;
 
-import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
 import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.ui.view.xml.XmlView;
@@ -14,7 +14,7 @@ import org.helyx.app.j2me.lib.xml.dom.DomUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.kxml2.kdom.Document;
 
-public class XmlMIDlet extends MIDlet {
+public class XmlMIDlet extends AbstractMIDlet {
 
 	private static final String CAT = "XML_MIDLET";
 	

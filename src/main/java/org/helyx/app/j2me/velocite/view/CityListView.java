@@ -3,10 +3,9 @@ package org.helyx.app.j2me.velocite.view;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.microedition.midlet.MIDlet;
-
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.Command;
@@ -26,12 +25,12 @@ public class CityListView extends MenuListView {
 	
 	private Vector cityList;
 
-	public CityListView(MIDlet midlet, IDisplayableReturnCallback displayableReturnCallback) throws CityManagerException {
+	public CityListView(AbstractMIDlet midlet, IDisplayableReturnCallback displayableReturnCallback) throws CityManagerException {
 		super(midlet, true, displayableReturnCallback);
 		init();
 	}
 
-	public CityListView(MIDlet midlet) throws CityManagerException {
+	public CityListView(AbstractMIDlet midlet) throws CityManagerException {
 		super(midlet, true);
 		init();
 	}

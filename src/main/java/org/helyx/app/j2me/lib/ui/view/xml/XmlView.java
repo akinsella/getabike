@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.action.ActionRegistry;
 import org.helyx.app.j2me.lib.action.EmptyAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.xml.CanvasNodeProcessor;
 import org.kxml2.kdom.Document;
@@ -24,7 +24,7 @@ public class XmlView extends AbstractCanvas {
 	
 	private ActionRegistry actionRegistry; 
 	
-	public XmlView(MIDlet midlet) {
+	public XmlView(AbstractMIDlet midlet) {
 		super(midlet);
 		init();
 	}

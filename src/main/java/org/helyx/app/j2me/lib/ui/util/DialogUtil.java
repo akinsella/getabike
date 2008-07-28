@@ -3,7 +3,8 @@ package org.helyx.app.j2me.lib.ui.util;
 import javax.microedition.lcdui.Alert;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
-import javax.microedition.midlet.MIDlet;
+
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 
 public class DialogUtil {
 
@@ -11,11 +12,11 @@ public class DialogUtil {
 		super();
 	}
 	
-	public static void showAlertMessage(MIDlet midlet, Displayable displayable, String title, String message) {
+	public static void showAlertMessage(AbstractMIDlet midlet, Displayable displayable, String title, String message) {
 		showAlertMessage(midlet, displayable, title, message, Alert.FOREVER);
 	}
 	
-	public static void showAlertMessage(MIDlet midlet, Displayable displayable, String title, String message, int timeout) {
+	public static void showAlertMessage(AbstractMIDlet midlet, Displayable displayable, String title, String message, int timeout) {
 		Alert alert;
 		
 		alert = new Alert(title);

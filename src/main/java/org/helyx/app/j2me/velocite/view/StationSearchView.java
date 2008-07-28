@@ -2,8 +2,8 @@ package org.helyx.app.j2me.velocite.view;
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
-import javax.microedition.midlet.MIDlet;
 
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractTextBox;
 import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
@@ -20,7 +20,7 @@ public class StationSearchView extends AbstractTextBox {
 	
 	private IDisplayableReturnCallback displayableReturnCallback;
 	
-	public StationSearchView(MIDlet midlet, IDisplayableReturnCallback displayableReturnCallback) {
+	public StationSearchView(AbstractMIDlet midlet, IDisplayableReturnCallback displayableReturnCallback) {
 		super(midlet, "Recherche de station");
 		this.displayableReturnCallback = displayableReturnCallback;
 		init();

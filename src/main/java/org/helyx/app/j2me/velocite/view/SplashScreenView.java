@@ -4,16 +4,12 @@ import java.util.Vector;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
-import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
-import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
-import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
-import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.manager.TaskManager;
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.Pref;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
@@ -24,13 +20,12 @@ import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.ui.widget.Command;
+import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.util.VectorUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
-import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 import org.helyx.app.j2me.velocite.task.factory.ApplicationUpdateTaskFactory;
 import org.helyx.app.j2me.velocite.task.factory.DataCleanUpTaskFactory;
 import org.helyx.app.j2me.velocite.task.factory.EachRunTaskFactory;
@@ -44,7 +39,7 @@ public class SplashScreenView extends AbstractCanvas {
 	private String fallbackLogoImageStr;
 	
 
-	public SplashScreenView(MIDlet midlet) {
+	public SplashScreenView(AbstractMIDlet midlet) {
 		super(midlet);
 
 		init();

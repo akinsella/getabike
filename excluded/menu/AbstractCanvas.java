@@ -6,7 +6,7 @@ import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
-import javax.microedition.midlet.MIDlet;
+import javax.microedition.midlet.AbstractMIDlet;
 
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.ui.displayable.IAbstractDisplayable;
@@ -43,7 +43,7 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 	private MenuWidget menuWidget;
 	private boolean menuShowed = false;
 
-	public AbstractCanvas(MIDlet midlet) {
+	public AbstractCanvas(AbstractMIDlet midlet) {
 		super(midlet);
 		init();
 	}

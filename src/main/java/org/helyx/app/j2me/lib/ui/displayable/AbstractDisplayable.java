@@ -4,8 +4,8 @@ import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
-import javax.microedition.midlet.MIDlet;
 
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.util.DialogUtil;
 
 public abstract class AbstractDisplayable implements DisplayableListener, IAbstractDisplayable, CommandListener {
@@ -16,11 +16,11 @@ public abstract class AbstractDisplayable implements DisplayableListener, IAbstr
 		super();
 	}
 	
-	private MIDlet midlet;
+	private AbstractMIDlet midlet;
 	
 	private IAbstractDisplayable previousDisplayable;
 
-	public AbstractDisplayable(MIDlet midlet) {
+	public AbstractDisplayable(AbstractMIDlet midlet) {
 		super();
 		this.midlet = midlet;
 	}
@@ -79,7 +79,7 @@ public abstract class AbstractDisplayable implements DisplayableListener, IAbstr
 		((IAbstractDisplayable)previousDisplayable).afterDisplayableSelection(this);
 	}
 
-	public MIDlet getMidlet() {
+	public AbstractMIDlet getMidlet() {
 		return midlet;
 	}
 

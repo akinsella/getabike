@@ -3,6 +3,10 @@ package org.helyx.app.j2me.lib.i18n;
 public class Locale {
 
 	private static final String CAT = "LOCALE";
+	
+	public static final Locale FRANCE = new Locale("fr", "FR");
+	public static final Locale US = new Locale("us", "US");
+	public static final Locale SPAIN = new Locale("es", "ES");
 
 	private String country;
 	private String language;

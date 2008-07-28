@@ -4,10 +4,10 @@ import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
-import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.util.ColorUtil;
@@ -28,7 +28,7 @@ public class MenuView extends AbstractCanvas {
 		
 		private int selectedIndex = 0;
 		
-		public MenuView(MIDlet midlet) {
+		public MenuView(AbstractMIDlet midlet) {
 			super(midlet);
 
 			init();

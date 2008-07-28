@@ -6,18 +6,18 @@ import java.util.TimerTask;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
-import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.ui.widget.Command;
+import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 
 public class LoadTaskView extends AbstractCanvas {
 	
@@ -37,7 +37,7 @@ public class LoadTaskView extends AbstractCanvas {
 	
 	private boolean hasStarted = false;
 
-	public LoadTaskView(MIDlet midlet, String title, IProgressTask progressTask) {
+	public LoadTaskView(AbstractMIDlet midlet, String title, IProgressTask progressTask) {
 		super(midlet);
 	    this.title = title;
 		this.progressTask = progressTask;

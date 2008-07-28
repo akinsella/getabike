@@ -3,16 +3,16 @@ package org.helyx.app.j2me.velocite.view;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
-import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.ui.widget.Command;
+import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 
 public class AboutView extends AbstractCanvas {
 
@@ -21,7 +21,7 @@ public class AboutView extends AbstractCanvas {
 	private Image logoImage;
 	private String fallbackLogoImageStr;
 	
-	public AboutView(MIDlet midlet) {
+	public AboutView(AbstractMIDlet midlet) {
 		super(midlet);
 
 		init();

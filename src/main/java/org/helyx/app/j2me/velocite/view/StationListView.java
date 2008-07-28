@@ -2,10 +2,10 @@ package org.helyx.app.j2me.velocite.view;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
-import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.Pref;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
@@ -20,8 +20,8 @@ import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.GraphicsUtil;
 import org.helyx.app.j2me.lib.ui.view.LoadTaskView;
 import org.helyx.app.j2me.lib.ui.view.MenuListView;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.ui.widget.Command;
+import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
@@ -40,7 +40,7 @@ public class StationListView extends AbstractCanvas {
 	private Menu menu;
 	private MenuListView prefMenuListView;
 
-	public StationListView(MIDlet midlet) {
+	public StationListView(AbstractMIDlet midlet) {
 		super(midlet);
 		init();
 	}

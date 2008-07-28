@@ -6,9 +6,9 @@ import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
-import javax.microedition.midlet.MIDlet;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
 import org.helyx.app.j2me.lib.ui.util.ColorUtil;
@@ -37,7 +37,7 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 	protected int backgroundColor = DEFAULT_THEME.WIDGET_BACKGROUND;
 	protected boolean paintBackgroundColor = true;
 
-	public AbstractCanvas(MIDlet midlet) {
+	public AbstractCanvas(AbstractMIDlet midlet) {
 		super(midlet);
 		init();
 	}

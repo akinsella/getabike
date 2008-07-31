@@ -3,7 +3,7 @@ package org.helyx.app.j2me.lib.i18n;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import org.helyx.app.j2me.lib.properties.Properties;
+import org.helyx.basics4me.util.Properties;
 
 public class Theme {
 	

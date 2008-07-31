@@ -5,9 +5,9 @@ import java.io.InputStream;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.properties.Properties;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.basics4me.util.Properties;
 
 
 public class PropertiesResourceBundleContentProvider extends AbstractContentProvider {

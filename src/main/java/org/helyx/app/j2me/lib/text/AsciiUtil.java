@@ -4,8 +4,10 @@ import java.util.Random;
 
 
 public class AsciiUtil {
+
+	private static final String CAT = "ASCII_UTIL";
 	
-   public static boolean isWhitespace(char c) {
+	public static boolean isWhitespace(char c) {
         // Optimized case for ASCII
         if ((c >= 0x1c && c <= 0x20) || (c >= 0x9 && c <= 0xd)) {
             return true;

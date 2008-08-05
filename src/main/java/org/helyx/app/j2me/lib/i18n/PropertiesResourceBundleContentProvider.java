@@ -32,7 +32,7 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 		InputStream inputStream = null;
 		InputStreamProvider cartoInputStreamProvider = null;
 		
-		Theme theme = null;
+		ResourceBundle resourceBundle = null;
 		try {
 
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
@@ -42,15 +42,15 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 				inputStream = cartoInputStreamProvider.createInputStream();
 				Properties properties = new Properties();
 				properties.load(inputStream);
-				theme = new Theme();
-				theme.putAll(properties);
+				resourceBundle = new ResourceBundle();
+				resourceBundle.putAll(properties);
 						
-				progressDispatcher.fireEvent(I18nConstants.ON_MESSAGES_LOADED, theme);
+				progressDispatcher.fireEvent(I18nConstants.ON_MESSAGES_LOADED, resourceBundle);
 			}
 			finally {
 				cartoInputStreamProvider.dispose();
 			}
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, theme);
+			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, resourceBundle);
 		}
 		catch (Throwable t) {
     		Log.warn(CAT, t);

@@ -41,5 +41,8 @@ public class ThemeConstants {
 	public static final String WIDGET_DETAILS_BACKGROUND = "WIDGET_DETAILS_BACKGROUND";
 	public static final String WIDGET_DETAILS_FONT_TITLE = "WIDGET_DETAILS_FONT_TITLE";
 	public static final String WIDGET_DETAILS_FONT_MESSAGE = "WIDGET_DETAILS_FONT_MESSAGE";
+	
+	public static final String LOAD_TASK_VIEW_IMAGE_COUNT = "LOAD_TASK_VIEW_IMAGE_COUNT";
+	public static final String LOAD_TASK_VIEW_IMAGE_PATH = "LOAD_TASK_VIEW_IMAGE_PATH";
 
 }

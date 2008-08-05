@@ -1,55 +1,65 @@
 package org.helyx.app.j2me.lib.theme;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
-
-import org.helyx.basics4me.util.Properties;
+import org.helyx.app.j2me.lib.i18n.ResourceBundle;
+import org.helyx.basics4me.lang.BooleanUtil;
 
 public class Theme {
 	
-	private static final String CAT = "RESOURCE_BUNDLE";
+	private static final String CAT = "THEME";
 
-	private Hashtable messageMap;
+	private ResourceBundle resourceBundle;
 	
-	public Theme() {
+	public Theme(ResourceBundle resourceBundle) {
 		super();
-		init();
+		this.resourceBundle = resourceBundle;
 	}
 	
-	private void init() {
-		messageMap = new Hashtable();
+	public byte getByte(String key) {
+		byte byteValue = Byte.parseByte(resourceBundle.get(key));
+		
+		return byteValue;
 	}
 	
-	public void putAll(Properties properties) {
-		Enumeration _enum = properties.propertyNames();
-		while(_enum.hasMoreElements()) {
-			String propertyKey = (String)_enum.nextElement();
-			messageMap.put(propertyKey, properties.get(propertyKey));
-		}
+	public short getShort(String key) {
+		short shortValue = Short.parseShort(resourceBundle.get(key));
+		
+		return shortValue;
 	}
 	
-	public void put(String key, String message) {
-		messageMap.put(key, message);
+	public int getInt(String key) {
+		int intValue = Integer.parseInt(resourceBundle.get(key));
+		
+		return intValue;
 	}
 	
-	public void remove(String key) {
-		messageMap.remove(key);
+	public long getLong(String key) {
+		long longValue = Long.parseLong(resourceBundle.get(key));
+		
+		return longValue;
 	}
 	
-	public void clear() {
-		messageMap.clear();
+	public float getFloat(String key) {
+		float floatValue = Float.parseFloat(resourceBundle.get(key));
+		
+		return floatValue;
+	}
+	
+	public double getDouble(String key) {
+		double doubleValue = Double.parseDouble(resourceBundle.get(key));
+		
+		return doubleValue;
+	}
+	
+	public boolean getBoolean(String key) {
+		boolean booleanValue = BooleanUtil.parseBoolean(resourceBundle.get(key));
+		
+		return booleanValue;
 	}
 
-	public Enumeration getMessageKeys() {
-		return messageMap.keys();
+	public String getString(String key) {
+		String stringValue = resourceBundle.get(key);
+		
+		return stringValue;
 	}
 
-	public String get(String key) {
-		return (String)messageMap.get(key);
-	}
-
-	public int size() {
-		return messageMap.size();
-	}
-	
 }

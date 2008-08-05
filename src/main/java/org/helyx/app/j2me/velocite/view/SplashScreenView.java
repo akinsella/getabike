@@ -140,7 +140,7 @@ public class SplashScreenView extends AbstractCanvas {
 	
 	private void loadLogoImage() {
 		try {
-			logoImage = ImageUtil.createImageFromClassPath("/VeloCite.png");
+			logoImage = ImageUtil.createImageFromClassPath("/org/helyx/app/j2me/velocite/image/VeloCite.png");
 		}
 		catch(Throwable t) {
 			fallbackLogoImageStr = t.getMessage();

@@ -40,7 +40,7 @@ public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 		InputStream inputStream = null;
 		InputStreamProvider cartoInputStreamProvider = null;
 		
-		Theme resourceBundle = null;
+		ResourceBundle resourceBundle = null;
 		try {
 
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
@@ -54,7 +54,7 @@ public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
 				xppAttributeProcessor.addAll(new String[] { KEY, MESSAGE });
 
-				resourceBundle = new Theme();
+				resourceBundle = new ResourceBundle();
 				while (XppUtil.readToNextElement(xpp, ENTRY)) {
 					if (cancel) {
 						progressDispatcher.fireEvent(ProgressEventType.ON_CANCEL);

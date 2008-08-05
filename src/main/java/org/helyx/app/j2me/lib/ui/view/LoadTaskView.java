@@ -12,6 +12,9 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
+import org.helyx.app.j2me.lib.text.StringFormat;
+import org.helyx.app.j2me.lib.theme.Theme;
+import org.helyx.app.j2me.lib.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
@@ -66,12 +69,18 @@ public class LoadTaskView extends AbstractCanvas {
 	}
 
 	private void initGraphics() {
-		int IMAGE_COUNT = 8;
-		images = new Image[IMAGE_COUNT];
+		Theme theme = getMidlet().getTheme();
+		int themeImageCount = theme.getInt(ThemeConstants.LOAD_TASK_VIEW_IMAGE_COUNT);
+		String themeImagePath = theme.getString(ThemeConstants.LOAD_TASK_VIEW_IMAGE_PATH);
+		StringFormat stringFormat = new StringFormat(themeImagePath);
 		
-		for (int i = 0 ; i < IMAGE_COUNT ; i++) {
+		images = new Image[themeImageCount];
+		
+		for (int i = 0 ; i < themeImageCount ; i++) {
 			try {
-				images[i] = ImageUtil.createImageFromClassPath("/images/wheel/wheel_" + (i + 1) + ".png");
+				String imagePath = stringFormat.format(i + 1);
+				Log.info(CAT, "imagePath: '" + imagePath + "'");
+				images[i] = ImageUtil.createImageFromClassPath(imagePath);
 			}
 			catch (IOException e) { 
 				Log.warn(getCat(), e);

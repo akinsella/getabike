@@ -8,6 +8,7 @@ import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.log.FileLogWriter;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.pref.PrefManager;
+import org.helyx.app.j2me.lib.theme.Theme;
 import org.helyx.app.j2me.velocite.PrefConstants;
 
 public class AbstractMIDlet extends MIDlet {
@@ -15,6 +16,7 @@ public class AbstractMIDlet extends MIDlet {
 		private static final String CAT = "ABSTRACT_MIDLET";
 		
 		private FileLogWriter flw;
+		private Theme theme;
 		private Locale locale;
 		
 		public AbstractMIDlet() {
@@ -32,6 +34,14 @@ public class AbstractMIDlet extends MIDlet {
 
 		public void setLocale(Locale locale) {
 			this.locale = locale;
+		}
+		
+		public Theme getTheme() {
+			return theme;
+		}
+
+		public void setTheme(Theme theme) {
+			this.theme = theme;
 		}
 
 		protected void destroyApp(boolean flag) {

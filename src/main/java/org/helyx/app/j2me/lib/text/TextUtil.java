@@ -4,6 +4,8 @@ import java.util.Vector;
 
 public class TextUtil {
 
+	private static final String CAT = "TEXT_UTIL";
+
 	public static String[] split(final String str, final char c) {
 
 		final Vector result = new Vector();

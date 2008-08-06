@@ -25,8 +25,6 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 	private static final String LONGITUDE = "longitude";
 	private static final String LYON = "Lyon";
 	
-	private static final String INVALID_CONTENT = "JSON content is invalid";
-	
 	private boolean cancel = false;
 
 	private IContentAccessor[] stationContentAccessors;
@@ -106,6 +104,7 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 						
 						progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 					}
+					progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 				}
 				finally {
 					cartoInputStreamProvider.dispose();
@@ -113,7 +112,6 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 				
 			}
 			
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 		}
 		catch (Throwable t) {
     		Log.warn(CAT, t);

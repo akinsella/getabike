@@ -2,18 +2,22 @@ package org.helyx.app.j2me.velocite.task.factory;
 
 import javax.microedition.lcdui.Canvas;
 
+import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.ITask;
 import org.helyx.app.j2me.lib.task.ITaskFactory;
+import org.helyx.app.j2me.velocite.task.LanguageConfigurationTask;
 import org.helyx.app.j2me.velocite.task.SoftKeyConfigurationTask;
 
 public class EachRunTaskFactory implements ITaskFactory {
 	
 	private static final String CAT = "EACH_RUN_TASK_FACTORY";
 	
+	private AbstractMIDlet midlet;
 	private Canvas canvas;
 	
-	public EachRunTaskFactory(Canvas canvas) {
+	public EachRunTaskFactory(AbstractMIDlet midlet, Canvas canvas) {
 		super();
+		this.midlet = midlet;
 		this.canvas = canvas;
 	}
 	
@@ -22,6 +26,7 @@ public class EachRunTaskFactory implements ITaskFactory {
 		
 		
 		ITask[] tasks = new ITask[] {
+			new LanguageConfigurationTask(midlet, canvas),
 			new SoftKeyConfigurationTask(canvas)
 		};
 		

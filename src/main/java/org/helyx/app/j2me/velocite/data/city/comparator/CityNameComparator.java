@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.data.carto.comparator;
+package org.helyx.app.j2me.velocite.data.city.comparator;
 
 import org.helyx.app.j2me.lib.comparator.Comparator;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
@@ -6,7 +6,7 @@ import org.helyx.app.j2me.velocite.data.city.domain.City;
 
 public class CityNameComparator implements Comparator {
 
-	private static final String CAT = "CITY_KEY_COMPARATOR_2";
+	private static final String CAT = "CITY_NAME_COMPARATOR";
 	
 	public int compare(Object object1, Object object2) {
 		if (object1 == null && object2 == null) {

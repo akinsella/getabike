@@ -1,18 +1,11 @@
 package org.helyx.app.j2me.velocite.task.factory;
 
-import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
-import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
-import org.helyx.app.j2me.lib.content.provider.IContentProvider;
-import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.BasicTask;
-import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ITask;
 import org.helyx.app.j2me.lib.task.ITaskFactory;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
-import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 
 public class DataCleanUpTaskFactory implements ITaskFactory {
 	

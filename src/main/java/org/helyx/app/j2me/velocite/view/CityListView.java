@@ -45,10 +45,28 @@ public class CityListView extends MenuListView {
 	
 	private void initActions() {
 
-		setSecondaryAction(new Command("Retour", true, new IAction() {
+		setSecondaryAction(new Command("Annuler", true, new IAction() {
 
 			public void run(Object data) {
 				returnToPreviousDisplayable();
+			}
+			
+		}));
+		
+		setPrimaryAction(new Command("Ok", true, new IAction() {
+
+			public void run(Object data) {
+				MenuItem menuItem = getMenu().getCheckedMenuItem();
+				
+				City city = (City)menuItem.getData();
+				CityManager.saveSelectedCity(city);
+				try {
+					CartoManager.refreshAll(city, getMidlet(), CityListView.this, getPreviousDisplayable());
+				}
+				catch (CartoManagerException e) {
+					showAlertMessage("Erreur", e.getMessage() != null ? e.getMessage() : "CityManagerException");
+					returnToPreviousDisplayable();
+				}
 			}
 			
 		}));
@@ -78,28 +96,5 @@ public class CityListView extends MenuListView {
 		}
 
 		setMenu(menu);
-	}
-
-	public void returnToPreviousDisplayable() {
-		MenuItem menuItem = getMenu().getCheckedMenuItem();
-		
-		Log.info(CAT, "City choose menu return: " + menuItem);
-		
-		City city = (City)menuItem.getData();
-
-		if (!city.key.equals(selectedCity.key)) {
-			CityManager.saveSelectedCity(city);
-			try {
-				CartoManager.refreshAll(city, getMidlet(), this, getPreviousDisplayable());
-			}
-			catch (CartoManagerException e) {
-				showAlertMessage("Erreur", e.getMessage() != null ? e.getMessage() : "StationManagerException");
-				super.returnToPreviousDisplayable();
-			}
-		}
-		else {
-			super.returnToPreviousDisplayable();
-		}
-
 	}
 }

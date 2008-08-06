@@ -8,7 +8,6 @@ import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.pref.Pref;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.velocite.PrefConstants;
@@ -26,7 +25,7 @@ public class CityManager {
 
 	public static IProgressTask refreshDataWithDefaults() {
 		
-		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://m.velocite.org/cities.xml");
+		IContentAccessor cityContentAccessor = new HttpContentAccessor("/org/helyx/app/j2me/velocite/data/city/cities.xml");
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 
@@ -43,15 +42,15 @@ public class CityManager {
 	public static City findSelectedCity(Vector cityList) throws CityManagerException {
 		City selectedCity = null;
 
-		Pref citySelectedKeyPref = PrefManager.readPref(PrefConstants.CITY_SELECTED_KEY);
-		Log.info(CAT, "Selected City key: " + citySelectedKeyPref);
-		Pref cityDefaultKeyPref = PrefManager.readPref(PrefConstants.CITY_DEFAULT_KEY);
-		Log.info(CAT, "Default City key: " + citySelectedKeyPref);
+		String citySelectedKeyPrefValue = PrefManager.readPrefValue(PrefConstants.CITY_SELECTED_KEY);
+		Log.info(CAT, "Selected City key: " + citySelectedKeyPrefValue);
+		String cityDefaultKeyPrefValue = PrefManager.readPrefValue(PrefConstants.CITY_DEFAULT_KEY);
+		Log.info(CAT, "Default City key: " + citySelectedKeyPrefValue);
 		
 		Enumeration _enum = cityList.elements();
 		while(_enum.hasMoreElements()) {
 			City city = (City)_enum.nextElement();
-			if (citySelectedKeyPref != null && citySelectedKeyPref!= null && citySelectedKeyPref.value.equals(city.key)) {
+			if (city.key.equals(citySelectedKeyPrefValue)) {
 				selectedCity = city;
 				break;
 			}
@@ -61,7 +60,7 @@ public class CityManager {
 			_enum = cityList.elements();
 			while(_enum.hasMoreElements()) {
 				City city = (City)_enum.nextElement();
-				if (city.active && cityDefaultKeyPref != null && cityDefaultKeyPref.value.equals(city.key)) {
+				if (city.active && city.key.equals(cityDefaultKeyPrefValue)) {
 					selectedCity = city;
 					PrefManager.writePref(PrefConstants.CITY_SELECTED_KEY, selectedCity.key);
 					break;

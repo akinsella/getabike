@@ -71,7 +71,7 @@ public class SplashScreenView extends AbstractCanvas {
 					VectorUtil.addElementsToVector(tasksToRun, new DataCleanUpTaskFactory().getTasks());
 				}
 								
-				VectorUtil.addElementsToVector(tasksToRun, new EachRunTaskFactory(getCanvas()).getTasks());
+				VectorUtil.addElementsToVector(tasksToRun, new EachRunTaskFactory(getMidlet(), getCanvas()).getTasks());
 
 				if (oldVersion == null) {
 					Log.info(CAT, "No previous version found.");

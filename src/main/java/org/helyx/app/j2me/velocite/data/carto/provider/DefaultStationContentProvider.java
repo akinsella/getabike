@@ -90,11 +90,11 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 					progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 				}
 				
+				progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 			}
 			finally {
 				cartoInputStreamProvider.dispose();
 			}
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 		}
 		catch (Throwable t) {
     		Log.warn(CAT, t);

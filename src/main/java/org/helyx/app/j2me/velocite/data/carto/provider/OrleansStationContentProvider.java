@@ -27,9 +27,6 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 	private static final String LNG = "lng";
 	private static final String LAT = "lat";
 	
-	
-	private static final String INVALID_CONTENT = "Xml content is invalid";
-	
 	private boolean cancel = false;
 
 	private IContentAccessor stationContentAccessor;
@@ -87,11 +84,11 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 	
 					progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 				}
+				progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 			}
 			finally {
 				cartoInputStreamProvider.dispose();
 			}
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 		}
 		catch (Throwable t) {
     		Log.warn(CAT, t);

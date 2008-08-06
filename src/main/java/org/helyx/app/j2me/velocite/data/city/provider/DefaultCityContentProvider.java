@@ -1,6 +1,7 @@
 package org.helyx.app.j2me.velocite.data.city.provider;
 
 import java.io.InputStream;
+import java.util.Vector;
 
 import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
@@ -91,6 +92,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 					STATION_DETAILS, STATION_LIST, OFFLINE_STATION_LIST
 				});
 
+				Vector cityList = new Vector();
 				while (XppUtil.readToNextElement(xpp, CITY)) {
 					if (cancel) {
 						progressDispatcher.fireEvent(ProgressEventType.ON_CANCEL);
@@ -109,14 +111,14 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 					city.stationList = xppAttributeProcessor.getAttrValueAsString(STATION_LIST);
 					city.stationDetails = xppAttributeProcessor.getAttrValueAsString(STATION_DETAILS);
 	
-					progressDispatcher.fireEvent(CityConstants.ON_CITY_LOADED, city);
+					cityList.addElement(city);
+					progressDispatcher.fireEvent(CityConstants.ON_CITY_LOADED, city);				
 				}
-
+				progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, cityList);
 			}
 			finally {
 				cityInputStreamProvider.dispose();
 			}
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 		}
 		catch (Throwable t) {
     		Log.warn(CAT, t);

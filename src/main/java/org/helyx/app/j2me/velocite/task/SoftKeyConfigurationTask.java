@@ -26,7 +26,7 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 		try {
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
 	
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recerche de config. existante...");
+			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche de config. existante...");
 			String softKeyDetectionTypeValue = PrefManager.readPrefValue(PrefConstants.SOFT_KEY_DETECTION_TYPE);
 			
 			if (KeyUtil.SOFT_KEY_DETECTION_PLATFORM.equals(softKeyDetectionTypeValue)) {

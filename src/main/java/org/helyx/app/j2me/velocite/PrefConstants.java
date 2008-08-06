@@ -4,6 +4,10 @@ public class PrefConstants {
 	
 	public static final String CITY_DEFAULT_KEY = "CITY_DEFAULT_KEY";
 	public static final String CITY_SELECTED_KEY = "CITY_SELECTED_KEY";
+	
+	public static final String LANGUAGE_DEFAULT_KEY = "LANGUAGE_DEFAULT_KEY";
+	public static final String LANGUAGE_SELECTED_KEY = "LANGUAGE_SELECTED_KEY";
+
 	public static final String SOFT_KEY_LEFT = "SOFT_KEY_LEFT";
 	public static final String SOFT_KEY_RIGHT = "SOFT_KEY_RIGHT";
 	public static final String SOFT_KEY_DETECTION_TYPE = "SOFT_KEY_DETECTION_TYPE";

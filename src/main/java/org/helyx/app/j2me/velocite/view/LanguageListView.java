@@ -55,6 +55,7 @@ public class LanguageListView extends MenuListView {
 		setPrimaryAction(new Command("Ok", true, new IAction() {
 
 			public void run(Object data) {
+				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());
 				MenuItem menuItem = getMenu().getCheckedMenuItem();
 				
 				Language language = (Language)menuItem.getData();

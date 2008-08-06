@@ -16,12 +16,13 @@ import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ITask;
 import org.helyx.app.j2me.lib.task.MultiTaskProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
+import org.helyx.app.j2me.lib.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.widget.Command;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.util.VectorUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener;
@@ -140,7 +141,7 @@ public class SplashScreenView extends AbstractCanvas {
 	
 	private void loadLogoImage() {
 		try {
-			logoImage = ImageUtil.createImageFromClassPath("/org/helyx/app/j2me/velocite/image/VeloCite.png");
+			logoImage = ImageUtil.createImageFromClassPath(getMidlet().getTheme().getString(ThemeConstants.WIDGET_SPLASH_IMAGE));
 		}
 		catch(Throwable t) {
 			fallbackLogoImageStr = t.getMessage();
@@ -159,7 +160,8 @@ public class SplashScreenView extends AbstractCanvas {
 		int width = clientArea.size.width;
         int height = clientArea.size.height;
                
-        g.setColor(DEFAULT_THEME.WIDGET_SPLASH_FONT);
+        Color splashFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SPLASH_FONT);
+        g.setColor(splashFontColor.intValue());
         g.setFont(FontUtil.SMALL);
         
         if (logoImage != null) {

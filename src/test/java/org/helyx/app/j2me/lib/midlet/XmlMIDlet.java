@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.midlet;
+package org.helyx.app.j2me.lib.midlet;
 
 import javax.microedition.midlet.MIDletStateChangeException;
 

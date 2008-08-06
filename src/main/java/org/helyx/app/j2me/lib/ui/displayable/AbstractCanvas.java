@@ -9,14 +9,15 @@ import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
 import org.helyx.app.j2me.lib.ui.util.ColorUtil;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.GraphicsUtil;
 import org.helyx.app.j2me.lib.ui.util.KeyUtil;
 import org.helyx.app.j2me.lib.ui.widget.Command;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 
 public abstract class AbstractCanvas extends AbstractDisplayable {
 
@@ -34,7 +35,6 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 	
 	protected static AbstractGameCanvas canvas = new AbstractGameCanvas();
 	
-	protected int backgroundColor = DEFAULT_THEME.WIDGET_BACKGROUND;
 	protected boolean paintBackgroundColor = true;
 
 	public AbstractCanvas(AbstractMIDlet midlet) {
@@ -246,7 +246,9 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 		if (!paintBackgroundColor) {
 			return;
 		}
-        g.setColor(backgroundColor);
+		Color bgColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_BACKGROUND);
+
+        g.setColor(bgColor.intValue());
         g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 
@@ -256,9 +258,12 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 		}
 
 		Rectangle titleArea = computeTitleArea(graphics);
-		GraphicsUtil.fillShade(graphics, titleArea, new Shade(DEFAULT_THEME.WIDGET_TITLE_BG_SHADE_LIGHT, DEFAULT_THEME.WIDGET_TITLE_BG_SHADE_DARK), false);
+		Color shadeColor1 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_LIGHT);
+		Color shadeColor2 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_DARK);
+		GraphicsUtil.fillShade(graphics, titleArea, new Shade(shadeColor1.intValue(), shadeColor2.intValue()), false);
 
-		graphics.setColor(DEFAULT_THEME.WIDGET_TITLE_FONT);
+		Color titleFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_FONT);
+		graphics.setColor(titleFontColor.intValue());
 		graphics.setFont(FontUtil.SMALL_BOLD);
 		graphics.drawLine(titleArea.location.x, titleArea.location.y + titleArea.size.height, titleArea.location.x + titleArea.size.width, titleArea.location.y + titleArea.size.height);
 		graphics.drawString(title, titleArea.location.x + titleArea.size.width / 2, titleArea.location.y + (titleArea.size.height - FontUtil.SMALL_BOLD.getHeight()) / 2, Graphics.HCENTER | Graphics.TOP);
@@ -270,9 +275,12 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 		}
 
 		Rectangle menuArea = computeMenuArea(graphics);
-		GraphicsUtil.fillShade(graphics, menuArea, new Shade(DEFAULT_THEME.WIDGET_TITLE_BG_SHADE_DARK, DEFAULT_THEME.WIDGET_TITLE_BG_SHADE_LIGHT), false);
+		Color shadeColor1 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_DARK);
+		Color shadeColor2 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_LIGHT);
+		GraphicsUtil.fillShade(graphics, menuArea, new Shade(shadeColor1.intValue(), shadeColor2.intValue()), false);
 
-		graphics.setColor(DEFAULT_THEME.WIDGET_TITLE_FONT);
+		Color titleFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_FONT);
+		graphics.setColor(titleFontColor.intValue());
 		graphics.setFont(FontUtil.SMALL_BOLD);
 		graphics.drawLine(menuArea.location.x, menuArea.location.y, menuArea.location.x + menuArea.size.width, menuArea.location.y);
 

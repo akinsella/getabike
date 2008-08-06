@@ -7,12 +7,13 @@ import javax.microedition.lcdui.game.GameCanvas;
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.widget.Command;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 
 public class AboutView extends AbstractCanvas {
 
@@ -47,7 +48,8 @@ public class AboutView extends AbstractCanvas {
 	
 	private void loadLogoImage() {
 		try {
-			logoImage = ImageUtil.createImageFromClassPath("/VeloCite.png");
+			String aboutImageStr = getMidlet().getTheme().getString(ThemeConstants.WIDGET_ABOUT_IMAGE);
+			logoImage = ImageUtil.createImageFromClassPath(aboutImageStr);
 		}
 		catch(Throwable t) {
 			fallbackLogoImageStr = t.getMessage();
@@ -73,7 +75,8 @@ public class AboutView extends AbstractCanvas {
 		int width = clientArea.size.width;
         int height = clientArea.size.height;
         
-        g.setColor(DEFAULT_THEME.WIDGET_ABOUT_FONT);
+        Color aboutColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_ABOUT_FONT);
+        g.setColor(aboutColor.intValue());
 
         if (logoImage != null) {
         	g.drawImage(logoImage, x + width / 2, y + height / 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.VCENTER);

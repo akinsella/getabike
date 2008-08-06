@@ -11,9 +11,11 @@ import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.task.ProgressListener;
+import org.helyx.app.j2me.lib.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
 import org.helyx.app.j2me.lib.ui.util.DialogUtil;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
@@ -21,7 +23,6 @@ import org.helyx.app.j2me.lib.ui.util.GraphicsUtil;
 import org.helyx.app.j2me.lib.ui.view.LoadTaskView;
 import org.helyx.app.j2me.lib.ui.view.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.Command;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
@@ -181,17 +182,21 @@ public class StationListView extends AbstractCanvas {
 		if (length == 0 || length <= visibleItemCount) {
 			return;
 		}
-		g.setColor(DEFAULT_THEME.WIDGET_SCROLL_BACKGROUND);
+		Color scrollBackgroundColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BACKGROUND);
+		g.setColor(scrollBackgroundColor.intValue());
 		g.fillRect(clientArea.location.x + clientArea.size.width - 4, clientArea.location.y, 4, clientArea.size.height);
 		
 		int yHeight = Math.max(clientArea.size.height / 8, clientArea.size.height * visibleItemCount / length);
 		int yPos = clientArea.location.y + (int)((clientArea.size.height - yHeight) * ((double)selectedOffset / ((double)length - 1)));
 		
-		Shade shade = new Shade(DEFAULT_THEME.WIDGET_SCROLL_SHADE_DARK, DEFAULT_THEME.WIDGET_SCROLL_SHADE_LIGHT);
+		Color shadeColor1 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_DARK);
+		Color shadeColor2 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_LIGHT);
+		Shade shade = new Shade(shadeColor1.intValue(), shadeColor2.intValue());
 		Rectangle area = new Rectangle(clientArea.location.x + clientArea.size.width - 4, yPos, 4, yHeight);
 		GraphicsUtil.fillShade(g, area, shade, true);
 
-		g.setColor(DEFAULT_THEME.WIDGET_SCROLL_BORDER);
+		Color scrollBorderColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BORDER);
+		g.setColor(scrollBorderColor.intValue());
 		g.drawLine(clientArea.location.x + clientArea.size.width - 5, clientArea.location.y, clientArea.location.x + clientArea.size.width - 5, clientArea.location.y + clientArea.size.height);
 	}
 
@@ -205,34 +210,43 @@ public class StationListView extends AbstractCanvas {
     	
     	if (isSelected) {
 //    		g.setColor(ColorUtil.WIDGET_LIST_FONT_SELECTED);
-    		Shade shade = new Shade(DEFAULT_THEME.WIDGET_LIST_SELECTED_SHADE_LIGHT, DEFAULT_THEME.WIDGET_LIST_SELECTED_SHADE_DARK);
+    		Color shadeColor1 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_LIGHT);
+    		Color shadeColor2 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_DARK);
+    		Shade shade = new Shade(shadeColor1.intValue(), shadeColor2.intValue());
     		GraphicsUtil.fillShade(g, itemClientArea, shade, false);
      	}
     	else {
-    		g.setColor(DEFAULT_THEME.WIDGET_LIST);
+    		Color listColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST);
+    		g.setColor(listColor.intValue());
     		g.fillRect(itemClientArea.location.x, itemClientArea.location.y, itemClientArea.size.width, itemClientArea.size.height);
     	}
     	
-    	g.setColor(DEFAULT_THEME.WIDGET_LIST_SEPARATOR);
+		Color listSeparatorColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_SEPARATOR);
+    	g.setColor(listSeparatorColor.intValue());
     	g.drawLine(itemClientArea.location.x, itemClientArea.location.y + itemClientArea.size.height - 1, itemClientArea.location.x + itemClientArea.size.width, itemClientArea.location.y + itemClientArea.size.height - 1);
 	
      	if (isSelected) {
-    		g.setColor(DEFAULT_THEME.WIDGET_LIST_FONT_SELECTED);
+    		Color listFontSelectedColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SELECTED);
+    		g.setColor(listFontSelectedColor.intValue());
     	}
     	else {
-    		g.setColor(DEFAULT_THEME.WIDGET_LIST_FONT);
+    		Color listFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT);
+    		g.setColor(listFontColor.intValue());
     	}
         if (!station.open) {
-         	g.setColor(DEFAULT_THEME.WIDGET_LIST_ERROR);
+    		Color listErrorColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_ERROR);
+         	g.setColor(listErrorColor.intValue());
         }
         g.setFont(FontUtil.SMALL_BOLD);
         g.drawString(station.number + " - " + station.name, itemClientArea.location.x + 5, itemClientArea.location.y + 2, Graphics.LEFT | Graphics.TOP);
  
     	if (isSelected) {
-    		g.setColor(DEFAULT_THEME.WIDGET_LIST_FONT_SECOND_SELECTED);
+    		Color listFontSecondSelectedColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
+    		g.setColor(listFontSecondSelectedColor.intValue());
     	}
     	else {
-    		g.setColor(DEFAULT_THEME.WIDGET_LIST_FONT_SECOND);
+    		Color listFontSecondColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
+    		g.setColor(listFontSecondColor.intValue());
     	}
         g.setFont(FontUtil.SMALL);
     	g.drawString(station.fullAddress, itemClientArea.location.x + 5, itemClientArea.location.y + 2 + FontUtil.SMALL_BOLD.getHeight(), Graphics.LEFT | Graphics.TOP);

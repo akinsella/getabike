@@ -17,10 +17,10 @@ import org.helyx.app.j2me.lib.theme.Theme;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.widget.Command;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 
 public class LoadTaskView extends AbstractCanvas {
 	
@@ -79,6 +79,7 @@ public class LoadTaskView extends AbstractCanvas {
 		for (int i = 0 ; i < themeImageCount ; i++) {
 			try {
 				String imagePath = stringFormat.format(i + 1);
+				Log.debug("imagePath: " + imagePath);
 				Log.info(CAT, "imagePath: '" + imagePath + "'");
 				images[i] = ImageUtil.createImageFromClassPath(imagePath);
 			}
@@ -141,13 +142,14 @@ public class LoadTaskView extends AbstractCanvas {
        		if (image != null) {
        			textYPos += image.getHeight() / 2 + FontUtil.SMALL_BOLD.getBaselinePosition();
        		}
-
-           	g.setColor(DEFAULT_THEME.WIDGET_WAITING_TITLE_FONT);
+       		Color waitingTitleFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_WAITING_TITLE_FONT);
+           	g.setColor(waitingTitleFontColor.intValue());
     		g.setFont(FontUtil.SMALL_BOLD);
     		g.drawString(label, x + width / 2, y + textYPos, Graphics.HCENTER | Graphics.BASELINE);
        	}
 
-       	g.setColor(DEFAULT_THEME.WIDGET_WAITING_MESSAGE_FONT);
+   		Color waitingMessageFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_WAITING_MESSAGE_FONT);
+       	g.setColor(waitingMessageFontColor.intValue());
         g.setFont(FontUtil.MEDIUM_BOLD);
    		int  textYPos = height / 2;
    		if (image != null) {

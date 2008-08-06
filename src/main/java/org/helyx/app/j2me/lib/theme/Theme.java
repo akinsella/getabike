@@ -1,6 +1,9 @@
 package org.helyx.app.j2me.lib.theme;
 
+import java.util.Hashtable;
+
 import org.helyx.app.j2me.lib.i18n.ResourceBundle;
+import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.basics4me.lang.BooleanUtil;
 
 public class Theme {
@@ -8,6 +11,7 @@ public class Theme {
 	private static final String CAT = "THEME";
 
 	private ResourceBundle resourceBundle;
+	private Hashtable colorCache = new Hashtable();
 	
 	public Theme(ResourceBundle resourceBundle) {
 		super();
@@ -60,6 +64,16 @@ public class Theme {
 		String stringValue = resourceBundle.get(key);
 		
 		return stringValue;
+	}
+	
+	public Color getColor(String key) {
+		String colorValue = resourceBundle.get(key);
+		if (colorCache.containsKey(colorValue)) {
+			return (Color)colorCache.get(colorValue);
+		}
+		Color color = new Color(colorValue);
+		colorCache.put(colorValue, color);
+		return color;
 	}
 
 }

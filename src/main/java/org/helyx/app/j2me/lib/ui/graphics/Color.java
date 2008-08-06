@@ -1,5 +1,9 @@
 package org.helyx.app.j2me.lib.ui.graphics;
 
+import org.helyx.app.j2me.lib.ui.util.ColorUtil;
+
+
+
 public class Color {
 
 	public int red;
@@ -15,6 +19,25 @@ public class Color {
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
+	}
+
+	public Color(int intColor) {
+		super();
+		ColorUtil.intToColor(this, intColor);
+	}
+
+	public Color(String colorValue) {
+		super();
+		if (colorValue.indexOf('#') == 0) {
+			ColorUtil.parseHtmlColor(this, colorValue);
+		}
+		else {
+			ColorUtil.parseHexaColor(this, colorValue);
+		}
+	}
+
+	public int intValue() {
+        return ColorUtil.colorToInt(this);
 	}
 		
 	public String toString() {

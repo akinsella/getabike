@@ -9,13 +9,26 @@ public class ClasspathResourceBundleContentProviderFactory {
 
 	private static final String CAT = "DEFAULT_RESOURCE_BUNDLE_CONTENT_PROVIDER_FACTORY";
 	
-	public ClasspathResourceBundleContentProviderFactory() {
+	private Locale locale;
+	private String _package;
+	private String rbName;
+	
+	public ClasspathResourceBundleContentProviderFactory(Locale locale, String _package, String rbName) {
 		super();
+		this.locale = locale;
+		this._package = _package;
+		this.rbName = rbName;
 	}
 	
-	public IContentProvider getContentProviderFactory(Locale locale, String _package, String prefix) {
+	public IContentProvider getContentProviderFactory() {
+		String classpath = new StringBuffer()
+			.append("/")
+			.append(TextUtil.replaceAll(_package, '.', '/'))
+			.append("/").append(rbName).append("_")
+			.append(locale.getName())
+			.append(".properties")
+			.toString();
 		
-		String classpath = "/" + TextUtil.replaceAll(_package, '.', '/') + "/" + prefix + "_" + locale.getName() + ".properties";
 		Log.debug(CAT, "classpath: '" + classpath + "'");
 		ClasspathContentAccessor classpathContentAccessor = new ClasspathContentAccessor(classpath);
 		IContentProvider resourceBundleContentProvider = new PropertiesResourceBundleContentProvider(classpathContentAccessor);

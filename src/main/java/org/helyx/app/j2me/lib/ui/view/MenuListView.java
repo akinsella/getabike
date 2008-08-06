@@ -6,14 +6,15 @@ import javax.microedition.lcdui.game.GameCanvas;
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.GraphicsUtil;
 import org.helyx.app.j2me.lib.ui.widget.Command;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
@@ -130,17 +131,21 @@ public class MenuListView extends AbstractCanvas {
 		if (length == 0 || length <= visibleItemCount) {
 			return;
 		}
-		g.setColor(DEFAULT_THEME.WIDGET_SCROLL_BACKGROUND);
+		Color scrollBackgroundColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BACKGROUND);
+		g.setColor(scrollBackgroundColor.intValue());
 		g.fillRect(clientArea.location.x + clientArea.size.width - 4, clientArea.location.y, 4, clientArea.size.height);
 		
 		int yHeight = Math.max(clientArea.size.height / 8, clientArea.size.height * visibleItemCount / length);
 		int yPos = clientArea.location.y + (int)((clientArea.size.height - yHeight) * ((double)selectedOffset / ((double)length - 1)));
 		
-		Shade shade = new Shade(DEFAULT_THEME.WIDGET_SCROLL_SHADE_DARK, DEFAULT_THEME.WIDGET_SCROLL_SHADE_LIGHT);
+		Color shadeColor1 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_DARK);
+		Color shadeColor2 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_LIGHT);
+		Shade shade = new Shade(shadeColor1.intValue(), shadeColor2.intValue());
 		Rectangle area = new Rectangle(clientArea.location.x + clientArea.size.width - 4, yPos, 4, yHeight);
 		GraphicsUtil.fillShade(g, area, shade, true);
 
-		g.setColor(DEFAULT_THEME.WIDGET_SCROLL_BORDER);
+		Color scrollBorderColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BACKGROUND);
+		g.setColor(scrollBorderColor.intValue());
 		g.drawLine(clientArea.location.x + clientArea.size.width - 5, clientArea.location.y, clientArea.location.x + clientArea.size.width - 5, clientArea.location.y + clientArea.size.height);
 	}
 
@@ -153,22 +158,28 @@ public class MenuListView extends AbstractCanvas {
     	boolean isSelected = selectedOffset == topOffset + offset;
     	
     	if (isSelected) {
-    		Shade shade = new Shade(DEFAULT_THEME.WIDGET_LIST_SELECTED_SHADE_LIGHT, DEFAULT_THEME.WIDGET_LIST_SELECTED_SHADE_DARK);
+    		Color shadeColor1 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_LIGHT);
+    		Color shadeColor2 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_LIGHT);
+    		Shade shade = new Shade(shadeColor1.intValue(), shadeColor2.intValue());
     		GraphicsUtil.fillShade(g, itemClientArea, shade, false);
      	}
     	else {
-    		g.setColor(DEFAULT_THEME.WIDGET_LIST);
+    		Color listColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST);
+    		g.setColor(listColor.intValue());
     		g.fillRect(itemClientArea.location.x, itemClientArea.location.y, itemClientArea.size.width, itemClientArea.size.height);
     	}
     	
-    	g.setColor(DEFAULT_THEME.WIDGET_LIST_SEPARATOR);
+		Color listSeparatorColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_SEPARATOR);
+		g.setColor(listSeparatorColor.intValue());
     	g.drawLine(itemClientArea.location.x, itemClientArea.location.y + itemClientArea.size.height - 1, itemClientArea.location.x + itemClientArea.size.width, itemClientArea.location.y + itemClientArea.size.height - 1);
 	
     	if (isSelected) {
-    		g.setColor(DEFAULT_THEME.WIDGET_MENU_LIST_FONT_SELECTED);
+    		Color menuListFontSelectedColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_MENU_LIST_FONT_SELECTED);
+    		g.setColor(menuListFontSelectedColor.intValue());
     	}
     	else {
-    		g.setColor(DEFAULT_THEME.WIDGET_MENU_LIST_FONT);
+    		Color menuListFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_MENU_LIST_FONT);
+    		g.setColor(menuListFontColor.intValue());
     	}
 
         g.setFont(FontUtil.MEDIUM_BOLD);

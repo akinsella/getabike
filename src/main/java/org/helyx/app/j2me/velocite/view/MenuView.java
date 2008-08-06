@@ -8,13 +8,15 @@ import javax.microedition.lcdui.game.GameCanvas;
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.theme.Theme;
+import org.helyx.app.j2me.lib.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.util.ColorUtil;
 import org.helyx.app.j2me.lib.ui.util.DialogUtil;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
-import org.helyx.app.j2me.lib.ui.widget.DEFAULT_THEME;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
@@ -73,21 +75,22 @@ public class MenuView extends AbstractCanvas {
 	        
 	        _height += ( (height - _height) - (FontUtil.SMALL.getHeight() * menuItemCount) ) / 2;
 	        
+	        Theme theme = getMidlet().getTheme();
 	        for (int i = 0 ; i < menuItemCount ; i++) {
 	        	MenuItem menuItem = (MenuItem)menu.getMenuItem(i);
 	           
 		        Font font = i == selectedIndex ? FontUtil.MEDIUM_BOLD : FontUtil.SMALL;
 
-	    	    int color = 0;
+	    	    Color menuItemColor;
 	    	    boolean isMenuEnabled = menuItem.isEnabled();
 	    	    if (i == selectedIndex) {
-	    	    	color = isMenuEnabled ? DEFAULT_THEME.WIDGET_MENU_FONT_SELECTED : DEFAULT_THEME.WIDGET_MENU_FONT_SELECTED_DISABLED;
+	    	    	menuItemColor = theme.getColor(isMenuEnabled ? ThemeConstants.WIDGET_MENU_FONT_SELECTED : ThemeConstants.WIDGET_MENU_FONT_SELECTED_DISABLED);
 	    	    }
 	    	    else {
-	    	    	color = isMenuEnabled ? DEFAULT_THEME.WIDGET_MENU_FONT : DEFAULT_THEME.WIDGET_MENU_FONT_DISABLED;
+	    	    	menuItemColor = theme.getColor(isMenuEnabled ? ThemeConstants.WIDGET_MENU_FONT : ThemeConstants.WIDGET_MENU_FONT_DISABLED);
 	    	    }
 	    	    	
-	    	    g.setColor(color);
+	    	    g.setColor(menuItemColor.intValue());
 		        g.setFont(font);
 		        g.drawString(menuItem.getTitle(), x + width / 2, y + _height, Graphics.HCENTER | Graphics.BASELINE);
 		        
@@ -152,7 +155,8 @@ public class MenuView extends AbstractCanvas {
 
 		private void loadLogoImage() {
 			try {
-				logoImage = ImageUtil.createImageFromClassPath("/VeloCite.png");
+				String menuImageStr = getMidlet().getTheme().getString(ThemeConstants.WIDGET_MENU_IMAGE);
+				logoImage = ImageUtil.createImageFromClassPath(menuImageStr);
 			}
 			catch(Throwable t) {
 				fallbackLogoImageStr = t.getMessage();

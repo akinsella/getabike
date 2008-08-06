@@ -2,6 +2,8 @@ package org.helyx.app.j2me.lib.text;
 
 import java.util.Vector;
 
+import org.helyx.app.j2me.lib.log.Log;
+
 public class TextUtil {
 
 	private static final String CAT = "TEXT_UTIL";
@@ -69,10 +71,6 @@ public class TextUtil {
 			result.append(replacement);
 
 			searchPos = pos + needle.length();
-		}
-
-		if (result.length() == 0) {
-			return haystack;
 		}
 
 		result.append(haystack.substring(searchPos));

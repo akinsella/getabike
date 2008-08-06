@@ -18,11 +18,10 @@ public class ResourceBundleTest extends TestCase {
 	}
 	
 	public void testResourceBundle() {
-		ClasspathResourceBundleContentProviderFactory drbcpf = new ClasspathResourceBundleContentProviderFactory();
-		IContentProvider contentProvider = drbcpf.getContentProviderFactory(new Locale("fr", "FR"), "org.helyx.app.j2me.velocite", "messages");
+		ClasspathResourceBundleContentProviderFactory drbcpf = new ClasspathResourceBundleContentProviderFactory(Locale.FRANCE, "org.helyx.app.j2me.velocite", "messages");
+		IContentProvider contentProvider = drbcpf.getContentProviderFactory();
 		
-		Future future = new Future();
-		ResourceBundle resourceBundle = (ResourceBundle)future.get(new ContentProviderProgressTaskAdapter(contentProvider));
+		ResourceBundle resourceBundle = (ResourceBundle)Future.get(new ContentProviderProgressTaskAdapter(contentProvider));
 		Enumeration _enum = resourceBundle.getMessageKeys();
 		while (_enum.hasMoreElements()) {
 			String key = (String)_enum.nextElement();

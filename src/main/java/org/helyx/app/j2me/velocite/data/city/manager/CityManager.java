@@ -3,7 +3,7 @@ package org.helyx.app.j2me.velocite.data.city.manager;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
+import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
@@ -25,7 +25,7 @@ public class CityManager {
 
 	public static IProgressTask refreshDataWithDefaults() {
 		
-		IContentAccessor cityContentAccessor = new HttpContentAccessor("/org/helyx/app/j2me/velocite/data/city/cities.xml");
+		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/data/city/cities.xml");
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 

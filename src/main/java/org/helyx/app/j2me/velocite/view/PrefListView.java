@@ -7,11 +7,8 @@ import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
+import org.helyx.app.j2me.velocite.data.language.manager.LanguageManagerException;
 
 public class PrefListView extends MenuListView {
 
@@ -35,7 +32,7 @@ public class PrefListView extends MenuListView {
 		
 		menu = new Menu();
 		
-		menu.addMenuItem(new MenuItem("Sélectionner une ville", new IAction() {
+		menu.addMenuItem(new MenuItem("Villes", new IAction() {
 			public void run(Object data) {
 				CityListView cityListView;
 				try {
@@ -50,19 +47,17 @@ public class PrefListView extends MenuListView {
 			}
 		}));
 		
-		menu.addMenuItem(new MenuItem("Rafraîchir les stations", new IAction() {
+		menu.addMenuItem(new MenuItem("Langues", new IAction() {
 			public void run(Object data) {
-
+				LanguageListView languageListView;
 				try {
-					City selectedCity = CityManager.findSelectedCity();
-					CartoManager.refreshAll(selectedCity, getMidlet(), PrefListView.this, PrefListView.this);
+					languageListView = new LanguageListView(getMidlet());
+					languageListView.setPreviousDisplayable(PrefListView.this);
+					showDisplayable(languageListView);
 				}
-				catch (CartoManagerException e) {
-					showAlertMessage("Erreur", e.getMessage() != null ? e.getMessage() : "StationManagerException");
-				}
-				catch(CityManagerException e) {
+				catch (LanguageManagerException e) {
 					Log.warn(CAT, e);
-					showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
+					showAlertMessage("Problème de configuration", "Le fichier des langues n'est pas valide: " + e.getMessage());
 				}
 			}
 		}));

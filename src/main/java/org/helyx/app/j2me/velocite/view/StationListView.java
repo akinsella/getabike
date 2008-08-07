@@ -12,7 +12,7 @@ import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.task.ProgressListener;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractView;
 import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
@@ -28,7 +28,7 @@ import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.task.StationLoadTask;
 
-public class StationListView extends AbstractCanvas {
+public class StationListView extends AbstractView {
 	
 	private Station[] stationArray = null;
 
@@ -58,7 +58,7 @@ public class StationListView extends AbstractCanvas {
 	
 	private void initActions() {
 		
-		setPrimaryAction(new Command("Voir", true, new IAction() {
+		setPrimaryCommand(new Command("Voir", true, new IAction() {
 
 			public void run(Object data) {
 				showCurrentStationSelected();
@@ -66,7 +66,7 @@ public class StationListView extends AbstractCanvas {
 			
 		}));
 
-		setSecondaryAction(new Command("Retour", true, new IAction() {
+		setSecondaryCommand(new Command("Retour", true, new IAction() {
 
 			public void run(Object data) {
 				returnToPreviousDisplayable();
@@ -74,7 +74,7 @@ public class StationListView extends AbstractCanvas {
 			
 		}));
 		
-		setThirdAction(new Command("Menu", true, new IAction() {
+		setThirdCommand(new Command("Menu", true, new IAction() {
 
 			public void run(Object data) {
 				prefMenuListView = new MenuListView(getMidlet(), false);

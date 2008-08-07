@@ -8,14 +8,14 @@ import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractView;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 
-public class AboutView extends AbstractCanvas {
+public class AboutView extends AbstractView {
 
 	private static final String CAT = "SPLASH_SCREEN_VIEW";
 	
@@ -37,7 +37,7 @@ public class AboutView extends AbstractCanvas {
 	}
 	
 	private void initActions() {
-		setSecondaryAction(new Command("Retour", true, new IAction() {
+		setSecondaryCommand(new Command("Retour", true, new IAction() {
 
 			public void run(Object data) {
 				returnToPreviousDisplayable();

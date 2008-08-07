@@ -10,7 +10,7 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.theme.Theme;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractView;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.util.ColorUtil;
@@ -20,7 +20,7 @@ import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
-public class MenuView extends AbstractCanvas {
+public class MenuView extends AbstractView {
 	
 		private static final String CAT = "MENU_VIEW";
 		

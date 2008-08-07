@@ -7,7 +7,7 @@ import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractView;
 import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
@@ -18,7 +18,7 @@ import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
-public class MenuListView extends AbstractCanvas {
+public class MenuListView extends AbstractView {
 
 	private static final String CAT = "MENU_LIST_VIEW";
 	
@@ -58,7 +58,7 @@ public class MenuListView extends AbstractCanvas {
 		Log.debug(CAT, "Menu List View Checkable: " + checkable);
 		
 		if (checkable) {
-			setPrimaryAction(new Command("Sélectionner", true, new IAction() {
+			setPrimaryCommand(new Command("Sélectionner", true, new IAction() {
 
 				public void run(Object data) {
 					MenuItem menuItem = getMenu().getSelectedMenuItem();
@@ -71,7 +71,7 @@ public class MenuListView extends AbstractCanvas {
 			}));
 		}
 		
-		setSecondaryAction(new Command("Retour", true, new IAction() {
+		setSecondaryCommand(new Command("Retour", true, new IAction() {
 
 			public void run(Object data) {
 				returnToPreviousDisplayable();

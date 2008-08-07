@@ -15,14 +15,14 @@ import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.text.StringFormat;
 import org.helyx.app.j2me.lib.theme.Theme;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractView;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 
-public class LoadTaskView extends AbstractCanvas {
+public class LoadTaskView extends AbstractView {
 	
 	private static final String CAT = "LOAD_TASK_VIEW";
 	
@@ -55,7 +55,7 @@ public class LoadTaskView extends AbstractCanvas {
 		initGraphics();
 		
 		if (progressTask.isCancellable()) {
-			setSecondaryAction(new Command("Retour", true, new IAction() {
+			setSecondaryCommand(new Command("Retour", true, new IAction() {
 				public void run(Object data) {
 					if (progressTask.isCancellable()) {
 						progressTask.cancel();

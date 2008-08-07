@@ -45,7 +45,7 @@ public class CityListView extends MenuListView {
 	
 	private void initActions() {
 
-		setSecondaryAction(new Command("Annuler", true, new IAction() {
+		setSecondaryCommand(new Command("Annuler", true, new IAction() {
 
 			public void run(Object data) {
 				returnToPreviousDisplayable();
@@ -53,7 +53,7 @@ public class CityListView extends MenuListView {
 			
 		}));
 		
-		setPrimaryAction(new Command("Ok", true, new IAction() {
+		setPrimaryCommand(new Command("Ok", true, new IAction() {
 
 			public void run(Object data) {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());

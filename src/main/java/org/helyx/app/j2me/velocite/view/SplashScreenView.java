@@ -17,7 +17,7 @@ import org.helyx.app.j2me.lib.task.ITask;
 import org.helyx.app.j2me.lib.task.MultiTaskProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractCanvas;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractView;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
@@ -32,7 +32,7 @@ import org.helyx.app.j2me.velocite.task.factory.DataCleanUpTaskFactory;
 import org.helyx.app.j2me.velocite.task.factory.EachRunTaskFactory;
 import org.helyx.app.j2me.velocite.task.factory.FirstRunTaskFactory;
 
-public class SplashScreenView extends AbstractCanvas {
+public class SplashScreenView extends AbstractView {
 
 	private static final String CAT = "SPLASH_SCREEN_VIEW";
 	
@@ -51,7 +51,7 @@ public class SplashScreenView extends AbstractCanvas {
 		setTitle("VeloCite");
 		loadLogoImage();
 		
-		setPrimaryAction(new Command("Ok", true, new IAction() {
+		setPrimaryCommand(new Command("Ok", true, new IAction() {
 			public void run(Object data) {
 
 				processApplicationStartupTasks();

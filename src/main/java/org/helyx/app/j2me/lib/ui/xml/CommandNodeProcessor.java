@@ -60,13 +60,13 @@ public class CommandNodeProcessor extends AbstractDomNodeProcessor {
 		String position = xap.getAttrValueAsString(POSITION);
 		
 		if (PRIMARY_STR.equals(position)) {
-			xmlView.setPrimaryAction(command);
+			xmlView.setPrimaryCommand(command);
 		}
 		else if (SECONDARY_STR.equals(position)) {
-			xmlView.setSecondaryAction(command);
+			xmlView.setSecondaryCommand(command);
 		}
 		else if (THIRD_STR.equals(position)) {
-			xmlView.setThirdAction(command);
+			xmlView.setThirdCommand(command);
 		}
 		else {
 			throw new XmlCanvasException("Command position not supported: '" + position + "'");

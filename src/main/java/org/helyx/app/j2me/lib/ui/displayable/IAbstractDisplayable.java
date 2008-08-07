@@ -4,15 +4,11 @@ import javax.microedition.lcdui.Displayable;
 
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 
-public interface IAbstractDisplayable {
+public interface IAbstractDisplayable extends DisplayableListener {
 
 	boolean isFullScreenMode();
 	
 	String getTitle();
-	
-	void afterDisplayableSelection(IAbstractDisplayable previous);
-
-	void beforeDisplayableSelection(IAbstractDisplayable previous);
 
 	Displayable getDisplayable();
 	

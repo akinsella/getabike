@@ -8,7 +8,7 @@ import javax.microedition.lcdui.Displayable;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.util.DialogUtil;
 
-public abstract class AbstractDisplayable implements DisplayableListener, IAbstractDisplayable, CommandListener {
+public abstract class AbstractDisplayable implements IAbstractDisplayable, CommandListener {
 	
 	private static final String CAT = "ABSTRACT_DISPLAYABLE";
 	
@@ -48,25 +48,25 @@ public abstract class AbstractDisplayable implements DisplayableListener, IAbstr
 
 	public void show() {
 		changeDisplayable(this, false, false);
-		((IAbstractDisplayable)this).afterDisplayableSelection(null);
+		afterDisplayableSelection(null);
 	}
 
 	public void showDisplayable(IAbstractDisplayable displayable) {
-		((IAbstractDisplayable)displayable).beforeDisplayableSelection(this);
+		beforeDisplayableSelection(this);
 		changeDisplayable(displayable, true, false);
-		((IAbstractDisplayable)displayable).afterDisplayableSelection(this);
+		afterDisplayableSelection(this);
 	}
 
 	public void showDisplayable(IAbstractDisplayable displayable, boolean goBack) {
-		((IAbstractDisplayable)displayable).beforeDisplayableSelection(this);
+		beforeDisplayableSelection(this);
 		changeDisplayable(displayable, true, goBack);
-		((IAbstractDisplayable)displayable).afterDisplayableSelection(this);
+		afterDisplayableSelection(this);
 	}
 
 	public void showDisplayable(IAbstractDisplayable displayable, boolean doTranstion, boolean goBack) {
-		((IAbstractDisplayable)displayable).beforeDisplayableSelection(this);
+		beforeDisplayableSelection(this);
 		changeDisplayable(displayable, doTranstion, goBack);
-		((IAbstractDisplayable)displayable).afterDisplayableSelection(this);
+		afterDisplayableSelection(this);
 	}
 	
 	protected void changeDisplayable(IAbstractDisplayable targetDisplayable, boolean doTransition, boolean goBack) {
@@ -74,9 +74,9 @@ public abstract class AbstractDisplayable implements DisplayableListener, IAbstr
 	}
 
 	public void returnToPreviousDisplayable() {
-		((IAbstractDisplayable)previousDisplayable).beforeDisplayableSelection(this);
+		beforeDisplayableSelection(this);
 		changeDisplayable(previousDisplayable, true, true);
-		((IAbstractDisplayable)previousDisplayable).afterDisplayableSelection(this);
+		afterDisplayableSelection(this);
 	}
 
 	public AbstractMIDlet getMidlet() {

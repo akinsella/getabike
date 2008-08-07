@@ -1,15 +1,14 @@
 package org.helyx.app.j2me.lib.ui.displayable;
 
-import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
+import org.helyx.app.j2me.lib.ui.displayable.transition.IViewTransition;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
@@ -19,16 +18,16 @@ import org.helyx.app.j2me.lib.ui.util.GraphicsUtil;
 import org.helyx.app.j2me.lib.ui.util.KeyUtil;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 
-public abstract class AbstractCanvas extends AbstractDisplayable {
+public abstract class AbstractView extends AbstractDisplayable {
 
 	private static final String CAT = "ABSTRACT_CANVAS";
 	
 	protected String title;
 	protected boolean fullScreenMode = false;
 	
-	private Command primaryAction;
-	private Command secondaryAction;
-	private Command thirdAction;
+	private Command primaryCommand;
+	private Command secondaryCommand;
+	private Command thirdCommand;
 	
 	protected boolean titleEnabled = true;
 	protected boolean menuEnabled = true;
@@ -37,7 +36,7 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 	
 	protected boolean paintBackgroundColor = true;
 
-	public AbstractCanvas(AbstractMIDlet midlet) {
+	public AbstractView(AbstractMIDlet midlet) {
 		super(midlet);
 		init();
 	}
@@ -82,16 +81,16 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 		int gameAction = canvas.getGameAction(keyCode);
 		
 		if (menuEnabled) {
-		    if (gameAction == GameCanvas.FIRE && primaryAction != null && primaryAction.isEnabled()) {
-				primaryAction.getAction().run(null);
+		    if (gameAction == GameCanvas.FIRE && primaryCommand != null && primaryCommand.isEnabled()) {
+				primaryCommand.getAction().run(null);
 		    	return true;
 			}
-		    else if (KeyUtil.isRightSoftKey(keyCode) && secondaryAction != null && secondaryAction.isEnabled()) {
-		    	secondaryAction.getAction().run(null);
+		    else if (KeyUtil.isRightSoftKey(keyCode) && secondaryCommand != null && secondaryCommand.isEnabled()) {
+		    	secondaryCommand.getAction().run(null);
 		    	return true;
 			}
-		    else if (KeyUtil.isLeftSoftKey(keyCode) && thirdAction != null && thirdAction.isEnabled()) {
-		    	thirdAction.getAction().run(null);
+		    else if (KeyUtil.isLeftSoftKey(keyCode) && thirdCommand != null && thirdCommand.isEnabled()) {
+		    	thirdCommand.getAction().run(null);
 		    	return true;
 		    }
 		}
@@ -132,20 +131,20 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 		canvas.setFullScreenMode(fullScreenMode);
 	}
 
-	public Canvas getCanvas() {
+	public GameCanvas getCanvas() {
 		return canvas;
 	}
 
-	public Command getPrimaryAction() {
-		return primaryAction;
+	public Command getPrimaryCommand() {
+		return primaryCommand;
 	}
 
-	public Command getSecondaryAction() {
-		return secondaryAction;
+	public Command getSecondaryCommand() {
+		return secondaryCommand;
 	}
 
-	public Command getThirdAction() {
-		return thirdAction;
+	public Command getThirdCommand() {
+		return thirdCommand;
 	}
 	
 	public boolean isTitleEnabled() {
@@ -209,7 +208,7 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 	}
 
 	private boolean shouldPaintMenu() {
-		return menuEnabled && (thirdAction != null || primaryAction != null || secondaryAction != null);
+		return menuEnabled && (thirdCommand != null || primaryCommand != null || secondaryCommand != null);
 	}
 	
 	protected boolean shouldPaintTitle() {
@@ -220,16 +219,18 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 		return canvas;
 	}
 	
-	protected void changeDisplayable(IAbstractDisplayable targetDisplayable, boolean doTransition, boolean reverse) {
+	protected void changeDisplayable(IAbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
 		Log.debug(CAT, "Current displayable: [" + getClass().getName() + "] title='" + getTitle() + "'");
 		Log.debug(CAT, "Target displayable: [" + targetDisplayable.getClass().getName() + "] title='" + targetDisplayable.getTitle() + "'");
 
-		if (targetDisplayable instanceof AbstractCanvas) {
-			AbstractCanvas abstractCanvas = (AbstractCanvas)targetDisplayable;
+		if (targetDisplayable instanceof AbstractView) {
+			AbstractView abstractCanvas = (AbstractView)targetDisplayable;
 
-			if (doTransition) {
-				canvas.doCanvasTransition(abstractCanvas, reverse);
+			try {
+				canvas.doCanvasTransition(abstractCanvas, canvasTransition);
 			}
+			catch(Throwable t) { Log.warn(CAT, t); }
+
 			canvas.setAbstractCanvas(abstractCanvas);
 		} 
 		else {
@@ -284,32 +285,32 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 		graphics.setFont(FontUtil.SMALL_BOLD);
 		graphics.drawLine(menuArea.location.x, menuArea.location.y, menuArea.location.x + menuArea.size.width, menuArea.location.y);
 
-		if (thirdAction != null) {
-			graphics.drawString(thirdAction.getText(), menuArea.location.x, menuArea.location.y + (menuArea.size.height - FontUtil.SMALL_BOLD.getHeight()) / 2 + 1, Graphics.LEFT | Graphics.TOP);
+		if (thirdCommand != null) {
+			graphics.drawString(thirdCommand.getText(), menuArea.location.x, menuArea.location.y + (menuArea.size.height - FontUtil.SMALL_BOLD.getHeight()) / 2 + 1, Graphics.LEFT | Graphics.TOP);
 		}
 
-		if (primaryAction != null) {
-			graphics.drawString(primaryAction.getText(), menuArea.location.x + menuArea.size.width / 2, menuArea.location.y + (menuArea.size.height - FontUtil.SMALL_BOLD.getHeight()) / 2 + 1, Graphics.HCENTER | Graphics.TOP);
+		if (primaryCommand != null) {
+			graphics.drawString(primaryCommand.getText(), menuArea.location.x + menuArea.size.width / 2, menuArea.location.y + (menuArea.size.height - FontUtil.SMALL_BOLD.getHeight()) / 2 + 1, Graphics.HCENTER | Graphics.TOP);
 		}
 
-		if (secondaryAction != null) {
-			graphics.drawString(secondaryAction.getText(), menuArea.location.x + menuArea.size.width, menuArea.location.y + (menuArea.size.height - FontUtil.SMALL_BOLD.getHeight()) / 2 + 1, Graphics.RIGHT | Graphics.TOP);
+		if (secondaryCommand != null) {
+			graphics.drawString(secondaryCommand.getText(), menuArea.location.x + menuArea.size.width, menuArea.location.y + (menuArea.size.height - FontUtil.SMALL_BOLD.getHeight()) / 2 + 1, Graphics.RIGHT | Graphics.TOP);
 		}
 		
 	}
 
 	protected abstract void paint(Graphics graphics);
 	
-	public void setPrimaryAction(Command primaryAction) {
-		this.primaryAction = primaryAction;
+	public void setPrimaryCommand(Command primaryCommand) {
+		this.primaryCommand = primaryCommand;
 	}
 
-	public void setSecondaryAction(Command secondaryAction) {
-		this.secondaryAction = secondaryAction;
+	public void setSecondaryCommand(Command secondaryCommand) {
+		this.secondaryCommand = secondaryCommand;
 	}
 
-	public void setThirdAction(Command thirdAction) {
-		this.thirdAction = thirdAction;
+	public void setThirdCommand(Command thirdCommand) {
+		this.thirdCommand = thirdCommand;
 	}
 
 	public static final class AbstractGameCanvas extends GameCanvas {
@@ -319,7 +320,7 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 		protected boolean debug = false;
 		protected int lastKeyCode = 0;
 		
-		protected AbstractCanvas abstractCanvas;
+		protected AbstractView abstractCanvas;
 
 		protected AbstractGameCanvas() {
 			super(false);
@@ -329,7 +330,7 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 			return super.getGraphics();
 		}
 
-		public void setAbstractCanvas(AbstractCanvas abstractCanvas) {
+		public void setAbstractCanvas(AbstractView abstractCanvas) {
 			Log.debug(CAT, "Current canvas: " + this.abstractCanvas);
 			Log.debug(CAT, "New canvas: " + abstractCanvas);
 			this.abstractCanvas = abstractCanvas;
@@ -425,72 +426,9 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 			}
 		}
 
-		public void doCanvasTransition(AbstractCanvas targetAbstractCanvas, boolean goBack) {
+		public void doCanvasTransition(AbstractView targetAbstractCanvas, IViewTransition canvasTransition) {
 			keyEventEnabled = false;
 			try {
-				Graphics graphics = getGraphics();
-				int width = getWidth();
-				int height = getHeight();
-
-				
-				Image srcImage = Image.createImage(width, height);
-				Image destImage = Image.createImage(width, height);
-				
-				if (abstractCanvas != null) {
-					abstractCanvas.onPaint(srcImage.getGraphics());
-				}
-				else {
-					Graphics srcGraphics = srcImage.getGraphics();
-					srcGraphics.setColor(ColorUtil.WHITE);
-					srcGraphics.fillRect(0, 0, getWidth(), getHeight());
-				}
-				targetAbstractCanvas.onPaint(destImage.getGraphics());
-
-				
-				long start = System.currentTimeMillis();
-				
-				int doTransitionCounter = 0;
-				int increment = width / 5;
-				if (goBack) {
-					doTransitionCounter = width;
-					increment *= -1;
-					
-					while (true) {
-						doTransitionCounter += increment;
-
-						graphics.drawImage(srcImage, width - doTransitionCounter, 0, Graphics.TOP | Graphics.LEFT);
-						graphics.drawImage(destImage, 0 - doTransitionCounter, 0, Graphics.TOP | Graphics.LEFT);
-						flushGraphics();
-
-						try { Thread.sleep(10); } catch (InterruptedException e) { Log.warn(CAT, e); }
-
-						if (doTransitionCounter + increment <= 0) {
-							graphics.drawImage(destImage, 0, 0, Graphics.TOP | Graphics.LEFT);
-							flushGraphics();
-							break;
-						}
-					}
-				}
-				else {
-					while (true) {
-						doTransitionCounter += increment;
-						
-						graphics.drawImage(srcImage, 0 - doTransitionCounter, 0, Graphics.TOP | Graphics.LEFT);
-						graphics.drawImage(destImage, width - doTransitionCounter, 0, Graphics.TOP | Graphics.LEFT);
-
-						flushGraphics();
-
-						try { Thread.sleep(10); } catch (InterruptedException e) { Log.warn(CAT, e); }
-
-						if (doTransitionCounter + increment >= width) {
-							graphics.drawImage(destImage, 0, 0, Graphics.TOP | Graphics.LEFT);
-							flushGraphics();
-							break;
-						}
-					}
-				}
-				
-				Log.debug(CAT, "Screen transition time ellapsed: " + Math.abs(System.currentTimeMillis() - start) + " ms");
 			}
 			finally {
 				keyEventEnabled = true;

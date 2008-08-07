@@ -64,7 +64,7 @@ public class MenuListView extends AbstractView {
 					MenuItem menuItem = getMenu().getSelectedMenuItem();
 					if (menuItem != null) {
 						getMenu().setCheckedMenuItem(menuItem);
-						MenuListView.this.getCanvas().repaint();
+						MenuListView.this.getViewCanvas().repaint();
 					}
 				}
 				
@@ -87,7 +87,7 @@ public class MenuListView extends AbstractView {
 	public void setMenu(Menu menu) {
 		this.menu = menu;
 		menu.setSelectedMenuItemIndex(0);
-		canvas.repaint();
+		viewCanvas.repaint();
 	}
 
 	protected void paint(Graphics g) {
@@ -196,7 +196,7 @@ public class MenuListView extends AbstractView {
  	}
 
 	protected void onKeyPressed(int keyCode) {
-		int gameAction = canvas.getGameAction(keyCode);
+		int gameAction = viewCanvas.getGameAction(keyCode);
 		Log.debug(CAT, "[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
@@ -216,7 +216,7 @@ public class MenuListView extends AbstractView {
 	}
 
 	protected void onKeyRepeated(int keyCode) {
-		int gameAction = canvas.getGameAction(keyCode);
+		int gameAction = viewCanvas.getGameAction(keyCode);
 		Log.debug(CAT, "[onKeyRepeated] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
@@ -243,7 +243,7 @@ public class MenuListView extends AbstractView {
 		}
 		getMenu().setSelectedMenuItemIndex(selectedOffset);
 		Log.debug(CAT, "Scroll Up - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset);
-		canvas.repaint();
+		viewCanvas.repaint();
 	}
 
 	private void scrollDown() {
@@ -264,7 +264,7 @@ public class MenuListView extends AbstractView {
 		}
 		getMenu().setSelectedMenuItemIndex(selectedOffset);
 		Log.debug(CAT, "Scroll Down - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset + ", visibleItemCount: " + visibleItemCount + ", length: " + length);
-		canvas.repaint();
+		viewCanvas.repaint();
 	}
 
 }

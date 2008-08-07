@@ -71,7 +71,7 @@ public class SplashScreenView extends AbstractView {
 					VectorUtil.addElementsToVector(tasksToRun, new DataCleanUpTaskFactory().getTasks());
 				}
 								
-				VectorUtil.addElementsToVector(tasksToRun, new EachRunTaskFactory(getMidlet(), getCanvas()).getTasks());
+				VectorUtil.addElementsToVector(tasksToRun, new EachRunTaskFactory(getMidlet(), getViewCanvas()).getTasks());
 
 				if (oldVersion == null) {
 					Log.info(CAT, "No previous version found.");
@@ -79,7 +79,7 @@ public class SplashScreenView extends AbstractView {
 				}
 				else if (!newVersion.equals(oldVersion)) {
 					Log.info(CAT, "Old version is different from new Version");
-					VectorUtil.addElementsToVector(tasksToRun, new ApplicationUpdateTaskFactory(getCanvas(), oldVersion, newVersion).getTasks());
+					VectorUtil.addElementsToVector(tasksToRun, new ApplicationUpdateTaskFactory(getViewCanvas(), oldVersion, newVersion).getTasks());
 				}
 				else {
 					Log.info(CAT, "Application version is the same one since last run");

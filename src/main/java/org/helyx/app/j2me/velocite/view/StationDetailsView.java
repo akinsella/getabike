@@ -68,7 +68,7 @@ public class StationDetailsView extends AbstractView {
 	}
 
 	protected void onKeyPressed(int keyCode) {
-		int gameAction = canvas.getGameAction(keyCode);
+		int gameAction = viewCanvas.getGameAction(keyCode);
 		Log.info(CAT, "[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.LEFT) {
 			returnToPreviousDisplayable();
@@ -96,7 +96,7 @@ public class StationDetailsView extends AbstractView {
 	}
 
 	protected void paint(Graphics g) {
-		int canvasWidth = canvas.getWidth();
+		int canvasWidth = viewCanvas.getWidth();
  
 		Font smallFont = FontUtil.SMALL;
 		Font smallBoldFont = FontUtil.SMALL_BOLD;

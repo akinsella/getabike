@@ -140,7 +140,7 @@ public class StationListView extends AbstractView {
 			stationArray = new Station[0];
 		}
 		this.stationArray = stationArray;
-		canvas.repaint();
+		viewCanvas.repaint();
 	}
 
 	protected void paint(Graphics g) {
@@ -253,7 +253,7 @@ public class StationListView extends AbstractView {
 	}
 
 	protected void onKeyPressed(int keyCode) {
-		int gameAction = canvas.getGameAction(keyCode);
+		int gameAction = viewCanvas.getGameAction(keyCode);
 		Log.info(CAT, "[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
@@ -270,7 +270,7 @@ public class StationListView extends AbstractView {
 	}
 
 	protected void onKeyRepeated(int keyCode) {
-		int gameAction = canvas.getGameAction(keyCode);
+		int gameAction = viewCanvas.getGameAction(keyCode);
 		Log.info(CAT, "[onKeyRepeated] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
@@ -288,7 +288,7 @@ public class StationListView extends AbstractView {
 			topOffset = selectedOffset;
 		}
 		Log.info(CAT, "Scroll Up - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset);
-		canvas.repaint();
+		viewCanvas.repaint();
 	}
 
 	private void scrollDown() {
@@ -308,7 +308,7 @@ public class StationListView extends AbstractView {
 			}	
 		}
 		Log.info(CAT, "Scroll Down - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset + ", visibleItemCount: " + visibleItemCount + ", length: " + length);
-		canvas.repaint();
+		viewCanvas.repaint();
 	}
 	
 	private ProgressListener loadStationListProgressListener = new ProgressAdapter(CAT) {

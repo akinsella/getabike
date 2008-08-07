@@ -102,7 +102,7 @@ public class LoadTaskView extends AbstractView {
 
 			public void onStart(String eventMessage, Object eventData) {
 				hasStarted = true;
-				canvas.repaint();
+				viewCanvas.repaint();
 				timer.scheduleAtFixedRate(repaintTimerTask, 0, 100);
 			}
 			
@@ -111,13 +111,13 @@ public class LoadTaskView extends AbstractView {
 					Log.info(this.getCat(), eventData.toString());
 				}
 				label = eventMessage;
-				canvas.repaint();
+				viewCanvas.repaint();
 			}
 
 			public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
 				repaintTimerTask.cancel();
 				timer.cancel();
-				canvas.repaint();
+				viewCanvas.repaint();
 			}
 
 		});
@@ -169,7 +169,7 @@ public class LoadTaskView extends AbstractView {
 			if (counter + 1 >= 8) {
 				counter = 0;
 			}
-			canvas.repaint();
+			viewCanvas.repaint();
 		}
 		
 	};

@@ -33,7 +33,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 	protected boolean titleEnabled = true;
 	protected boolean menuEnabled = true;
 	
-	protected static AbstractGameCanvas canvas = new AbstractGameCanvas();
+	protected static ViewCanvas viewCanvas = new ViewCanvas();
 	
 	protected boolean paintBackgroundColor = true;
 
@@ -66,7 +66,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 	}
 
 	protected void keyPressed(int keyCode) {
-		Log.debug(CAT, "Key pressed: '" + canvas.getKeyName(keyCode) + "' - Key code: '" + keyCode + "'");
+		Log.debug(CAT, "Key pressed: '" + viewCanvas.getKeyName(keyCode) + "' - Key code: '" + keyCode + "'");
 
 		if (!checkMenuEvent(keyCode)) {
 			onKeyPressed(keyCode);
@@ -74,12 +74,12 @@ public abstract class AbstractView extends AbstractDisplayable {
 	}
 
 	protected void keyRepeated(int keyCode) {
-		Log.debug(CAT, "Key repeated: '" + canvas.getKeyName(keyCode) + "' - Key code: '" + keyCode + "'");
+		Log.debug(CAT, "Key repeated: '" + viewCanvas.getKeyName(keyCode) + "' - Key code: '" + keyCode + "'");
 		onKeyRepeated(keyCode);
 	}
 
 	private boolean checkMenuEvent(int keyCode) {
-		int gameAction = canvas.getGameAction(keyCode);
+		int gameAction = viewCanvas.getGameAction(keyCode);
 		
 		if (menuEnabled) {
 		    if (gameAction == GameCanvas.FIRE && primaryCommand != null && primaryCommand.isEnabled()) {
@@ -112,7 +112,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 	}
 
 	public Displayable getDisplayable() {
-		return canvas;
+		return viewCanvas;
 	}
 
 	public String getTitle() {
@@ -129,11 +129,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 	
 	public void setFullScreenMode(boolean fullScreenMode) {
 		this.fullScreenMode = fullScreenMode;
-		canvas.setFullScreenMode(fullScreenMode);
-	}
-
-	public GameCanvas getCanvas() {
-		return canvas;
+		viewCanvas.setFullScreenMode(fullScreenMode);
 	}
 
 	public Command getPrimaryCommand() {
@@ -176,15 +172,15 @@ public abstract class AbstractView extends AbstractDisplayable {
 		
 		Rectangle titleArea = computeTitleArea(graphics);
 		Rectangle menuArea = computeMenuArea(graphics);
-		return new Rectangle(0, titleArea.size.height, canvas.getWidth(), canvas.getHeight() - titleArea.size.height - menuArea.size.height);
+		return new Rectangle(0, titleArea.size.height, viewCanvas.getWidth(), viewCanvas.getHeight() - titleArea.size.height - menuArea.size.height);
 	}
 	
 	protected Rectangle computeMenuArea(Graphics graphics) {
-		return new Rectangle(0, canvas.getHeight() - (shouldPaintMenu() ? FontUtil.SMALL_BOLD.getHeight() : 0) - 1, canvas.getWidth(), (shouldPaintMenu() ? FontUtil.SMALL_BOLD.getHeight() : 0) + 1);
+		return new Rectangle(0, viewCanvas.getHeight() - (shouldPaintMenu() ? FontUtil.SMALL_BOLD.getHeight() : 0) - 1, viewCanvas.getWidth(), (shouldPaintMenu() ? FontUtil.SMALL_BOLD.getHeight() : 0) + 1);
 	}
 
 	protected Rectangle computeTitleArea(Graphics graphics) {
-		return new Rectangle(0, 0, canvas.getWidth(), shouldPaintTitle() ? FontUtil.SMALL_BOLD.getHeight() : 0);
+		return new Rectangle(0, 0, viewCanvas.getWidth(), shouldPaintTitle() ? FontUtil.SMALL_BOLD.getHeight() : 0);
 	}
 
 	public void onPaint(Graphics graphics) {
@@ -194,17 +190,17 @@ public abstract class AbstractView extends AbstractDisplayable {
 		paint(graphics);
 		paintTitleArea(graphics);
 		paintMenuArea(graphics);
-		if (canvas.isDebug()) {
+		if (viewCanvas.isDebug()) {
 			paintDebug(graphics);
 		}
 	}
 
 	private void paintDebug(Graphics graphics) {
-		int lastKeyCode = canvas.getLastKeyCode();
-		if (canvas != null && canvas.getLastKeyCode() != 0) {
+		int lastKeyCode = viewCanvas.getLastKeyCode();
+		if (viewCanvas != null && viewCanvas.getLastKeyCode() != 0) {
 			graphics.setColor(ColorUtil.BLACK);
 			graphics.setFont(FontUtil.SMALL_BOLD);
-			graphics.drawString("Code: " + lastKeyCode + ", Name: " + canvas.getKeyName(lastKeyCode) + ", : " + canvas.getGameAction(lastKeyCode), 0, 0, Graphics.TOP | Graphics.LEFT);
+			graphics.drawString("Code: " + lastKeyCode + ", Name: " + viewCanvas.getKeyName(lastKeyCode) + ", : " + viewCanvas.getGameAction(lastKeyCode), 0, 0, Graphics.TOP | Graphics.LEFT);
 		}
 	}
 
@@ -216,8 +212,8 @@ public abstract class AbstractView extends AbstractDisplayable {
 		return titleEnabled && title != null;
 	}
 	
-	public AbstractGameCanvas getAbstractGameCanvas() {
-		return canvas;
+	public ViewCanvas getViewCanvas() {
+		return viewCanvas;
 	}
 	
 	protected void changeDisplayable(AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
@@ -225,17 +221,17 @@ public abstract class AbstractView extends AbstractDisplayable {
 		Log.debug(CAT, "Target displayable: [" + targetDisplayable.getClass().getName() + "] title='" + targetDisplayable.getTitle() + "'");
 
 		if (targetDisplayable instanceof AbstractView) {
-			AbstractView abstractCanvas = (AbstractView)targetDisplayable;
+			AbstractView abstractView = (AbstractView)targetDisplayable;
 
 			try {
-				canvas.doCanvasTransition(abstractCanvas, canvasTransition);
+				viewCanvas.doCanvasTransition(abstractView, canvasTransition);
 			}
 			catch(Throwable t) { Log.warn(CAT, t); }
 
-			canvas.setAbstractCanvas(abstractCanvas);
+			viewCanvas.setAbstractCanvas(abstractView);
 		} 
 		else {
-			canvas.setAbstractCanvas(null);
+			viewCanvas.setAbstractCanvas(null);
 		}
 		
 		Displayable currentDisplayable = Display.getDisplay(getMidlet()).getCurrent();
@@ -251,7 +247,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 		Color bgColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_BACKGROUND);
 
         g.setColor(bgColor.intValue());
-        g.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        g.fillRect(0, 0, viewCanvas.getWidth(), viewCanvas.getHeight());
 	}
 
 	private void paintTitleArea(Graphics graphics) {
@@ -312,129 +308,6 @@ public abstract class AbstractView extends AbstractDisplayable {
 
 	public void setThirdCommand(Command thirdCommand) {
 		this.thirdCommand = thirdCommand;
-	}
-
-	public static final class AbstractGameCanvas extends GameCanvas {
-
-		private boolean keyEventEnabled = true;
-
-		protected boolean debug = false;
-		protected int lastKeyCode = 0;
-		
-		protected AbstractView abstractCanvas;
-
-		protected AbstractGameCanvas() {
-			super(false);
-		}
-		
-		public Graphics getGraphics() {
-			return super.getGraphics();
-		}
-
-		public void setAbstractCanvas(AbstractView abstractCanvas) {
-			Log.debug(CAT, "Current canvas: " + this.abstractCanvas);
-			Log.debug(CAT, "New canvas: " + abstractCanvas);
-			this.abstractCanvas = abstractCanvas;
-			if (abstractCanvas != null) {
-				abstractCanvas.getAbstractGameCanvas().repaint();
-			}
-		}
-
-		public boolean isDebug() {
-			return debug;
-		}
-
-		public int getLastKeyCode() {
-			return lastKeyCode;
-		}
-		
-		public void paint(Graphics graphics) {
-			try {
-				if (abstractCanvas != null) {
-					abstractCanvas.onPaint(graphics);
-				}
-			}
-			catch(Throwable t) {
-				Log.warn(CAT, t);
-			}
-		}
-
-		protected void keyPressed(int keyCode) {
-			if (keyEventEnabled) {
-				if (abstractCanvas != null) {
-					abstractCanvas.keyPressed(keyCode);
-				}
-				lastKeyCode = keyCode;
-				if (debug) {
-					repaint();
-				}
-			}
-		}
-
-		protected void keyReleased(int keyCode) {
-			if (keyEventEnabled) {
-				if (abstractCanvas != null) {
-					abstractCanvas.keyReleased(keyCode);
-				}
-				lastKeyCode = keyCode;
-				if (debug) {
-					repaint();
-				}
-			}
-		}
-
-		protected void keyRepeated(int keyCode) {
-			if (keyEventEnabled) {
-				if (abstractCanvas != null) {
-					abstractCanvas.keyRepeated(keyCode);
-				}
-				lastKeyCode = keyCode;
-				if (debug) {
-					repaint();
-				}
-			}
-		}
-
-		protected void pointerDragged(int x, int y) {
-			if (keyEventEnabled) {
-				if (abstractCanvas != null) {
-					abstractCanvas.pointerDragged(x, y);
-				}
-			}
-		}
-
-		protected void pointerPressed(int x, int y) {
-			if (keyEventEnabled) {
-				if (abstractCanvas != null) {
-					abstractCanvas.pointerPressed(x, y);
-				}
-			}
-		}
-
-		protected void pointerReleased(int x, int y) {
-			if (keyEventEnabled) {
-				if (abstractCanvas != null) {
-					abstractCanvas.pointerReleased(x, y);
-				}
-			}
-		}
-
-		protected void sizeChanged(int w, int h) {
-			if (abstractCanvas != null) {
-				if (abstractCanvas != null) {
-					abstractCanvas.sizeChanged(w, h);
-				}
-			}
-		}
-
-		public void doCanvasTransition(AbstractView targetAbstractCanvas, IViewTransition canvasTransition) {
-			keyEventEnabled = false;
-			try {
-			}
-			finally {
-				keyEventEnabled = true;
-			}
-		}
 	}
 
 }

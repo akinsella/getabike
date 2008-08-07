@@ -99,7 +99,7 @@ public class MenuView extends AbstractView {
 		}
 
 		protected void onKeyPressed(int keyCode) {
-			int gameAction = canvas.getGameAction(keyCode);
+			int gameAction = viewCanvas.getGameAction(keyCode);
 		    if (gameAction == GameCanvas.DOWN) {
 		    	scrollDown();
 		    }
@@ -122,7 +122,7 @@ public class MenuView extends AbstractView {
 		}
 
 		protected void onKeyRepeated(int keyCode) {
-			int gameAction = canvas.getGameAction(keyCode);
+			int gameAction = viewCanvas.getGameAction(keyCode);
 		    if (gameAction == GameCanvas.DOWN) {
 		    	scrollDown();
 		    }
@@ -139,7 +139,7 @@ public class MenuView extends AbstractView {
 				selectedIndex = menu.menuItemCount() - 1;
 			}
 
-			canvas.repaint();
+			viewCanvas.repaint();
 		}
 
 		private void scrollDown() {
@@ -150,7 +150,7 @@ public class MenuView extends AbstractView {
 				selectedIndex = 0;
 			}
 			
-			canvas.repaint();
+			viewCanvas.repaint();
 		}
 
 		private void loadLogoImage() {

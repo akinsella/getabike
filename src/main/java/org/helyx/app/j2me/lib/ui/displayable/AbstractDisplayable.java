@@ -3,7 +3,9 @@ package org.helyx.app.j2me.lib.ui.displayable;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 
+import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.theme.Theme;
 import org.helyx.app.j2me.lib.ui.displayable.listener.DisplayableListener;
 import org.helyx.app.j2me.lib.ui.util.DialogUtil;
 
@@ -50,6 +52,14 @@ public abstract class AbstractDisplayable implements DisplayableListener {
 	public void show() {
 		changeDisplayable(this, false, false);
 		afterDisplayableSelection(null);
+	}
+	
+	public Theme getTheme() {
+		return midlet.getTheme();
+	}
+	
+	public Locale getLocale() {
+		return midlet.getLocale();
 	}
 
 	public void showDisplayable(AbstractDisplayable displayable) {

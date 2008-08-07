@@ -8,7 +8,7 @@ import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.log.FileLogWriter;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.theme.Theme;
+import org.helyx.app.j2me.lib.ui.theme.Theme;
 import org.helyx.app.j2me.velocite.PrefConstants;
 
 public class AbstractMIDlet extends MIDlet {

@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.view;
+package org.helyx.app.j2me.velocite.ui.view;
 
 import java.util.Enumeration;
 import java.util.Vector;

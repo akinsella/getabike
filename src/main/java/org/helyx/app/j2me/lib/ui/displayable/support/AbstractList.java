@@ -13,6 +13,7 @@ public abstract class AbstractList extends AbstractDisplayable {
 	public AbstractList(AbstractMIDlet midlet, String title, int listType) {
 		super(midlet);
 		list = new List(title, listType);
+		list.setCommandListener(this);
 	}
 
 	public Displayable getDisplayable() {

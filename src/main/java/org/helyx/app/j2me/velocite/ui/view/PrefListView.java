@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.view;
+package org.helyx.app.j2me.velocite.ui.view;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;

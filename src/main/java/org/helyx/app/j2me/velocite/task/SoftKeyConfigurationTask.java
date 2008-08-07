@@ -67,7 +67,7 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 			int leftSoftKey = 0;
 			int rightSoftKey = 0;
 
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recerche auto. en cours ...");
+			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche auto. en cours ...");
 			for (int i = 0 ; i <= 256 ; i++) {
 				String positiveKeyName = null;
 				String negativeKeyName = null;

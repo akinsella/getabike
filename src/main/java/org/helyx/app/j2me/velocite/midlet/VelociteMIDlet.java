@@ -6,8 +6,8 @@ import org.helyx.app.j2me.lib.i18n.ClasspathResourceBundleContentProviderFactory
 import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.i18n.ResourceBundle;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.theme.Theme;
-import org.helyx.app.j2me.velocite.view.SplashScreenView;
+import org.helyx.app.j2me.lib.ui.theme.Theme;
+import org.helyx.app.j2me.velocite.ui.view.SplashScreenView;
 
 
 public class VelociteMIDlet extends AbstractMIDlet {

@@ -61,8 +61,6 @@ public class StationLoaderProgressListener extends ProgressAdapter {
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Chargement terminé");
 			stationArray = null;
 			System.gc();
-	
-			progressDispatcher.fireEvent(eventType, eventMessage, eventData);
    		}
    		finally {
    			stationPersistenceService.dispose();

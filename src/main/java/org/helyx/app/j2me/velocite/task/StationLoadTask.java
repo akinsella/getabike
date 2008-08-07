@@ -11,7 +11,7 @@ import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationNameFilter;
 import org.helyx.app.j2me.velocite.data.carto.service.IStationPersistenceService;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
-import org.helyx.app.j2me.velocite.view.StationListView;
+import org.helyx.app.j2me.velocite.ui.view.StationListView;
 
 
 public class StationLoadTask extends AbstractProgressTask {

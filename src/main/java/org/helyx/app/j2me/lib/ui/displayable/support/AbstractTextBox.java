@@ -21,7 +21,8 @@ public abstract class AbstractTextBox extends AbstractDisplayable {
 
 	public AbstractTextBox(AbstractMIDlet midlet, String title) {
 		super(midlet);
-		this.textBox = new TextBox(title, "", 128, TextField.ANY);
+		textBox = new TextBox(title, "", 128, TextField.ANY);
+		textBox.setCommandListener(this);
 	}
 	
 	public Displayable getDisplayable() {

@@ -2,10 +2,7 @@ package org.helyx.app.j2me.velocite.data.carto.manager;
 
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
-import org.helyx.app.j2me.lib.manager.TaskManager;
-import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.velocite.data.carto.listener.StationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.HttpStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.ICityContentProviderFactory;
@@ -14,6 +11,7 @@ import org.helyx.app.j2me.velocite.data.carto.provider.factory.OrleansStationCon
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.StationContentProviderFactoryNoFoundExcepton;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener;
 
 public class CartoManager {
 
@@ -27,7 +25,7 @@ public class CartoManager {
 		super();
 	}
 	
-	public static void refreshAll(City city, final AbstractMIDlet midlet, final AbstractDisplayable currentDisplayable, final AbstractDisplayable targetDisplayable) throws CartoManagerException {
+	public static IProgressTask refreshAll(City city) throws CartoManagerException {
 
 		try {
 			ICityContentProviderFactory cpf = null;
@@ -47,9 +45,8 @@ public class CartoManager {
 			IContentProvider cp = cpf.getContentProviderFactory(city);
 			
 			IProgressTask progressTask = new ContentProviderProgressTaskAdapter(cp);
-			progressTask.addProgressListener(new StationLoaderProgressListener(progressTask.getProgressDispatcher()));
 	
-			TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, midlet, currentDisplayable, targetDisplayable);
+			return progressTask;
 		}
 		catch (StationContentProviderFactoryNoFoundExcepton e) {
 			throw new CartoManagerException(e);

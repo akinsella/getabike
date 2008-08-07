@@ -1,18 +1,20 @@
 package org.helyx.app.j2me.lib.ui.displayable;
 
+import javax.microedition.lcdui.Command;
+import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 
 import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.theme.Theme;
 import org.helyx.app.j2me.lib.ui.displayable.listener.DisplayableListener;
 import org.helyx.app.j2me.lib.ui.displayable.transition.BasicTransition;
 import org.helyx.app.j2me.lib.ui.displayable.transition.IViewTransition;
+import org.helyx.app.j2me.lib.ui.theme.Theme;
 import org.helyx.app.j2me.lib.ui.util.DialogUtil;
 
-public abstract class AbstractDisplayable implements DisplayableListener {
-	
+public abstract class AbstractDisplayable implements DisplayableListener, CommandListener {
+
 	private static final String CAT = "ABSTRACT_DISPLAYABLE";
 	
 	public AbstractDisplayable() {
@@ -102,6 +104,10 @@ public abstract class AbstractDisplayable implements DisplayableListener {
 	
 	public void dispose() {
 		
+	}
+	
+	public void commandAction(Command command, Displayable displayable) {
+
 	}
 	
 	public void showAlertMessage(String title, String message) {

@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.theme;
+package org.helyx.app.j2me.lib.ui.theme;
 
 import java.util.Hashtable;
 

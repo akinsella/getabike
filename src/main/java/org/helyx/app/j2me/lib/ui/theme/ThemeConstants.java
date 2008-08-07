@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.theme;
+package org.helyx.app.j2me.lib.ui.theme;
 
 public class ThemeConstants {
 	

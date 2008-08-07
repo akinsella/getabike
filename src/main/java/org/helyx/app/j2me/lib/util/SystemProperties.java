@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.util;
+package org.helyx.app.j2me.lib.util;
 
 public class SystemProperties {
 	  private static final String[] SYSPROPLISTS = {

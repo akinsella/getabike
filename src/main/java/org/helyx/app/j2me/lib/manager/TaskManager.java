@@ -3,7 +3,7 @@ package org.helyx.app.j2me.lib.manager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.ui.displayable.IAbstractDisplayable;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.view.LoadTaskView;
 
 public class TaskManager {
@@ -15,11 +15,11 @@ public class TaskManager {
 		super();
 	}
 
-	public static void runLoadTaskView(String taskDescription, IProgressTask progressTask, final AbstractMIDlet midlet, final IAbstractDisplayable currentDisplayable) {
+	public static void runLoadTaskView(String taskDescription, IProgressTask progressTask, final AbstractMIDlet midlet, final AbstractDisplayable currentDisplayable) {
 		runLoadTaskView(taskDescription, progressTask, midlet, currentDisplayable, null);
 	}
 	
-	public static void runLoadTaskView(String taskDescription, IProgressTask progressTask, final AbstractMIDlet midlet, final IAbstractDisplayable currentDisplayable, final IAbstractDisplayable targetDisplayable) {
+	public static void runLoadTaskView(String taskDescription, IProgressTask progressTask, final AbstractMIDlet midlet, final AbstractDisplayable currentDisplayable, final AbstractDisplayable targetDisplayable) {
 
 		final LoadTaskView loadTaskView = new LoadTaskView(midlet, taskDescription, progressTask);
 		if (targetDisplayable != null) {

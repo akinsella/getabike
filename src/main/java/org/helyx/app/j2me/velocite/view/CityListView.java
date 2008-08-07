@@ -6,7 +6,7 @@ import java.util.Vector;
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
+import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
@@ -25,7 +25,7 @@ public class CityListView extends MenuListView {
 	
 	private Vector cityList;
 
-	public CityListView(AbstractMIDlet midlet, IDisplayableReturnCallback displayableReturnCallback) throws CityManagerException {
+	public CityListView(AbstractMIDlet midlet, IReturnCallback displayableReturnCallback) throws CityManagerException {
 		super(midlet, true, displayableReturnCallback);
 		init();
 	}

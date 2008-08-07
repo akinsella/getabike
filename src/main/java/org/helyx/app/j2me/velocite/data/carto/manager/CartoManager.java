@@ -5,7 +5,7 @@ import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.manager.TaskManager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.ui.displayable.IAbstractDisplayable;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.velocite.data.carto.listener.StationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.HttpStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.ICityContentProviderFactory;
@@ -27,7 +27,7 @@ public class CartoManager {
 		super();
 	}
 	
-	public static void refreshAll(City city, final AbstractMIDlet midlet, final IAbstractDisplayable currentDisplayable, final IAbstractDisplayable targetDisplayable) throws CartoManagerException {
+	public static void refreshAll(City city, final AbstractMIDlet midlet, final AbstractDisplayable currentDisplayable, final AbstractDisplayable targetDisplayable) throws CartoManagerException {
 
 		try {
 			ICityContentProviderFactory cpf = null;

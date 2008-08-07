@@ -4,7 +4,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
-import org.helyx.app.j2me.lib.ui.displayable.AbstractView;
+import org.helyx.app.j2me.lib.ui.displayable.view.AbstractView;
 
 public class BasicTransition implements IViewTransition {
 

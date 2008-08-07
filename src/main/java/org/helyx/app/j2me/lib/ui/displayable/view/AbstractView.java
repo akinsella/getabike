@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.displayable;
+package org.helyx.app.j2me.lib.ui.displayable.view;
 
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
@@ -8,6 +8,7 @@ import javax.microedition.lcdui.game.GameCanvas;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.displayable.transition.IViewTransition;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
@@ -20,7 +21,7 @@ import org.helyx.app.j2me.lib.ui.widget.Command;
 
 public abstract class AbstractView extends AbstractDisplayable {
 
-	private static final String CAT = "ABSTRACT_CANVAS";
+	private static final String CAT = "ABSTRACT_VIEW";
 	
 	protected String title;
 	protected boolean fullScreenMode = false;
@@ -219,7 +220,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 		return canvas;
 	}
 	
-	protected void changeDisplayable(IAbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
+	protected void changeDisplayable(AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
 		Log.debug(CAT, "Current displayable: [" + getClass().getName() + "] title='" + getTitle() + "'");
 		Log.debug(CAT, "Target displayable: [" + targetDisplayable.getClass().getName() + "] title='" + targetDisplayable.getTitle() + "'");
 

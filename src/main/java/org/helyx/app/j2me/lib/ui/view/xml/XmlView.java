@@ -9,7 +9,7 @@ import org.helyx.app.j2me.lib.action.ActionRegistry;
 import org.helyx.app.j2me.lib.action.EmptyAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractView;
+import org.helyx.app.j2me.lib.ui.displayable.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.xml.CanvasNodeProcessor;
 import org.kxml2.kdom.Document;
 import org.xmlpull.v1.XmlPullParserException;

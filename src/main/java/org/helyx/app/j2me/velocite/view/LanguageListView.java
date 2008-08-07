@@ -7,7 +7,7 @@ import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
+import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
@@ -24,7 +24,7 @@ public class LanguageListView extends MenuListView {
 	
 	private Vector languageList;
 
-	public LanguageListView(AbstractMIDlet midlet, IDisplayableReturnCallback displayableReturnCallback) throws LanguageManagerException {
+	public LanguageListView(AbstractMIDlet midlet, IReturnCallback displayableReturnCallback) throws LanguageManagerException {
 		super(midlet, true, displayableReturnCallback);
 		init();
 	}

@@ -5,8 +5,8 @@ import javax.microedition.lcdui.Displayable;
 
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractTextBox;
-import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
+import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
+import org.helyx.app.j2me.lib.ui.displayable.support.AbstractTextBox;
 
 public class StationSearchView extends AbstractTextBox {
 	
@@ -18,9 +18,9 @@ public class StationSearchView extends AbstractTextBox {
 	private Command cmdBack;
 	private Command cmdValidate;
 	
-	private IDisplayableReturnCallback displayableReturnCallback;
+	private IReturnCallback displayableReturnCallback;
 	
-	public StationSearchView(AbstractMIDlet midlet, IDisplayableReturnCallback displayableReturnCallback) {
+	public StationSearchView(AbstractMIDlet midlet, IReturnCallback displayableReturnCallback) {
 		super(midlet, "Recherche de station");
 		this.displayableReturnCallback = displayableReturnCallback;
 		init();
@@ -37,8 +37,6 @@ public class StationSearchView extends AbstractTextBox {
 		textBox.addCommand(cmdBack);
 		cmdValidate = new Command("Valider", Command.ITEM, 2);
 		textBox.addCommand(cmdValidate);
-		
-		textBox.setCommandListener(this);
 	}
 
 	public void commandAction(Command command, Displayable displayable) {

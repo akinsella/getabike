@@ -9,7 +9,7 @@ import javax.microedition.lcdui.game.GameCanvas;
 import javax.microedition.midlet.AbstractMIDlet;
 
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.ui.displayable.IAbstractDisplayable;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.geometry.Point;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
@@ -244,7 +244,7 @@ public abstract class AbstractCanvas extends AbstractDisplayable {
 		return canvas;
 	}
 	
-	protected void changeDisplayable(IAbstractDisplayable targetDisplayable, boolean doTransition, boolean reverse) {
+	protected void changeDisplayable(AbstractDisplayable targetDisplayable, boolean doTransition, boolean reverse) {
 
 		if (targetDisplayable instanceof AbstractCanvas) {
 			Log.debug("targetDisplayable: [" + targetDisplayable.getClass().getName() + "] title='" + targetDisplayable.getTitle() + "'");

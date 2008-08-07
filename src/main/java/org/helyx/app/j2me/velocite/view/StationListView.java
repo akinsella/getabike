@@ -12,8 +12,8 @@ import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.task.ProgressListener;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractView;
-import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
+import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
+import org.helyx.app.j2me.lib.ui.displayable.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
@@ -91,7 +91,7 @@ public class StationListView extends AbstractView {
 		
 		menu.addMenuItem(new MenuItem("Chercher une station", new IAction() {
 			public void run(Object data) {
-				showDisplayable(new StationSearchView(getMidlet(), new IDisplayableReturnCallback() {
+				showDisplayable(new StationSearchView(getMidlet(), new IReturnCallback() {
 
 					public void onReturn(Object data) {
 						loadListContent();

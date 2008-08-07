@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.displayable;
+package org.helyx.app.j2me.lib.ui.displayable.view;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
@@ -9,7 +9,7 @@ import org.helyx.app.j2me.lib.ui.displayable.transition.IViewTransition;
 
 public class ViewCanvas extends GameCanvas {
 
-	private static final String CAT = "ABSTRACT_GAME_CANVAS";
+	private static final String CAT = "VIEW_CANVAS";
 	
 	private boolean keyEventEnabled = true;
 

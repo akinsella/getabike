@@ -7,8 +7,8 @@ import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractView;
-import org.helyx.app.j2me.lib.ui.displayable.IDisplayableReturnCallback;
+import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
+import org.helyx.app.j2me.lib.ui.displayable.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
@@ -27,7 +27,7 @@ public class MenuListView extends AbstractView {
 	private int visibleItemCount = 0;
 	private boolean checkable = false;
 	
-	private IDisplayableReturnCallback displayableReturnCallback;
+	private IReturnCallback displayableReturnCallback;
 	
 	private Menu menu;
 
@@ -37,7 +37,7 @@ public class MenuListView extends AbstractView {
 		init();
 	}
 
-	public MenuListView(AbstractMIDlet midlet, boolean checkable, IDisplayableReturnCallback displayableReturnCallback) {
+	public MenuListView(AbstractMIDlet midlet, boolean checkable, IReturnCallback displayableReturnCallback) {
 		super(midlet);
 		
 		this.displayableReturnCallback = displayableReturnCallback;

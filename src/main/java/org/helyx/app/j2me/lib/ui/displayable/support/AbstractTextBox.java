@@ -1,10 +1,11 @@
-package org.helyx.app.j2me.lib.ui.displayable;
+package org.helyx.app.j2me.lib.ui.displayable.support;
 
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.TextBox;
 import javax.microedition.lcdui.TextField;
 
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 
 public abstract class AbstractTextBox extends AbstractDisplayable {
 	
@@ -21,7 +22,6 @@ public abstract class AbstractTextBox extends AbstractDisplayable {
 	public AbstractTextBox(AbstractMIDlet midlet, String title) {
 		super(midlet);
 		this.textBox = new TextBox(title, "", 128, TextField.ANY);
-		textBox.setCommandListener(this);
 	}
 	
 	public Displayable getDisplayable() {

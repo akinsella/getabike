@@ -13,6 +13,7 @@ import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.task.ProgressListener;
 import org.helyx.app.j2me.lib.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
+import org.helyx.app.j2me.lib.ui.displayable.transition.BasicTransition;
 import org.helyx.app.j2me.lib.ui.displayable.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
@@ -80,7 +81,7 @@ public class StationListView extends AbstractView {
 				prefMenuListView = new MenuListView(getMidlet(), false);
 				prefMenuListView.setMenu(menu);
 				prefMenuListView.setPreviousDisplayable(StationListView.this);
-				showDisplayable(prefMenuListView, true, false);
+				showDisplayable(prefMenuListView, new BasicTransition());
 			}
 			
 		}));
@@ -316,18 +317,18 @@ public class StationListView extends AbstractView {
 		public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
 			switch (eventType) {
 				case ProgressEventType.ON_SUCCESS:
-					showDisplayable(StationListView.this, true);
+					showDisplayable(StationListView.this, new BasicTransition());
 					break;
 					
 				case ProgressEventType.ON_CANCEL:
-					showDisplayable(StationListView.this, true);
+					showDisplayable(StationListView.this, new BasicTransition());
 					break;
 	
 				case ProgressEventType.ON_ERROR:
 					Throwable throwable = (Throwable)eventData;
 					Log.warn(getCat(), throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
 					DialogUtil.showAlertMessage(getMidlet(), getDisplayable(), "Erreur", throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
-					showDisplayable(StationListView.this, true);
+					showDisplayable(StationListView.this, new BasicTransition());
 					break;
 					
 				default:

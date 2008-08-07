@@ -7,6 +7,8 @@ import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.theme.Theme;
 import org.helyx.app.j2me.lib.ui.displayable.listener.DisplayableListener;
+import org.helyx.app.j2me.lib.ui.displayable.transition.BasicTransition;
+import org.helyx.app.j2me.lib.ui.displayable.transition.IViewTransition;
 import org.helyx.app.j2me.lib.ui.util.DialogUtil;
 
 public abstract class AbstractDisplayable implements DisplayableListener {
@@ -50,7 +52,7 @@ public abstract class AbstractDisplayable implements DisplayableListener {
 	}
 
 	public void show() {
-		changeDisplayable(this, false, false);
+		changeDisplayable(this, new BasicTransition());
 		afterDisplayableSelection(null);
 	}
 	
@@ -64,31 +66,25 @@ public abstract class AbstractDisplayable implements DisplayableListener {
 
 	public void showDisplayable(AbstractDisplayable displayable) {
 		beforeDisplayableSelection(this);
-		changeDisplayable(displayable, true, false);
+		changeDisplayable(displayable, new BasicTransition());
 		afterDisplayableSelection(this);
 	}
 
-	public void showDisplayable(AbstractDisplayable displayable, boolean goBack) {
+	public void showDisplayable(AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
 		beforeDisplayableSelection(this);
-		changeDisplayable(displayable, true, goBack);
-		afterDisplayableSelection(this);
-	}
-
-	public void showDisplayable(AbstractDisplayable displayable, boolean doTranstion, boolean goBack) {
-		beforeDisplayableSelection(this);
-		changeDisplayable(displayable, doTranstion, goBack);
+		changeDisplayable(targetDisplayable, canvasTransition);
 		afterDisplayableSelection(this);
 	}
 	
 	public abstract Displayable getDisplayable();
 	
-	protected void changeDisplayable(AbstractDisplayable targetDisplayable, boolean doTransition, boolean goBack) {
+	protected void changeDisplayable(AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
 		Display.getDisplay(midlet).setCurrent(targetDisplayable.getDisplayable());
 	}
 
 	public void returnToPreviousDisplayable() {
 		beforeDisplayableSelection(this);
-		changeDisplayable(previousDisplayable, true, true);
+		changeDisplayable(previousDisplayable, new BasicTransition());
 		afterDisplayableSelection(this);
 	}
 

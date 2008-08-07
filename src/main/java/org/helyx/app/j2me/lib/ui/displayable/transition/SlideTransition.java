@@ -20,7 +20,7 @@ public class SlideTransition implements IViewTransition {
 	}
 
 	public void doTransition(Graphics graphics, AbstractView srcAbstractCanvas, AbstractView targetAbstractCanvas) {
-		GameCanvas canvas = srcAbstractCanvas.getCanvas();
+		GameCanvas canvas = srcAbstractCanvas.getViewCanvas();
 		int width = canvas.getWidth();
 		int height = canvas.getHeight();
 

@@ -3,28 +3,34 @@ package org.helyx.app.j2me.velocite.ui.view;
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
-import org.helyx.app.j2me.lib.ui.view.MenuListView;
+import org.helyx.app.j2me.lib.ui.view.PrefBaseListView;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
+import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
+import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManagerException;
 
-public class PrefListView extends MenuListView {
+public class PrefListView extends PrefBaseListView {
 
 	private static final String CAT = "PREF_LIST_VIEW";
 	
+	private MenuItem cityMenuItem;
 	private MenuItem languageMenuItem;
-	
-	public PrefListView(AbstractMIDlet midlet, IReturnCallback displayableReturnCallback) {
-		super(midlet, false, displayableReturnCallback);
-		init();
-	}
 
 	public PrefListView(AbstractMIDlet midlet) {
-		super(midlet, false);
+		super(midlet);
+		init();
+	}
+	
+	public PrefListView(AbstractMIDlet midlet, IReturnCallback displayableReturnCallback) {
+		super(midlet, displayableReturnCallback);
 		init();
 	}
 	
@@ -34,9 +40,7 @@ public class PrefListView extends MenuListView {
 		
 		Menu menu = new Menu();
 		
-		menu = new Menu();
-		
-		menu.addMenuItem(new MenuItem("Villes", new IAction() {
+		cityMenuItem = new MenuItem("Villes", new IAction() {
 			public void run(Object data) {
 				CityListView cityListView;
 				try {
@@ -49,7 +53,7 @@ public class PrefListView extends MenuListView {
 					showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
 				}
 			}
-		}));
+		});
 		
 		languageMenuItem = new MenuItem("Langues", new IAction() {
 			public void run(Object data) {
@@ -66,25 +70,47 @@ public class PrefListView extends MenuListView {
 			}
 		});
 		
+		
+		menu.addMenuItem(cityMenuItem);
 		menu.addMenuItem(languageMenuItem);
-
+		
 		setMenu(menu);
 	}
 
-	public void afterDisplayableSelection(AbstractDisplayable previous, AbstractDisplayable current) {
-		if (current == this) {
-			try {
-				languageMenuItem.setText("Langue: '" + LanguageManager.findSelectedLanguage().name + "'");
-			}
-			catch (LanguageManagerException e) {
-				Log.debug(CAT, e);
-				languageMenuItem.setText("Langue");
+	public void beforeDisplayableSelection(AbstractDisplayable current, AbstractDisplayable next) {
+		if (next == this) {
+			fetchCityPref();
+			fetchLanguagePref();
+		}
+		super.beforeDisplayableSelection(current, next);
+	}
+
+	private void fetchCityPref() {
+		try {
+			String cityKey = PrefManager.readPrefValue(PrefConstants.CITY_SELECTED_KEY);
+			if (cityKey != null && !cityKey.equals(languageMenuItem.getData("city.key"))) {
+				cityMenuItem.setData("city.key", cityKey);
+				City city = CityManager.findSelectedCity();
+				cityMenuItem.setData(PREF_VALUE, city.name);
 			}
 		}
-		super.afterDisplayableSelection(previous, current);
+		catch (CityManagerException e) {
+			Log.debug(CAT, e);
+		}
 	}
-	
-	
 
+	private void fetchLanguagePref() {
+		try {
+			String languageKey = PrefManager.readPrefValue(PrefConstants.LANGUAGE_SELECTED_KEY);
+			if (languageKey != null && !languageKey.equals(languageMenuItem.getData("language.key"))) {
+				languageMenuItem.setData("language.key", languageKey);
+				Language language = LanguageManager.findSelectedLanguage();
+				languageMenuItem.setData(PREF_VALUE, language.name);
+			}
+		}
+		catch (LanguageManagerException e) {
+			Log.debug(CAT, e);
+		}
+	}
 
 }

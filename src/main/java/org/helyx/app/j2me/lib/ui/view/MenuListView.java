@@ -123,7 +123,9 @@ public class MenuListView extends AbstractView {
         for (int i = 0 ; i < visibleItemCount + 1 ; i++) {
         	int y = clientArea.location.y + i * itemHeight;
         	Rectangle itemClientArea = new Rectangle(clientArea.location.x, y, clientArea.size.width, itemHeight);
-        	paintItem(g, i, itemClientArea);
+    		if (topOffset + i < getMenu().menuItemCount()) {
+            	paintItem(g, topOffset + i, itemClientArea);
+    		}
         }
         paintScrollBar(g, length, topOffset, selectedOffset, visibleItemCount, clientArea);
 	}
@@ -149,14 +151,17 @@ public class MenuListView extends AbstractView {
 		g.setColor(scrollBorderColor.intValue());
 		g.drawLine(clientArea.location.x + clientArea.size.width - 5, clientArea.location.y, clientArea.location.x + clientArea.size.width - 5, clientArea.location.y + clientArea.size.height);
 	}
+	
+	protected boolean isItemSelected(int offset) {
+    	boolean isSelected = selectedOffset == offset;
+    	return isSelected;
+	}
 
-	private void paintItem(Graphics g, int offset, Rectangle itemClientArea) {
-		if (topOffset + offset >= getMenu().menuItemCount()) {
-			return ;
-		}
-		MenuItem menuItem = getMenu().getMenuItem(topOffset + offset);
+	protected void paintItem(Graphics g, int offset, Rectangle itemClientArea) {
+		
+		MenuItem menuItem = getMenu().getMenuItem(offset);
     	
-    	boolean isSelected = selectedOffset == topOffset + offset;
+    	boolean isSelected = isItemSelected(offset);
     	
     	if (isSelected) {
     		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_LIGHT);

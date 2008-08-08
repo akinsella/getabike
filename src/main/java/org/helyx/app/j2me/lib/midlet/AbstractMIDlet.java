@@ -3,6 +3,7 @@ package org.helyx.app.j2me.lib.midlet;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
+import org.helyx.app.j2me.lib.cache.Cache;
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
 import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.log.FileLogWriter;
@@ -18,7 +19,8 @@ public class AbstractMIDlet extends MIDlet {
 		private FileLogWriter flw;
 		private Theme theme;
 		private Locale locale;
-		
+		private Cache cache;
+
 		public AbstractMIDlet() {
 			super();
 			init();
@@ -26,6 +28,10 @@ public class AbstractMIDlet extends MIDlet {
 
 		private void init() {
 			
+		}
+		
+		public Cache getCache() {
+			return cache;
 		}
 
 		public Locale getLocale() {

@@ -181,6 +181,10 @@ public abstract class AbstractView extends AbstractDisplayable {
 	protected Rectangle computeTitleArea(Graphics graphics) {
 		return new Rectangle(0, 0, viewCanvas.getWidth(), shouldPaintTitle() ? FontUtil.SMALL_BOLD.getHeight() : 0);
 	}
+	
+	protected void repaint() {
+		viewCanvas.repaint();
+	}
 
 	public void onPaint(Graphics graphics) {
 		Log.debug(CAT, "Event: Painting screen");

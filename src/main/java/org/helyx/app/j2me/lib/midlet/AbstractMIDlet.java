@@ -27,7 +27,7 @@ public class AbstractMIDlet extends MIDlet {
 		}
 
 		private void init() {
-			
+			cache = new Cache();
 		}
 		
 		public Cache getCache() {

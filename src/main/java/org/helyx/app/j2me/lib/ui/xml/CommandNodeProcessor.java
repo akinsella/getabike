@@ -3,9 +3,9 @@ package org.helyx.app.j2me.lib.ui.xml;
 import java.util.Hashtable;
 
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.ui.view.xml.XmlCanvasException;
-import org.helyx.app.j2me.lib.ui.view.xml.XmlCanvasProcessingException;
-import org.helyx.app.j2me.lib.ui.view.xml.XmlView;
+import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasException;
+import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasProcessingException;
+import org.helyx.app.j2me.lib.ui.view.support.xml.XmlView;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.xml.AbstractDomNodeProcessor;
 import org.helyx.app.j2me.lib.xml.dom.DomAttributeProcessor;

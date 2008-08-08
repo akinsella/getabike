@@ -5,7 +5,9 @@ import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 
+import org.helyx.app.j2me.lib.cache.Cache;
 import org.helyx.app.j2me.lib.i18n.Locale;
+import org.helyx.app.j2me.lib.i18n.ResourceBundle;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.listener.DisplayableListener;
 import org.helyx.app.j2me.lib.ui.displayable.transition.BasicTransition;
@@ -41,7 +43,23 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	}
 	
 	public void exit() {
-		getMidlet().notifyDestroyed();
+		getMidlet().exit();
+	}
+	
+	public void pause() {
+		getMidlet().pause();
+	}
+	
+	public Cache getCache() {
+		return midlet.getCache();
+	}
+	
+	public ResourceBundle getResourceBundle() {
+		return midlet.getResourceBundle();
+	}
+	
+	public String getMessage(String key) {
+		return midlet.getMessage(key);
 	}
 	
 	public Theme getTheme() {

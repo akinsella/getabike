@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.displayable.view;
+package org.helyx.app.j2me.lib.ui.view;
 
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
@@ -42,6 +42,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 	}
 
 	private void init() {
+		
 	}
 
 	protected void sizeChanged(int w, int h) {
@@ -168,7 +169,6 @@ public abstract class AbstractView extends AbstractDisplayable {
 	}
 	
 	protected Rectangle computeClientArea(Graphics graphics) {
-		
 		Rectangle titleArea = computeTitleArea(graphics);
 		Rectangle menuArea = computeMenuArea(graphics);
 		return new Rectangle(0, titleArea.size.height, viewCanvas.getWidth(), viewCanvas.getHeight() - titleArea.size.height - menuArea.size.height);

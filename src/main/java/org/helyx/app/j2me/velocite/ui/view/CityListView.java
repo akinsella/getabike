@@ -9,7 +9,7 @@ import org.helyx.app.j2me.lib.manager.TaskManager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
-import org.helyx.app.j2me.lib.ui.view.MenuListView;
+import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;

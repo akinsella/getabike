@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.ui.view.xml.XmlCanvasProcessingException;
+import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasProcessingException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 

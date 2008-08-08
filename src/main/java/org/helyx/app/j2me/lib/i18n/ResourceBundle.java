@@ -8,6 +8,8 @@ import org.helyx.basics4me.util.Properties;
 public class ResourceBundle {
 	
 	private static final String CAT = "RESOURCE_BUNDLE";
+	
+	private static final String TOKEN = "##";
 
 	protected Hashtable messageMap;
 	
@@ -44,7 +46,16 @@ public class ResourceBundle {
 		return messageMap.keys();
 	}
 
+	public boolean containsKey(String key) {
+		return messageMap.containsKey(key);
+	}
+
 	public String get(String key) {
+		String messageKey = (String)messageMap.get(key);
+		if (messageKey == null) {
+			String fallbackMessage = new StringBuffer(TOKEN).append(key).append(TOKEN).toString();
+			return fallbackMessage;
+		}
 		return (String)messageMap.get(key);
 	}
 

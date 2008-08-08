@@ -5,8 +5,8 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.ui.displayable.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.util.ColorUtil;
+import org.helyx.app.j2me.lib.ui.view.AbstractView;
 
 public class SlideTransition implements IViewTransition {
 

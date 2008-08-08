@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.view.xml;
+package org.helyx.app.j2me.lib.ui.view.support.xml;
 
 import org.helyx.app.j2me.lib.exception.NestedException;
 

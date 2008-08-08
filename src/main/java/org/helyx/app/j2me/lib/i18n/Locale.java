@@ -5,7 +5,7 @@ public class Locale {
 	private static final String CAT = "LOCALE";
 	
 	public static final Locale FRANCE = new Locale("fr", "FR");
-	public static final Locale US = new Locale("us", "US");
+	public static final Locale ENGLAND = new Locale("en", "EN");
 	public static final Locale SPAIN = new Locale("es", "ES");
 
 	private String country;

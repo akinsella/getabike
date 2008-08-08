@@ -4,8 +4,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.ui.view.xml.XmlCanvasException;
-import org.helyx.app.j2me.lib.ui.view.xml.XmlCanvasProcessingException;
+import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasException;
+import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasProcessingException;
 import org.helyx.app.j2me.lib.util.MapUtil;
 import org.helyx.app.j2me.lib.xml.dom.DomNodeProcessor;
 import org.helyx.app.j2me.lib.xml.dom.DomUtil;

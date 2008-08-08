@@ -9,7 +9,7 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
-import org.helyx.app.j2me.lib.ui.view.xml.XmlView;
+import org.helyx.app.j2me.lib.ui.view.support.xml.XmlView;
 import org.helyx.app.j2me.lib.xml.dom.DomUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.kxml2.kdom.Document;

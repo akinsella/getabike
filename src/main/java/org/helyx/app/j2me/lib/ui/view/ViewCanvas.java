@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.displayable.view;
+package org.helyx.app.j2me.lib.ui.view;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;

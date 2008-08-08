@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.view.xml;
+package org.helyx.app.j2me.lib.ui.view.support.xml;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -9,7 +9,7 @@ import org.helyx.app.j2me.lib.action.ActionRegistry;
 import org.helyx.app.j2me.lib.action.EmptyAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.ui.displayable.view.AbstractView;
+import org.helyx.app.j2me.lib.ui.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.xml.CanvasNodeProcessor;
 import org.kxml2.kdom.Document;
 import org.xmlpull.v1.XmlPullParserException;

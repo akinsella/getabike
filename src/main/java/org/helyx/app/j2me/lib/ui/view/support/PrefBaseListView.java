@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.view;
+package org.helyx.app.j2me.lib.ui.view.support;
 
 import javax.microedition.lcdui.Graphics;
 

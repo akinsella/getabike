@@ -33,7 +33,7 @@ public class LanguageManager {
 	}
 
 	public static Language findSelectedLanguage() throws LanguageManagerException {
-		Vector languageList = findAllCities();
+		Vector languageList = findAllLanguages();
 		Language selectedLanguage = findSelectedLanguage(languageList);
 		
 		return selectedLanguage;
@@ -77,7 +77,7 @@ public class LanguageManager {
 		return selectedLanguage;
 	}
 
-	public static Vector findAllCities() {
+	public static Vector findAllLanguages() {
 		LanguagePersistenceService languagePersistenceService = new LanguagePersistenceService();
 		try {
 			Vector languageList = languagePersistenceService.findAllCities();

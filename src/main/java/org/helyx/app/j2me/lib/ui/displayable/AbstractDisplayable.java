@@ -10,7 +10,6 @@ import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.listener.DisplayableListener;
 import org.helyx.app.j2me.lib.ui.displayable.transition.BasicTransition;
 import org.helyx.app.j2me.lib.ui.displayable.transition.IViewTransition;
-import org.helyx.app.j2me.lib.ui.displayable.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.theme.Theme;
 import org.helyx.app.j2me.lib.ui.util.DialogUtil;
 
@@ -44,20 +43,6 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	public void exit() {
 		getMidlet().notifyDestroyed();
 	}
-
-	public void showDisplayable(Displayable displayable) {
-		Display.getDisplay(midlet).setCurrent(displayable);
-	}
-
-	public void showDisplayable(AbstractDisplayable displayable, AbstractDisplayable previousDisplayable) {
-		displayable.setPreviousDisplayable(previousDisplayable);
-		showDisplayable(displayable);
-	}
-
-	public void show() {
-		changeDisplayable(this, new BasicTransition());
-		afterDisplayableSelection(null);
-	}
 	
 	public Theme getTheme() {
 		return midlet.getTheme();
@@ -67,37 +52,61 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 		return midlet.getLocale();
 	}
 
+	public void show() {
+		showDisplayableInternal(null, this, new BasicTransition());
+	}
+	
+	public void showDisplayable(AbstractDisplayable targetDisplayable, AbstractDisplayable previousDisplayable) {
+		showDisplayable(targetDisplayable, previousDisplayable, new BasicTransition());
+	}
+	
+	public void showDisplayable(AbstractDisplayable targetDisplayable, AbstractDisplayable previousDisplayable, IViewTransition viewTransition) {
+		targetDisplayable.setPreviousDisplayable(previousDisplayable);
+		showDisplayableInternal(this, targetDisplayable, viewTransition);
+	}
+
 	public void showDisplayable(AbstractDisplayable targetDisplayable) {
-		showDisplayable(targetDisplayable, new BasicTransition());
+		showDisplayableInternal(this, targetDisplayable, new BasicTransition());
 	}
 
 	public void showDisplayable(AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
-		beforeDisplayableSelection(this);
-		changeDisplayable(targetDisplayable, canvasTransition);
-		afterDisplayableSelection(this);
+		showDisplayableInternal(this, targetDisplayable, canvasTransition);
+	}
+
+	public void returnToPreviousDisplayable() {
+		showDisplayableInternal(this, previousDisplayable, new BasicTransition());
+	}
+
+	private void showDisplayableInternal(AbstractDisplayable srcDisplayable, AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
+		if (srcDisplayable != null) {
+			srcDisplayable.beforeDisplayableSelection(srcDisplayable, targetDisplayable);
+		}
+		targetDisplayable.beforeDisplayableSelection(srcDisplayable, targetDisplayable);
+		changeDisplayable(srcDisplayable, targetDisplayable, canvasTransition);
+		if (srcDisplayable != null) {
+			srcDisplayable.afterDisplayableSelection(srcDisplayable, targetDisplayable);
+		}
+		targetDisplayable.afterDisplayableSelection(srcDisplayable, targetDisplayable);
 	}
 	
 	public abstract Displayable getDisplayable();
 	
-	protected void changeDisplayable(AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
-		Display.getDisplay(midlet).setCurrent(targetDisplayable.getDisplayable());
-	}
-
-	public void returnToPreviousDisplayable() {
-		beforeDisplayableSelection(this);
-		changeDisplayable(previousDisplayable, new BasicTransition());
-		afterDisplayableSelection(this);
+	protected void changeDisplayable(AbstractDisplayable srcDisplayable, AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
+		Displayable currentDisplayable = Display.getDisplay(getMidlet()).getCurrent();
+		if (currentDisplayable == null || currentDisplayable != targetDisplayable.getDisplayable()) {
+			Display.getDisplay(getMidlet()).setCurrent(targetDisplayable.getDisplayable());
+		}
 	}
 
 	public AbstractMIDlet getMidlet() {
 		return midlet;
 	}
 
-	public void afterDisplayableSelection(AbstractDisplayable previous) {
+	public void beforeDisplayableSelection(AbstractDisplayable current, AbstractDisplayable next) {
 		
 	}
-
-	public void beforeDisplayableSelection(AbstractDisplayable previous) {
+	
+	public void afterDisplayableSelection(AbstractDisplayable previous, AbstractDisplayable current) {
 		
 	}
 	

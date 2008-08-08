@@ -92,7 +92,7 @@ public class MenuView extends AbstractView {
 	    	    	
 	    	    g.setColor(menuItemColor.intValue());
 		        g.setFont(font);
-		        g.drawString(menuItem.getTitle(), x + width / 2, y + _height, Graphics.HCENTER | Graphics.BASELINE);
+		        g.drawString(menuItem.getText(), x + width / 2, y + _height, Graphics.HCENTER | Graphics.BASELINE);
 		        
 		        _height += FontUtil.SMALL.getHeight();
 	        }

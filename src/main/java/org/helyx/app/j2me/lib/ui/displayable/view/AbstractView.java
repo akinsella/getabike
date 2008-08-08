@@ -1,6 +1,5 @@
 package org.helyx.app.j2me.lib.ui.displayable.view;
 
-import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
@@ -216,28 +215,32 @@ public abstract class AbstractView extends AbstractDisplayable {
 		return viewCanvas;
 	}
 	
-	protected void changeDisplayable(AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
-		Log.debug(CAT, "Current displayable: [" + getClass().getName() + "] title='" + getTitle() + "'");
+	protected void changeDisplayable(AbstractDisplayable srcDisplayable, AbstractDisplayable targetDisplayable, IViewTransition viewTransition) {
+		if (srcDisplayable == null) {
+			Log.debug(CAT, "Current displayable: [" + null + "]");
+		}
+		else {
+			Log.debug(CAT, "Current displayable: [" + srcDisplayable.getClass().getName() + "] title='" + srcDisplayable.getTitle() + "'");
+		}
 		Log.debug(CAT, "Target displayable: [" + targetDisplayable.getClass().getName() + "] title='" + targetDisplayable.getTitle() + "'");
 
-		if (targetDisplayable instanceof AbstractView) {
-			AbstractView abstractView = (AbstractView)targetDisplayable;
+		if (srcDisplayable != null && (srcDisplayable instanceof AbstractView) && (targetDisplayable instanceof AbstractView)) {
+			AbstractView srcView = (AbstractView)srcDisplayable;
+			AbstractView targetView = (AbstractView)targetDisplayable;
 
-			try {
-				viewCanvas.doCanvasTransition(abstractView, canvasTransition);
-			}
+			try { viewCanvas.doCanvasTransition(srcView, targetView, viewTransition); }
 			catch(Throwable t) { Log.warn(CAT, t); }
-
-			viewCanvas.setAbstractCanvas(abstractView);
-		} 
-		else {
-			viewCanvas.setAbstractCanvas(null);
 		}
 		
-		Displayable currentDisplayable = Display.getDisplay(getMidlet()).getCurrent();
-		if (currentDisplayable == null || currentDisplayable != targetDisplayable.getDisplayable()) {
-			Display.getDisplay(getMidlet()).setCurrent(targetDisplayable.getDisplayable());
+		if (targetDisplayable instanceof AbstractView) {
+			AbstractView targetView = (AbstractView)targetDisplayable;
+			viewCanvas.setView(targetView);
+		} 
+		else {
+			viewCanvas.setView(null);
 		}
+		
+		super.changeDisplayable(srcDisplayable, targetDisplayable, viewTransition);
 	}
 
 	private void paintBackgroundColor(Graphics g) {
@@ -310,8 +313,13 @@ public abstract class AbstractView extends AbstractDisplayable {
 		this.thirdCommand = thirdCommand;
 	}
 
-	public void afterDisplayableSelection(AbstractDisplayable previous) {
-		viewCanvas.setFullScreenMode(fullScreenMode);
+	public void afterDisplayableSelection(AbstractDisplayable previous, AbstractDisplayable current) {
+		if (current == this) {
+			Log.debug("afterDisplayableSelection[previous]: " + previous);
+			Log.debug("afterDisplayableSelection[current]: " + current);
+			Log.debug("fullScreenMode: " + fullScreenMode);
+			viewCanvas.setFullScreenMode(fullScreenMode);
+		}
 	}
 
 }

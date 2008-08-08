@@ -16,7 +16,7 @@ public class ViewCanvas extends GameCanvas {
 	protected boolean debug = false;
 	protected int lastKeyCode = 0;
 	
-	protected AbstractView abstractView;
+	protected AbstractView view;
 
 	protected ViewCanvas() {
 		super(false);
@@ -26,12 +26,12 @@ public class ViewCanvas extends GameCanvas {
 		return super.getGraphics();
 	}
 
-	public void setAbstractCanvas(AbstractView abstractView) {
-		Log.debug(CAT, "Current canvas: " + this.abstractView);
-		Log.debug(CAT, "New canvas: " + abstractView);
-		this.abstractView = abstractView;
-		if (abstractView != null) {
-			abstractView.getViewCanvas().repaint();
+	public void setView(AbstractView view) {
+		Log.debug(CAT, "Current canvas: " + this.view);
+		Log.debug(CAT, "New canvas: " + view);
+		this.view = view;
+		if (view != null) {
+			view.getViewCanvas().repaint();
 		}
 	}
 
@@ -45,8 +45,8 @@ public class ViewCanvas extends GameCanvas {
 	
 	public void paint(Graphics graphics) {
 		try {
-			if (abstractView != null) {
-				abstractView.onPaint(graphics);
+			if (view != null) {
+				view.onPaint(graphics);
 			}
 		}
 		catch(Throwable t) {
@@ -56,8 +56,8 @@ public class ViewCanvas extends GameCanvas {
 
 	protected void keyPressed(int keyCode) {
 		if (keyEventEnabled) {
-			if (abstractView != null) {
-				abstractView.keyPressed(keyCode);
+			if (view != null) {
+				view.keyPressed(keyCode);
 			}
 			lastKeyCode = keyCode;
 			if (debug) {
@@ -68,8 +68,8 @@ public class ViewCanvas extends GameCanvas {
 
 	protected void keyReleased(int keyCode) {
 		if (keyEventEnabled) {
-			if (abstractView != null) {
-				abstractView.keyReleased(keyCode);
+			if (view != null) {
+				view.keyReleased(keyCode);
 			}
 			lastKeyCode = keyCode;
 			if (debug) {
@@ -80,8 +80,8 @@ public class ViewCanvas extends GameCanvas {
 
 	protected void keyRepeated(int keyCode) {
 		if (keyEventEnabled) {
-			if (abstractView != null) {
-				abstractView.keyRepeated(keyCode);
+			if (view != null) {
+				view.keyRepeated(keyCode);
 			}
 			lastKeyCode = keyCode;
 			if (debug) {
@@ -92,37 +92,41 @@ public class ViewCanvas extends GameCanvas {
 
 	protected void pointerDragged(int x, int y) {
 		if (keyEventEnabled) {
-			if (abstractView != null) {
-				abstractView.pointerDragged(x, y);
+			if (view != null) {
+				view.pointerDragged(x, y);
 			}
 		}
 	}
 
 	protected void pointerPressed(int x, int y) {
 		if (keyEventEnabled) {
-			if (abstractView != null) {
-				abstractView.pointerPressed(x, y);
+			if (view != null) {
+				view.pointerPressed(x, y);
 			}
 		}
 	}
 
 	protected void pointerReleased(int x, int y) {
 		if (keyEventEnabled) {
-			if (abstractView != null) {
-				abstractView.pointerReleased(x, y);
+			if (view != null) {
+				view.pointerReleased(x, y);
 			}
 		}
 	}
 
 	protected void sizeChanged(int w, int h) {
-		if (abstractView != null) {
-			abstractView.sizeChanged(w, h);
+		if (view != null) {
+			view.sizeChanged(w, h);
 		}
 	}
 
-	public void doCanvasTransition(AbstractView targetAbstractCanvas, IViewTransition canvasTransition) {
+	public void doCanvasTransition(AbstractView srcView, AbstractView targetView, IViewTransition viewTransition) {
+		if (srcView == null) {
+			return;
+		}
 		keyEventEnabled = false;
 		try {
+			viewTransition.doTransition(getGraphics(), srcView, targetView);
 		}
 		finally {
 			keyEventEnabled = true;

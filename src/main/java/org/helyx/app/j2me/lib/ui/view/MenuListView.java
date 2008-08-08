@@ -54,6 +54,7 @@ public class MenuListView extends AbstractView {
 
 	private void init() {
 		setTitle("Menu");
+		setFullScreenMode(true);
 
 		Log.debug(CAT, "Menu List View Checkable: " + checkable);
 		
@@ -184,14 +185,14 @@ public class MenuListView extends AbstractView {
 
         g.setFont(FontUtil.MEDIUM_BOLD);
         if (!checkable) {
-            g.drawString(menuItem.getTitle(), itemClientArea.location.x + 5, itemClientArea.location.y +  (itemClientArea.size.height - FontUtil.MEDIUM_BOLD.getHeight()) / 2, Graphics.LEFT | Graphics.TOP);
+            g.drawString(menuItem.getText(), itemClientArea.location.x + 5, itemClientArea.location.y +  (itemClientArea.size.height - FontUtil.MEDIUM_BOLD.getHeight()) / 2, Graphics.LEFT | Graphics.TOP);
         }
         else {
         	int CHECKABLE_WIDTH = 10;
             if (getMenu().getCheckedMenuItem() == menuItem) {
             	g.fillArc(itemClientArea.location.x + 5, itemClientArea.location.y + (itemClientArea.size.height - 5) / 2, 5, 5, 0, 360);
             }
-            g.drawString(menuItem.getTitle(), itemClientArea.location.x + 5 + CHECKABLE_WIDTH, itemClientArea.location.y + (itemClientArea.size.height - FontUtil.MEDIUM_BOLD.getHeight()) / 2, Graphics.LEFT | Graphics.TOP);
+            g.drawString(menuItem.getText(), itemClientArea.location.x + 5 + CHECKABLE_WIDTH, itemClientArea.location.y + (itemClientArea.size.height - FontUtil.MEDIUM_BOLD.getHeight()) / 2, Graphics.LEFT | Graphics.TOP);
         }
  	}
 

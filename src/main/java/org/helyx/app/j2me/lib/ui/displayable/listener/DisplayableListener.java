@@ -5,7 +5,7 @@ import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 
 public interface DisplayableListener {
 
-	void beforeDisplayableSelection(AbstractDisplayable previous);
-	void afterDisplayableSelection(AbstractDisplayable previous);
+	void beforeDisplayableSelection(AbstractDisplayable current, AbstractDisplayable next);
+	void afterDisplayableSelection(AbstractDisplayable previous, AbstractDisplayable current);
 	
 }

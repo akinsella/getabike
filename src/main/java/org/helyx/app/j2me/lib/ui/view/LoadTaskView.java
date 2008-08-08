@@ -49,6 +49,7 @@ public class LoadTaskView extends AbstractView {
 
 	private void init() {
 		setTitle(title);
+		setFullScreenMode(true);
 
 		timer = new Timer();
 

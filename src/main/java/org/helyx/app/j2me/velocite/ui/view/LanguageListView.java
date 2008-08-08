@@ -68,7 +68,7 @@ public class LanguageListView extends MenuListView {
 	}
 
 	private void initData() throws LanguageManagerException {
-		languageList = LanguageManager.findAllCities();
+		languageList = LanguageManager.findAllLanguages();
 		Log.info(CAT, "languageList: " + languageList);
 		selectedLanguage = LanguageManager.findSelectedLanguage(languageList);
 		Log.info(CAT, "selectedLanguage: " + languageList);

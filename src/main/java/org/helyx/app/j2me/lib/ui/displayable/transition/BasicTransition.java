@@ -14,14 +14,14 @@ public class BasicTransition implements IViewTransition {
 		super();
 	}
 
-	public void doTransition(Graphics graphics, AbstractView srcAbstractCanvas, AbstractView targetAbstractCanvas) {
-		GameCanvas canvas = srcAbstractCanvas.getViewCanvas();
+	public void doTransition(Graphics graphics, AbstractView srcView, AbstractView targetView) {
+		GameCanvas canvas = srcView.getViewCanvas();
 		int width = canvas.getWidth();
 		int height = canvas.getHeight();
 
 		Image destImage = Image.createImage(width, height);
 		
-		targetAbstractCanvas.onPaint(destImage.getGraphics());
+		targetView.onPaint(destImage.getGraphics());
 
 		graphics.drawImage(destImage, 0, 0, Graphics.TOP | Graphics.LEFT);
 		canvas.flushGraphics();

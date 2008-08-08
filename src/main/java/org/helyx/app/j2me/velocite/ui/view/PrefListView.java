@@ -3,16 +3,20 @@ package org.helyx.app.j2me.velocite.ui.view;
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
+import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManagerException;
 
 public class PrefListView extends MenuListView {
 
 	private static final String CAT = "PREF_LIST_VIEW";
+	
+	private MenuItem languageMenuItem;
 	
 	public PrefListView(AbstractMIDlet midlet, IReturnCallback displayableReturnCallback) {
 		super(midlet, false, displayableReturnCallback);
@@ -47,7 +51,7 @@ public class PrefListView extends MenuListView {
 			}
 		}));
 		
-		menu.addMenuItem(new MenuItem("Langues", new IAction() {
+		languageMenuItem = new MenuItem("Langues", new IAction() {
 			public void run(Object data) {
 				LanguageListView languageListView;
 				try {
@@ -60,10 +64,27 @@ public class PrefListView extends MenuListView {
 					showAlertMessage("Problème de configuration", "Le fichier des langues n'est pas valide: " + e.getMessage());
 				}
 			}
-		}));
+		});
+		
+		menu.addMenuItem(languageMenuItem);
 
 		setMenu(menu);
 	}
+
+	public void afterDisplayableSelection(AbstractDisplayable previous, AbstractDisplayable current) {
+		if (current == this) {
+			try {
+				languageMenuItem.setText("Langue: '" + LanguageManager.findSelectedLanguage().name + "'");
+			}
+			catch (LanguageManagerException e) {
+				Log.debug(CAT, e);
+				languageMenuItem.setText("Langue");
+			}
+		}
+		super.afterDisplayableSelection(previous, current);
+	}
+	
+	
 
 
 }

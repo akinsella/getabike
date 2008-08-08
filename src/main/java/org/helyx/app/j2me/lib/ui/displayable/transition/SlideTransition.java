@@ -19,8 +19,8 @@ public class SlideTransition implements IViewTransition {
 		this.reverse = reverse;
 	}
 
-	public void doTransition(Graphics graphics, AbstractView srcAbstractCanvas, AbstractView targetAbstractCanvas) {
-		GameCanvas canvas = srcAbstractCanvas.getViewCanvas();
+	public void doTransition(Graphics graphics, AbstractView srcView, AbstractView targetView) {
+		GameCanvas canvas = srcView.getViewCanvas();
 		int width = canvas.getWidth();
 		int height = canvas.getHeight();
 
@@ -29,14 +29,14 @@ public class SlideTransition implements IViewTransition {
 		Image destImage = Image.createImage(width, height);
 		
 		if (canvas != null) {
-			srcAbstractCanvas.onPaint(srcImage.getGraphics());
+			srcView.onPaint(srcImage.getGraphics());
 		}
 		else {
 			Graphics srcGraphics = srcImage.getGraphics();
 			srcGraphics.setColor(ColorUtil.WHITE);
 			srcGraphics.fillRect(0, 0, width, height);
 		}
-		targetAbstractCanvas.onPaint(destImage.getGraphics());
+		targetView.onPaint(destImage.getGraphics());
 
 		
 		long start = System.currentTimeMillis();

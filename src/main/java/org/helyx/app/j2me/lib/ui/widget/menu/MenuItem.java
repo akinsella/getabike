@@ -1,5 +1,7 @@
 package org.helyx.app.j2me.lib.ui.widget.menu;
 
+import java.util.Hashtable;
+
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.ui.widget.ImageSet;
 
@@ -7,69 +9,70 @@ public class MenuItem {
 	
 	public static final int NO_ACCELERATOR = -1;
 	
-	private String title;
+	private String text;
 	private ImageSet imageSet;
 	private int accelerator;
 	private boolean active;
 	private boolean enabled = true;
 	private Object data;
+	private Hashtable dataMap;
 	private IAction action;
 
 	public MenuItem() {
 		super();
 	}
 
-	public MenuItem(String title) {
+	public MenuItem(String text) {
 		super();
-		this.title = title;
+		this.text = text;
 	}
 
-	public MenuItem(String title, IAction action) {
+	public MenuItem(String text, IAction action) {
 		super();
-		this.title = title;
+		this.text = text;
 		this.action = action;
 	}
 
-	public MenuItem(String title, boolean enabled, IAction action) {
+	public MenuItem(String text, boolean enabled, IAction action) {
 		super();
-		this.title = title;
-		this.action = action;
-		this.enabled = enabled;
-	}
-
-	public MenuItem(String title, int accelerator, IAction action) {
-		super();
-		this.title = title;
-		this.accelerator = accelerator;
-		this.action = action;
-	}
-
-	public MenuItem(String title, int accelerator, boolean enabled) {
-		super();
-		this.title = title;
-		this.accelerator = accelerator;
-		this.enabled = enabled;
-	}
-
-	public MenuItem(String title, int accelerator, boolean enabled, IAction action) {
-		super();
-		this.title = title;
-		this.accelerator = accelerator;
+		this.text = text;
 		this.action = action;
 		this.enabled = enabled;
 	}
 
-	public MenuItem(String title, ImageSet imageSet, int accelerator, boolean enabled) {
+	public MenuItem(String text, int accelerator, IAction action) {
 		super();
-		this.title = title;
+		this.text = text;
+		this.accelerator = accelerator;
+		this.action = action;
+	}
+
+	public MenuItem(String text, int accelerator, boolean enabled) {
+		super();
+		this.text = text;
+		this.accelerator = accelerator;
+		this.enabled = enabled;
+	}
+
+	public MenuItem(String text, int accelerator, boolean enabled, IAction action) {
+		super();
+		this.text = text;
+		this.accelerator = accelerator;
+		this.action = action;
+		this.enabled = enabled;
+	}
+
+	public MenuItem(String text, ImageSet imageSet, int accelerator, boolean enabled) {
+		super();
+		this.text = text;
 		this.imageSet = imageSet;
 		this.accelerator = accelerator;
 		this.enabled = enabled;
 	}
 
-	public MenuItem(String title, ImageSet imageSet, int accelerator, boolean enabled, IAction action) {
+	public MenuItem(String text, ImageSet imageSet, int accelerator, boolean enabled, IAction action) {
 		super();
-		this.title = title;
+		this.text = text;
 		this.imageSet = imageSet;
 		this.accelerator = accelerator;
 		this.enabled = enabled;
@@ -92,12 +95,12 @@ public class MenuItem {
 		this.action = action;
 	}
 	
-	public String getTitle() {
-		return title;
+	public String getText() {
+		return text;
 	}
 	
-	public void setTitle(String title) {
-		this.title = title;
+	public void setText(String text) {
+		this.text = text;
 	}
 	
 	public ImageSet getImageSet() {
@@ -130,6 +133,34 @@ public class MenuItem {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+	
+	private void checkDataMap() {
+		if (dataMap == null) {
+			dataMap = new Hashtable();
+		}
+	}
+	
+	public void setData(String key, Object value) {
+		checkDataMap();
+		dataMap.put(key, value);
+	}
+	
+	public Object getData(String key) {
+		checkDataMap();
+		Object resultObject = dataMap.get(key);
+		
+		return resultObject;
+	}
+	
+	public void clearData(String key) {
+		checkDataMap();
+		dataMap.remove(key);
+	}
+	
+	public void clearAllData() {
+		checkDataMap();
+		dataMap.clear();
 	}
 
 }

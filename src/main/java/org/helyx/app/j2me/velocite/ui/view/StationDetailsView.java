@@ -125,11 +125,11 @@ public class StationDetailsView extends AbstractView {
 		        titleZoneHeight = iconImageHeight;
 	        }
 	        
-	        Color detailsBackgroundColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_DETAILS_BACKGROUND);
+	        Color detailsBackgroundColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_BACKGROUND);
 	        g.setColor(detailsBackgroundColor.intValue());
 	        g.fillRect(0, 0, canvasWidth, height + titleZoneHeight + 1);
 
-	        Color detailsFontTitleColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_DETAILS_FONT_TITLE);
+	        Color detailsFontTitleColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_FONT_TITLE);
 	        g.setColor(detailsFontTitleColor.intValue());
 	        
 	        g.drawImage(iconImage, width + iconImageWidth / 2, height + titleZoneHeight / 2, Graphics.VCENTER | Graphics.HCENTER);
@@ -140,7 +140,7 @@ public class StationDetailsView extends AbstractView {
 	        g.drawString(stationNumber, width + iconImageWidth + 5, height + titleZoneHeight / 2 + mediumFontHeight - mediumBoldFont.getBaselinePosition() + smallFontHeight / 2, Graphics.BASELINE | Graphics.LEFT);
 	        
 	        if (!station.open) {
-		        Color detailsErrorColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_DETAILS_ERROR);
+		        Color detailsErrorColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_ERROR);
 	        	g.setColor(detailsErrorColor.intValue());
 	        	g.setFont(smallBoldFont);
 		        g.drawString(" - Station fermée", width + iconImageWidth + 5 + smallFont.stringWidth(stationNumber), height + titleZoneHeight / 2 + mediumFontHeight - mediumBoldFont.getBaselinePosition() + smallFontHeight / 2, Graphics.BASELINE | Graphics.LEFT);
@@ -148,12 +148,12 @@ public class StationDetailsView extends AbstractView {
 	        height += titleZoneHeight + 2;
 		}
 		else {
-	        Color detailsBackgroundColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_DETAILS_BACKGROUND);
+	        Color detailsBackgroundColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_BACKGROUND);
 	        g.setColor(detailsBackgroundColor.intValue());
 	        g.fillRect(0, 0, canvasWidth, height + mediumFontHeight + 1 + smallFontHeight + 1);
 
 	        
-	        Color detailsFontMessageColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_DETAILS_FONT_MESSAGE);
+	        Color detailsFontMessageColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_FONT_MESSAGE);
 			g.setColor(detailsFontMessageColor.intValue());
 	        g.setFont(mediumFont);
 	        g.drawString(station.name, width, height, Graphics.TOP | Graphics.HCENTER); 
@@ -161,7 +161,7 @@ public class StationDetailsView extends AbstractView {
 	        g.drawString(String.valueOf(station.number), width, height + mediumFontHeight + 1, Graphics.TOP | Graphics.HCENTER); 
 	        
 	        if (!station.open) {
-		        Color detailsErrorColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_DETAILS_ERROR);
+		        Color detailsErrorColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_ERROR);
 	        	g.setColor(detailsErrorColor.intValue());
 		        g.drawString(" - Station fermée", width + smallFont.stringWidth(stationNumber), height + mediumFontHeight + 1, Graphics.BASELINE | Graphics.LEFT);
 	        }
@@ -183,11 +183,11 @@ public class StationDetailsView extends AbstractView {
         }
         
 
-        Color detailsBackgroundColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_DETAILS_BACKGROUND);
+        Color detailsBackgroundColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_BACKGROUND);
         g.setColor(detailsBackgroundColor.intValue());
         g.fillRect(5, height, canvasWidth - 10, 5 + addressFont.getHeight() + 1 + smallFontHeight + 5);
 
-        Color detailsFontMessageColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_DETAILS_FONT_MESSAGE);
+        Color detailsFontMessageColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_FONT_MESSAGE);
         g.setColor(detailsFontMessageColor.intValue());
 
         height += 5;

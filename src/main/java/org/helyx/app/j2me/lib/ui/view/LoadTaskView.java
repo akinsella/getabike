@@ -69,7 +69,7 @@ public class LoadTaskView extends AbstractView {
 	}
 
 	private void initGraphics() {
-		Theme theme = getMidlet().getTheme();
+		Theme theme = getTheme();
 		int themeImageCount = theme.getInt(ThemeConstants.LOAD_TASK_VIEW_IMAGE_COUNT);
 		String themeImagePath = theme.getString(ThemeConstants.LOAD_TASK_VIEW_IMAGE_PATH);
 		StringFormat stringFormat = new StringFormat(themeImagePath);
@@ -142,13 +142,13 @@ public class LoadTaskView extends AbstractView {
        		if (image != null) {
        			textYPos += image.getHeight() / 2 + FontUtil.SMALL_BOLD.getBaselinePosition();
        		}
-       		Color waitingTitleFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_WAITING_TITLE_FONT);
+       		Color waitingTitleFontColor = getTheme().getColor(ThemeConstants.WIDGET_WAITING_TITLE_FONT);
            	g.setColor(waitingTitleFontColor.intValue());
     		g.setFont(FontUtil.SMALL_BOLD);
     		g.drawString(label, x + width / 2, y + textYPos, Graphics.HCENTER | Graphics.BASELINE);
        	}
 
-   		Color waitingMessageFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_WAITING_MESSAGE_FONT);
+   		Color waitingMessageFontColor = getTheme().getColor(ThemeConstants.WIDGET_WAITING_MESSAGE_FONT);
        	g.setColor(waitingMessageFontColor.intValue());
         g.setFont(FontUtil.MEDIUM_BOLD);
    		int  textYPos = height / 2;

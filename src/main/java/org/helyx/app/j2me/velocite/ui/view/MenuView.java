@@ -75,7 +75,7 @@ public class MenuView extends AbstractView {
 	        
 	        _height += ( (height - _height) - (FontUtil.SMALL.getHeight() * menuItemCount) ) / 2;
 	        
-	        Theme theme = getMidlet().getTheme();
+	        Theme theme = getTheme();
 	        for (int i = 0 ; i < menuItemCount ; i++) {
 	        	MenuItem menuItem = (MenuItem)menu.getMenuItem(i);
 	           
@@ -155,7 +155,7 @@ public class MenuView extends AbstractView {
 
 		private void loadLogoImage() {
 			try {
-				String menuImageStr = getMidlet().getTheme().getString(ThemeConstants.WIDGET_MENU_IMAGE);
+				String menuImageStr = getTheme().getString(ThemeConstants.WIDGET_MENU_IMAGE);
 				logoImage = ImageUtil.createImageFromClassPath(menuImageStr);
 			}
 			catch(Throwable t) {

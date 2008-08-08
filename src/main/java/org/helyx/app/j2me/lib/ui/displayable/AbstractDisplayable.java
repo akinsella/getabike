@@ -10,6 +10,7 @@ import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.listener.DisplayableListener;
 import org.helyx.app.j2me.lib.ui.displayable.transition.BasicTransition;
 import org.helyx.app.j2me.lib.ui.displayable.transition.IViewTransition;
+import org.helyx.app.j2me.lib.ui.displayable.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.theme.Theme;
 import org.helyx.app.j2me.lib.ui.util.DialogUtil;
 
@@ -66,10 +67,8 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 		return midlet.getLocale();
 	}
 
-	public void showDisplayable(AbstractDisplayable displayable) {
-		beforeDisplayableSelection(this);
-		changeDisplayable(displayable, new BasicTransition());
-		afterDisplayableSelection(this);
+	public void showDisplayable(AbstractDisplayable targetDisplayable) {
+		showDisplayable(targetDisplayable, new BasicTransition());
 	}
 
 	public void showDisplayable(AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {

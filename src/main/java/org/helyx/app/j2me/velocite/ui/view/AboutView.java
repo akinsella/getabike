@@ -48,7 +48,7 @@ public class AboutView extends AbstractView {
 	
 	private void loadLogoImage() {
 		try {
-			String aboutImageStr = getMidlet().getTheme().getString(ThemeConstants.WIDGET_ABOUT_IMAGE);
+			String aboutImageStr = getTheme().getString(ThemeConstants.WIDGET_ABOUT_IMAGE);
 			logoImage = ImageUtil.createImageFromClassPath(aboutImageStr);
 		}
 		catch(Throwable t) {
@@ -75,7 +75,7 @@ public class AboutView extends AbstractView {
 		int width = clientArea.size.width;
         int height = clientArea.size.height;
         
-        Color aboutColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_ABOUT_FONT);
+        Color aboutColor = getTheme().getColor(ThemeConstants.WIDGET_ABOUT_FONT);
         g.setColor(aboutColor.intValue());
 
         if (logoImage != null) {

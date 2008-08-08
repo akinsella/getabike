@@ -183,20 +183,20 @@ public class StationListView extends AbstractView {
 		if (length == 0 || length <= visibleItemCount) {
 			return;
 		}
-		Color scrollBackgroundColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BACKGROUND);
+		Color scrollBackgroundColor = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BACKGROUND);
 		g.setColor(scrollBackgroundColor.intValue());
 		g.fillRect(clientArea.location.x + clientArea.size.width - 4, clientArea.location.y, 4, clientArea.size.height);
 		
 		int yHeight = Math.max(clientArea.size.height / 8, clientArea.size.height * visibleItemCount / length);
 		int yPos = clientArea.location.y + (int)((clientArea.size.height - yHeight) * ((double)selectedOffset / ((double)length - 1)));
 		
-		Color shadeColor1 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_DARK);
-		Color shadeColor2 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_LIGHT);
+		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_DARK);
+		Color shadeColor2 = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_LIGHT);
 		Shade shade = new Shade(shadeColor1.intValue(), shadeColor2.intValue());
 		Rectangle area = new Rectangle(clientArea.location.x + clientArea.size.width - 4, yPos, 4, yHeight);
 		GraphicsUtil.fillShade(g, area, shade, true);
 
-		Color scrollBorderColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BORDER);
+		Color scrollBorderColor = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BORDER);
 		g.setColor(scrollBorderColor.intValue());
 		g.drawLine(clientArea.location.x + clientArea.size.width - 5, clientArea.location.y, clientArea.location.x + clientArea.size.width - 5, clientArea.location.y + clientArea.size.height);
 	}
@@ -211,42 +211,42 @@ public class StationListView extends AbstractView {
     	
     	if (isSelected) {
 //    		g.setColor(ColorUtil.WIDGET_LIST_FONT_SELECTED);
-    		Color shadeColor1 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_LIGHT);
-    		Color shadeColor2 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_DARK);
+    		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_LIGHT);
+    		Color shadeColor2 = getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_DARK);
     		Shade shade = new Shade(shadeColor1.intValue(), shadeColor2.intValue());
     		GraphicsUtil.fillShade(g, itemClientArea, shade, false);
      	}
     	else {
-    		Color listColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST);
+    		Color listColor = getTheme().getColor(ThemeConstants.WIDGET_LIST);
     		g.setColor(listColor.intValue());
     		g.fillRect(itemClientArea.location.x, itemClientArea.location.y, itemClientArea.size.width, itemClientArea.size.height);
     	}
     	
-		Color listSeparatorColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_SEPARATOR);
+		Color listSeparatorColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_SEPARATOR);
     	g.setColor(listSeparatorColor.intValue());
     	g.drawLine(itemClientArea.location.x, itemClientArea.location.y + itemClientArea.size.height - 1, itemClientArea.location.x + itemClientArea.size.width, itemClientArea.location.y + itemClientArea.size.height - 1);
 	
      	if (isSelected) {
-    		Color listFontSelectedColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SELECTED);
+    		Color listFontSelectedColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SELECTED);
     		g.setColor(listFontSelectedColor.intValue());
     	}
     	else {
-    		Color listFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT);
+    		Color listFontColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT);
     		g.setColor(listFontColor.intValue());
     	}
         if (!station.open) {
-    		Color listErrorColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_ERROR);
+    		Color listErrorColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_ERROR);
          	g.setColor(listErrorColor.intValue());
         }
         g.setFont(FontUtil.SMALL_BOLD);
         g.drawString(station.number + " - " + station.name, itemClientArea.location.x + 5, itemClientArea.location.y + 2, Graphics.LEFT | Graphics.TOP);
  
     	if (isSelected) {
-    		Color listFontSecondSelectedColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
+    		Color listFontSecondSelectedColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
     		g.setColor(listFontSecondSelectedColor.intValue());
     	}
     	else {
-    		Color listFontSecondColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
+    		Color listFontSecondColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
     		g.setColor(listFontSecondColor.intValue());
     	}
         g.setFont(FontUtil.SMALL);

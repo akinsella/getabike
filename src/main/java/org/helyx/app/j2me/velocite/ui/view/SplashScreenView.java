@@ -141,7 +141,7 @@ public class SplashScreenView extends AbstractView {
 	
 	private void loadLogoImage() {
 		try {
-			logoImage = ImageUtil.createImageFromClassPath(getMidlet().getTheme().getString(ThemeConstants.WIDGET_SPLASH_IMAGE));
+			logoImage = ImageUtil.createImageFromClassPath(getTheme().getString(ThemeConstants.WIDGET_SPLASH_IMAGE));
 		}
 		catch(Throwable t) {
 			fallbackLogoImageStr = t.getMessage();
@@ -160,7 +160,7 @@ public class SplashScreenView extends AbstractView {
 		int width = clientArea.size.width;
         int height = clientArea.size.height;
                
-        Color splashFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_SPLASH_FONT);
+        Color splashFontColor = getTheme().getColor(ThemeConstants.WIDGET_SPLASH_FONT);
         g.setColor(splashFontColor.intValue());
         g.setFont(FontUtil.SMALL);
         

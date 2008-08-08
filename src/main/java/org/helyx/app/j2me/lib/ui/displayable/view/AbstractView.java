@@ -244,7 +244,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 		if (!paintBackgroundColor) {
 			return;
 		}
-		Color bgColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_BACKGROUND);
+		Color bgColor = getTheme().getColor(ThemeConstants.WIDGET_BACKGROUND);
 
         g.setColor(bgColor.intValue());
         g.fillRect(0, 0, viewCanvas.getWidth(), viewCanvas.getHeight());
@@ -256,11 +256,11 @@ public abstract class AbstractView extends AbstractDisplayable {
 		}
 
 		Rectangle titleArea = computeTitleArea(graphics);
-		Color shadeColor1 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_LIGHT);
-		Color shadeColor2 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_DARK);
+		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_LIGHT);
+		Color shadeColor2 = getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_DARK);
 		GraphicsUtil.fillShade(graphics, titleArea, new Shade(shadeColor1.intValue(), shadeColor2.intValue()), false);
 
-		Color titleFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_FONT);
+		Color titleFontColor = getTheme().getColor(ThemeConstants.WIDGET_TITLE_FONT);
 		graphics.setColor(titleFontColor.intValue());
 		graphics.setFont(FontUtil.SMALL_BOLD);
 		graphics.drawLine(titleArea.location.x, titleArea.location.y + titleArea.size.height, titleArea.location.x + titleArea.size.width, titleArea.location.y + titleArea.size.height);
@@ -273,11 +273,11 @@ public abstract class AbstractView extends AbstractDisplayable {
 		}
 
 		Rectangle menuArea = computeMenuArea(graphics);
-		Color shadeColor1 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_DARK);
-		Color shadeColor2 = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_LIGHT);
+		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_DARK);
+		Color shadeColor2 = getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_LIGHT);
 		GraphicsUtil.fillShade(graphics, menuArea, new Shade(shadeColor1.intValue(), shadeColor2.intValue()), false);
 
-		Color titleFontColor = getMidlet().getTheme().getColor(ThemeConstants.WIDGET_TITLE_FONT);
+		Color titleFontColor = getTheme().getColor(ThemeConstants.WIDGET_TITLE_FONT);
 		graphics.setColor(titleFontColor.intValue());
 		graphics.setFont(FontUtil.SMALL_BOLD);
 		graphics.drawLine(menuArea.location.x, menuArea.location.y, menuArea.location.x + menuArea.size.width, menuArea.location.y);
@@ -308,6 +308,10 @@ public abstract class AbstractView extends AbstractDisplayable {
 
 	public void setThirdCommand(Command thirdCommand) {
 		this.thirdCommand = thirdCommand;
+	}
+
+	public void afterDisplayableSelection(AbstractDisplayable previous) {
+		viewCanvas.setFullScreenMode(fullScreenMode);
 	}
 
 }

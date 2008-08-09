@@ -8,7 +8,7 @@
 
 	<groupId>org.velocite</groupId>
 	<artifactId>velocite</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.96-SNAPSHOT</version>
 
 	<name>VeloCite</name>
 
@@ -33,7 +33,6 @@
 
 	<inceptionYear>2007</inceptionYear>
 
-
 	<scm>
 		<connection>scm:svn:https://r13491.ovh.net/svn/VeloCite/trunk</connection>
 		<developerConnection>scm:svn:https://r13491.ovh.net/svn/VeloCite/trunk</developerConnection>
@@ -49,8 +48,8 @@
 	</distributionManagement>
 
 	<issueManagement>
-		<system>jtrac</system>
-		<url>http://r13491.ovh.net/jtrac/app/</url>
+		<system>bugzilla</system>
+		<url>http://r13491.ovh.net/bugzilla/</url>
 	</issueManagement>
 
 	<developers>
@@ -79,6 +78,25 @@
 			<url>http://r13491.ovh.net/archiva/repository/install</url>
 		</repository>
 	</repositories>
+
+	<properties>
+		<wtk.home>${env.WTK_HOME}</wtk.home>
+		<j2me.midlet.vendor>${project.organization.name}</j2me.midlet.vendor>
+		<j2me.midlet.icon>/org/helyx/app/j2me/velocite/image/vcIcon.png</j2me.midlet.icon>
+		<j2me.midlet.name>VeloCite</j2me.midlet.name>
+		<j2me.midlet.class>org.helyx.app.j2me.velocite.midlet.VelociteMIDlet</j2me.midlet.class>
+		<j2me.midlet.version>${project.version}</j2me.midlet.version>
+		<j2me.midlet.configuration>CLDC-1.1</j2me.midlet.configuration>
+		<j2me.midlet.profile>MIDP-2.0</j2me.midlet.profile>
+		<j2me.midlet.author>${project.organization.name}</j2me.midlet.author>
+		<!--
+			<wtk.bluetooth.enabled>true</wtk.bluetooth.enabled>
+			<wtk.wma.enabled>true</wtk.wma.enabled>
+			<wtk.wma.version>2.0</wtk.wma.version>
+			<wtk.locationservices.enabled>true</wtk.locationservices.enabled>
+			<wtk.optionalpda.enabled>true</wtk.optionalpda.enabled>
+		-->
+	</properties>
 
 	<build>
 		<pluginManagement>
@@ -161,37 +179,35 @@
 						<proguardInclude>${basedir}/proguard.conf</proguardInclude>
 						<proguard>true</proguard>
 						<obfuscate>true</obfuscate>
-						<!-- Optional, populated by default
-							<jadAttributes>
-								<MIDlet-Icon>/pyx.png</MIDlet-Icon>
-								<MicroEdition-Profile>${j2me.midlet.profile}</MicroEdition-Profile>
-								<MicroEdition-Configuration>${j2me.midlet.configuration}</MicroEdition-Configuration>
-								<MIDlet-Vendor>${project.organization.name}</MIDlet-Vendor>
-								<Created-By>Vlad Skarzhevskyy</Created-By>
-								<MIDlet-Permissions>javax.microedition.io.Connector.http</MIDlet-Permissions>
-							</jadAttributes>
-						-->
+						<!-- Optional, populated by default -->
+						<jadAttributes>
+							<MIDlet-Icon>${j2me.midlet.icon}</MIDlet-Icon>
+							<MicroEdition-Profile>${j2me.midlet.profile}</MicroEdition-Profile>
+							<MicroEdition-Configuration>${j2me.midlet.configuration}</MicroEdition-Configuration>
+							<MIDlet-Vendor>${project.organization.name}</MIDlet-Vendor>
+							<MIDlet-Info-URL>http://m.velocite.org</MIDlet-Info-URL>
+							<Created-By>${j2me.midlet.author}</Created-By>
+							<!-- <MIDlet-Permissions>javax.microedition.io.Connector.http</MIDlet-Permissions> -->
+						</jadAttributes>
 						<midlets>
 							<MIDlet>
 								<name>VeloCite</name>
-								<icon>/vcIcon.png</icon>
+								<icon>${j2me.midlet.icon}</icon>
 								<class>org.helyx.app.j2me.velocite.midlet.VelociteMIDlet</class>
 							</MIDlet>
 						</midlets>
-
-						<!-- Optional, populated by default
-							<archive>
-								<manifestEntries>
-									<MIDlet-1>Example,/pyx.png,com.pyx4me.examples.ExampleMIDlet</MIDlet-1>
-									<MIDlet-Name>${j2me.midlet.name}</MIDlet-Name>
-									<MIDlet-Icon>/pyx.png</MIDlet-Icon>
-									<MIDlet-Vendor>${j2me.midlet.vendor}</MIDlet-Vendor>
-									<MIDlet-Version>${j2me.midlet.version}</MIDlet-Version>
-									<MicroEdition-Configuration>${j2me.midlet.configuration}</MicroEdition-Configuration>
-									<MicroEdition-Profile>${j2me.midlet.profile}</MicroEdition-Profile>
-								</manifestEntries>
-							</archive>
-						-->
+						
+						<archive>
+							<manifestEntries>
+								<MIDlet-1>${j2me.midlet.name},${j2me.midlet.icon},${j2me.midlet.class}</MIDlet-1>
+								<MIDlet-Name>${j2me.midlet.name}</MIDlet-Name>
+								<MIDlet-Icon>/pyx.png</MIDlet-Icon>
+								<MIDlet-Vendor>${j2me.midlet.vendor}</MIDlet-Vendor>
+								<MIDlet-Version>${j2me.midlet.version}</MIDlet-Version>
+								<MicroEdition-Configuration>${j2me.midlet.configuration}</MicroEdition-Configuration>
+								<MicroEdition-Profile>${j2me.midlet.profile}</MicroEdition-Profile>
+							</manifestEntries>
+						</archive>
 					</configuration>
 					<!-- Use different version of proguard
 						<dependencies>
@@ -235,23 +251,6 @@
 
 		</pluginManagement>
 	</build>
-	
-	<properties>
-		<wtk.home>${env.WTK_HOME}</wtk.home>
-		<j2me.midlet.vendor>${project.organization.name}</j2me.midlet.vendor>
-		<j2me.midlet.name>${project.name}</j2me.midlet.name>
-		<j2me.midlet.version>${project.version}</j2me.midlet.version>
-		<j2me.midlet.configuration>CLDC-1.1</j2me.midlet.configuration>
-		<j2me.midlet.profile>MIDP-2.0</j2me.midlet.profile>
-		<!--
-			<wtk.bluetooth.enabled>true</wtk.bluetooth.enabled>
-			<wtk.wma.enabled>true</wtk.wma.enabled>
-			<wtk.wma.version>2.0</wtk.wma.version>
-			<wtk.locationservices.enabled>true</wtk.locationservices.enabled>
-			<wtk.optionalpda.enabled>true</wtk.optionalpda.enabled>
-		-->
-	</properties>
-
 
 	<reporting>
 		<plugins>

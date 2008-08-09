@@ -2,6 +2,8 @@ package org.helyx.app.j2me.lib.pref;
 
 import java.util.Vector;
 
+import org.helyx.basics4me.lang.BooleanUtil;
+
 
 public class PrefManager {
 
@@ -68,13 +70,29 @@ public class PrefManager {
 		}
 	}
 
-	public static String readPrefValue(String prefName) {
+	public static String readPrefString(String prefName) {
 		Pref pref = readPref(prefName);
 		if (pref == null) {
 			return null;
 		}
 		
 		return pref.value;
+	}
+
+	public static void writePrefBoolean(String key, boolean booleanValue) {
+		writePref(key, booleanValue ? BooleanUtil.TRUE : BooleanUtil.FALSE);
+	}
+
+	public static boolean readPrefBoolean(String key, boolean booleanValue) {
+		return readPrefBoolean(key, booleanValue, false);
+	}
+	
+	public static boolean readPrefBoolean(String key, boolean booleanValue, boolean nullValue) {
+		String stringValue = readPrefString(key);
+		if (stringValue == null) {
+			return nullValue;
+		}
+		return BooleanUtil.TRUE.equals(stringValue) ? true : false;
 	}
 
 }

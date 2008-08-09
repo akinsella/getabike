@@ -119,7 +119,7 @@ public class DefaultLanguageContentProvider extends AbstractContentProvider {
 		cancel = true;
 	}
 
-	protected String getCat() {
+	public String getCat() {
 		return CAT;
 	}
 

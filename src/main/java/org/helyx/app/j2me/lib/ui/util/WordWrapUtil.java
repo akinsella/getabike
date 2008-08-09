@@ -1,5 +1,7 @@
 package org.helyx.app.j2me.lib.ui.util;
 
+import java.util.Vector;
+
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 
@@ -9,49 +11,41 @@ public final class WordWrapUtil {
 		super();
 	}
 	
-	public static void paint(Graphics g, String text, int x, int y, int fullWidth, int style) {
-		StringBuffer positions = wrapText(g, text, fullWidth);
-		paint(g, text, x, y, fullWidth, style, positions);
+	public static void paint(Graphics g, String text, int x, int y, int maxWidth, int style) {
+		Vector positions = wrapText(g, text, maxWidth);
+		paint(g, text, x, y, style, positions);
 	}
 	
-	public static void paint(Graphics g, String text, int x, int y, int fullWidth, int style, StringBuffer positions) {
+	public static void paint(Graphics g, String text, int x, int y, int style, Vector positions) {
 
 		Font font = g.getFont();
-		int positionLength = positions.length();
-
-		if ((style & Graphics.HCENTER) != 0) {
-			x += fullWidth / 2; 
-		}
-		else if ((style & Graphics.RIGHT) != 0) {
-			x += fullWidth;
-		}
+		int positionLength = positions.size();
 		
 		if ((style & Graphics.VCENTER) != 0) {
-			x += getHeight(g, positions) / 2; 
+			y -= (positionLength * g.getFont().getHeight()) / 2; 
 		}
 		else if ((style & Graphics.BOTTOM) != 0) {
-			x += getHeight(g, positions);
+			y -= (positionLength * g.getFont().getHeight());
 		}
 		
 		int pos = 0;
 		
 		for( int i = 0 ; i < positionLength ; i++ ) {
 
-			final int cut = positions.charAt(i);
+			final int cut = ((Integer)positions.elementAt(i)).intValue();
 
-			int posX = x;
-
+			int lineLength = cut > 0 && text.charAt(cut-1) <= ' ' ? cut - 1 - pos : cut - pos;
 			g.drawSubstring(
-				text, pos, cut > 0 && text.charAt(cut-1) <= ' ' ? cut - 1 - pos : cut - pos,
-				posX, y, Graphics.LEFT | Graphics.TOP);
+				text, pos, lineLength,
+				x, y, (style & (Graphics.LEFT | Graphics.HCENTER | Graphics.RIGHT)) | Graphics.TOP);
             pos = cut;
             y += font.getHeight();
         }
 	}
 	
 
-    public static StringBuffer wrapText(Graphics g, String text, int fullWidth) {
-    	 StringBuffer positions = new StringBuffer();
+    public static Vector wrapText(Graphics g, String text, int maxWidth) {
+    	 Vector positions = new Vector();
     	
     	 int curPos = 0;
          int strLen = text.length();
@@ -72,7 +66,7 @@ public final class WordWrapUtil {
 
                 // Because of the cut away support we need to calculate the available
                 // width per line.
-                int availableWidth = fullWidth;
+                int availableWidth = maxWidth;
 
 
          		// Calculate how much space we would need from the current position
@@ -108,16 +102,10 @@ public final class WordWrapUtil {
          	}
 
          	// Save the position
-         	positions.append((char) (curPos >= strLen ? strLen : ++curPos));
+         	positions.addElement(new Integer(curPos >= strLen ? strLen : ++curPos));
          }
          
          return positions;
     }
-
-	public static int getHeight(Graphics g, StringBuffer positions) {
-		Font font = g.getFont();
-		return positions.length() * font.getHeight();
-	}
-
 	
 }

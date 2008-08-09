@@ -32,6 +32,6 @@ public abstract class AbstractContentProvider implements IContentProvider {
 	
 	}
 	
-	protected abstract String getCat();
+	public abstract String getCat();
 
 }

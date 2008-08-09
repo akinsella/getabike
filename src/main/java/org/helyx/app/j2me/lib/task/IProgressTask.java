@@ -14,4 +14,6 @@ public interface IProgressTask extends ITask, IProgressListenerManager {
 	
 	IProgressDispatcher getProgressDispatcher();
 
+	String getCat();
+
 }

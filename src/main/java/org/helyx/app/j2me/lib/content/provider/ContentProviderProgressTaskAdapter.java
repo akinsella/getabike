@@ -23,5 +23,9 @@ public class ContentProviderProgressTaskAdapter extends AbstractProgressTask {
 	public void execute() {
 		contentProvider.loadData();
 	}
+
+	public String getCat() {
+		return CAT + "[" + contentProvider.getCat() + "]";
+	}
 	
 }

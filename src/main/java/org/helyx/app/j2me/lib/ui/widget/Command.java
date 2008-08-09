@@ -13,6 +13,10 @@ public class Command {
 		super();
 	}
 	
+	public Command(String text, IAction action) {
+		this(text, true, action);
+	}
+	
 	public Command(String text, boolean enabled, IAction action) {
 		super();
 		

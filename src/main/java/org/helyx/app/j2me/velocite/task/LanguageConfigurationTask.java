@@ -37,7 +37,7 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
 	
 			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche de config. existante...");
-			String languageSelectedKey = PrefManager.readPrefValue(PrefConstants.LANGUAGE_SELECTED_KEY);
+			String languageSelectedKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
 			
 			if (languageSelectedKey == null) {
 				Log.info(CAT, "Chargement des langues ...");
@@ -55,7 +55,7 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 					
 				});
 				Vector languageList = (Vector)Future.get(progressTask);
-				String defaultLanguageKey = PrefManager.readPrefValue(PrefConstants.LANGUAGE_DEFAULT_KEY);
+				String defaultLanguageKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_DEFAULT_KEY);
 				Enumeration _enum = languageList.elements();
 				while(_enum.hasMoreElements()) {
 					Language language = (Language)_enum.nextElement();
@@ -74,6 +74,10 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t.getMessage(), t);
 		}
 		
+	}
+
+	public String getCat() {
+		return CAT;
 	}
 
 }

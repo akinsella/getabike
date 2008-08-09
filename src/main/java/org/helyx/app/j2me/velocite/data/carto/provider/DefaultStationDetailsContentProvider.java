@@ -105,7 +105,7 @@ public class DefaultStationDetailsContentProvider extends AbstractContentProvide
 
 	}
 
-	protected String getCat() {
+	public String getCat() {
 		return CAT;
 	}
 	

@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.ui.displayable.transition;
+package org.helyx.app.j2me.lib.ui.view.transition;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;

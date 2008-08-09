@@ -27,8 +27,6 @@ public class MenuListView extends AbstractView {
 	private int visibleItemCount = 0;
 	private boolean checkable = false;
 	
-	private IReturnCallback displayableReturnCallback;
-	
 	private Menu menu;
 
 	public MenuListView(AbstractMIDlet midlet, boolean checkable) {
@@ -37,19 +35,11 @@ public class MenuListView extends AbstractView {
 		init();
 	}
 
-	public MenuListView(AbstractMIDlet midlet, boolean checkable, IReturnCallback displayableReturnCallback) {
+	public MenuListView(AbstractMIDlet midlet, boolean checkable, IReturnCallback returnCallback) {
 		super(midlet);
-		
-		this.displayableReturnCallback = displayableReturnCallback;
+		setReturnCallback(returnCallback);
 		this.checkable = checkable;
 		init();
-	}
-
-	public void returnToPreviousDisplayable() {
-		super.returnToPreviousDisplayable();
-		if (displayableReturnCallback != null ) {
-			displayableReturnCallback.onReturn(null);
-		}
 	}
 
 	private void init() {

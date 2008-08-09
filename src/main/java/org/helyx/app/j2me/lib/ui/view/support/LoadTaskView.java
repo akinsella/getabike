@@ -36,19 +36,16 @@ public class LoadTaskView extends AbstractView {
 	
 	private Image[] images;
 	
-	private String title;
-	
 	private boolean hasStarted = false;
 
 	public LoadTaskView(AbstractMIDlet midlet, String title, IProgressTask progressTask) {
 		super(midlet);
-	    this.title = title;
+		setTitle(title);
 		this.progressTask = progressTask;
 		init();
 	}
 
 	private void init() {
-		setTitle(title);
 		setFullScreenMode(true);
 
 		timer = new Timer();

@@ -104,7 +104,7 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 		cancel = true;
 	}
 
-	protected String getCat() {
+	public String getCat() {
 		return CAT;
 	}
 	

@@ -62,7 +62,7 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 		cancel = true;
 	}
 
-	protected String getCat() {
+	public String getCat() {
 		return CAT;
 	}
 	

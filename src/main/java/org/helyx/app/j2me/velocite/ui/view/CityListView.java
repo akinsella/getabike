@@ -28,8 +28,8 @@ public class CityListView extends MenuListView {
 	
 	private Vector cityList;
 
-	public CityListView(AbstractMIDlet midlet, IReturnCallback displayableReturnCallback) throws CityManagerException {
-		super(midlet, true, displayableReturnCallback);
+	public CityListView(AbstractMIDlet midlet, IReturnCallback returnCallback) throws CityManagerException {
+		super(midlet, true, returnCallback);
 		init();
 	}
 

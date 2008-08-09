@@ -27,7 +27,7 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
 	
 			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche de config. existante...");
-			String softKeyDetectionTypeValue = PrefManager.readPrefValue(PrefConstants.SOFT_KEY_DETECTION_TYPE);
+			String softKeyDetectionTypeValue = PrefManager.readPrefString(PrefConstants.SOFT_KEY_DETECTION_TYPE);
 			
 			if (KeyUtil.SOFT_KEY_DETECTION_PLATFORM.equals(softKeyDetectionTypeValue)) {
 				Log.info(CAT, "[SoftKey detection] Attempting to associate softkeys by platform");
@@ -45,8 +45,8 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 				}
 			}
 			
-			String leftSoftKeyStr = PrefManager.readPrefValue(PrefConstants.SOFT_KEY_LEFT);
-			String rightSoftKeyStr = PrefManager.readPrefValue(PrefConstants.SOFT_KEY_RIGHT);
+			String leftSoftKeyStr = PrefManager.readPrefString(PrefConstants.SOFT_KEY_LEFT);
+			String rightSoftKeyStr = PrefManager.readPrefString(PrefConstants.SOFT_KEY_RIGHT);
 			
 			if (leftSoftKeyStr != null && rightSoftKeyStr != null) {
 				try {
@@ -168,6 +168,10 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 			}
 			
 			return null;
+		}
+
+		public String getCat() {
+			return CAT;
 		}
 
 }

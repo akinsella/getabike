@@ -42,9 +42,9 @@ public class LanguageManager {
 	public static Language findSelectedLanguage(Vector languageList) throws LanguageManagerException {
 		Language selectedLanguage = null;
 
-		String languageSelectedKeyPrefValue = PrefManager.readPrefValue(PrefConstants.LANGUAGE_SELECTED_KEY);
+		String languageSelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
 		Log.info(CAT, "Selected Language key: " + languageSelectedKeyPrefValue);
-		String languageDefaultKeyPrefValue = PrefManager.readPrefValue(PrefConstants.LANGUAGE_DEFAULT_KEY);
+		String languageDefaultKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_DEFAULT_KEY);
 		Log.info(CAT, "Default Language key: " + languageSelectedKeyPrefValue);
 		
 		Enumeration _enum = languageList.elements();

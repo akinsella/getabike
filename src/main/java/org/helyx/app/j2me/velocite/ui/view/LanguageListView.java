@@ -24,8 +24,8 @@ public class LanguageListView extends MenuListView {
 	
 	private Vector languageList;
 
-	public LanguageListView(AbstractMIDlet midlet, IReturnCallback displayableReturnCallback) throws LanguageManagerException {
-		super(midlet, true, displayableReturnCallback);
+	public LanguageListView(AbstractMIDlet midlet, IReturnCallback returnCallback) throws LanguageManagerException {
+		super(midlet, true, returnCallback);
 		init();
 	}
 

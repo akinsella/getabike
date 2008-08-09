@@ -18,11 +18,9 @@ public class StationSearchView extends AbstractTextBox {
 	private Command cmdBack;
 	private Command cmdValidate;
 	
-	private IReturnCallback displayableReturnCallback;
-	
-	public StationSearchView(AbstractMIDlet midlet, IReturnCallback displayableReturnCallback) {
+	public StationSearchView(AbstractMIDlet midlet, IReturnCallback returnCallback) {
 		super(midlet, "Recherche de station");
-		this.displayableReturnCallback = displayableReturnCallback;
+		setReturnCallback(returnCallback);
 		init();
 	}
 
@@ -43,16 +41,14 @@ public class StationSearchView extends AbstractTextBox {
 		if (command == cmdValidate) {
 			savePrefs();
 			returnToPreviousDisplayable();
-			displayableReturnCallback.onReturn(null);
 		}
 		if (command == cmdBack) {
 			returnToPreviousDisplayable();
-			displayableReturnCallback.onReturn(null);
 		}
 	}
 	
 	private void loadPrefs() {
-		String stationName = PrefManager.readPrefValue(PREF_STATION_NAME);
+		String stationName = PrefManager.readPrefString(PREF_STATION_NAME);
 		if (stationName != null) {
 			textBox.setString(stationName);
 		}

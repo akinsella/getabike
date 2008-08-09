@@ -52,5 +52,7 @@ public class ThemeConstants {
 	
 	public static final String WIDGET_MENU_IMAGE = "WIDGET_MENU_IMAGE";
 
+	public static final String WIDGET_FONT = "WIDGET_FONT";
+
 
 }

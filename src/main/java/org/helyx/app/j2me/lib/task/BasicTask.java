@@ -13,4 +13,8 @@ public class BasicTask extends AbstractTask {
 		
 	}
 
+	public String getCat() {
+		return CAT;
+	}
+
 }

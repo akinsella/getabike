@@ -102,7 +102,7 @@ public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 		}
 	}
 
-	protected String getCat() {
+	public String getCat() {
 		return CAT;
 	}
 

@@ -3,7 +3,6 @@ package org.helyx.app.j2me.lib.ui.view.support;
 import javax.microedition.lcdui.Graphics;
 
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
@@ -22,8 +21,8 @@ public abstract class PrefBaseListView extends MenuListView {
 		super(midlet, false);
 	}
 	
-	public PrefBaseListView(AbstractMIDlet midlet, IReturnCallback displayableReturnCallback) {
-		super(midlet, false, displayableReturnCallback);
+	public PrefBaseListView(AbstractMIDlet midlet, IReturnCallback returnCallback) {
+		super(midlet, false, returnCallback);
 	}
 
 	protected void paintItem(Graphics g, int offset, Rectangle itemClientArea) {

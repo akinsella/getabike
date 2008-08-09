@@ -6,13 +6,13 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 
 	private static final String CAT = "MULTI_TASK_PROGRESS_TASK";
 	
-	private ITask[] progressTasks;
+	private ITask[] tasks;
 	private int currentIndex;
 	private InternalProgressMultiTaskListener internaleProgressListener;
 	
-	public MultiTaskProgressTask(ITask[] progressTasks) {
+	public MultiTaskProgressTask(ITask[] tasks) {
 		super(CAT);
-		this.progressTasks = progressTasks;
+		this.tasks = tasks;
 	}
 
 	public String getDescription() {
@@ -24,11 +24,11 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 	}
 	
 	public void execute() {
-		int taskToRunCount = progressTasks.length;
+		int taskToRunCount = tasks.length;
 		Log.debug(CAT, "Starting Multitask executor");
 		Log.info(CAT, "Scheduled task: ");
 		for (int i = 0 ; i < taskToRunCount ; i++) {
-			Log.info(CAT, i + " - " + progressTasks[i].getDescription());
+			Log.info(CAT, i + " - " + tasks[i].getDescription());
 		}
 
 		internaleProgressListener = new InternalProgressMultiTaskListener(CAT + "[" + this.getDescription() + "]");
@@ -38,12 +38,12 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 	}
 	
 	private void startCurrentTask() {
-		int length = progressTasks.length;
+		int length = tasks.length;
 		if (currentIndex >= length) {
 			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 			return;
 		}
-		ITask currentTask = progressTasks[currentIndex];
+		ITask currentTask = tasks[currentIndex];
 
 		if (currentTask instanceof IProgressTask) {
 			IProgressTask currentProgressTask = (IProgressTask)currentTask;
@@ -68,7 +68,7 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 	}
 
 	private void cleanUpCurrentTask() {
-		ITask currentTask = progressTasks[currentIndex];
+		ITask currentTask = tasks[currentIndex];
 	
 		if (currentTask instanceof IProgressTask) {
 			IProgressTask currentProgressTask = (IProgressTask)currentTask;
@@ -105,6 +105,18 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 			}
 		}
 
+	}
+
+	public String getCat() {
+		StringBuffer sb = new StringBuffer();
+		int size = tasks.length;
+		for (int i = 0 ; i < size ; i++) {
+			sb.append(tasks[i].getCat());
+			if (i +1 < size) {
+				sb.append(", ");
+			}
+		}
+		return CAT + "[" + sb.toString() + "]";
 	}
 	
 }

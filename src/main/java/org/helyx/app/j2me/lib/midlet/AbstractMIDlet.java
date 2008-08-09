@@ -5,7 +5,6 @@ import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.helyx.app.j2me.lib.cache.Cache;
 import org.helyx.app.j2me.lib.concurrent.Future;
-import org.helyx.app.j2me.lib.constant.BooleanConstants;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.i18n.ClasspathResourceBundleContentProviderFactory;
 import org.helyx.app.j2me.lib.i18n.Locale;
@@ -13,7 +12,6 @@ import org.helyx.app.j2me.lib.i18n.ResourceBundle;
 import org.helyx.app.j2me.lib.i18n.ResourceBundleConfiguration;
 import org.helyx.app.j2me.lib.log.FileLogWriter;
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.ui.theme.Theme;
 import org.helyx.app.j2me.velocite.PrefConstants;
 
@@ -45,7 +43,13 @@ public class AbstractMIDlet extends MIDlet {
 	}
 	
 	public void exit() {
-		notifyDestroyed();
+		try {
+		    destroyApp(false);
+		    notifyDestroyed();
+		}
+		catch (MIDletStateChangeException t) {
+		   Log.warn(CAT, t);
+		}
 	}
 	
 	public void pause() {
@@ -126,9 +130,9 @@ public class AbstractMIDlet extends MIDlet {
 		this.theme = theme;
 	}
 
-	protected void destroyApp(boolean flag) {
+	protected void destroyApp(boolean unconditional) throws MIDletStateChangeException {
 //			closeFileLogWriter();
-		onDestroy(flag);
+		onDestroy(unconditional);
 	}
 
 	protected void pauseApp() {
@@ -140,7 +144,7 @@ public class AbstractMIDlet extends MIDlet {
 		try {
 			setDefaultLocale(Locale.ENGLAND);
 			setLocale(Locale.ENGLAND);
-			PrefManager.writePref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
+//			PrefManager.writePref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 			Log.setThresholdLevel(Log.DEBUG);
 	//		openFileLogWriter();
 			logPlatformInfos();
@@ -152,7 +156,7 @@ public class AbstractMIDlet extends MIDlet {
 		}
 	}
 
-	protected void onDestroy(boolean flag) {
+	protected void onDestroy(boolean unconditional) throws MIDletStateChangeException {
 
 	}
 	
@@ -207,7 +211,7 @@ public class AbstractMIDlet extends MIDlet {
 				Log.addLogWriter(flw);
 			}
 			catch(Throwable t) {
-				t.printStackTrace();
+				Log.warn(CAT, t);
 				flw = null;
 			}
 		}

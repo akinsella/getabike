@@ -16,7 +16,7 @@ public class ClasspathContentAccessor implements IContentAccessor {
 	}
 
 	public InputStreamProvider getInputStreamProvider() throws ContentAccessorException {
-		Log.debug(CAT, "Classpath: " + classpath);
+		Log.debug(CAT, "Classpath: '" + classpath + "'");
 		return new ClasspathInputStreamProvider(classpath);
 	}
 

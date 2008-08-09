@@ -5,4 +5,7 @@ public interface ITask {
 	String getDescription();
 
 	void execute();
+
+	String getCat();
+	
 }

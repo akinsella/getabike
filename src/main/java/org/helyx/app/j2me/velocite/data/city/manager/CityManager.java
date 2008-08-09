@@ -42,9 +42,9 @@ public class CityManager {
 	public static City findSelectedCity(Vector cityList) throws CityManagerException {
 		City selectedCity = null;
 
-		String citySelectedKeyPrefValue = PrefManager.readPrefValue(PrefConstants.CITY_SELECTED_KEY);
+		String citySelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.CITY_SELECTED_KEY);
 		Log.info(CAT, "Selected City key: " + citySelectedKeyPrefValue);
-		String cityDefaultKeyPrefValue = PrefManager.readPrefValue(PrefConstants.CITY_DEFAULT_KEY);
+		String cityDefaultKeyPrefValue = PrefManager.readPrefString(PrefConstants.CITY_DEFAULT_KEY);
 		Log.info(CAT, "Default City key: " + citySelectedKeyPrefValue);
 		
 		Enumeration _enum = cityList.elements();

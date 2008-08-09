@@ -7,6 +7,10 @@ import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.support.PrefBaseListView;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.AbstractDialogResultCallback;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogResultConstants;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogView;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.PrefConstants;
@@ -29,8 +33,8 @@ public class PrefListView extends PrefBaseListView {
 		init();
 	}
 	
-	public PrefListView(AbstractMIDlet midlet, IReturnCallback displayableReturnCallback) {
-		super(midlet, displayableReturnCallback);
+	public PrefListView(AbstractMIDlet midlet, IReturnCallback returnCallback) {
+		super(midlet, returnCallback);
 		init();
 	}
 	
@@ -71,8 +75,37 @@ public class PrefListView extends PrefBaseListView {
 		});
 		
 		
+		MenuItem resetMenuItem = new MenuItem("Reset", new IAction() {
+			public void run(Object data) {
+				PrefManager.writePrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, true);
+				DialogUtil.showConfirmDialog(getMidlet(), PrefListView.this, "Confirmation", "Etes-vous sur de vouloir reseter l'application ?", new AbstractDialogResultCallback() {
+
+					public void onResult(DialogView dialogView) {
+						int resultValue = dialogView.getResultCode();
+						switch (resultValue) {
+							case DialogResultConstants.OK:
+								DialogUtil.showMessageDialog(getMidlet(), PrefListView.this, "Attention", "L'application va quitter. L'application doit être relancée.", new AbstractDialogResultCallback() {
+
+									public void onResult(DialogView dialogView) {
+										getMidlet().exit();								
+									}
+								});
+
+								break;
+							case DialogResultConstants.CANCEL:
+								dialogView.returnToPreviousDisplayable();
+								break;
+						}
+					}
+					
+				});
+			}
+		});
+		
+		
 		menu.addMenuItem(cityMenuItem);
 		menu.addMenuItem(languageMenuItem);
+		menu.addMenuItem(resetMenuItem);
 		
 		setMenu(menu);
 	}
@@ -87,7 +120,7 @@ public class PrefListView extends PrefBaseListView {
 
 	private void fetchCityPref() {
 		try {
-			String cityKey = PrefManager.readPrefValue(PrefConstants.CITY_SELECTED_KEY);
+			String cityKey = PrefManager.readPrefString(PrefConstants.CITY_SELECTED_KEY);
 			if (cityKey != null && !cityKey.equals(languageMenuItem.getData("city.key"))) {
 				cityMenuItem.setData("city.key", cityKey);
 				City city = CityManager.findSelectedCity();
@@ -101,7 +134,7 @@ public class PrefListView extends PrefBaseListView {
 
 	private void fetchLanguagePref() {
 		try {
-			String languageKey = PrefManager.readPrefValue(PrefConstants.LANGUAGE_SELECTED_KEY);
+			String languageKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
 			if (languageKey != null && !languageKey.equals(languageMenuItem.getData("language.key"))) {
 				languageMenuItem.setData("language.key", languageKey);
 				Language language = LanguageManager.findSelectedLanguage();

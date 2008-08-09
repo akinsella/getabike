@@ -4,7 +4,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.ui.displayable.transition.IViewTransition;
+import org.helyx.app.j2me.lib.ui.view.transition.IViewTransition;
 
 
 public class ViewCanvas extends GameCanvas {

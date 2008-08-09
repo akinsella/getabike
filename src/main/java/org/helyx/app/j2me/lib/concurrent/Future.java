@@ -24,13 +24,15 @@ public class Future {
 
 	public static Object get(IProgressTask progressTask) {
 		final Future future = new Future();
-		progressTask.addProgressListener(new ProgressAdapter(CAT + "[" + progressTask.getDescription() + "]") {
+		progressTask.addProgressListener(new ProgressAdapter(CAT + "[" + progressTask.getCat() + "]") {
 
 			public void onCancel(String eventMessage, Object eventData) {
+				future.failed = true;
 				future.exceptionMessage = eventMessage != null ? eventMessage : "ON_CANCEL";
 			}
 
 			public void onError(String eventMessage, Object eventData) {
+				future.failed = true;
 				future.exceptionMessage = eventMessage != null ? eventMessage : "ON_ERROR";
 				if (eventData instanceof FutureException) {
 					future.exception = (FutureException)eventData;
@@ -60,7 +62,11 @@ public class Future {
 			}
 			catch(InterruptedException ie) {
 				throw new FutureException(ie.getMessage() != null ? ie.getMessage() : "Interrupted Exception");
-			}			
+			}
+			catch(Throwable t) {
+				throw new FutureException(t);
+			}
+			
 		}
 		
 		if (future.failed) {

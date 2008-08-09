@@ -9,11 +9,12 @@ import org.helyx.app.j2me.lib.cache.Cache;
 import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.i18n.ResourceBundle;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.displayable.listener.DisplayableListener;
-import org.helyx.app.j2me.lib.ui.displayable.transition.BasicTransition;
-import org.helyx.app.j2me.lib.ui.displayable.transition.IViewTransition;
 import org.helyx.app.j2me.lib.ui.theme.Theme;
 import org.helyx.app.j2me.lib.ui.util.DialogUtil;
+import org.helyx.app.j2me.lib.ui.view.transition.BasicTransition;
+import org.helyx.app.j2me.lib.ui.view.transition.IViewTransition;
 
 public abstract class AbstractDisplayable implements DisplayableListener, CommandListener {
 
@@ -26,6 +27,8 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	private AbstractMIDlet midlet;
 	
 	private AbstractDisplayable previousDisplayable;
+	
+	private IReturnCallback returnCallback;
 
 	public AbstractDisplayable(AbstractMIDlet midlet) {
 		super();
@@ -33,6 +36,10 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	}
 
 	public abstract String getTitle();
+	
+	public void setReturnCallback(IReturnCallback returnCallback) {
+		this.returnCallback = returnCallback;
+	}
 	
 	public void setPreviousDisplayable(AbstractDisplayable previousDisplayable) {
 		this.previousDisplayable = previousDisplayable;
@@ -92,7 +99,19 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	}
 
 	public void returnToPreviousDisplayable() {
-		showDisplayableInternal(this, previousDisplayable, new BasicTransition());
+		returnToPreviousDisplayable(new BasicTransition());
+	}
+	
+	public void returnToPreviousDisplayable(IViewTransition viewTransition) {
+		showDisplayableInternal(this, previousDisplayable, viewTransition);
+	}
+
+	public boolean hasReturnCallback() {
+		return returnCallback != null;
+	}
+	
+	public void fireReturnCallback(Object data) {
+		returnCallback.onReturn(data);
 	}
 
 	private void showDisplayableInternal(AbstractDisplayable srcDisplayable, AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {

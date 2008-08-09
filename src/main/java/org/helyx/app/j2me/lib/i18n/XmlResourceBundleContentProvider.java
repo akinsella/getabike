@@ -85,7 +85,7 @@ public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 		cancel = true;
 	}
 
-	protected String getCat() {
+	public String getCat() {
 		return CAT;
 	}
 	

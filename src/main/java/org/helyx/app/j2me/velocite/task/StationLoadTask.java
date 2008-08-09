@@ -100,5 +100,9 @@ public class StationLoadTask extends AbstractProgressTask {
 	public boolean isCancellable() {
 		return false;
 	}
+
+	public String getCat() {
+		return CAT;
+	}
 	
 }

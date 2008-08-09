@@ -99,6 +99,9 @@
 	</properties>
 
 	<build>
+		
+		<finalName>VeloCite</finalName>
+	
 		<pluginManagement>
 			<plugins>
 				<plugin>

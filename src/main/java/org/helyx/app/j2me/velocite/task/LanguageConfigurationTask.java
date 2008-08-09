@@ -36,7 +36,7 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 		try {
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
 	
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recerche de config. existante...");
+			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche de config. existante...");
 			String languageSelectedKey = PrefManager.readPrefValue(PrefConstants.LANGUAGE_SELECTED_KEY);
 			
 			if (languageSelectedKey == null) {

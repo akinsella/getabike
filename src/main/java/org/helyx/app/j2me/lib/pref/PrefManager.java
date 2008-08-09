@@ -83,11 +83,11 @@ public class PrefManager {
 		writePref(key, booleanValue ? BooleanUtil.TRUE : BooleanUtil.FALSE);
 	}
 
-	public static boolean readPrefBoolean(String key, boolean booleanValue) {
-		return readPrefBoolean(key, booleanValue, false);
+	public static boolean readPrefBoolean(String key) {
+		return readPrefBoolean(key, false);
 	}
 	
-	public static boolean readPrefBoolean(String key, boolean booleanValue, boolean nullValue) {
+	public static boolean readPrefBoolean(String key, boolean nullValue) {
 		String stringValue = readPrefString(key);
 		if (stringValue == null) {
 			return nullValue;

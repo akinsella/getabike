@@ -64,9 +64,9 @@ public class SplashScreenView extends AbstractView {
 				Pref oldVersionPref = PrefManager.readPref(PrefConstants.MIDLET_VERSION);
 				String oldVersion = oldVersionPref == null ? null : oldVersionPref.value;
 				String newVersion = getMidlet().getAppProperty(PrefConstants.MIDLET_VERSION);
-				Pref applicationDataCleanUpNeededPref = PrefManager.readPref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED);
+				boolean applicationDataCleanUpNeeded = PrefManager.readPrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED);
 
-				if (applicationDataCleanUpNeededPref != null && applicationDataCleanUpNeededPref.value.equals(BooleanConstants.TRUE)) {
+				if (applicationDataCleanUpNeeded) {
 					Log.info(CAT, "Application data need to be reseted");
 					VectorUtil.addElementsToVector(tasksToRun, new DataCleanUpTaskFactory().getTasks());
 				}

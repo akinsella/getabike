@@ -110,6 +110,10 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 		return returnCallback != null;
 	}
 	
+	public void fireReturnCallback() {
+		fireReturnCallback(null);
+	}
+	
 	public void fireReturnCallback(Object data) {
 		returnCallback.onReturn(data);
 	}

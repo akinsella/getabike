@@ -40,10 +40,10 @@ public class StationSearchView extends AbstractTextBox {
 	public void commandAction(Command command, Displayable displayable) {
 		if (command == cmdValidate) {
 			savePrefs();
-			returnToPreviousDisplayable();
+			fireReturnCallback();
 		}
 		if (command == cmdBack) {
-			returnToPreviousDisplayable();
+			fireReturnCallback();
 		}
 	}
 	

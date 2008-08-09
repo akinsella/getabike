@@ -6,6 +6,7 @@ import org.helyx.app.j2me.lib.task.ITask;
 import org.helyx.app.j2me.lib.task.ITaskFactory;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
+import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 
 public class DataCleanUpTaskFactory implements ITaskFactory {
 	
@@ -33,6 +34,12 @@ public class DataCleanUpTaskFactory implements ITaskFactory {
 			new BasicTask("Cleaning up preference related data") {
 				public void execute() {
 					PrefManager.cleanUpSavedData();
+				}
+			},
+			
+			new BasicTask("Cleaning up language related data") {
+				public void execute() {
+					LanguageManager.cleanUpSavedData();
 				}
 			}
 			

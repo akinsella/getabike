@@ -48,7 +48,7 @@ public class CanvasNodeProcessor extends AbstractDomNodeProcessor {
 		
 		xmlView.setTitle(dap.attrExists(TITLE) ? dap.getAttrValueAsString(TITLE) : null);
 		xmlView.setTitleEnabled(dap.attrExists(TITLE_ENABLED) ? dap.getAttrValueAsBoolean(TITLE_ENABLED) : true);
-		xmlView.setPaintBackgroundColor(dap.attrExists(PAINT_BACKGROUND) ? dap.getAttrValueAsBoolean(PAINT_BACKGROUND) : true);
+		xmlView.setBackgroundEnabled(dap.attrExists(PAINT_BACKGROUND) ? dap.getAttrValueAsBoolean(PAINT_BACKGROUND) : true);
 		xmlView.setFullScreenMode(dap.attrExists(FULL_SCREEN) ? dap.getAttrValueAsBoolean(FULL_SCREEN) : true);
 		xmlView.setMenuEnabled(dap.attrExists(MENU_ENABLED) ? dap.getAttrValueAsBoolean(MENU_ENABLED) : true);
 

@@ -132,4 +132,5 @@ public class ViewCanvas extends GameCanvas {
 			keyEventEnabled = true;
 		}
 	}
+	
 }

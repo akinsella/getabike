@@ -8,13 +8,13 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
-import org.helyx.app.j2me.lib.ui.graphics.Color;
-import org.helyx.app.j2me.lib.ui.graphics.Shade;
-import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.util.ColorUtil;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
-import org.helyx.app.j2me.lib.ui.util.GraphicsUtil;
 import org.helyx.app.j2me.lib.ui.util.KeyUtil;
+import org.helyx.app.j2me.lib.ui.view.painter.DefaultBackgroundZone;
+import org.helyx.app.j2me.lib.ui.view.painter.SmallMenuZone;
+import org.helyx.app.j2me.lib.ui.view.painter.SmallTitleZone;
+import org.helyx.app.j2me.lib.ui.view.painter.ViewCanvasZone;
 import org.helyx.app.j2me.lib.ui.view.transition.IViewTransition;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 
@@ -25,6 +25,10 @@ public abstract class AbstractView extends AbstractDisplayable {
 	protected String title;
 	protected boolean fullScreenMode = false;
 	
+	private ViewCanvasZone titleZone = new SmallTitleZone();
+	private ViewCanvasZone menuZone = new SmallMenuZone();
+	private ViewCanvasZone backgroundZone = new DefaultBackgroundZone();
+	
 	private Command primaryCommand;
 	private Command secondaryCommand;
 	private Command thirdCommand;
@@ -34,7 +38,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 	
 	protected static ViewCanvas viewCanvas = new ViewCanvas();
 	
-	protected boolean paintBackgroundColor = true;
+	protected boolean backgroundEnabled = true;
 
 	public AbstractView(AbstractMIDlet midlet) {
 		super(midlet);
@@ -45,20 +49,59 @@ public abstract class AbstractView extends AbstractDisplayable {
 		
 	}
 
+	public ViewCanvasZone getTitleZone() {
+		return titleZone;
+	}
+
+	public void setTitleZone(ViewCanvasZone titleZone) {
+		this.titleZone = titleZone;
+	}
+
+	public ViewCanvasZone getMenuZone() {
+		return menuZone;
+	}
+
+	public void setMenuZone(ViewCanvasZone menuZone) {
+		this.menuZone = menuZone;
+	}
+
+	public ViewCanvasZone getBackgroundZone() {
+		return backgroundZone;
+	}
+
+	public void setBackgroundZone(ViewCanvasZone backgroundZone) {
+		this.backgroundZone = backgroundZone;
+	}
+
 	protected void sizeChanged(int w, int h) {
 
 	}
 
-	protected void pointerReleased(int x, int y) {
+	public void onPointerPressed(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
 
+	public void onPointerReleased(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void onPointerDragged(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void pointerReleased(int x, int y) {
+		onPointerReleased(x, y);
 	}
 
 	protected void pointerPressed(int x, int y) {
-	
+		onPointerPressed(x, y);
 	}
 
 	protected void pointerDragged(int x, int y) {
-	
+		onPointerDragged(x, y);
 	}
 
 	protected void keyReleased(int keyCode) {
@@ -160,26 +203,18 @@ public abstract class AbstractView extends AbstractDisplayable {
 		this.menuEnabled = menuEnabled;
 	}
 
-	public boolean isPaintBackgroundColor() {
-		return paintBackgroundColor;
+	public boolean isBackgroundEnabled() {
+		return backgroundEnabled;
 	}
 
-	public void setPaintBackgroundColor(boolean paintBackgroundColor) {
-		this.paintBackgroundColor = paintBackgroundColor;
+	public void setBackgroundEnabled(boolean paintBackgroundColor) {
+		this.backgroundEnabled = paintBackgroundColor;
 	}
 	
 	protected Rectangle computeClientArea(Graphics graphics) {
-		Rectangle titleArea = computeTitleArea(graphics);
-		Rectangle menuArea = computeMenuArea(graphics);
+		Rectangle titleArea = titleZone.computeArea(this, graphics);
+		Rectangle menuArea = menuZone.computeArea(this, graphics);
 		return new Rectangle(0, titleArea.size.height, viewCanvas.getWidth(), viewCanvas.getHeight() - titleArea.size.height - menuArea.size.height);
-	}
-	
-	protected Rectangle computeMenuArea(Graphics graphics) {
-		return new Rectangle(0, viewCanvas.getHeight() - (shouldPaintMenu() ? FontUtil.SMALL_BOLD.getHeight() : 0) - 1, viewCanvas.getWidth(), (shouldPaintMenu() ? FontUtil.SMALL_BOLD.getHeight() : 0) + 1);
-	}
-
-	protected Rectangle computeTitleArea(Graphics graphics) {
-		return new Rectangle(0, 0, viewCanvas.getWidth(), shouldPaintTitle() ? FontUtil.SMALL_BOLD.getHeight() : 0);
 	}
 	
 	protected void repaint() {
@@ -189,7 +224,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 	public void onPaint(Graphics graphics) {
 		Log.debug(CAT, "Event: Painting screen");
 
-		paintBackgroundColor(graphics);
+		paintBackground(graphics);
 		paint(graphics);
 		paintTitleArea(graphics);
 		paintMenuArea(graphics);
@@ -207,11 +242,15 @@ public abstract class AbstractView extends AbstractDisplayable {
 		}
 	}
 
-	private boolean shouldPaintMenu() {
+	public boolean shouldPaintBackground() {
+		return backgroundEnabled;
+	}
+	
+	public boolean shouldPaintMenu() {
 		return menuEnabled && (thirdCommand != null || primaryCommand != null || secondaryCommand != null);
 	}
 	
-	protected boolean shouldPaintTitle() {
+	public boolean shouldPaintTitle() {
 		return titleEnabled && title != null;
 	}
 	
@@ -247,31 +286,22 @@ public abstract class AbstractView extends AbstractDisplayable {
 		super.changeDisplayable(srcDisplayable, targetDisplayable, viewTransition);
 	}
 
-	private void paintBackgroundColor(Graphics g) {
-		if (!paintBackgroundColor) {
+	private void paintBackground(Graphics graphics) {
+		if (!shouldPaintBackground()) {
 			return;
 		}
-		Color bgColor = getTheme().getColor(ThemeConstants.WIDGET_BACKGROUND);
 
-        g.setColor(bgColor.intValue());
-        g.fillRect(0, 0, viewCanvas.getWidth(), viewCanvas.getHeight());
+		Rectangle backgroundArea = backgroundZone.computeArea(this, graphics);
+		backgroundZone.paintArea(this, graphics, backgroundArea);
 	}
 
 	private void paintTitleArea(Graphics graphics) {
 		if (!shouldPaintTitle()) {
 			return;
 		}
-
-		Rectangle titleArea = computeTitleArea(graphics);
-		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_LIGHT);
-		Color shadeColor2 = getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_DARK);
-		GraphicsUtil.fillShade(graphics, titleArea, new Shade(shadeColor1.intValue(), shadeColor2.intValue()), false);
-
-		Color titleFontColor = getTheme().getColor(ThemeConstants.WIDGET_TITLE_FONT);
-		graphics.setColor(titleFontColor.intValue());
-		graphics.setFont(FontUtil.SMALL_BOLD);
-		graphics.drawLine(titleArea.location.x, titleArea.location.y + titleArea.size.height, titleArea.location.x + titleArea.size.width, titleArea.location.y + titleArea.size.height);
-		graphics.drawString(title, titleArea.location.x + titleArea.size.width / 2, titleArea.location.y + (titleArea.size.height - FontUtil.SMALL_BOLD.getHeight()) / 2, Graphics.HCENTER | Graphics.TOP);
+		
+		Rectangle titleArea = titleZone.computeArea(this, graphics);
+		titleZone.paintArea(this, graphics, titleArea);
 	}
 
 	private void paintMenuArea(Graphics graphics) {
@@ -279,28 +309,8 @@ public abstract class AbstractView extends AbstractDisplayable {
 			return;
 		}
 
-		Rectangle menuArea = computeMenuArea(graphics);
-		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_DARK);
-		Color shadeColor2 = getTheme().getColor(ThemeConstants.WIDGET_TITLE_BG_SHADE_LIGHT);
-		GraphicsUtil.fillShade(graphics, menuArea, new Shade(shadeColor1.intValue(), shadeColor2.intValue()), false);
-
-		Color titleFontColor = getTheme().getColor(ThemeConstants.WIDGET_TITLE_FONT);
-		graphics.setColor(titleFontColor.intValue());
-		graphics.setFont(FontUtil.SMALL_BOLD);
-		graphics.drawLine(menuArea.location.x, menuArea.location.y, menuArea.location.x + menuArea.size.width, menuArea.location.y);
-
-		if (thirdCommand != null) {
-			graphics.drawString(thirdCommand.getText(), menuArea.location.x, menuArea.location.y + (menuArea.size.height - FontUtil.SMALL_BOLD.getHeight()) / 2 + 1, Graphics.LEFT | Graphics.TOP);
-		}
-
-		if (primaryCommand != null) {
-			graphics.drawString(primaryCommand.getText(), menuArea.location.x + menuArea.size.width / 2, menuArea.location.y + (menuArea.size.height - FontUtil.SMALL_BOLD.getHeight()) / 2 + 1, Graphics.HCENTER | Graphics.TOP);
-		}
-
-		if (secondaryCommand != null) {
-			graphics.drawString(secondaryCommand.getText(), menuArea.location.x + menuArea.size.width, menuArea.location.y + (menuArea.size.height - FontUtil.SMALL_BOLD.getHeight()) / 2 + 1, Graphics.RIGHT | Graphics.TOP);
-		}
-		
+		Rectangle menuArea = menuZone.computeArea(this, graphics);
+		menuZone.paintArea(this, graphics, menuArea);
 	}
 
 	protected abstract void paint(Graphics graphics);

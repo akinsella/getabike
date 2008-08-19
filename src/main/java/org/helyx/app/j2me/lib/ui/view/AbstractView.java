@@ -32,13 +32,12 @@ public abstract class AbstractView extends AbstractDisplayable {
 	private Command primaryCommand;
 	private Command secondaryCommand;
 	private Command thirdCommand;
-	
+		
+	protected boolean backgroundEnabled = true;
 	protected boolean titleEnabled = true;
 	protected boolean menuEnabled = true;
 	
 	protected static ViewCanvas viewCanvas = new ViewCanvas();
-	
-	protected boolean backgroundEnabled = true;
 
 	public AbstractView(AbstractMIDlet midlet) {
 		super(midlet);

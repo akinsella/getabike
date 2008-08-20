@@ -58,7 +58,7 @@ public class AbstractXmlAttributeProcessor {
 	public boolean getAttrValueAsBoolean(String attributeName) {
 		String booleanValue = (String)attributeMap.get(attributeName);
 		
-		if (booleanValue == null) {
+		if (booleanValue == null || booleanValue.length() == 0) {
 			return false;
 		}
 		return BooleanConstants.TRUE.compareTo(booleanValue.toLowerCase()) == 0;
@@ -67,7 +67,7 @@ public class AbstractXmlAttributeProcessor {
 	public byte getAttrValueAsByte(String attributeName) {
 		String byteValue = (String)attributeMap.get(attributeName);
 		
-		if (byteValue == null) {
+		if (byteValue == null || byteValue.length() == 0) {
 			return 0;
 		}
 		return Byte.parseByte(byteValue);
@@ -76,7 +76,7 @@ public class AbstractXmlAttributeProcessor {
 	public short getAttrValueAsShort(String attributeName) {
 		String shortValue = (String)attributeMap.get(attributeName);
 		
-		if (shortValue == null) {
+		if (shortValue == null || shortValue.length() == 0) {
 			return 0;
 		}
 		return Short.parseShort(shortValue);
@@ -85,7 +85,7 @@ public class AbstractXmlAttributeProcessor {
 	public int getAttrValueAsInt(String attributeName) {
 		String intValue = (String)attributeMap.get(attributeName);
 		
-		if (intValue == null) {
+		if (intValue == null || intValue.length() == 0) {
 			return 0;
 		}
 		return Integer.parseInt(intValue);
@@ -94,7 +94,7 @@ public class AbstractXmlAttributeProcessor {
 	public long getAttrValueAsLong(String attributeName) {
 		String longValue = (String)attributeMap.get(attributeName);
 		
-		if (longValue == null) {
+		if (longValue == null || longValue.length() == 0) {
 			return 0;
 		}
 		return Long.parseLong(longValue);
@@ -103,7 +103,7 @@ public class AbstractXmlAttributeProcessor {
 	public float getAttrValueAsFloat(String attributeName) {
 		String floatValue = (String)attributeMap.get(attributeName);
 		
-		if (floatValue == null) {
+		if (floatValue == null || floatValue.length() == 0) {
 			return 0;
 		}
 		return Float.parseFloat(floatValue);
@@ -112,7 +112,7 @@ public class AbstractXmlAttributeProcessor {
 	public double getAttrValueAsDouble(String attributeName) {
 		String doubleValue = (String)attributeMap.get(attributeName);
 		
-		if (doubleValue == null) {
+		if (doubleValue == null || doubleValue.length() == 0) {
 			return 0;
 		}
 		return Double.parseDouble((String)attributeMap.get(attributeName));

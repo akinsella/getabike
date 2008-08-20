@@ -255,7 +255,7 @@ public class StationListView extends AbstractView {
 
 	protected void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		Log.info(CAT, "[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		Log.debug(CAT, "[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
 	    }
@@ -272,7 +272,7 @@ public class StationListView extends AbstractView {
 
 	protected void onKeyRepeated(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		Log.info(CAT, "[onKeyRepeated] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		Log.debug(CAT, "[onKeyRepeated] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
 	    }
@@ -288,7 +288,7 @@ public class StationListView extends AbstractView {
 		if (selectedOffset < topOffset) {
 			topOffset = selectedOffset;
 		}
-		Log.info(CAT, "Scroll Up - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset);
+		Log.debug(CAT, "Scroll Up - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset);
 		viewCanvas.repaint();
 	}
 
@@ -308,7 +308,7 @@ public class StationListView extends AbstractView {
 				topOffset = selectedOffset - visibleItemCount + 1;
 			}	
 		}
-		Log.info(CAT, "Scroll Down - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset + ", visibleItemCount: " + visibleItemCount + ", length: " + length);
+		Log.debug(CAT, "Scroll Down - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset + ", visibleItemCount: " + visibleItemCount + ", length: " + length);
 		viewCanvas.repaint();
 	}
 	

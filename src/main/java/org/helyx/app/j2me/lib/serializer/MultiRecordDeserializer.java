@@ -27,7 +27,7 @@ public class MultiRecordDeserializer {
 		bis = new ByteArrayInputStream(bytes);
 		dis = new DataInputStream(bis);
 		recordIteratorCount = dis.readInt();
-		Log.info("Record iterator count: " + recordIteratorCount);
+		Log.debug("Record iterator count: " + recordIteratorCount);
 	}
 	
 	public void dispose() {

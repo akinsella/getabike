@@ -13,6 +13,7 @@ import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
+import org.helyx.basics4me.io.BufferedInputStream;
 import org.xmlpull.v1.XmlPullParser;
 
 
@@ -59,7 +60,7 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 			try {
 				
 				cartoInputStreamProvider = stationContentAccessor.getInputStreamProvider();
-				inputStream = cartoInputStreamProvider.createInputStream();
+				inputStream = new BufferedInputStream(cartoInputStreamProvider.createInputStream());
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, UTF_8);
 

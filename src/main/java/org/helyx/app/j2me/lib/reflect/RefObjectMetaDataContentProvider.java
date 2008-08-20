@@ -10,6 +10,7 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
+import org.helyx.basics4me.io.BufferedInputStream;
 import org.xmlpull.v1.XmlPullParser;
 
 public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
@@ -47,7 +48,7 @@ public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 			RefObjectMetaData refObjectMetaData = new RefObjectMetaData();
 			try {			
 				metadataInputStreamProvider = metadataContentAccessor.getInputStreamProvider();
-				inputStream = metadataInputStreamProvider.createInputStream();
+				inputStream = new BufferedInputStream(metadataInputStreamProvider.createInputStream());
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream,  EncodingConstants.UTF_8);
 	

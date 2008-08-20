@@ -77,8 +77,7 @@ public class LoadTaskView extends AbstractView {
 		for (int i = 0 ; i < themeImageCount ; i++) {
 			try {
 				String imagePath = stringFormat.format(i + 1);
-				Log.debug("imagePath: " + imagePath);
-				Log.info(CAT, "imagePath: '" + imagePath + "'");
+				Log.debug(CAT, "imagePath: '" + imagePath + "'");
 				images[i] = ImageUtil.createImageFromClassPath(imagePath);
 			}
 			catch (IOException e) { 
@@ -106,7 +105,7 @@ public class LoadTaskView extends AbstractView {
 			
 			public void onProgress(String eventMessage, Object eventData) {
 				if (eventData != null) {
-					Log.info(this.getCat(), eventData.toString());
+					Log.debug(this.getCat(), eventData.toString());
 				}
 				label = eventMessage;
 				viewCanvas.repaint();

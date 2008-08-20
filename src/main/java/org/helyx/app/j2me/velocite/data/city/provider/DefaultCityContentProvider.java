@@ -16,6 +16,7 @@ import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.city.CityConstants;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.basics4me.io.BufferedInputStream;
 import org.xmlpull.v1.XmlPullParser;
 
 public class DefaultCityContentProvider extends AbstractContentProvider {
@@ -65,7 +66,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
 			try {			
 				cityInputStreamProvider = cityContentAccessor.getInputStreamProvider();
-				inputStream = cityInputStreamProvider.createInputStream();
+				inputStream = new BufferedInputStream(cityInputStreamProvider.createInputStream());
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
 				

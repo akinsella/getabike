@@ -45,8 +45,8 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 		try {
 
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
-			
-			for (int i = 0 ; i < 11 ; i++) {
+			int scaLength = stationContentAccessors.length;
+			for (int i = 0 ; i < scaLength ; i++) {
 				InputStream inputStream = null;
 				InputStreamProvider cartoInputStreamProvider = null;
 
@@ -104,14 +104,13 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 						
 						progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 					}
-					progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 				}
 				finally {
 					cartoInputStreamProvider.dispose();
 				}
 				
 			}
-			
+			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);			
 		}
 		catch (Throwable t) {
     		Log.warn(CAT, t);

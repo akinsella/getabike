@@ -16,6 +16,7 @@ import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.language.LanguageConstants;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
+import org.helyx.basics4me.io.BufferedInputStream;
 import org.xmlpull.v1.XmlPullParser;
 
 public class DefaultLanguageContentProvider extends AbstractContentProvider {
@@ -59,7 +60,7 @@ public class DefaultLanguageContentProvider extends AbstractContentProvider {
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
 			try {			
 				languageInputStreamProvider = languageContentAccessor.getInputStreamProvider();
-				inputStream = languageInputStreamProvider.createInputStream();
+				inputStream = new BufferedInputStream(languageInputStreamProvider.createInputStream());
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
 				

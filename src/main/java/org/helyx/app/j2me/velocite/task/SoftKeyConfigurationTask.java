@@ -54,7 +54,7 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 					int rightSoftKey = Integer.parseInt(rightSoftKeyStr);
 					
 					KeyUtil.keyMapConfig = new KeyMapConfig("CACHED_VALUES", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
-					Log.info(CAT, "[SoftKey detection] Associating softkeys from cached values: " + KeyUtil.keyMapConfig);
+					Log.debug(CAT, "[SoftKey detection] Associating softkeys from cached values: " + KeyUtil.keyMapConfig);
 					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
 					progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 					return ;
@@ -106,12 +106,12 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 					if (negativeKeyName != null) {
 						progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Touche détectée: '" + negativeKeyName + "'");
 					}
-					Log.info(CAT, "[SoftKey detection] index=" + i + ", positiveKeyName='" + positiveKeyName + "', negativeKeyName='" + negativeKeyName + "', leftSoftKey=" + leftSoftKey + ", rightSoftKey=" + rightSoftKey);
+					Log.debug(CAT, "[SoftKey detection] index=" + i + ", positiveKeyName='" + positiveKeyName + "', negativeKeyName='" + negativeKeyName + "', leftSoftKey=" + leftSoftKey + ", rightSoftKey=" + rightSoftKey);
 				}
 				
 				if (leftSoftKey != 0 && rightSoftKey != 0) {
 					KeyUtil.keyMapConfig = new KeyMapConfig("AUTO_DETECTION", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
-					Log.info(CAT, "[SoftKey detection] Associating softkeys by automatic detection: " + KeyUtil.keyMapConfig);
+					Log.debug(CAT, "[SoftKey detection] Associating softkeys by automatic detection: " + KeyUtil.keyMapConfig);
 
 					KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_AUTO_DETECTION, leftSoftKey, rightSoftKey);
 					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
@@ -141,7 +141,7 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 			KeyUtil.keyMapConfig = KeyUtil.DEFAULT_KEY_MAP;
 
 			KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_DEFAULT, KeyUtil.keyMapConfig.keyMapArray[0].softKeyLeft, KeyUtil.keyMapConfig.keyMapArray[0].softKeyRight);
-			Log.info(CAT, "[SoftKey detection] Associating softkeys to defaults: " + KeyUtil.keyMapConfig);
+			Log.debug(CAT, "[SoftKey detection] Associating softkeys to defaults: " + KeyUtil.keyMapConfig);
 			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Config. par défaut");
 			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 		}
@@ -162,7 +162,7 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 			for (int i = 0 ; i < length ; i++) {
 				if (platformName.indexOf(KeyUtil.keyMapArray[i].modelKey) >= 0) {
 					KeyMapConfig keyMapConfig = KeyUtil.keyMapArray[i];
-					Log.info(CAT, "[SoftKey detection] Associating softkeys to platform '" + platformName + "': " + keyMapConfig);
+					Log.debug(CAT, "[SoftKey detection] Associating softkeys to platform '" + platformName + "': " + keyMapConfig);
 					return keyMapConfig;
 				}
 			}

@@ -38,7 +38,7 @@ public class MultiRecordEnumeration implements Enumeration {
 			}
 			hasRecords = true;
 			byte[] bytes = recordStore.getRecord(1);
-			Log.info(CAT, "First Record bytes length: " + bytes.length);
+			Log.debug(CAT, "First Record bytes length: " + bytes.length);
 			multiRecordDeserializer = new MultiRecordDeserializer(bytes);
 			recordReader = new MultiRecordReader(multiRecordDeserializer, recordSerializer, recordFilter);
 		}

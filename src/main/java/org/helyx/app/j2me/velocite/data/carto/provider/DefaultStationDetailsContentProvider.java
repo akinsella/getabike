@@ -12,6 +12,7 @@ import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
+import org.helyx.basics4me.io.BufferedInputStream;
 import org.xmlpull.v1.XmlPullParser;
 
 
@@ -61,7 +62,7 @@ public class DefaultStationDetailsContentProvider extends AbstractContentProvide
 
 				stationDetailsInputStreamReaderProvider = stationDetailsContentAccessor.getInputStreamProvider();
 				
-				inputStream = stationDetailsInputStreamReaderProvider.createInputStream();
+				inputStream = new BufferedInputStream(stationDetailsInputStreamReaderProvider.createInputStream());
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
 				

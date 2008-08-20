@@ -21,7 +21,7 @@ import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 
 public class LanguageConfigurationTask extends AbstractProgressTask {
 	
-	private static final String CAT = "SOFT_KEY_CONFIGURATION_TASK";
+	private static final String CAT = "LANGUAGE_CONFIGURATION_TASK";
 	
 	private Canvas canvas;
 	private AbstractMIDlet midlet;

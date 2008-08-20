@@ -92,7 +92,7 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 						Station station = new Station();
 						station.number = jsonMarker.getInt(NUM_STATION);
 						station.name = jsonMarker.getString(NOM_STATION);
-						station.address = jsonMarker.getString(INFO_STATION);
+						station.address = jsonMarker.optString(INFO_STATION, "");
 						station.fullAddress = station.address;
 						station.hasLocalization = true;
 						station.localization = new Point();

@@ -96,8 +96,8 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 						station.fullAddress = station.address;
 						station.hasLocalization = true;
 						station.localization = new Point();
-						station.localization.lat = jsonMarker.getInt(LATITUDE);
-						station.localization.lat = jsonMarker.getInt(LONGITUDE);
+						station.localization.lat = jsonMarker.optDouble(LATITUDE, 0);
+						station.localization.lat = jsonMarker.optDouble(LONGITUDE, 0);
 						station.open = true;
 						station.city = LYON;
 						station.zipCode = (markerOffset < 10 ? "6900": "690") + markerOffset;

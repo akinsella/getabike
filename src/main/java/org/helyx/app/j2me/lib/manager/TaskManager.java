@@ -1,5 +1,7 @@
 package org.helyx.app.j2me.lib.manager;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
@@ -7,9 +9,8 @@ import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.view.support.LoadTaskView;
 
 public class TaskManager {
-
 	
-	private static final String CAT = "TASK_MANAGER";
+	private static final Log log = LogFactory.getLog("TASK_MANAGER");
 	
 	private TaskManager() {
 		super();
@@ -25,7 +26,7 @@ public class TaskManager {
 		if (targetDisplayable != null) {
 			loadTaskView.setPreviousDisplayable(targetDisplayable);
 
-			progressTask.addProgressListener(new ProgressAdapter(CAT + "[" + progressTask.getDescription() + "]") {
+			progressTask.addProgressListener(new ProgressAdapter() {
 
 				public void onCancel(String eventMessage, Object eventData) {
 					if (targetDisplayable != null) {

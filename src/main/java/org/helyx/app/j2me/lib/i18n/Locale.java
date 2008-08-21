@@ -1,8 +1,11 @@
 package org.helyx.app.j2me.lib.i18n;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
+
 public class Locale {
 
-	private static final String CAT = "LOCALE";
+	private static final Log log = LogFactory.getLog("LOCALE");
 	
 	public static final Locale FRANCE = new Locale("fr", "FR");
 	public static final Locale ENGLAND = new Locale("en", "EN");

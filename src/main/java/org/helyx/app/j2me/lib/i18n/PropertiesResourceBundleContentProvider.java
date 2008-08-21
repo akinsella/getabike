@@ -5,6 +5,7 @@ import java.io.InputStream;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.basics4me.util.Properties;
@@ -12,7 +13,7 @@ import org.helyx.basics4me.util.Properties;
 
 public class PropertiesResourceBundleContentProvider extends AbstractContentProvider {
 	
-	private static final String CAT = "PROPERTIES_RESOURCE_BUNDLE_CONTENT_PROVIDER";
+	private static final Log log = LogFactory.getLog("PROPERTIES_RESOURCE_BUNDLE_CONTENT_PROVIDER");
 
 	
 	private boolean cancel = false;
@@ -27,7 +28,7 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 
 	public void loadData() {
 		
-		Log.debug(CAT, "Loading messages ...");
+		log.debug("Loading messages ...");
 		
 		InputStream inputStream = null;
 		InputStreamProvider cartoInputStreamProvider = null;
@@ -53,17 +54,13 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, resourceBundle);
 		}
 		catch (Throwable t) {
-    		Log.warn(CAT, t);
+    		log.warn(t);
 			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
 		}
 	}
 
 	public void cancel() {
 		cancel = true;
-	}
-
-	public String getCat() {
-		return CAT;
 	}
 	
 	public String getDescription() {

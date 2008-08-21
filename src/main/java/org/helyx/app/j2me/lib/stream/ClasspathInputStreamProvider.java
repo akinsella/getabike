@@ -3,9 +3,12 @@ package org.helyx.app.j2me.lib.stream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
+
 public class ClasspathInputStreamProvider implements InputStreamProvider {
 
-	private static final String CAT = "CLASSPATH_INPUT_STREAM_PROVIDER";
+	private static final Log log = LogFactory.getLog("CLASSPATH_INPUT_STREAM_PROVIDER");
 	
 	private String path;
 	private InputStream inputStream;

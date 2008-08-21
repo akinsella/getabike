@@ -6,9 +6,12 @@ import java.io.IOException;
 
 import javax.microedition.rms.RecordFilter;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
+
 public class StationDetailsNumberFilter implements RecordFilter {
 
-	private static final String CAT = "STATION_DETAILS_NUMBER_FILTER";
+	private static final Log log = LogFactory.getLog("STATION_DETAILS_NUMBER_FILTER");
 	
 	private int stationNumberFilter;
 	

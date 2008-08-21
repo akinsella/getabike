@@ -10,6 +10,7 @@ import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.velocite.data.city.CityConstants;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
@@ -17,7 +18,7 @@ import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider
 
 public class DefaultCityContentProviderTest extends TestCase {
 
-	private static final String CAT = "DEFAULT_CITY_CONTENT_PROVIDER_TEST";
+	private static final Log log = LogFactory.getLog("DEFAULT_CITY_CONTENT_PROVIDER_TEST");
 	
 	public void testCityContentLoaderParis() throws ContentProviderException, ContentAccessorException {
 		
@@ -26,18 +27,18 @@ public class DefaultCityContentProviderTest extends TestCase {
 		
 		final Vector cityList = new Vector();
 		
-		cityContentProvider.addProgressListener(new ProgressAdapter(CAT) {
+		cityContentProvider.addProgressListener(new ProgressAdapter() {
 
 			public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
 				if (eventType == CityConstants.ON_CITY_LOADED) {
-					Log.info(getCat(), "ON_CITY_LOADED: " + eventData);
+					getLog().info("ON_CITY_LOADED: " + eventData);
 					assertEquals(City.class.getName(), eventData.getClass().getName());
 					cityList.addElement(eventData);
 				}
 			}
 
 			public void onSuccess(String eventMessage, Object eventData) {
-				Log.info(getCat(), "ON_SUCCESS");
+				getLog().info("ON_SUCCESS");
 			}
 
 			public void onError(String eventMessage, Object eventData) {
@@ -70,18 +71,18 @@ public class DefaultCityContentProviderTest extends TestCase {
 		
 		final Vector cityList = new Vector();
 		
-		cityContentLoader.addProgressListener(new ProgressAdapter(CAT) {
+		cityContentLoader.addProgressListener(new ProgressAdapter() {
 
 			public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
 				if (eventType == CityConstants.ON_CITY_LOADED) {
-					Log.info(getCat(), "ON_CITY_LOADED: " + eventData);
+					getLog().info("ON_CITY_LOADED: " + eventData);
 					assertEquals(City.class.getName(), eventData.getClass().getName());
 					cityList.addElement(eventData);
 				}
 			}
 
 			public void onSuccess(String eventMessage, Object eventData) {
-				Log.info(getCat(), "ON_SUCCESS");
+				getLog().info("ON_SUCCESS");
 			}
 
 			public void onError(String eventMessage, Object eventData) {

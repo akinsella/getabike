@@ -1,5 +1,7 @@
 package org.helyx.app.j2me.velocite.task.factory;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.BasicTask;
 import org.helyx.app.j2me.lib.task.ITask;
@@ -10,7 +12,7 @@ import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 
 public class DataCleanUpTaskFactory implements ITaskFactory {
 	
-	private static final String CAT = "DATA_CLEAN_UP_TASK_FACTORY";
+	private static final Log log = LogFactory.getLog("DATA_CLEAN_UP_TASK_FACTORY");
 		
 	public DataCleanUpTaskFactory() {
 		super();

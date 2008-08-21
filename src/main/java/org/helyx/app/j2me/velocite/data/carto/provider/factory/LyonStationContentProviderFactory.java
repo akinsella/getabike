@@ -3,12 +3,14 @@ package org.helyx.app.j2me.velocite.data.carto.provider.factory;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.SingleParamHttpContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.LyonStationContentProvider;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 
 public class LyonStationContentProviderFactory implements ICityContentProviderFactory {
 
-	private static final String CAT = "LYON_STATION_CONTENT_PROVIDER_FACTORY";
+	private static final Log log = LogFactory.getLog("LYON_STATION_CONTENT_PROVIDER_FACTORY");
 	
 	public LyonStationContentProviderFactory() {
 		super();

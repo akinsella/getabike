@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.util.Hashtable;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasProcessingException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 public class XppTreeWalker {
 
-	private static final String CAT = "XPP_TREE_WALKER";
+	private static final Log log = LogFactory.getLog("XPP_TREE_WALKER");
 	
 	private Hashtable nodeProcessorMap = new Hashtable();
 	private XppNodePath xppNodePath = new XppNodePath();
@@ -24,17 +25,17 @@ public class XppTreeWalker {
 	}
 	
 	public void setNodeProcessor(String nodePath, XppNodeProcessor xnp) {
-		Log.debug(CAT, "Associating NodePath '" + nodePath + "' to XppNodeProcessor: '" + xnp + "'");
+		log.debug("Associating NodePath '" + nodePath + "' to XppNodeProcessor: '" + xnp + "'");
 		nodeProcessorMap.put(nodePath, xnp);
 	}
 	
 	public void removeNodeProcessor(String nodePath) {
-		Log.debug(CAT, "Removing NodePath association '" + nodePath + "'");
+		log.debug("Removing NodePath association '" + nodePath + "'");
 		nodeProcessorMap.remove(nodePath);
 	}
 	
 	public void removeAllNodeProcessors() {
-		Log.debug(CAT, "Removing All NodePath associations");
+		log.debug("Removing All NodePath associations");
 		nodeProcessorMap.clear();
 	}
 	
@@ -43,24 +44,24 @@ public class XppTreeWalker {
 		xpp.next();
 		int eventType = xpp.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
-			Log.debug(CAT, "Xpp eventType name: " + XmlPullParser.TYPES[eventType]);
+			log.debug("Xpp eventType name: " + XmlPullParser.TYPES[eventType]);
 			if (eventType == XmlPullParser.START_TAG) {
 				String nodeName = xpp.getName();
-				Log.debug(CAT, "[START_TAG] Xpp element name: " + nodeName);
+				log.debug("[START_TAG] Xpp element name: " + nodeName);
 				xppNodePath.push(nodeName);
 				String xmlPath = xppNodePath.toXmlPath();
-				Log.debug(CAT, "[START_TAG] Xpp element path: " + xmlPath);
+				log.debug("[START_TAG] Xpp element path: " + xmlPath);
 				XppNodeProcessor xnp = (XppNodeProcessor)nodeProcessorMap.get(xmlPath);
-				Log.debug(CAT, "[START_TAG] Found XppNodeProcessor: '" + xnp + "' for XmlPath: '" + xmlPath + "'");
+				log.debug("[START_TAG] Found XppNodeProcessor: '" + xnp + "' for XmlPath: '" + xmlPath + "'");
 				if (xnp != null) {
 					xnp.processNodeStart(xpp);
 				}
 			}
 			else if (eventType == XmlPullParser.END_TAG) {
 				String xmlPath = xppNodePath.toXmlPath();
-				Log.debug(CAT, "[END_TAG] Xpp element path: " + xmlPath);
+				log.debug("[END_TAG] Xpp element path: " + xmlPath);
 				XppNodeProcessor xnp = (XppNodeProcessor)nodeProcessorMap.get(xmlPath);
-				Log.debug(CAT, "[END_TAG] Found XppNodeProcessor: '" + xnp + "' for XmlPath: '" + xmlPath + "'");
+				log.debug("[END_TAG] Found XppNodeProcessor: '" + xnp + "' for XmlPath: '" + xmlPath + "'");
 				if (xnp != null) {
 					xnp.processNodeEnd(xpp);
 				}

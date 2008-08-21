@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.manager.TaskManager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
@@ -22,7 +23,7 @@ import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 
 public class CityListView extends MenuListView {
 	
-	private static final String CAT = "CITY_LIST_VIEW";
+	private static final Log log = LogFactory.getLog("CITY_LIST_VIEW");
 	
 	private City selectedCity;
 	
@@ -82,9 +83,9 @@ public class CityListView extends MenuListView {
 
 	private void initData() throws CityManagerException {
 		cityList = CityManager.findAllCities();
-		Log.info(CAT, "cityList: " + cityList);
+		log.info("cityList: " + cityList);
 		selectedCity = CityManager.findSelectedCity(cityList);
-		Log.info(CAT, "selectedCity: " + cityList);
+		log.info("selectedCity: " + cityList);
 	}
 	
 	private void initComponents() {

@@ -2,26 +2,27 @@ package org.helyx.app.j2me.lib.log;
 
 import java.util.Date;
 
-import org.helyx.app.j2me.lib.format.DateFormatUtil;
+public class ConsoleLogWriter extends AbstractLogWriter {
+	
+	private static final Log log = LogFactory.getLog("CONSOLE_LOG_WRITER");
+	
+	private static ConsoleLogWriter consoleLogWriter;
+	
+	static {
+		consoleLogWriter = new ConsoleLogWriter();
+	}
 
-public class ConsoleLogWriter implements ILogWriter {
-
-	public ConsoleLogWriter() {
+	private ConsoleLogWriter() {
 		super();
 	}
 
-	public void write(int level, String category, String message, Date date) {
-		try {
-		
-			String dateStr = DateFormatUtil.formatDate(date);
-			
-			StringBuffer sb = new StringBuffer().append("[").append(Thread.currentThread().getName().toUpperCase()).append(" | ").append(Log.getLevelName(level)).append(" | ").append(category).append(" | ").append(dateStr).append("] ").append(message);
-			
+	public void onWrite(int level, Log log, String message, Date date) {
+		try {			
 			if (level == Log.FATAL || level == Log.ERROR) {
-				System.err.println(sb.toString());
+				System.err.println(getLogMessage(level, log, message, date));
 			}
 			else {
-				System.out.println(sb.toString());
+				System.out.println(getLogMessage(level, log, message, date));
 			}
 		}
 		catch(Exception e) { 
@@ -39,6 +40,10 @@ public class ConsoleLogWriter implements ILogWriter {
 
 	public void flush() throws Exception {
 		
+	}
+
+	public static ConsoleLogWriter getInstance() {
+		return consoleLogWriter;
 	}
 
 }

@@ -8,6 +8,7 @@ import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.velocite.PrefConstants;
@@ -17,7 +18,7 @@ import org.helyx.app.j2me.velocite.data.language.service.LanguagePersistenceServ
 
 public class LanguageManager {
 
-	private static final String CAT = "LANGUAGE_MANAGER";
+	private static final Log log = LogFactory.getLog("LANGUAGE_MANAGER");
 	
 	private LanguageManager() {
 		super();
@@ -43,9 +44,9 @@ public class LanguageManager {
 		Language selectedLanguage = null;
 
 		String languageSelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
-		Log.info(CAT, "Selected Language key: " + languageSelectedKeyPrefValue);
+		log.info("Selected Language key: " + languageSelectedKeyPrefValue);
 		String languageDefaultKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_DEFAULT_KEY);
-		Log.info(CAT, "Default Language key: " + languageSelectedKeyPrefValue);
+		log.info("Default Language key: " + languageSelectedKeyPrefValue);
 		
 		Enumeration _enum = languageList.elements();
 		while(_enum.hasMoreElements()) {
@@ -72,7 +73,7 @@ public class LanguageManager {
 			throw new LanguageManagerException("No default/active language exception");
 		}
 
-		Log.debug("Selected language: " + selectedLanguage);
+		log.debug("Selected language: " + selectedLanguage);
 		
 		return selectedLanguage;
 	}

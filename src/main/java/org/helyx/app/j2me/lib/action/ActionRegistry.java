@@ -3,10 +3,11 @@ package org.helyx.app.j2me.lib.action;
 import java.util.Hashtable;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 
 public class ActionRegistry {
 
-	private static final String CAT = "ACTIVE_REGISTRY";
+	private static final Log log = LogFactory.getLog("ACTIVE_REGISTRY");
 	
 	private Hashtable actionMap = new Hashtable();
 	
@@ -23,17 +24,17 @@ public class ActionRegistry {
 	}
 	
 	public void put(String key, IAction action) {
-		Log.debug(CAT, "Associating key: '" + key + "' to action: '" + action + "'");
+		log.debug("Associating key: '" + key + "' to action: '" + action + "'");
 		actionMap.put(key, action);
 	}
 	
 	public void remove(String key) {
-		Log.debug(CAT, "Removing key association '" + key + "'");
+		log.debug("Removing key association '" + key + "'");
 		actionMap.remove(key);
 	}
 	
 	public void removeAll() {
-		Log.debug(CAT, "Removing All key associations");
+		log.debug("Removing All key associations");
 		actionMap.clear();
 	}
 

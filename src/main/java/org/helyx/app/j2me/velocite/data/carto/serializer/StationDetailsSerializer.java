@@ -4,13 +4,15 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Date;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.serializer.AbstractObjectSerializer;
 import org.helyx.app.j2me.lib.serializer.SerializerException;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 
 public class StationDetailsSerializer extends AbstractObjectSerializer {
 
-	private static final String CAT = "STATION_DETAILS_SERIALIZER";
+	private static final Log log = LogFactory.getLog("STATION_DETAILS_SERIALIZER");
 
 	public StationDetailsSerializer() {
 		super();

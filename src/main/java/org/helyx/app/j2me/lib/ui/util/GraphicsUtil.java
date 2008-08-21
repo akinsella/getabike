@@ -2,13 +2,15 @@ package org.helyx.app.j2me.lib.ui.util;
 
 import javax.microedition.lcdui.Graphics;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
 
 
 public final class GraphicsUtil {
 
-	private static final String CAT = "GRAPHICS_UTIL";
+	private static final Log log = LogFactory.getLog("GRAPHICS_UTIL");
 
 	public static void drawStringWordWrap(Graphics g, String text, int x, int y, int fullWidth, int style) {
 		WordWrapUtil.paint(g, text, x, y, fullWidth, style);
@@ -36,7 +38,7 @@ public final class GraphicsUtil {
 					ColorUtil.getShadeComposant(srcGreen, destGreen, i, areaWidth),
 					ColorUtil.getShadeComposant(srcBlue, destBlue, i, areaWidth)
 				);
-//				Log.info(CAT, ColorUtil.intToColor(color));
+//				log.info(ColorUtil.intToColor(color));
 				g.setColor(color);
 				g.drawLine(areaX + i, areaY, areaX + i, areaY + areaHeight);
 			}
@@ -49,7 +51,7 @@ public final class GraphicsUtil {
 					ColorUtil.getShadeComposant(srcGreen, destGreen, i, areaHeight),
 					ColorUtil.getShadeComposant(srcBlue, destBlue, i, areaHeight)
 				);
-//				Log.info(CAT, ColorUtil.intToColor(color));
+//				log.info(ColorUtil.intToColor(color));
 				g.setColor(color);
 				g.drawLine(areaX, areaY + i, areaX + areaWidth, areaY + i);
 			}

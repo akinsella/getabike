@@ -3,10 +3,11 @@ package org.helyx.app.j2me.lib.task;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 
 public class ProgressDispatcher implements IProgressDispatcher {
 	
-	private static final String CAT = "PROGRESS_DISPATCHER";
+	private static final Log log = LogFactory.getLog("PROGRESS_DISPATCHER");
 	
 	private String name;
 	
@@ -18,9 +19,9 @@ public class ProgressDispatcher implements IProgressDispatcher {
 	
 	private String getLoggerName() {
 		if (name == null) {
-			return CAT;
+			return log.getCategory();
 		}
-		return CAT + "[" + name + "]";
+		return log.getCategory() + "[" + name + "]";
 	}
 	
 
@@ -46,7 +47,7 @@ public class ProgressDispatcher implements IProgressDispatcher {
 		
 	public void fireEvent(int eventType, String eventMessage, Object eventData) {
 		
-		Log.debug(getLoggerName(), "[" + name + "] eventType=" + eventType + ", eventMessage=" + eventMessage + ", eventData=" + eventData);
+		log.debug(getLoggerName(), "[" + name + "] eventType=" + eventType + ", eventMessage=" + eventMessage + ", eventData=" + eventData);
 		int size = progressListenerList.size();
 		
 		for (int i = 0 ; i < size ; i++) {
@@ -55,7 +56,7 @@ public class ProgressDispatcher implements IProgressDispatcher {
 				progressListener.onEvent(eventType, eventMessage, eventData);
 			}
 			catch(Throwable t) {
-				Log.warn(getLoggerName(), t);
+				log.warn(getLoggerName(), t);
 			}
 		}
 	}

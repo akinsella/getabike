@@ -5,12 +5,13 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.ui.util.ColorUtil;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
 
 public class SlideTransition implements IViewTransition {
 
-	private static final String CAT = "SLIDE_TRANSITION";
+	private static final Log log = LogFactory.getLog("SLIDE_TRANSITION");
 	
 	private boolean reverse = false;
 	
@@ -54,7 +55,7 @@ public class SlideTransition implements IViewTransition {
 				graphics.drawImage(destImage, 0 - doTransitionCounter, 0, Graphics.TOP | Graphics.LEFT);
 				canvas.flushGraphics();
 
-				try { Thread.sleep(10); } catch (InterruptedException e) { Log.warn(CAT, e); }
+				try { Thread.sleep(10); } catch (InterruptedException e) { log.warn(e); }
 
 				if (doTransitionCounter + increment <= 0) {
 					graphics.drawImage(destImage, 0, 0, Graphics.TOP | Graphics.LEFT);
@@ -72,7 +73,7 @@ public class SlideTransition implements IViewTransition {
 
 				canvas.flushGraphics();
 
-				try { Thread.sleep(10); } catch (InterruptedException e) { Log.warn(CAT, e); }
+				try { Thread.sleep(10); } catch (InterruptedException e) { log.warn(e); }
 
 				if (doTransitionCounter + increment >= width) {
 					graphics.drawImage(destImage, 0, 0, Graphics.TOP | Graphics.LEFT);
@@ -82,7 +83,7 @@ public class SlideTransition implements IViewTransition {
 			}
 		}
 		
-		Log.debug(CAT, "Screen transition time ellapsed: " + Math.abs(System.currentTimeMillis() - start) + " ms");
+		log.debug("Screen transition time ellapsed: " + Math.abs(System.currentTimeMillis() - start) + " ms");
 	}
 
 }

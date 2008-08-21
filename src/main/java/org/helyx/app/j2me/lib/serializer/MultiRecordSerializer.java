@@ -5,10 +5,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 
 public class MultiRecordSerializer {
 
-	private static final String CAT = "MULTI_RECORD_SERIALIZER";
+	private static final Log log = LogFactory.getLog("MULTI_RECORD_SERIALIZER");
 	
 	private int byteBufferLength;
 	
@@ -27,7 +28,7 @@ public class MultiRecordSerializer {
 
 	public void dispose() {
 		if (dos != null) { 
-			try { dos.close();  } catch (IOException e) { Log.warn(CAT, e); }
+			try { dos.close();  } catch (IOException e) { log.warn(e); }
 		}
 	}
 	

@@ -10,12 +10,14 @@ import javax.microedition.rms.RecordStoreException;
 import javax.microedition.rms.RecordStoreNotOpenException;
 
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.serializer.IObjectSerializer;
 import org.helyx.app.j2me.lib.serializer.SerializerException;
 
 public class DefaultRecordEnumeration implements Enumeration {
 
-	public static final String CAT = "DEFAULT_RECORD_ENUMERATION";
+	public static final Log log = LogFactory.getLog("DEFAULT_RECORD_ENUMERATION");
 	
 	private RecordEnumeration recordEnumeration;
 	private IRecordReader recordReader;

@@ -9,6 +9,7 @@ import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.rms.DefaultRecordEnumeration;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
@@ -26,7 +27,7 @@ import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
 
 public class StationDetailsView extends AbstractView {
 	
-	private static final String CAT = "STATION_DETAILS_VIEW";
+	private static final Log log = LogFactory.getLog("STATION_DETAILS_VIEW");
 	
 	private Image iconImage;
 	
@@ -63,14 +64,14 @@ public class StationDetailsView extends AbstractView {
 			iconImage = ImageUtil.createImageFromClassPath(getTheme().getString(AppThemeConstants.WIDGET_STATION_DETAILS_IMAGE));
 		}
 		catch (IOException e) {
-			Log.warn(CAT, e);
+			log.warn(e);
 		}
 		
 	}
 
 	protected void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		Log.debug(CAT, "[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		log.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.LEFT) {
 			returnToPreviousDisplayable();
 		}

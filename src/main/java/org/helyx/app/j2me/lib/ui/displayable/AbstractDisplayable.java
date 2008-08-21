@@ -8,6 +8,8 @@ import javax.microedition.lcdui.Displayable;
 import org.helyx.app.j2me.lib.cache.Cache;
 import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.i18n.ResourceBundle;
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.displayable.listener.DisplayableListener;
@@ -18,7 +20,7 @@ import org.helyx.app.j2me.lib.ui.view.transition.IViewTransition;
 
 public abstract class AbstractDisplayable implements DisplayableListener, CommandListener {
 
-	private static final String CAT = "ABSTRACT_DISPLAYABLE";
+	private static final Log log = LogFactory.getLog("ABSTRACT_DISPLAYABLE");
 	
 	public AbstractDisplayable() {
 		super();

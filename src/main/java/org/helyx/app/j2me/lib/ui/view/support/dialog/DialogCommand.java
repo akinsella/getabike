@@ -1,8 +1,11 @@
 package org.helyx.app.j2me.lib.ui.view.support.dialog;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
+
 public class DialogCommand {
 
-	private static final String CAT = "DIALOG_COMMAND";
+	private static final Log log = LogFactory.getLog("DIALOG_COMMAND");
 
 	public static final DialogCommand OK = new DialogCommand("Ok", DialogResultConstants.OK);
 	public static final DialogCommand CANCEL = new DialogCommand("Annuler", DialogResultConstants.CANCEL);

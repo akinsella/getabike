@@ -1,8 +1,11 @@
 package org.helyx.app.j2me.lib.math;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
+
 public class MathUtil {
 	
-	private static final String CAT = "MATH_UTIL";
+	private static final Log log = LogFactory.getLog("MATH_UTIL");
 
 	private MathUtil() {
 		super();

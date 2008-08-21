@@ -6,6 +6,7 @@ import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
@@ -16,7 +17,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 	
-	private static final String CAT = "XML_RESOURCE_BUNDLE_CONTENT_PROVIDER";
+	private static final Log log = LogFactory.getLog("XML_RESOURCE_BUNDLE_CONTENT_PROVIDER");
 
 	private static final String ENTRY = "entry";
 	
@@ -35,7 +36,7 @@ public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 
 	public void loadData() {
 		
-		Log.debug(CAT, "Loading messages ...");
+		log.debug("Loading messages ...");
 		
 		InputStream inputStream = null;
 		InputStreamProvider cartoInputStreamProvider = null;
@@ -76,7 +77,7 @@ public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, resourceBundle);
 		}
 		catch (Throwable t) {
-    		Log.warn(CAT, t);
+    		log.warn(t);
 			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
 		}
 	}
@@ -85,10 +86,6 @@ public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 		cancel = true;
 	}
 
-	public String getCat() {
-		return CAT;
-	}
-	
 	public String getDescription() {
 		return "Fetchs messages from path: '" + messageContentAccessor.getPath() + "'";
 	}

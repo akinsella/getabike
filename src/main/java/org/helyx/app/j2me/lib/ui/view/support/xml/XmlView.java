@@ -8,6 +8,7 @@ import javax.microedition.lcdui.Graphics;
 import org.helyx.app.j2me.lib.action.ActionRegistry;
 import org.helyx.app.j2me.lib.action.EmptyAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.xml.CanvasNodeProcessor;
@@ -16,7 +17,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 public class XmlView extends AbstractView {
 
-	private static final String CAT = "XML_VIEW";
+	private static final Log log = LogFactory.getLog("XML_VIEW");
 	
 	private static final String CANVAS = "canvas";
 	
@@ -47,7 +48,7 @@ public class XmlView extends AbstractView {
 	}
 
 	protected void paint(Graphics graphics) {
-		Log.debug(CAT, "paint");
+		log.debug("paint");
 	}
 
 }

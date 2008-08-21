@@ -3,6 +3,8 @@ package org.helyx.app.j2me.velocite.ui.view;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
@@ -10,7 +12,7 @@ import org.helyx.app.j2me.lib.ui.displayable.support.AbstractTextBox;
 
 public class StationSearchView extends AbstractTextBox {
 	
-	private static final String CAT = "STATION_SEARCH_VIEW";
+	private static final Log log = LogFactory.getLog("STATION_SEARCH_VIEW");
 	
 	public static final String PREF_STATION_NAME = "search.stationName";
 	public static final String PREF_MAX_STATION_NUMBER = "search.maxStationNumber";

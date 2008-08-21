@@ -9,6 +9,7 @@ import javax.microedition.lcdui.Image;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
@@ -24,13 +25,11 @@ import org.helyx.app.j2me.lib.ui.widget.Command;
 
 public class LoadTaskView extends AbstractView {
 	
-	private static final String CAT = "LOAD_TASK_VIEW";
+	private static final Log log = LogFactory.getLog("LOAD_TASK_VIEW");
 	
 	private IProgressTask progressTask;
 	private Timer timer;
 	private int counter;
-	
-	private String catName;
 	
 	private String label;
 	
@@ -77,25 +76,18 @@ public class LoadTaskView extends AbstractView {
 		for (int i = 0 ; i < themeImageCount ; i++) {
 			try {
 				String imagePath = stringFormat.format(i + 1);
-				Log.debug(CAT, "imagePath: '" + imagePath + "'");
+				log.debug("imagePath: '" + imagePath + "'");
 				images[i] = ImageUtil.createImageFromClassPath(imagePath);
 			}
 			catch (IOException e) { 
-				Log.warn(getCat(), e);
+				log.warn(e);
 			}
 		}
-	}
-	
-	protected String getCat() {
-		if (catName == null) {
-			catName = CAT + "[" + progressTask.getDescription() + "]";
-		}
-		return catName;
 	}
 	
 	private void initListeners() {
 		
-		progressTask.addProgressListener(new ProgressAdapter(CAT + "[" + progressTask.getDescription() + "]") {
+		progressTask.addProgressListener(new ProgressAdapter() {
 
 			public void onStart(String eventMessage, Object eventData) {
 				hasStarted = true;
@@ -105,7 +97,7 @@ public class LoadTaskView extends AbstractView {
 			
 			public void onProgress(String eventMessage, Object eventData) {
 				if (eventData != null) {
-					Log.debug(this.getCat(), eventData.toString());
+					getLog().debug(eventData.toString());
 				}
 				label = eventMessage;
 				viewCanvas.repaint();

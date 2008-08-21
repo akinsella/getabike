@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.StreamUtil;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -12,13 +13,13 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 public class XppUtil {
 	
-	private static final String CAT = "XPP_UTIL";
+	private static final Log log = LogFactory.getLog("XPP_UTIL");
 
 	
 	public static XmlPullParser createXpp(InputStream inputStream, String encoding) throws XmlPullParserException {
 		boolean supportEncoding = StreamUtil.supportEncoding(encoding);
-		Log.debug(CAT, "Encoding '" + encoding + "' supported: " + supportEncoding);
-		Log.debug(CAT, "System encoding: " + System.getProperty("microedition.encoding"));
+		log.debug("Encoding '" + encoding + "' supported: " + supportEncoding);
+		log.debug("System encoding: " + System.getProperty("microedition.encoding"));
 		
 		XmlPullParser xpp = null;
 		
@@ -52,9 +53,9 @@ public class XppUtil {
 		xpp.next();
 		int eventType = xpp.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
-			Log.debug(CAT, "Xpp eventType name: " + XmlPullParser.TYPES[eventType]);
+			log.debug("Xpp eventType name: " + XmlPullParser.TYPES[eventType]);
 			if (eventType == XmlPullParser.START_TAG) {
-				Log.debug(CAT, "Xpp element name: " + xpp.getName());
+				log.debug("Xpp element name: " + xpp.getName());
 				if (xpp.getName().equals(name)) {
 					return true;
 				}

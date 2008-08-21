@@ -14,6 +14,7 @@ import javax.microedition.rms.RecordStoreNotFoundException;
 import javax.microedition.rms.RecordStoreNotOpenException;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.rms.DefaultRecordEnumeration;
 import org.helyx.app.j2me.lib.rms.IRecordReader;
 import org.helyx.app.j2me.lib.rms.RecordReader;
@@ -22,7 +23,7 @@ import org.helyx.app.j2me.lib.serializer.SerializerException;
 
 public class PrefDao implements IPrefDao {
 	
-	private static final String CAT = "PREF_DAO";
+	private static final Log log = LogFactory.getLog("PREF_DAO");
 
 	public static final String PREF_RECORD_STORE = "pref";
 	
@@ -142,13 +143,13 @@ public class PrefDao implements IPrefDao {
 		
 		try {
 			try {
-				Log.debug(CAT, "Reading prefs");
+				log.debug("Reading prefs");
 
 				recordEnumeration = recordStore.enumerateRecords(null, null, false);
 				while (recordEnumeration.hasNextElement()) {
 					int recordId = recordEnumeration.nextRecordId();
 					Pref pref = (Pref)recordReader.readRecord(recordId);
-					Log.debug(CAT, "Readed pref: " + pref);
+					log.debug("Readed pref: " + pref);
 					if (key.equals(pref.key)) {
 						return pref;
 					}
@@ -179,7 +180,7 @@ public class PrefDao implements IPrefDao {
 	}
 
 	public void removeAllPref() {
-		Log.debug(CAT, "Removing all prefs");
+		log.debug("Removing all prefs");
 		RecordEnumeration recordEnumeration = null;
 		
 		try {
@@ -207,7 +208,7 @@ public class PrefDao implements IPrefDao {
 	}
 
 	public void removePref(String key) {
-		Log.debug(CAT, "Removing pref with key: '" + key + "'");
+		log.debug("Removing pref with key: '" + key + "'");
 		RecordEnumeration recordEnumeration = null;
 		
 		try {
@@ -246,7 +247,7 @@ public class PrefDao implements IPrefDao {
 	}
 
 	public void writePref(Pref pref) {
-		Log.debug(CAT, "Writing pref : " + pref);
+		log.debug("Writing pref : " + pref);
 		RecordEnumeration recordEnumeration = null;
 		
 		try {

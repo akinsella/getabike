@@ -8,6 +8,7 @@ import javax.microedition.lcdui.Image;
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.manager.TaskManager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.Pref;
@@ -34,7 +35,7 @@ import org.helyx.app.j2me.velocite.task.factory.FirstRunTaskFactory;
 
 public class SplashScreenView extends AbstractView {
 
-	private static final String CAT = "SPLASH_SCREEN_VIEW";
+	private static final Log log = LogFactory.getLog("SPLASH_SCREEN_VIEW");
 	
 	private Image logoImage;
 	private String fallbackLogoImageStr;
@@ -67,22 +68,22 @@ public class SplashScreenView extends AbstractView {
 				boolean applicationDataCleanUpNeeded = PrefManager.readPrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED);
 
 				if (applicationDataCleanUpNeeded) {
-					Log.info(CAT, "Application data need to be reseted");
+					log.info("Application data need to be reseted");
 					VectorUtil.addElementsToVector(tasksToRun, new DataCleanUpTaskFactory().getTasks());
 				}
 								
 				VectorUtil.addElementsToVector(tasksToRun, new EachRunTaskFactory(getMidlet(), getViewCanvas()).getTasks());
 
 				if (oldVersion == null) {
-					Log.info(CAT, "No previous version found.");
+					log.info("No previous version found.");
 					VectorUtil.addElementsToVector(tasksToRun, new FirstRunTaskFactory().getTasks());
 				}
 				else if (!newVersion.equals(oldVersion)) {
-					Log.info(CAT, "Old version is different from new Version");
+					log.info("Old version is different from new Version");
 					VectorUtil.addElementsToVector(tasksToRun, new ApplicationUpdateTaskFactory(getViewCanvas(), oldVersion, newVersion).getTasks());
 				}
 				else {
-					Log.info(CAT, "Application version is the same one since last run");
+					log.info("Application version is the same one since last run");
 				}
 				
 				int taskToRunCount = tasksToRun.size();
@@ -91,16 +92,16 @@ public class SplashScreenView extends AbstractView {
 				
 				MultiTaskProgressTask multiTaskProgressTask = new MultiTaskProgressTask(initTasks);
 				
-				multiTaskProgressTask.addProgressListener(new ProgressAdapter(CAT + "[" + multiTaskProgressTask.getDescription() + "]") {
+				multiTaskProgressTask.addProgressListener(new ProgressAdapter() {
 					
 					public void onSuccess(String eventMessage, Object eventData) {
 						String newVersion = getMidlet().getAppProperty(PrefConstants.MIDLET_VERSION);
-						Log.info(getCat(), "Writing new version to prefs: '" + newVersion + "'");
+						getLog().info("Writing new version to prefs: '" + newVersion + "'");
 						PrefManager.writePref(PrefConstants.MIDLET_VERSION, newVersion);
 						if (CityManager.countCities() <= 0) {
 							IProgressTask progressTask = CityManager.refreshDataWithDefaults();
 							progressTask.addProgressListener(new CityLoaderProgressListener(progressTask.getProgressDispatcher()));
-							progressTask.addProgressListener(new ProgressAdapter(SplashScreenView.CAT) {
+							progressTask.addProgressListener(new ProgressAdapter() {
 
 								public void onSuccess(String eventMessage, Object eventData) {
 									showDisplayable(new MenuView(getMidlet()));
@@ -115,12 +116,12 @@ public class SplashScreenView extends AbstractView {
 					}
 					
 					public void onError(String eventMessage, Object eventData) {
-						Log.info(getCat(), "Writing reset demand to prefs");
+						getLog().info(SplashScreenView.log.getCategory(), "Writing reset demand to prefs");
 						PrefManager.writePref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 					}
 					
 					public void onCancel(String eventMessage, Object eventData) {
-						Log.info(getCat(), "Writing reset demand to prefs");
+						getLog().info(SplashScreenView.log.getCategory(), "Writing reset demand to prefs");
 						PrefManager.writePref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 					}
 					
@@ -148,7 +149,7 @@ public class SplashScreenView extends AbstractView {
 			if (fallbackLogoImageStr == null) {
 				fallbackLogoImageStr = t.toString();
 			}
-			Log.warn(CAT, t);
+			log.warn(t);
 		}
 	}
 
@@ -168,11 +169,11 @@ public class SplashScreenView extends AbstractView {
         	g.drawImage(logoImage, x + width / 2, y + height / 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.VCENTER);
         }
         else if (fallbackLogoImageStr != null) {
-        	Log.info(CAT, fallbackLogoImageStr);
+        	log.info(fallbackLogoImageStr);
         	g.drawString(fallbackLogoImageStr, x + width / 2, y + height / 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.BASELINE);        	
         }
         else {
-        	Log.info(CAT, "fallbackLogoImageStr error");
+        	log.info("fallbackLogoImageStr error");
         }
         
         g.drawString("Copyright - 2008", width / 2, clientArea.location.y + clientArea.size.height - 2, Graphics.HCENTER | Graphics.BOTTOM);

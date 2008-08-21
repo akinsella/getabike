@@ -1,11 +1,13 @@
 package org.helyx.app.j2me.lib.concurrent;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 
 public class Future {
 	
-	private static final String CAT = "FUTURE";
+	private static final Log log = LogFactory.getLog("FUTURE");
 	
 	protected Object response;
 	protected boolean failed = false;
@@ -24,7 +26,7 @@ public class Future {
 
 	public static Object get(IProgressTask progressTask) {
 		final Future future = new Future();
-		progressTask.addProgressListener(new ProgressAdapter(CAT + "[" + progressTask.getCat() + "]") {
+		progressTask.addProgressListener(new ProgressAdapter() {
 
 			public void onCancel(String eventMessage, Object eventData) {
 				future.failed = true;

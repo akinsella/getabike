@@ -11,6 +11,8 @@ import javax.microedition.rms.RecordStoreFullException;
 import javax.microedition.rms.RecordStoreNotFoundException;
 import javax.microedition.rms.RecordStoreNotOpenException;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.rms.IRecordReader;
 import org.helyx.app.j2me.lib.rms.RecordReader;
 import org.helyx.app.j2me.lib.rms.exception.BasicRecordDaoException;
@@ -22,7 +24,7 @@ import org.helyx.app.j2me.velocite.data.carto.serializer.StationDetailsSerialize
 
 public class StationDetailsDao implements IStationDetailsDao {
 	
-	private static final String CAT = "STATION_DETAILS_DAO";
+	private static final Log log = LogFactory.getLog("STATION_DETAILS_DAO");
 
 	public static final String STATION_DETAILS_RECORD_STORE = "station_details";
 	

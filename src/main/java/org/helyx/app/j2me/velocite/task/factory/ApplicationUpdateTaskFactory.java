@@ -9,6 +9,7 @@ import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.task.BasicTask;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ITask;
@@ -19,7 +20,7 @@ import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider
 // TODO: Fix Version Management
 public class ApplicationUpdateTaskFactory implements ITaskFactory {
 
-	private static final String CAT = "APPLICATION_UPDATE_TASK_FACTORY";
+	private static final Log log = LogFactory.getLog("APPLICATION_UPDATE_TASK_FACTORY");
 	private static final String V_1_0_83 = "1.0.83";
 	private static final String V_1_0_82 = "1.0.82";
 	private String oldVersion;
@@ -35,19 +36,19 @@ public class ApplicationUpdateTaskFactory implements ITaskFactory {
 	}
 
 	public ITask[] getTasks() {
-		Log.info(CAT, "Old Version: " + oldVersion + ", New Version: " + newVersion);
+		log.info("Old Version: " + oldVersion + ", New Version: " + newVersion);
 		Vector tasksToRun = new Vector();
 		if (V_1_0_82.equals(newVersion) || V_1_0_83.equals(newVersion))  {
-			Log.info(CAT, "Need to Clean Up Cities to support Lyon City.");
+			log.info("Need to Clean Up Cities to support Lyon City.");
 			
 			tasksToRun.addElement(new BasicTask("Cleaning up City related data") {
 				public void execute() {
-					Log.info(CAT, "Cleaning up City related data");
+					log.info("Cleaning up City related data");
 					CityManager.cleanUpSavedData();
 				}
 			});
 			
-			Log.info(CAT, "Reloading City Data");
+			log.info("Reloading City Data");
 			IContentAccessor cityContentAccessor = new HttpContentAccessor("http://m.velocite.org/cities.xml");
 			IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 			IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);

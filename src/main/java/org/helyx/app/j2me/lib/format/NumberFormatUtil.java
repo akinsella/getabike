@@ -1,10 +1,12 @@
 package org.helyx.app.j2me.lib.format;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.math.MathUtil;
 
 public class NumberFormatUtil {
 	
-	private static final String CAT = "NUMBER_FORMAT_UTIL";
+	private static final Log log = LogFactory.getLog("NUMBER_FORMAT_UTIL");
 
 	private NumberFormatUtil() {
 		super();

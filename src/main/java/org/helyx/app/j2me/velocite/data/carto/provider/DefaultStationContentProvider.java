@@ -5,6 +5,7 @@ import java.io.InputStream;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
@@ -19,7 +20,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class DefaultStationContentProvider extends AbstractContentProvider {
 	
-	private static final String CAT = "DEFAULT_STATION_CONTENT_PROVIDER";
+	private static final Log log = LogFactory.getLog("DEFAULT_STATION_CONTENT_PROVIDER");
 
 	private static final String MARKER = "marker";
 	
@@ -49,7 +50,7 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 
 	public void loadData() {
 		
-		Log.debug(CAT, "Loading carto info ...");
+		log.debug("Loading carto info ...");
 		
 		InputStream inputStream = null;
 		InputStreamProvider cartoInputStreamProvider = null;
@@ -98,7 +99,7 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 			}
 		}
 		catch (Throwable t) {
-    		Log.warn(CAT, t);
+    		log.warn(t);
 			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
 		}
 	}
@@ -118,10 +119,6 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 
 	public void cancel() {
 		cancel = true;
-	}
-
-	public String getCat() {
-		return CAT;
 	}
 	
 	public String getDescription() {

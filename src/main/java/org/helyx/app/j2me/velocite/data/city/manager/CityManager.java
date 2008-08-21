@@ -8,6 +8,7 @@ import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.velocite.PrefConstants;
@@ -17,7 +18,7 @@ import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
 
 public class CityManager {
 
-	private static final String CAT = "CITY_MANAGER";
+	private static final Log log = LogFactory.getLog("CITY_MANAGER");
 	
 	private CityManager() {
 		super();
@@ -43,9 +44,9 @@ public class CityManager {
 		City selectedCity = null;
 
 		String citySelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.CITY_SELECTED_KEY);
-		Log.info(CAT, "Selected City key: " + citySelectedKeyPrefValue);
+		log.info("Selected City key: " + citySelectedKeyPrefValue);
 		String cityDefaultKeyPrefValue = PrefManager.readPrefString(PrefConstants.CITY_DEFAULT_KEY);
-		Log.info(CAT, "Default City key: " + citySelectedKeyPrefValue);
+		log.info("Default City key: " + citySelectedKeyPrefValue);
 		
 		Enumeration _enum = cityList.elements();
 		while(_enum.hasMoreElements()) {
@@ -72,7 +73,7 @@ public class CityManager {
 			throw new CityManagerException("No default/active city exception");
 		}
 
-		Log.debug("Selected city: " + selectedCity);
+		log.debug("Selected city: " + selectedCity);
 		
 		return selectedCity;
 	}

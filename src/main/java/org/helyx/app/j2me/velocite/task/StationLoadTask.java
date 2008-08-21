@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.rms.MultiRecordEnumeration;
 import org.helyx.app.j2me.lib.task.AbstractProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
@@ -16,13 +17,13 @@ import org.helyx.app.j2me.velocite.ui.view.StationListView;
 
 public class StationLoadTask extends AbstractProgressTask {
 	
-	private static final String CAT = "STATION_LOAD_TASK";
+	private static final Log log = LogFactory.getLog("STATION_LOAD_TASK");
 
 	private String stationNameFilter;
 	private StationListView stationListView;
 		
 	public StationLoadTask(StationListView stationListView, String stationNameFilter) {
-		super(CAT);
+		super(log.getCategory());
 		this.stationListView = stationListView;
 		this.stationNameFilter = stationNameFilter;
 	}
@@ -64,7 +65,7 @@ public class StationLoadTask extends AbstractProgressTask {
 			
 			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, count + " stations chargées");
 	
-			Log.info(CAT, "Copying Station Array ...");
+			log.info("Copying Station Array ...");
 			Station[] stationArray = new Station[stationList.size()];
 			stationList.copyInto(stationArray);
 			stationList = null;
@@ -75,7 +76,7 @@ public class StationLoadTask extends AbstractProgressTask {
 			System.gc();
 		}
 		catch(Throwable t) {
-			Log.warn(CAT, t);
+			log.warn(t);
 			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
 		}
     	finally {
@@ -88,7 +89,7 @@ public class StationLoadTask extends AbstractProgressTask {
 	    		}
     		}
     		catch(Throwable t) {
-    			Log.warn(CAT, t);
+    			log.warn(t);
     		}
     		finally {
     			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
@@ -99,10 +100,6 @@ public class StationLoadTask extends AbstractProgressTask {
 
 	public boolean isCancellable() {
 		return false;
-	}
-
-	public String getCat() {
-		return CAT;
 	}
 	
 }

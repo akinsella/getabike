@@ -7,6 +7,7 @@ import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
@@ -22,7 +23,7 @@ import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
 public class MenuView extends AbstractView {
 	
-		private static final String CAT = "MENU_VIEW";
+		private static final Log log = LogFactory.getLog("MENU_VIEW");
 		
 		private Image logoImage;
 		private String fallbackLogoImageStr;
@@ -63,12 +64,12 @@ public class MenuView extends AbstractView {
 	        	_height += logoImage.getHeight() / 2;
 	        }
 	        else if (fallbackLogoImageStr != null) {
-	        	Log.info(CAT, fallbackLogoImageStr);
+	        	log.info(fallbackLogoImageStr);
 	        	g.drawString(fallbackLogoImageStr, x + width / 2, y + _height, Graphics.HCENTER | Graphics.BASELINE);        	
 	        	_height += FontUtil.LARGE_BOLD.getHeight() / 2;
 	        }
 	        else {
-	        	Log.info(CAT, "fallbackLogoImageStr error");
+	        	log.info("fallbackLogoImageStr error");
 	        }
 
 	        int menuItemCount = menu.menuItemCount();
@@ -164,7 +165,7 @@ public class MenuView extends AbstractView {
 					fallbackLogoImageStr = t.toString();
 				}
 				
-				Log.warn(CAT, t);
+				log.warn(t);
 			}
 		}
 

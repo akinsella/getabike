@@ -4,10 +4,12 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 
 public class StationNameFilter implements IRecordFilter {
 
-	private static final String CAT = "STATION_NAME_FILTER_3";
+	private static final Log log = LogFactory.getLog("STATION_NAME_FILTER_3");
 	
 	private String stationNameFilter;
 	

@@ -3,6 +3,8 @@ package org.helyx.app.j2me.lib.ui.view.support.dialog;
 import javax.microedition.lcdui.Graphics;
 
 import org.helyx.app.j2me.lib.action.IAction;
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
@@ -13,7 +15,7 @@ import org.helyx.app.j2me.lib.ui.widget.Command;
 
 public class DialogView extends AbstractView {
 	
-	private static final String CAT = "MESSAGE_VIEW";
+	private static final Log log = LogFactory.getLog("MESSAGE_VIEW");
 		
 	private String text;
 	
@@ -65,11 +67,6 @@ public class DialogView extends AbstractView {
 		});
 		
 		return command;
-	}
-
-	
-	protected String getCat() {
-		return CAT;
 	}
 
 	protected void paint(Graphics g) {

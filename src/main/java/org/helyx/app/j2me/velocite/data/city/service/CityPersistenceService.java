@@ -4,6 +4,8 @@ package org.helyx.app.j2me.velocite.data.city.service;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.rms.IMultiRecordDao;
 import org.helyx.app.j2me.lib.rms.MultiRecordDao;
 import org.helyx.app.j2me.lib.rms.MultiRecordEnumeration;
@@ -12,7 +14,7 @@ import org.helyx.app.j2me.velocite.data.city.serializer.CitySerializer;
 
 public class CityPersistenceService implements ICityPersistenceService {
 	
-	private static final String CAT = "CITY_PERSISTENCE_SERVICE";
+	private static final Log log = LogFactory.getLog("CITY_PERSISTENCE_SERVICE");
 	
 	private static final String CITY_RECORD_STORE_NAME = "city";
 	

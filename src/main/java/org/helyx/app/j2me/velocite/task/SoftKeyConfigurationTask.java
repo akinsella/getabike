@@ -3,6 +3,7 @@ package org.helyx.app.j2me.velocite.task;
 import javax.microedition.lcdui.Canvas;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.AbstractProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
@@ -13,7 +14,7 @@ import org.helyx.app.j2me.velocite.PrefConstants;
 
 public class SoftKeyConfigurationTask extends AbstractProgressTask {
 	
-	private static final String CAT = "SOFT_KEY_CONFIGURATION_TASK";
+	private static final Log log = LogFactory.getLog("SOFT_KEY_CONFIGURATION_TASK");
 	
 	private Canvas canvas;
 	
@@ -30,7 +31,7 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 			String softKeyDetectionTypeValue = PrefManager.readPrefString(PrefConstants.SOFT_KEY_DETECTION_TYPE);
 			
 			if (KeyUtil.SOFT_KEY_DETECTION_PLATFORM.equals(softKeyDetectionTypeValue)) {
-				Log.info(CAT, "[SoftKey detection] Attempting to associate softkeys by platform");
+				log.info("[SoftKey detection] Attempting to associate softkeys by platform");
 				
 				KeyMapConfig platformKeyMapConfig = findPlatformKeyMapConfig();
 				
@@ -54,13 +55,13 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 					int rightSoftKey = Integer.parseInt(rightSoftKeyStr);
 					
 					KeyUtil.keyMapConfig = new KeyMapConfig("CACHED_VALUES", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
-					Log.debug(CAT, "[SoftKey detection] Associating softkeys from cached values: " + KeyUtil.keyMapConfig);
+					log.debug("[SoftKey detection] Associating softkeys from cached values: " + KeyUtil.keyMapConfig);
 					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
 					progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 					return ;
 				}
 				catch(Throwable t) {
-					Log.warn(CAT, t);
+					log.warn(t);
 				}
 			}
 			
@@ -106,12 +107,12 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 					if (negativeKeyName != null) {
 						progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Touche détectée: '" + negativeKeyName + "'");
 					}
-					Log.debug(CAT, "[SoftKey detection] index=" + i + ", positiveKeyName='" + positiveKeyName + "', negativeKeyName='" + negativeKeyName + "', leftSoftKey=" + leftSoftKey + ", rightSoftKey=" + rightSoftKey);
+					log.debug("[SoftKey detection] index=" + i + ", positiveKeyName='" + positiveKeyName + "', negativeKeyName='" + negativeKeyName + "', leftSoftKey=" + leftSoftKey + ", rightSoftKey=" + rightSoftKey);
 				}
 				
 				if (leftSoftKey != 0 && rightSoftKey != 0) {
 					KeyUtil.keyMapConfig = new KeyMapConfig("AUTO_DETECTION", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
-					Log.debug(CAT, "[SoftKey detection] Associating softkeys by automatic detection: " + KeyUtil.keyMapConfig);
+					log.debug("[SoftKey detection] Associating softkeys by automatic detection: " + KeyUtil.keyMapConfig);
 
 					KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_AUTO_DETECTION, leftSoftKey, rightSoftKey);
 					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
@@ -121,8 +122,8 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 			}
 			
 			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche auto. échouée");
-			Log.info(CAT, "[SoftKey detection] Automatic detection failed");
-			Log.info(CAT, "[SoftKey detection] Attempting to associate softkeys by platform");
+			log.info("[SoftKey detection] Automatic detection failed");
+			log.info("[SoftKey detection] Attempting to associate softkeys by platform");
 			
 			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche par plateforme...");
 			KeyMapConfig platformKeyMapConfig = findPlatformKeyMapConfig();
@@ -136,17 +137,17 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 				return ;
 			}
 			
-			Log.info(CAT, "[SoftKey detection] Softkeys association by platform failed");
+			log.info("[SoftKey detection] Softkeys association by platform failed");
 			
 			KeyUtil.keyMapConfig = KeyUtil.DEFAULT_KEY_MAP;
 
 			KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_DEFAULT, KeyUtil.keyMapConfig.keyMapArray[0].softKeyLeft, KeyUtil.keyMapConfig.keyMapArray[0].softKeyRight);
-			Log.debug(CAT, "[SoftKey detection] Associating softkeys to defaults: " + KeyUtil.keyMapConfig);
+			log.debug("[SoftKey detection] Associating softkeys to defaults: " + KeyUtil.keyMapConfig);
 			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Config. par défaut");
 			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 		}
 		catch(Throwable t) {
-			Log.warn(CAT, t);
+			log.warn(t);
 			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t.getMessage(), t);
 		}
 		
@@ -156,22 +157,18 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 			
 			String platformName = System.getProperty(KeyUtil.MICROEDITION_PLATFORM).toUpperCase();
 
-			Log.info(CAT, "[SoftKey detection] Platform name: " + platformName);
+			log.info("[SoftKey detection] Platform name: " + platformName);
 
 			int length = KeyUtil.keyMapArray.length;
 			for (int i = 0 ; i < length ; i++) {
 				if (platformName.indexOf(KeyUtil.keyMapArray[i].modelKey) >= 0) {
 					KeyMapConfig keyMapConfig = KeyUtil.keyMapArray[i];
-					Log.debug(CAT, "[SoftKey detection] Associating softkeys to platform '" + platformName + "': " + keyMapConfig);
+					log.debug("[SoftKey detection] Associating softkeys to platform '" + platformName + "': " + keyMapConfig);
 					return keyMapConfig;
 				}
 			}
 			
 			return null;
-		}
-
-		public String getCat() {
-			return CAT;
 		}
 
 }

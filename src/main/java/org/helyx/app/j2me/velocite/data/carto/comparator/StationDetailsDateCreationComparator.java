@@ -6,9 +6,12 @@ import java.io.IOException;
 
 import javax.microedition.rms.RecordComparator;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
+
 public class StationDetailsDateCreationComparator implements RecordComparator {
 
-	private static final String CAT = "STATION_NAME_COMPARATOR";
+	private static final Log log = LogFactory.getLog("STATION_NAME_COMPARATOR");
 	
 	public int compare(byte[] bytes1, byte[] bytes2) {
 		long stationDate1 = readStationDetailsDateCreation(bytes1);

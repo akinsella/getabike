@@ -5,6 +5,7 @@ import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
@@ -20,7 +21,7 @@ import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
 public class MenuListView extends AbstractView {
 
-	private static final String CAT = "MENU_LIST_VIEW";
+	private static final Log log = LogFactory.getLog("MENU_LIST_VIEW");
 	
 	private int selectedOffset = 0;
 	private int topOffset = 0;
@@ -46,7 +47,7 @@ public class MenuListView extends AbstractView {
 		setTitle("Menu");
 		setFullScreenMode(true);
 
-		Log.debug(CAT, "Menu List View Checkable: " + checkable);
+		log.debug("Menu List View Checkable: " + checkable);
 		
 		if (checkable) {
 			setPrimaryCommand(new Command("Sélectionner", true, new IAction() {
@@ -193,7 +194,7 @@ public class MenuListView extends AbstractView {
 
 	protected void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		Log.debug(CAT, "[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		log.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
 	    }
@@ -213,7 +214,7 @@ public class MenuListView extends AbstractView {
 
 	protected void onKeyRepeated(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		Log.debug(CAT, "[onKeyRepeated] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		log.debug("[onKeyRepeated] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
 	    }
@@ -224,7 +225,7 @@ public class MenuListView extends AbstractView {
 
 	private void executeCurrentMenuItemSelectedAction() {
 		MenuItem menuItem = getMenu().getSelectedMenuItem();
-		Log.debug(CAT, "menuItem: " + menuItem);
+		log.debug("menuItem: " + menuItem);
 		if (menuItem.getAction() != null) {
 			menuItem.getAction().run(null);
 		}
@@ -238,7 +239,7 @@ public class MenuListView extends AbstractView {
 			topOffset = selectedOffset;
 		}
 		getMenu().setSelectedMenuItemIndex(selectedOffset);
-		Log.debug(CAT, "Scroll Up - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset);
+		log.debug("Scroll Up - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset);
 		viewCanvas.repaint();
 	}
 
@@ -259,7 +260,7 @@ public class MenuListView extends AbstractView {
 			}	
 		}
 		getMenu().setSelectedMenuItemIndex(selectedOffset);
-		Log.debug(CAT, "Scroll Down - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset + ", visibleItemCount: " + visibleItemCount + ", length: " + length);
+		log.debug("Scroll Down - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset + ", visibleItemCount: " + visibleItemCount + ", length: " + length);
 		viewCanvas.repaint();
 	}
 

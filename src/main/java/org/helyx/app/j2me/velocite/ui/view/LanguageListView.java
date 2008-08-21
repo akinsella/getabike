@@ -6,6 +6,7 @@ import java.util.Vector;
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
@@ -18,7 +19,7 @@ import org.helyx.app.j2me.velocite.data.language.manager.LanguageManagerExceptio
 
 public class LanguageListView extends MenuListView {
 	
-	private static final String CAT = "LANGUAGE_LIST_VIEW";
+	private static final Log log = LogFactory.getLog("LANGUAGE_LIST_VIEW");
 	
 	private Language selectedLanguage;
 	
@@ -69,9 +70,9 @@ public class LanguageListView extends MenuListView {
 
 	private void initData() throws LanguageManagerException {
 		languageList = LanguageManager.findAllLanguages();
-		Log.info(CAT, "languageList: " + languageList);
+		log.info("languageList: " + languageList);
 		selectedLanguage = LanguageManager.findSelectedLanguage(languageList);
-		Log.info(CAT, "selectedLanguage: " + languageList);
+		log.info("selectedLanguage: " + languageList);
 	}
 	
 	private void initComponents() {

@@ -3,12 +3,14 @@ package org.helyx.app.j2me.lib.ui.theme;
 import java.util.Hashtable;
 
 import org.helyx.app.j2me.lib.i18n.ResourceBundle;
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.basics4me.lang.BooleanUtil;
 
 public class Theme {
 	
-	private static final String CAT = "THEME";
+	private static final Log log = LogFactory.getLog("THEME");
 
 	private ResourceBundle resourceBundle;
 	private Hashtable colorCache = new Hashtable();

@@ -8,6 +8,7 @@ import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
@@ -18,7 +19,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class DefaultStationDetailsContentProvider extends AbstractContentProvider {
 	
-	private static final String CAT = "DEFAULT_STATION_CONTENT_PROVIDER";
+	private static final Log log = LogFactory.getLog("DEFAULT_STATION_CONTENT_PROVIDER");
 
 
 	private static final String STATION = "station";
@@ -47,8 +48,8 @@ public class DefaultStationDetailsContentProvider extends AbstractContentProvide
 	
 	public void loadData() {
 		
-		if (Log.isLoggable(CAT, Log.DEBUG)) {
-			Log.debug(CAT, "Loading station '" + stationNumber + "' infos ...");
+		if (log.isDebugEnabled()) {
+			log.debug("Loading station '" + stationNumber + "' infos ...");
 		}
 		
 		InputStream inputStream = null;
@@ -89,8 +90,8 @@ public class DefaultStationDetailsContentProvider extends AbstractContentProvide
 					}
 				}
 				
-				if (Log.isLoggable(CAT, Log.DEBUG)) {
-					Log.debug(CAT, "Station loaded: " + stationDetails);
+				if (log.isDebugEnabled()) {
+					log.debug("Station loaded: " + stationDetails);
 				}
 
 				progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, stationDetails);
@@ -100,14 +101,10 @@ public class DefaultStationDetailsContentProvider extends AbstractContentProvide
 			}
 		}
 		catch (Throwable t) {
-    		Log.warn(CAT, t);
+    		log.warn(t);
 			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
 		}
 
-	}
-
-	public String getCat() {
-		return CAT;
 	}
 	
 	public String getDescription() {

@@ -6,6 +6,7 @@ import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
@@ -19,7 +20,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class OrleansStationContentProvider extends AbstractContentProvider {
 	
-	private static final String CAT = "DEFAULT_STATION_CONTENT_PROVIDER";
+	private static final Log log = LogFactory.getLog("DEFAULT_STATION_CONTENT_PROVIDER");
 
 	private static final String MARKER = "marker";
 
@@ -44,7 +45,7 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 
 	public void loadData() {
 		
-		Log.debug(CAT, "Loading carto info ...");
+		log.debug("Loading carto info ...");
 		
 		InputStream inputStream = null;
 		InputStreamProvider cartoInputStreamProvider = null;
@@ -92,7 +93,7 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 			}
 		}
 		catch (Throwable t) {
-    		Log.warn(CAT, t);
+    		log.warn(t);
 			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
 		}
 	}
@@ -105,10 +106,6 @@ public class OrleansStationContentProvider extends AbstractContentProvider {
 		cancel = true;
 	}
 
-	public String getCat() {
-		return CAT;
-	}
-	
 	public String getDescription() {
 		return "Fetchs station informations from path: '" + stationContentAccessor.getPath() + "'";
 	}

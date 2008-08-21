@@ -2,9 +2,12 @@ package org.helyx.app.j2me.lib.util;
 
 import java.util.Vector;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
+
 public class Stack extends Vector {
 	
-	private static final String CAT = "STACK";
+	private static final Log log = LogFactory.getLog("STACK");
 
 	public Stack() {
 		super();

@@ -11,6 +11,8 @@ import javax.microedition.rms.RecordStoreFullException;
 import javax.microedition.rms.RecordStoreNotFoundException;
 import javax.microedition.rms.RecordStoreNotOpenException;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.rms.exception.BasicRecordDaoException;
 import org.helyx.app.j2me.lib.rms.exception.MultiRecordDaoException;
 import org.helyx.app.j2me.lib.serializer.AbstractObjectSerializer;
@@ -18,7 +20,7 @@ import org.helyx.app.j2me.lib.serializer.SerializerException;
 
 public class BasicRecordDao implements IBasicRecordDao {
 	
-	private static final String CAT = "BASIC_RECORD_DAO";
+	private static final Log log = LogFactory.getLog("BASIC_RECORD_DAO");
 
 	public String recordStoreName;
 	

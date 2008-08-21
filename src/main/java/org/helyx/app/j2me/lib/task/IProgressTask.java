@@ -1,5 +1,6 @@
 package org.helyx.app.j2me.lib.task;
 
+
 public interface IProgressTask extends ITask, IProgressListenerManager {
 	
 	String getName();
@@ -13,7 +14,5 @@ public interface IProgressTask extends ITask, IProgressListenerManager {
 	void execute();
 	
 	IProgressDispatcher getProgressDispatcher();
-
-	String getCat();
 
 }

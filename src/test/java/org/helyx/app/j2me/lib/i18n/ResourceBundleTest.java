@@ -8,10 +8,11 @@ import org.helyx.app.j2me.lib.concurrent.Future;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 
 public class ResourceBundleTest extends TestCase {
 
-	public static final String CAT = "RESOURCE_BUNDLE_TEST";
+	public static final Log log = LogFactory.getLog("RESOURCE_BUNDLE_TEST");
 	
 	public ResourceBundleTest() {
 		super();
@@ -26,7 +27,7 @@ public class ResourceBundleTest extends TestCase {
 		while (_enum.hasMoreElements()) {
 			String key = (String)_enum.nextElement();
 			String value = (String)resourceBundle.get(key);
-			Log.info(CAT, "key='" + key + "', value='" + value + "'");
+			log.info("key='" + key + "', value='" + value + "'");
 		}
 	}
 	

@@ -5,6 +5,7 @@ import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.Pref;
 import org.helyx.app.j2me.lib.pref.PrefManager;
@@ -33,7 +34,7 @@ public class StationListView extends AbstractView {
 	
 	private Station[] stationArray = null;
 
-	private static final String CAT = "STATION_LIST_VIEW";
+	private static final Log log = LogFactory.getLog("STATION_LIST_VIEW");
 	
 	private int selectedOffset = 0;
 	private int topOffset = 0;
@@ -133,7 +134,7 @@ public class StationListView extends AbstractView {
 		selectedOffset = 0;
 		topOffset = 0;
 		loadTaskView.startTask();
-		Log.info(CAT, "Load List Content...");
+		log.info("Load List Content...");
 	}
 
 	public void setStations(Station[] stationArray) {
@@ -255,7 +256,7 @@ public class StationListView extends AbstractView {
 
 	protected void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		Log.debug(CAT, "[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		log.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
 	    }
@@ -272,7 +273,7 @@ public class StationListView extends AbstractView {
 
 	protected void onKeyRepeated(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		Log.debug(CAT, "[onKeyRepeated] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		log.debug("[onKeyRepeated] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
 	    }
@@ -288,7 +289,7 @@ public class StationListView extends AbstractView {
 		if (selectedOffset < topOffset) {
 			topOffset = selectedOffset;
 		}
-		Log.debug(CAT, "Scroll Up - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset);
+		log.debug("Scroll Up - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset);
 		viewCanvas.repaint();
 	}
 
@@ -308,11 +309,11 @@ public class StationListView extends AbstractView {
 				topOffset = selectedOffset - visibleItemCount + 1;
 			}	
 		}
-		Log.debug(CAT, "Scroll Down - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset + ", visibleItemCount: " + visibleItemCount + ", length: " + length);
+		log.debug("Scroll Down - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset + ", visibleItemCount: " + visibleItemCount + ", length: " + length);
 		viewCanvas.repaint();
 	}
 	
-	private ProgressListener loadStationListProgressListener = new ProgressAdapter(CAT) {
+	private ProgressListener loadStationListProgressListener = new ProgressAdapter() {
 
 		public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
 			switch (eventType) {
@@ -326,7 +327,7 @@ public class StationListView extends AbstractView {
 	
 				case ProgressEventType.ON_ERROR:
 					Throwable throwable = (Throwable)eventData;
-					Log.warn(getCat(), throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
+					getLog().warn(throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
 					DialogUtil.showAlertMessage(getMidlet(), getDisplayable(), "Erreur", throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
 					showDisplayable(StationListView.this, new BasicTransition());
 					break;

@@ -3,9 +3,12 @@ package org.helyx.app.j2me.lib.format;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
+
 public class DateFormatUtil {
 	
-	private static final String CAT = "DATE_FORMAT_UTIL";
+	private static final Log log = LogFactory.getLog("DATE_FORMAT_UTIL");
 	
 	private DateFormatUtil() {
 		super();

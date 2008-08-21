@@ -8,6 +8,7 @@ import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.reflect.FieldType;
 import org.helyx.app.j2me.lib.reflect.RefObject;
 import org.helyx.app.j2me.lib.reflect.RefObjectDeserializer;
@@ -16,6 +17,8 @@ import org.helyx.app.j2me.lib.reflect.RefObjectMetaDataContentProvider;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 
 public class ReflectTest extends TestCase {
+	
+	private static final Log log = LogFactory.getLog("REFLECT_TEST");
 
 	private static final String KEY = "key";
 	private static final String ACTIVE = "active";
@@ -25,8 +28,6 @@ public class ReflectTest extends TestCase {
 	private static final String STATION_DETAILS = "stationDetails";
 	private static final String STATION_LIST = "stationList";
 	private static final String TYPE = "type";
-	
-	private static final String CAT = "REFLECT_TEST";
 	
 	public void testSerialize() throws Exception {
 
@@ -55,10 +56,10 @@ public class ReflectTest extends TestCase {
 			System.arraycopy(bytes, 0, targetBytes, 0, byteLength);
 			Object newCity = refObjectDeserializer.deserialize();
 
-			Log.info(CAT, "Original City: " + city);
-			Log.info(CAT, "New City: " + newCity);
+			log.info("Original City: " + city);
+			log.info("New City: " + newCity);
 //		}
-//		Log.info(CAT, "Fin");
+//		log.info("Fin");
 	}
 
 	private RefObjectMetaData getCityRefObjectMetaData() {

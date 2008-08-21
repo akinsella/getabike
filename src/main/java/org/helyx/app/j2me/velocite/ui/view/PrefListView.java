@@ -2,6 +2,7 @@ package org.helyx.app.j2me.velocite.ui.view;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
@@ -23,7 +24,7 @@ import org.helyx.app.j2me.velocite.data.language.manager.LanguageManagerExceptio
 
 public class PrefListView extends PrefBaseListView {
 
-	private static final String CAT = "PREF_LIST_VIEW";
+	private static final Log log = LogFactory.getLog("PREF_LIST_VIEW");
 	
 	private MenuItem cityMenuItem;
 	private MenuItem languageMenuItem;
@@ -53,7 +54,7 @@ public class PrefListView extends PrefBaseListView {
 					showDisplayable(cityListView);
 				}
 				catch (CityManagerException e) {
-					Log.warn(CAT, e);
+					log.warn(e);
 					showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
 				}
 			}
@@ -68,7 +69,7 @@ public class PrefListView extends PrefBaseListView {
 					showDisplayable(languageListView);
 				}
 				catch (LanguageManagerException e) {
-					Log.warn(CAT, e);
+					log.warn(e);
 					showAlertMessage("Problème de configuration", "Le fichier des langues n'est pas valide: " + e.getMessage());
 				}
 			}
@@ -128,7 +129,7 @@ public class PrefListView extends PrefBaseListView {
 			}
 		}
 		catch (CityManagerException e) {
-			Log.debug(CAT, e);
+			log.debug(e);
 		}
 	}
 
@@ -142,7 +143,7 @@ public class PrefListView extends PrefBaseListView {
 			}
 		}
 		catch (LanguageManagerException e) {
-			Log.debug(CAT, e);
+			log.debug(e);
 		}
 	}
 

@@ -1,11 +1,13 @@
 package org.helyx.app.j2me.lib.ui.util;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.text.TextUtil;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 
 public class ColorUtil {
 	
-	private static final String CAT = "COLOR_UTIL";
+	private static final Log log = LogFactory.getLog("COLOR_UTIL");
 
 	public static final int WHITE = 0xFFFFFF;
 	public static final int BLACK = 0x000000;

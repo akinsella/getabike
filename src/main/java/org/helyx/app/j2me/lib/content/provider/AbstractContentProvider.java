@@ -1,19 +1,21 @@
 package org.helyx.app.j2me.lib.content.provider;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.task.IProgressDispatcher;
 import org.helyx.app.j2me.lib.task.ProgressDispatcher;
 import org.helyx.app.j2me.lib.task.ProgressListener;
 
 public abstract class AbstractContentProvider implements IContentProvider {
 	
-	private static final String CAT = "ABSTRACT_CONTENT_PROVIDER";
+	private static final Log log = LogFactory.getLog("ABSTRACT_CONTENT_PROVIDER");
 
 	protected IProgressDispatcher progressDispatcher;
 
 	public AbstractContentProvider() {
 		super();
 		this.progressDispatcher = new ProgressDispatcher();
-		this.progressDispatcher.setName(getCat());
+		this.progressDispatcher.setName(log.getCategory());
 	}
 
 	public void addProgressListener(ProgressListener progressListener) {
@@ -31,7 +33,5 @@ public abstract class AbstractContentProvider implements IContentProvider {
 	public void cancel() {
 	
 	}
-	
-	public abstract String getCat();
 
 }

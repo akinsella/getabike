@@ -5,8 +5,9 @@ import javax.microedition.midlet.MIDletStateChangeException;
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
 import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
+import org.helyx.app.j2me.lib.log.ConsoleLogWriter;
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.ui.view.support.xml.XmlView;
@@ -16,7 +17,7 @@ import org.kxml2.kdom.Document;
 
 public class XmlMIDlet extends AbstractMIDlet {
 
-	private static final String CAT = "XML_MIDLET";
+	private static final Log log = LogFactory.getLog("XML_MIDLET");
 	
 	public XmlMIDlet() {
 		super();
@@ -36,7 +37,7 @@ public class XmlMIDlet extends AbstractMIDlet {
 	protected void startApp() throws MIDletStateChangeException {
 		try { 
 			PrefManager.writePref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
-			Log.setThresholdLevel(Log.DEBUG);
+			ConsoleLogWriter.getInstance().setThresholdLevel(Log.DEBUG);
 			logPlatformInfos();
 			
 			ClasspathContentAccessor cca = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/view/xml/welcomeView.xml");
@@ -66,8 +67,8 @@ public class XmlMIDlet extends AbstractMIDlet {
 		String platformName = System.getProperty(PrefConstants.MICROEDITION_PLATFORM);
 		String memoryCard = System.getProperty(PrefConstants.FILECONN_DIR_MEMORYCARD);
 		
-		Log.info(CAT, "Platform name: '" + platformName + "'");
-		Log.info(CAT, "Platform memory card: '" + memoryCard + "'");
+		log.info("Platform name: '" + platformName + "'");
+		log.info("Platform memory card: '" + memoryCard + "'");
 	}
 
 }

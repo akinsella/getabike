@@ -12,12 +12,13 @@ import org.helyx.app.j2me.lib.i18n.ResourceBundle;
 import org.helyx.app.j2me.lib.i18n.ResourceBundleConfiguration;
 import org.helyx.app.j2me.lib.log.FileLogWriter;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.ui.theme.Theme;
 import org.helyx.app.j2me.velocite.PrefConstants;
 
 public class AbstractMIDlet extends MIDlet {
 
-	private static final String CAT = "ABSTRACT_MIDLET";
+	private static final Log log = LogFactory.getLog("ABSTRACT_MIDLET");
 	
 	private FileLogWriter flw;
 	private Theme theme;
@@ -48,7 +49,7 @@ public class AbstractMIDlet extends MIDlet {
 		    notifyDestroyed();
 		}
 		catch (MIDletStateChangeException t) {
-		   Log.warn(CAT, t);
+		   log.warn(t);
 		}
 	}
 	
@@ -80,18 +81,18 @@ public class AbstractMIDlet extends MIDlet {
 		this.locale = locale;
 		try { loadI18nResourceBundle(getLocale()); } 
 		catch(Throwable t) {
-			Log.warn(CAT, t);
+			log.warn(t);
 			try { loadI18nResourceBundle(getDefaultLocale()); } 
 			catch(Throwable t1) {
-				Log.warn(CAT, t1);
+				log.warn(t1);
 			}
 		}
 		try { loadThemeResourceBundle(getLocale()); }
 		catch(Throwable t) {
-			Log.warn(CAT, t);
+			log.warn(t);
 			try { loadThemeResourceBundle(getDefaultLocale()); } 
 			catch(Throwable t1) {
-				Log.warn(CAT, t1);
+				log.warn(t1);
 			}
 		}
 	}
@@ -145,7 +146,6 @@ public class AbstractMIDlet extends MIDlet {
 			setDefaultLocale(Locale.ENGLAND);
 			setLocale(Locale.ENGLAND);
 //			PrefManager.writePref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
-			Log.setThresholdLevel(Log.DEBUG);
 	//		openFileLogWriter();
 			logPlatformInfos();
 			onStart();
@@ -198,8 +198,8 @@ public class AbstractMIDlet extends MIDlet {
 		String platformName = System.getProperty(PrefConstants.MICROEDITION_PLATFORM);
 		String memoryCard = System.getProperty(PrefConstants.FILECONN_DIR_MEMORYCARD);
 		
-		Log.info(CAT, "Platform name: '" + platformName + "'");
-		Log.info(CAT, "Platform memory card: '" + memoryCard + "'");
+		log.info("Platform name: '" + platformName + "'");
+		log.info("Platform memory card: '" + memoryCard + "'");
 	}
 
 	
@@ -208,10 +208,10 @@ public class AbstractMIDlet extends MIDlet {
 			try {
 				flw = new FileLogWriter("VeloCite.log");
 				flw.open();
-				Log.addLogWriter(flw);
+				log.addLogWriter(flw);
 			}
 			catch(Throwable t) {
-				Log.warn(CAT, t);
+				log.warn(t);
 				flw = null;
 			}
 		}
@@ -221,7 +221,7 @@ public class AbstractMIDlet extends MIDlet {
 	private void closeFileLogWriter() {
 		if (flw != null) {
 			try {
-				Log.removeLogWriter(flw);
+				log.removeLogWriter(flw);
 				flw.flush();
 				flw.close();
 			}

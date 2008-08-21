@@ -4,14 +4,16 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import org.helyx.app.j2me.lib.text.StringFormat;
+
 public class Log {
 
-	public static final int FATAL = 1;
-	public static final int ERROR = 2;
-	public static final int WARN = 3;
-	public static final int INFO = 4;
-	public static final int DEBUG = 5;
-	public static final int TRACE = 6;
+	public static final int FATAL = 6;
+	public static final int ERROR = 5;
+	public static final int WARN = 4;
+	public static final int INFO = 3;
+	public static final int DEBUG = 2;
+	public static final int TRACE = 1;
 
 	public static final String FATAL_STR = "FATAL";
 	public static final String ERROR_STR = "ERROR";
@@ -19,8 +21,6 @@ public class Log {
 	public static final String INFO_STR = "INFO";
 	public static final String DEBUG_STR = "DEBUG";
 	public static final String TRACE_STR = "TRACE";
-
-	private static final String DEFAULT = "DEFAULT";
 	
 	private static final String NULL_STR = "null";
 
@@ -30,10 +30,17 @@ public class Log {
 	
 	static {
 		logWriterList = new Vector();
-		logWriterList.addElement(new ConsoleLogWriter());
+		logWriterList.addElement(ConsoleLogWriter.getInstance());
+	}
+	
+	private String category;
+	
+	public Log(String category) {
+		super();
+		this.category = category;
 	}
 
-	public static String getLevelName(int level) {
+	public String getLevelName(int level) {
 		switch(level) {
 			case Log.FATAL:
 				return FATAL_STR;
@@ -52,19 +59,19 @@ public class Log {
 		}
 	}
 	
-	public synchronized static void addLogWriter(ILogWriter logWriter) {
+	public void addLogWriter(ILogWriter logWriter) {
 		logWriterList.addElement(logWriter);
 	}
 
-	public synchronized static boolean existLogWriter(ILogWriter logWriter) {
+	public boolean existLogWriter(ILogWriter logWriter) {
 		return logWriterList.contains(logWriter);
 	}
 
-	public synchronized static void removeLogWriter(ILogWriter logWriter) {
+	public void removeLogWriter(ILogWriter logWriter) {
 		logWriterList.removeElement(logWriter);
 	}
 
-	public synchronized static Vector getLogWriterList() {
+	public Vector getLogWriterList() {
 		
 		Vector newLogWriterList = new Vector();
 	
@@ -78,7 +85,7 @@ public class Log {
 		return newLogWriterList;
 	}
 
-	public synchronized static void flushLogWriters() throws Exception {
+	public void flushLogWriters() throws Exception {
 		Enumeration _enum = logWriterList.elements();
 		
 		while (_enum.hasMoreElements()) {			
@@ -87,7 +94,7 @@ public class Log {
 		}
 	}
 
-	public synchronized static void closeLogWriters() throws Exception {
+	public void closeLogWriters() throws Exception {
 		Enumeration _enum = getLogWriterList().elements();
 
 		logWriterList.removeAllElements();
@@ -98,13 +105,13 @@ public class Log {
 		}
 	}
 
-	private static String getThrowableMessage(Throwable throwable) {
+	private String getThrowableMessage(Throwable throwable) {
 		return "Exception : " + throwable.getMessage() + " - " + throwable.getClass().getName();
 	}
 
-	private synchronized static void write(int level, String category, Object object) {
+	private void write(int level, Object object) {
 //		System.err.println("level: " + level + ", thresholdLevel: "  + thresholdLevel);
-		if (level > Log.thresholdLevel) {
+		if (!isLoggable(level)) {
 			return; 
 		}
 		
@@ -130,77 +137,148 @@ public class Log {
 				
 				ILogWriter logWriter = (ILogWriter)_enum.nextElement();
 				
-				logWriter.write(level, category, message, date);				
+				logWriter.write(level, this, message, date);				
 			}
 		}
 		else {
-			write(level, category, NULL_STR);
+			write(level, NULL_STR);
 		}
 	}
 
 	
 
 	
-	public static void fatal(Object object) {
-		write(Log.FATAL, DEFAULT, object);
+
+	public void fatal(Object object) {
+		write(Log.FATAL, object);
 	}
 	
-	public static void error(Object object) {
-		write(Log.ERROR, DEFAULT, object);
+	public void error(Object object) {
+		write(Log.ERROR, object);
 	}
 	
-	public static void warn(Object object) {
-		write(Log.WARN, DEFAULT, object);
+	public void warn(Object object) {
+		write(Log.WARN, object);
 	}
 	
-	public static void info(Object object) {
-		write(Log.INFO, DEFAULT, object);
+	public void info(Object object) {
+		write(Log.INFO, object);
 	}
 	
-	public static void debug(Object object) {
-		write(Log.DEBUG, DEFAULT, object);
+	public void debug(Object object) {
+		write(Log.DEBUG, object);
 	}
 	
-	public static void trace(Object object) {
-		write(Log.TRACE, DEFAULT, object);
-	}
-	
-	
-	
-	public static void fatal(String category, Object object) {
-		write(Log.FATAL, category, object);
-	}
-	
-	public static void error(String category, Object object) {
-		write(Log.ERROR, category, object);
-	}
-	
-	public static void warn(String category, Object object) {
-		write(Log.WARN, category, object);
-	}
-	
-	public static void info(String category, Object object) {
-		write(Log.INFO, category, object);
-	}
-	
-	public static void debug(String category, Object object) {
-		write(Log.DEBUG, category, object);
-	}
-	
-	public static void trace(String category, Object object) {
-		write(Log.TRACE, category, object);
+	public void trace(Object object) {
+		write(Log.TRACE, object);
 	}
 
-	public static boolean isLoggable(String category, int level) {
-		return true;
+	
+	
+	
+	
+	
+	public void fatal(String log, Object param) {
+		write(Log.FATAL, new StringFormat(log).format(param));
+	}
+	
+	public void error(String log, Object param) {
+		write(Log.ERROR, new StringFormat(log).format(param));
+	}
+	
+	public void warn(String log, Object param) {
+		write(Log.WARN, new StringFormat(log).format(param));
+	}
+	
+	public void info(String log, Object param) {
+		write(Log.INFO, new StringFormat(log).format(param));
+	}
+	
+	public void debug(String log, Object param) {
+		write(Log.DEBUG, new StringFormat(log).format(param));
+	}
+	
+	public void trace(String log, Object param) {
+		write(Log.TRACE, new StringFormat(log).format(param));
+	}
+	
+	
+	
+	
+	
+	public void fatal(String log, Object[] params) {
+		write(Log.FATAL, new StringFormat(log).format(params));
+	}
+	
+	public void error(String log, Object[] params) {
+		write(Log.ERROR, new StringFormat(log).format(params));
+	}
+	
+	public void warn(String log, Object[] params) {
+		write(Log.WARN, new StringFormat(log).format(params));
+	}
+	
+	public void info(String log, Object[] params) {
+		write(Log.INFO, new StringFormat(log).format(params));
+	}
+	
+	public void debug(String log, Object[] params) {
+		write(Log.DEBUG, new StringFormat(log).format(params));
+	}
+	
+	public void trace(String log, Object[] params) {
+		write(Log.TRACE, new StringFormat(log).format(params));
 	}
 
-	public static int getLevel() {
+
+	
+	
+	public boolean isLoggable(int level) {
+		return level > Log.thresholdLevel;
+	}
+	
+	public boolean isFatalEnabled() {
+		return FATAL > Log.thresholdLevel;
+	}
+	
+	public boolean isErrorEnabled() {
+		return ERROR > Log.thresholdLevel;
+	}
+	
+	public boolean isWarnEnabled() {
+		return WARN > Log.thresholdLevel;
+	}
+	
+	public boolean isInfoEnabled() {
+		return INFO > Log.thresholdLevel;
+	}
+	
+	public boolean isDebugEnabled() {
+		return DEBUG > Log.thresholdLevel;
+	}
+	
+	public boolean isTraceEnabled() {
+		return TRACE > Log.thresholdLevel;
+	}
+
+	public int getLevel() {
 		return thresholdLevel;
 	}
 
-	public static void setThresholdLevel(int thresholdLevel) {
+	public void setThresholdLevel(int thresholdLevel) {
 		Log.thresholdLevel = thresholdLevel;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public static int getThresholdLevel() {
+		return thresholdLevel;
 	}
 
 }

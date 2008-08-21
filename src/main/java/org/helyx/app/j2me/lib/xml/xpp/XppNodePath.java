@@ -1,11 +1,13 @@
 package org.helyx.app.j2me.lib.xml.xpp;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.util.Stack;
 
 
 public class XppNodePath {
 	
-	private static final String CAT = "XPP_NODE_PATH";
+	private static final Log log = LogFactory.getLog("XPP_NODE_PATH");
 	
 	public static final String SEPARATOR = "/";
 

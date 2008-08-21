@@ -3,6 +3,7 @@ package org.helyx.app.j2me.velocite.data.language.listener;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.sort.FastQuickSort;
 import org.helyx.app.j2me.lib.task.IProgressDispatcher;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
@@ -15,7 +16,7 @@ import org.helyx.app.j2me.velocite.data.language.service.LanguagePersistenceServ
 
 public class LanguageLoaderProgressListener extends ProgressAdapter {
 
-	private static final String CAT = "LANGUAGE_LOADER_PROGRESS_LISTENER";
+	private static final Log log = LogFactory.getLog("LANGUAGE_LOADER_PROGRESS_LISTENER");
 	
 	private ILanguagePersistenceService languagePersistenceService;
 	
@@ -24,7 +25,7 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 	private IProgressDispatcher progressDispatcher;
 
 	public LanguageLoaderProgressListener(IProgressDispatcher progressDispatcher) {
-		super(CAT + "[" + progressDispatcher.getName() + "]");
+		super();
 		this.progressDispatcher = progressDispatcher;
 	}
 
@@ -59,12 +60,12 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 //			languageList = null;
 			System.gc();
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Tri des données");
-			try { new FastQuickSort(new LanguageNameComparator()).sort(languageArray); } catch (Exception e) { Log.warn(CAT, e); }
+			try { new FastQuickSort(new LanguageNameComparator()).sort(languageArray); } catch (Exception e) { log.warn(e); }
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Sauvegarde des villes");
-//			Log.debug("About to save cities");
+//			log.debug("About to save cities");
 			languagePersistenceService.saveLanguageArray(languageArray);
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Chargement terminé");
-//			Log.debug("Cities saved");
+//			log.debug("Cities saved");
 			languageArray = null;
 			System.gc();
 	
@@ -72,7 +73,7 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 //			progressDispatcher.fireEvent(eventType, eventMessage, eventData);
 		}
 		finally {
-			Log.debug("Disposing languagePersistenceService");
+			log.debug("Disposing languagePersistenceService");
 			languagePersistenceService.dispose();
 		}
 	}

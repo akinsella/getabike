@@ -5,6 +5,7 @@ import java.io.InputStream;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
@@ -16,7 +17,7 @@ import org.json.me.JSONObject;
 
 public class LyonStationContentProvider extends AbstractContentProvider {
 	
-	private static final String CAT = "LYON_STATION_CONTENT_PROVIDER";
+	private static final Log log = LogFactory.getLog("LYON_STATION_CONTENT_PROVIDER");
 	
 	private static final String NUM_STATION = "numStation";
 	private static final String NOM_STATION = "nomStation";
@@ -40,7 +41,7 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 	
 	public void loadData() {
 		
-		Log.debug(CAT, "Loading Lyon carto info ...");
+		log.debug("Loading Lyon carto info ...");
 
 		try {
 
@@ -59,7 +60,7 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 					cartoInputStreamProvider = stationContentAccessors[i].getInputStreamProvider();
 					inputStream = cartoInputStreamProvider.createInputStream();
 
-					Log.debug(CAT, "Parsing simple sample XML for id: " + i);
+					log.debug("Parsing simple sample XML for id: " + i);
 					
 					int length = -1;
 					StringBuffer sb = new StringBuffer();
@@ -77,7 +78,7 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 						sb.append(line);
 					}
 					String content = sb.toString();
-					Log.info(CAT, "JSON content: " + content);
+					log.info("JSON content: " + content);
 					JSONObject jsonContent = new JSONObject(content);
 					JSONArray markerArray = jsonContent.getJSONArray("markers");
 					int markerCount = markerArray.length();
@@ -113,7 +114,7 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);			
 		}
 		catch (Throwable t) {
-    		Log.warn(CAT, t);
+    		log.warn(t);
 			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
 		}
 	}
@@ -122,10 +123,6 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 		cancel = true;
 	}
 
-	public String getCat() {
-		return CAT;
-	}
-	
 	public String getDescription() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("Fetchs station informations from path: [");

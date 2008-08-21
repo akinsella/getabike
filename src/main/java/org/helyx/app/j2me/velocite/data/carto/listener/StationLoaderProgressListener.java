@@ -3,6 +3,7 @@ package org.helyx.app.j2me.velocite.data.carto.listener;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.sort.FastQuickSort;
 import org.helyx.app.j2me.lib.task.IProgressDispatcher;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
@@ -15,7 +16,7 @@ import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 
 public class StationLoaderProgressListener extends ProgressAdapter {
 	
-	private static final String CAT = "STATION_LOADER_PROGRESS_LISTENER";
+	private static final Log log = LogFactory.getLog("STATION_LOADER_PROGRESS_LISTENER");
 
 	private IStationPersistenceService stationPersistenceService;
 	
@@ -24,7 +25,7 @@ public class StationLoaderProgressListener extends ProgressAdapter {
 	private IProgressDispatcher progressDispatcher;
 
 	public StationLoaderProgressListener(IProgressDispatcher progressDispatcher) {
-		super(CAT + "[" + progressDispatcher.getName() + "]");
+		super();
 		this.progressDispatcher = progressDispatcher;
 		this.stationList = new Vector(4096);
 	}
@@ -55,7 +56,7 @@ public class StationLoaderProgressListener extends ProgressAdapter {
 			stationList = null;
 			System.gc();
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Tri des données");
-			try { new FastQuickSort(new StationNameComparator()).sort(stationArray); } catch (Exception e) { Log.warn(CAT, e); }
+			try { new FastQuickSort(new StationNameComparator()).sort(stationArray); } catch (Exception e) { log.warn(e); }
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Sauvegarde des stations");
 			stationPersistenceService.saveStationArray(stationArray);
 	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Chargement terminé");

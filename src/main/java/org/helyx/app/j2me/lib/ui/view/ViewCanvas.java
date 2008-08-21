@@ -4,12 +4,13 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.ui.view.transition.IViewTransition;
 
 
 public class ViewCanvas extends GameCanvas {
 
-	private static final String CAT = "VIEW_CANVAS";
+	private static final Log log = LogFactory.getLog("VIEW_CANVAS");
 	
 	private boolean keyEventEnabled = true;
 
@@ -27,8 +28,8 @@ public class ViewCanvas extends GameCanvas {
 	}
 
 	public void setView(AbstractView view) {
-		Log.debug(CAT, "Current canvas: " + this.view);
-		Log.debug(CAT, "New canvas: " + view);
+		log.debug("Current canvas: " + this.view);
+		log.debug("New canvas: " + view);
 		this.view = view;
 		if (view != null) {
 			view.getViewCanvas().repaint();
@@ -50,7 +51,7 @@ public class ViewCanvas extends GameCanvas {
 			}
 		}
 		catch(Throwable t) {
-			Log.warn(CAT, t);
+			log.warn(t);
 		}
 	}
 

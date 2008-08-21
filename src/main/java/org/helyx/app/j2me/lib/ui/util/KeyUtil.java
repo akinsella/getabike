@@ -1,16 +1,14 @@
 package org.helyx.app.j2me.lib.ui.util;
 
-import javax.microedition.lcdui.Canvas;
-
 import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.pref.Pref;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.velocite.PrefConstants;
 
 
 public class KeyUtil {
 
-	private static final String CAT = "KEY_UTIL";
+	private static final Log log = LogFactory.getLog("KEY_UTIL");
 	
 	public static final String SOFT_KEY_DETECTION_PLATFORM = "PLATFORM";
 	public static final String SOFT_KEY_DETECTION_AUTO_DETECTION = "AUTO_DETECTION";
@@ -83,11 +81,11 @@ public class KeyUtil {
 	}
 	
 	public static void writeSoftKeyPref(String softKeyDetectionType, int softKeyLeft, int softKeyRight) {
-		Log.info(CAT, "Writing softkey infos: ");
+		log.info("Writing softkey infos: ");
 		
-		Log.info(CAT, "SOFT_KEY_DETECTION_TYPE: " + softKeyDetectionType);
-		Log.info(CAT, "SOFT_KEY_LEFT: " + softKeyLeft);
-		Log.info(CAT, "SOFT_KEY_RIGHT: " + softKeyRight);
+		log.info("SOFT_KEY_DETECTION_TYPE: " + softKeyDetectionType);
+		log.info("SOFT_KEY_LEFT: " + softKeyLeft);
+		log.info("SOFT_KEY_RIGHT: " + softKeyRight);
 		PrefManager.writePref(PrefConstants.SOFT_KEY_DETECTION_TYPE, softKeyDetectionType);
 		PrefManager.writePref(PrefConstants.SOFT_KEY_LEFT, String.valueOf(softKeyLeft));
 		PrefManager.writePref(PrefConstants.SOFT_KEY_RIGHT, String.valueOf(softKeyRight));

@@ -3,10 +3,11 @@ package org.helyx.app.j2me.lib.text;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 
 public class TextUtil {
 
-	private static final String CAT = "TEXT_UTIL";
+	private static final Log log = LogFactory.getLog("TEXT_UTIL");
 
 	public static String[] split(final String str, final char c) {
 

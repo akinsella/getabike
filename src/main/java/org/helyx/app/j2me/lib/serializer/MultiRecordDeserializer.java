@@ -5,10 +5,11 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 
 public class MultiRecordDeserializer {
 
-	private static final String CAT = "MULTI_RECORD_DESERIALIZER";
+	private static final Log log = LogFactory.getLog("MULTI_RECORD_DESERIALIZER");
 	
 	private int recordIterator;
 	private int recordIteratorCount;
@@ -27,7 +28,7 @@ public class MultiRecordDeserializer {
 		bis = new ByteArrayInputStream(bytes);
 		dis = new DataInputStream(bis);
 		recordIteratorCount = dis.readInt();
-		Log.debug("Record iterator count: " + recordIteratorCount);
+		log.debug("Record iterator count: " + recordIteratorCount);
 	}
 	
 	public void dispose() {
@@ -36,7 +37,7 @@ public class MultiRecordDeserializer {
 	
 	private void cleanUpResources() {
 		if (dis != null) {
-			try { dis.close(); } catch (IOException e) { Log.warn(CAT, e); }
+			try { dis.close(); } catch (IOException e) { log.warn(e); }
 		}
 	}
 

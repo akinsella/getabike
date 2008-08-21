@@ -1,8 +1,11 @@
 package org.helyx.app.j2me.lib.i18n;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
+
 public class ResourceBundleConfiguration {
 
-	private static final String CAT = "THEME_CONFIGURATION";
+	private static final Log log = LogFactory.getLog("THEME_CONFIGURATION");
 	
 	private String name;
 	private String packageName;

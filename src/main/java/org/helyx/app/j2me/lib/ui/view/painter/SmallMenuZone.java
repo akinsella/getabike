@@ -2,6 +2,8 @@ package org.helyx.app.j2me.lib.ui.view.painter;
 
 import javax.microedition.lcdui.Graphics;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.graphics.Shade;
@@ -12,7 +14,7 @@ import org.helyx.app.j2me.lib.ui.view.AbstractView;
 
 public class SmallMenuZone extends AbstractViewCanvasZone {
 
-	private static final String CAT = "SMALL_MENU_ZONE";
+	private static final Log log = LogFactory.getLog("SMALL_MENU_ZONE");
 	
 	public SmallMenuZone() {
 		super();

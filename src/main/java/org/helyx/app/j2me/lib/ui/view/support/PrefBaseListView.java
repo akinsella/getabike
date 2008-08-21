@@ -2,6 +2,8 @@ package org.helyx.app.j2me.lib.ui.view.support;
 
 import javax.microedition.lcdui.Graphics;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
@@ -13,7 +15,7 @@ import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
 public abstract class PrefBaseListView extends MenuListView {
 
-	private static final String CAT = "PREF_LIST_VIEW";
+	private static final Log log = LogFactory.getLog("PREF_LIST_VIEW");
 	
 	protected static final String PREF_VALUE = "PREF_VALUE";
 

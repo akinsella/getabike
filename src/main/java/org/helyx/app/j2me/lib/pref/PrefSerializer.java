@@ -2,12 +2,14 @@ package org.helyx.app.j2me.lib.pref;
 
 import java.io.IOException;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.serializer.AbstractObjectSerializer;
 import org.helyx.app.j2me.lib.serializer.SerializerException;
 
 public class PrefSerializer extends AbstractObjectSerializer {
 
-	private static final String CAT = "PREF_SERIALIZER";
+	private static final Log log = LogFactory.getLog("PREF_SERIALIZER");
 	
 	public PrefSerializer() {
 		super();

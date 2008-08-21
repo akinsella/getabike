@@ -3,9 +3,12 @@ package org.helyx.app.j2me.lib.reflect;
 import java.util.Date;
 import java.util.Hashtable;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
+
 public class RefObject {
 
-	private static final String CAT = "REF_OBJECT";
+	private static final Log log = LogFactory.getLog("REF_OBJECT");
 
 	Hashtable fieldMap = new Hashtable();
 	

@@ -7,10 +7,11 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 
 public class HttpConnectionInputStreamProvider implements InputStreamProvider {
 
-	private static final String CAT = "HTTP_CONNECTION_INPUT_STREAM_PROVIDER";
+	private static final Log log = LogFactory.getLog("HTTP_CONNECTION_INPUT_STREAM_PROVIDER");
 	
 	private String url;
 	private HttpConnection httpConnection;
@@ -31,10 +32,10 @@ public class HttpConnectionInputStreamProvider implements InputStreamProvider {
         httpConnection.setRequestMethod(HttpConnection.GET);
         httpConnection.setRequestProperty("User-Agent", "Profile/MIDP-1.0 Configuration/CLDC-1.0");
         
-        Log.debug(CAT, "About to open connection");
+        log.debug("About to open connection");
         
 		if (httpConnection.getResponseCode() != HttpConnection.HTTP_OK) {
-			Log.debug(CAT, "Closing connection: " + httpConnection.getResponseMessage());
+			log.debug("Closing connection: " + httpConnection.getResponseMessage());
 		    throw new IOException(httpConnection.getResponseMessage());		 
 		}		
 

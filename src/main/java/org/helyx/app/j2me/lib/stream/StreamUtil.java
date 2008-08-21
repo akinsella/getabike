@@ -6,10 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 
 public class StreamUtil {
 	
-	private static final String CAT = "STREAM_UTIL";
+	private static final Log log = LogFactory.getLog("STREAM_UTIL");
 	
 	private static final byte[] ALPHABET = "abcdefghijklmnopkrstuvwxyz".getBytes();
 	
@@ -32,7 +33,7 @@ public class StreamUtil {
 			}
 		}
 		catch(Throwable t) {
-			Log.warn(CAT, t);
+			log.warn(t);
 		}
 		
 		return false;

@@ -3,11 +3,13 @@ package org.helyx.app.j2me.lib.i18n;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.basics4me.util.Properties;
 
 public class ResourceBundle {
 	
-	private static final String CAT = "RESOURCE_BUNDLE";
+	private static final Log log = LogFactory.getLog("RESOURCE_BUNDLE");
 	
 	private static final String TOKEN = "##";
 

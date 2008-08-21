@@ -1,12 +1,13 @@
 package org.helyx.app.j2me.lib.content.accessor;
 
 import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.HttpConnectionInputStreamProvider;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 
 public class SingleParamHttpContentAccessor implements IContentAccessor {
 
-	private static final String CAT = "SINGLE_PARAM_HTTP_CONTENT_ACCESSOR";
+	private static final Log log = LogFactory.getLog("SINGLE_PARAM_HTTP_CONTENT_ACCESSOR");
 
 	private String url;
 	private String param;
@@ -24,7 +25,7 @@ public class SingleParamHttpContentAccessor implements IContentAccessor {
 	}
 
 	public InputStreamProvider getInputStreamProvider() throws ContentAccessorException {
-		Log.debug(CAT, "Url: " + targetUrl);
+		log.debug("Url: " + targetUrl);
 		return new HttpConnectionInputStreamProvider(targetUrl);
 	}
 

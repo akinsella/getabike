@@ -10,9 +10,9 @@ import org.helyx.app.j2me.lib.i18n.ClasspathResourceBundleContentProviderFactory
 import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.i18n.ResourceBundle;
 import org.helyx.app.j2me.lib.i18n.ResourceBundleConfiguration;
-import org.helyx.app.j2me.lib.log.FileLogWriter;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.log.appender.FileAppender;
 import org.helyx.app.j2me.lib.ui.theme.Theme;
 import org.helyx.app.j2me.velocite.PrefConstants;
 
@@ -20,7 +20,7 @@ public class AbstractMIDlet extends MIDlet {
 
 	private static final Log log = LogFactory.getLog("ABSTRACT_MIDLET");
 	
-	private FileLogWriter flw;
+	private FileAppender flw;
 	private Theme theme;
 	private ResourceBundle resourceBundle;
 	private Locale locale;
@@ -206,7 +206,7 @@ public class AbstractMIDlet extends MIDlet {
 	private void openFileLogWriter() {
 		if (flw == null) {
 			try {
-				flw = new FileLogWriter("VeloCite.log");
+				flw = new FileAppender("VeloCite.log");
 				flw.open();
 				log.addLogWriter(flw);
 			}

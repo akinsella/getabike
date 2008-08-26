@@ -12,7 +12,7 @@ import org.helyx.app.j2me.lib.ui.util.FileUtil;
 
 public class FileAppender extends AbstractAppender {
 	
-	private static final Log log = LogFactory.getLog("FILE_LOG_WRITER");
+	private static final Log log = LogFactory.getLog("FILE_APPENDER");
 
 	private String filePath;
 	private FileConnection fc;

@@ -7,7 +7,7 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 
 public class ConsoleAppender extends AbstractAppender {
 	
-	private static final Log log = LogFactory.getLog("CONSOLE_LOG_WRITER");
+	private static final Log log = LogFactory.getLog("CONSOLE_APPENDER");
 	
 	private static ConsoleAppender consoleLogWriter;
 	

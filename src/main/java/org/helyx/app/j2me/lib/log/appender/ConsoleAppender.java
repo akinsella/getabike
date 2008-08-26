@@ -1,18 +1,21 @@
-package org.helyx.app.j2me.lib.log;
+package org.helyx.app.j2me.lib.log.appender;
 
 import java.util.Date;
 
-public class ConsoleLogWriter extends AbstractLogWriter {
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
+
+public class ConsoleAppender extends AbstractAppender {
 	
 	private static final Log log = LogFactory.getLog("CONSOLE_LOG_WRITER");
 	
-	private static ConsoleLogWriter consoleLogWriter;
+	private static ConsoleAppender consoleLogWriter;
 	
 	static {
-		consoleLogWriter = new ConsoleLogWriter();
+		consoleLogWriter = new ConsoleAppender();
 	}
 
-	private ConsoleLogWriter() {
+	private ConsoleAppender() {
 		super();
 	}
 
@@ -42,7 +45,7 @@ public class ConsoleLogWriter extends AbstractLogWriter {
 		
 	}
 
-	public static ConsoleLogWriter getInstance() {
+	public static ConsoleAppender getInstance() {
 		return consoleLogWriter;
 	}
 

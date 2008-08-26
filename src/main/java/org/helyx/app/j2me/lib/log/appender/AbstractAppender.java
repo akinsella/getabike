@@ -1,14 +1,15 @@
-package org.helyx.app.j2me.lib.log;
+package org.helyx.app.j2me.lib.log.appender;
 
 import java.util.Date;
 
 import org.helyx.app.j2me.lib.format.DateFormatUtil;
+import org.helyx.app.j2me.lib.log.Log;
 
-public abstract class AbstractLogWriter implements ILogWriter {
+public abstract class AbstractAppender implements Appender {
 
 	private int thresholdLevel = Log.DEBUG;
 
-	public AbstractLogWriter() {
+	public AbstractAppender() {
 		super();
 	}
 

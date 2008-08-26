@@ -1,9 +1,11 @@
-package org.helyx.app.j2me.lib.log;
+package org.helyx.app.j2me.lib.log.appender;
 
 import java.util.Date;
 
+import org.helyx.app.j2me.lib.log.Log;
 
-public interface ILogWriter {
+
+public interface Appender {
 
 	public void write(int level, Log log, String message, Date date);
 

@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.log;
+package org.helyx.app.j2me.lib.log.appender;
 
 import java.io.PrintStream;
 import java.util.Date;
@@ -6,9 +6,11 @@ import java.util.Date;
 import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
 
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.ui.util.FileUtil;
 
-public class FileLogWriter extends AbstractLogWriter {
+public class FileAppender extends AbstractAppender {
 	
 	private static final Log log = LogFactory.getLog("FILE_LOG_WRITER");
 
@@ -16,7 +18,7 @@ public class FileLogWriter extends AbstractLogWriter {
 	private FileConnection fc;
 	private PrintStream ps;
 	
-	public FileLogWriter(String filePath) {
+	public FileAppender(String filePath) {
 		super();
 		this.filePath = filePath;
 	}

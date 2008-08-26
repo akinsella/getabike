@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import org.helyx.app.j2me.lib.log.appender.ConsoleAppender;
+import org.helyx.app.j2me.lib.log.appender.Appender;
 import org.helyx.app.j2me.lib.text.StringFormat;
 
 public class Log {
@@ -30,7 +32,7 @@ public class Log {
 	
 	static {
 		logWriterList = new Vector();
-		logWriterList.addElement(ConsoleLogWriter.getInstance());
+		logWriterList.addElement(ConsoleAppender.getInstance());
 	}
 	
 	private String category;
@@ -59,15 +61,15 @@ public class Log {
 		}
 	}
 	
-	public void addLogWriter(ILogWriter logWriter) {
+	public void addLogWriter(Appender logWriter) {
 		logWriterList.addElement(logWriter);
 	}
 
-	public boolean existLogWriter(ILogWriter logWriter) {
+	public boolean existLogWriter(Appender logWriter) {
 		return logWriterList.contains(logWriter);
 	}
 
-	public void removeLogWriter(ILogWriter logWriter) {
+	public void removeLogWriter(Appender logWriter) {
 		logWriterList.removeElement(logWriter);
 	}
 
@@ -78,7 +80,7 @@ public class Log {
 		Enumeration _enum = logWriterList.elements();
 		
 		while (_enum.hasMoreElements()) {	
-			ILogWriter logWriter = (ILogWriter)_enum.nextElement();
+			Appender logWriter = (Appender)_enum.nextElement();
 			newLogWriterList.addElement(logWriter);
 		}
 		
@@ -89,7 +91,7 @@ public class Log {
 		Enumeration _enum = logWriterList.elements();
 		
 		while (_enum.hasMoreElements()) {			
-			ILogWriter logWriter = (ILogWriter)_enum.nextElement();
+			Appender logWriter = (Appender)_enum.nextElement();
 			logWriter.flush();
 		}
 	}
@@ -100,7 +102,7 @@ public class Log {
 		logWriterList.removeAllElements();
 
 		while (_enum.hasMoreElements()) {			
-			ILogWriter logWriter = (ILogWriter)_enum.nextElement();
+			Appender logWriter = (Appender)_enum.nextElement();
 			logWriter.close();
 		}
 	}
@@ -135,7 +137,7 @@ public class Log {
 			}
 			while (_enum.hasMoreElements()) {
 				
-				ILogWriter logWriter = (ILogWriter)_enum.nextElement();
+				Appender logWriter = (Appender)_enum.nextElement();
 				
 				logWriter.write(level, this, message, date);				
 			}

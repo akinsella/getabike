@@ -5,9 +5,9 @@ import javax.microedition.midlet.MIDletStateChangeException;
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
 import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
-import org.helyx.app.j2me.lib.log.ConsoleLogWriter;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.log.appender.ConsoleAppender;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.ui.view.support.xml.XmlView;
@@ -37,7 +37,7 @@ public class XmlMIDlet extends AbstractMIDlet {
 	protected void startApp() throws MIDletStateChangeException {
 		try { 
 			PrefManager.writePref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
-			ConsoleLogWriter.getInstance().setThresholdLevel(Log.DEBUG);
+			ConsoleAppender.getInstance().setThresholdLevel(Log.DEBUG);
 			logPlatformInfos();
 			
 			ClasspathContentAccessor cca = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/view/xml/welcomeView.xml");

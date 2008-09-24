@@ -19,7 +19,7 @@ public class ResourceBundleTest extends TestCase {
 	}
 	
 	public void testResourceBundle() {
-		ClasspathResourceBundleContentProviderFactory drbcpf = new ClasspathResourceBundleContentProviderFactory(Locale.FRANCE, "org.helyx.app.j2me.velocite", "messages");
+		ClasspathResourceBundleContentProviderFactory drbcpf = new ClasspathResourceBundleContentProviderFactory(Locale.FRANCE, "org.helyx.app.j2me.velocite.i18n", "messages");
 		IContentProvider contentProvider = drbcpf.getContentProviderFactory();
 		
 		ResourceBundle resourceBundle = (ResourceBundle)Future.get(new ContentProviderProgressTaskAdapter(contentProvider));

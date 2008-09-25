@@ -79,14 +79,11 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 				xppAttributeProcessor0.addAll(new String[] { DEFAULT });
 				xppAttributeProcessor0.processNode(xpp);
 
-				if (!xppAttributeProcessor0.attrExists(DEFAULT)) {
-					PrefManager.removePref(PrefConstants.CITY_DEFAULT_KEY);
-				}
-				else {
-					String defaultCityKey = xppAttributeProcessor0.getAttrValueAsString(DEFAULT);
-					log.debug("Default city key: '" + defaultCityKey + "'");
-					PrefManager.writePref(PrefConstants.CITY_DEFAULT_KEY, defaultCityKey);					
-				}
+				progressDispatcher.fireEvent(
+						CityConstants.ON_DEFAULT_CITY, 
+						xppAttributeProcessor0.attrExists(DEFAULT) ? 
+								xppAttributeProcessor0.getAttrValueAsString(DEFAULT) : 
+								null );
 				
 				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
 				xppAttributeProcessor.addAll(new String[] { 

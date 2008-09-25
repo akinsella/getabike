@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<carto>
+  <markers>
+    <marker name="103_AVENIDA EDUARDO DATO" number="103" address="Aprox. C/ San Bernardo" fullAddress="Aprox. C/ San Bernardo  " lat="37.38446600" lng="-5.98272800" open="1"/>
+    <marker name="001_GLORIETA OLIMPICA" number="1" address="Aprox. Concejal Alberto Jiménez-Becerril" fullAddress="Aprox. Concejal Alberto Jiménez-Becerril  " lat="37.41290551" lng="-5.98881447" open="1"/>
+    <marker name="004_CALLE LEONARDO DA VINCI" number="4" address="Aprox C/ Thomas Alba Edison" fullAddress="Aprox C/ Thomas Alba Edison  " lat="37.410145" lng="-6.005712" open="1"/>
+    <marker name="006_CAMINO DE LOS DESCUBRIMIENTOS" number="6" address="Aprox. Calle Isaac Newton" fullAddress="Aprox. Calle Isaac Newton  " lat="37.40664726" lng="-6.00296768" open="1"/>
+    <marker name="007_CALLE AMÉRICO VESPUCIO" number="7" address="Aprox. Calle de Jacques Cousteau" fullAddress="Aprox. Calle de Jacques Cousteau  " lat="37.40750296" lng="-6.00759306" open="1"/>
+    <marker name="008_CALLE LEONARDO DA VINCI" number="8" address="Aprox. C/ Gregor Mendel" fullAddress="Aprox. C/ Gregor Mendel  " lat="37.40100809" lng="-6.00936058" open="1"/>
+    <marker name="010_CALLE JOSE DIAZ" number="10" address="Aprox. Avda Concejal Alberto Jiménez-Becerril" fullAddress="Aprox. Avda Concejal Alberto Jiménez-Becerril  " lat="37.40941848" lng="-5.99075578" open="1"/>
+    <marker name="011_CALLE AVICENA" number="11" address="Aprox. calle Avenzoar" fullAddress="Aprox. calle Avenzoar  " lat="37.40717635" lng="-5.99258007" open="1"/>
+    <marker name="012_PLAZA DUQUESA DE ALBA" number="12" address="Barqueta" fullAddress="Barqueta  " lat="37.40348079" lng="-5.99563122" open="1"/>
+    <marker name="014_AVENIDA SANCHEZ PIZJUAN" number="14" address="Facultad de medicina" fullAddress="Facultad de medicina  " lat="37.40650717" lng="-5.98910852" open="1"/>
+    <marker name="015_CALLE DR MARAÑON" number="15" address="Aprox. C/ San Juan de Ribera" fullAddress="Aprox. C/ San Juan de Ribera  " lat="37.40607504" lng="-5.98572349" open="1"/>
+    <marker name="016_CALLE DE MANUEL VILLALOBOS" number="16" address="Aprox. C/ Sor Francisca Dorotea" fullAddress="Aprox. C/ Sor Francisca Dorotea  " lat="37.40708426" lng="-5.98242031" open="1"/>
+    <marker name="017_CALLE DE MADRESELVA" number="17" address="Aprox. Ronda de Pio XII" fullAddress="Aprox. Ronda de Pio XII  " lat="37.40732824" lng="-5.97872930" open="1"/>
+    <marker name="019_PARLAMENTO" number="19" address="Aprox. C/ Don Fadrique" fullAddress="Aprox. C/ Don Fadrique  " lat="37.40335737" lng="-5.98903357" open="1"/>
+    <marker name="020_CALLE SAN JUAN DE RIBERA" number="20" address="Aprox. C/ Fray Isidoro de Sevilla" fullAddress="Aprox. C/ Fray Isidoro de Sevilla  " lat="37.40464929" lng="-5.98650496" open="1"/>
+    <marker name="022_AVENIDA DE LLANES" number="22" address="Aprox. Avda de Miraflores" fullAddress="Aprox. Avda de Miraflores  " lat="37.40517128" lng="-5.97477992" open="1"/>
+    <marker name="023_PARLAMENTO" number="23" address="Aprox. C/ San Juan de Ribera" fullAddress="Aprox. C/ San Juan de Ribera  " lat="37.40333736" lng="-5.98783938" open="1"/>
+    <marker name="027_AVENIDA DE LLANES" number="27" address="Aprox C/ Escultor Francisco Buiza" fullAddress="Aprox C/ Escultor Francisco Buiza  " lat="37.40396167" lng="-5.97186035" open="1"/>
+    <marker name="029_CARRETERA DE CARMONA" number="29" address="Aprox. Avda de Llanes" fullAddress="Aprox. Avda de Llanes  " lat="37.40266414" lng="-5.96989257" open="1"/>
+    <marker name="035_ALAMEDA DE HERCULES" number="35" address="Aprox. Calle Peris Mencheta" fullAddress="Aprox. Calle Peris Mencheta  " lat="37.400716" lng="-5.993620" open="1"/>
+    <marker name="036_CALLE SAN VICENTE" number="36" address="Aprox. C/ Guadalquivir" fullAddress="Aprox. C/ Guadalquivir  " lat="37.400534" lng="-5.998393" open="1"/>
+    <marker name="040_AVENIDA REINA MERCEDES" number="40" address="Aprox. Glorieta Alcalde de Parias Merry" fullAddress="Aprox. Glorieta Alcalde de Parias Merry  " lat="37.35638449" lng="-5.98644969" open="1"/>
+    <marker name="042_PLAZA CRONISTA" number="42" address="Aprox. C/ Divina Pastora" fullAddress="Aprox. C/ Divina Pastora  " lat="37.39873942" lng="-5.98944980" open="1"/>
+    <marker name="043_RONDA CAPUCHINOS" number="43" address="Aprox. C/ Maestro Quiroga" fullAddress="Aprox. C/ Maestro Quiroga  " lat="37.39918958" lng="-5.98272644" open="1"/>
+    <marker name="044_RONDA CAPUCHINOS" number="44" address="Aprox. C/ Corinto" fullAddress="Aprox. C/ Corinto  " lat="37.39837159" lng="-5.98163413" open="1"/>
+    <marker name="046_PLAZA DEL PELICANO" number="46" address="Aprox. C/ Enladrilladas" fullAddress="Aprox. C/ Enladrilladas  " lat="37.39769198" lng="-5.98362829" open="1"/>
+    <marker name="048_CALLE CHURRUCA" number="48" address="Aprox. C/ Gonzáles Cuadrado" fullAddress="Aprox. C/ Gonzáles Cuadrado  " lat="" lng="" open="1"/>
+    <marker name="049_ALAMEDA DE HERCULES" number="49" address="Aprox. C/ Amor de Dios" fullAddress="Aprox. C/ Amor de Dios  " lat="37.396899" lng="-5.993917" open="1"/>
+    <marker name="051_AVENIDA TORNEO" number="51" address="Aprox. C/ Luis Rey Romero" fullAddress="Aprox. C/ Luis Rey Romero  " lat="37.395553" lng="-6.002311" open="1"/>
+    <marker name="052_CALLE DEL INCA GARCILASO" number="52" address="Aprox. C/ Jerónimo de Aguilar" fullAddress="Aprox. C/ Jerónimo de Aguilar  " lat="37.394260" lng="-6.010299" open="1"/>
+    <marker name="055_CALLE DE MARIA AUXILIADORA" number="55" address="Aprox. C/ Gonzalo de Bilbao" fullAddress="Aprox. C/ Gonzalo de Bilbao  " lat="37.393307" lng="-5.983733" open="1"/>
+    <marker name="056_PLAZA PONCE DE LEON" number="56" address="Aprox. C/ Juan de Mesa" fullAddress="Aprox. C/ Juan de Mesa  " lat="37.393152" lng="-5.987625" open="1"/>
+    <marker name="057_PLAZA CRISTO DE BURGOS" number="57" address="Pza de San Pedro" fullAddress="Pza de San Pedro  " lat="37.39235214" lng="-5.98969497" open="1"/>
+    <marker name="058_CALLE REGINA" number="58" address="Aprox. Pza de la Encarnación" fullAddress="Aprox. Pza de la Encarnación  " lat="37.39440494" lng="-5.99152648" open="1"/>
+    <marker name="062_PLAZA DE ARMAS" number="62" address="Avda Torneo (estación de autobuses)" fullAddress="Avda Torneo (estación de autobuses)  " lat="37.391113" lng="-6.003080" open="1"/>
+    <marker name="064_CALLE CUESTA DE ROSARIO" number="64" address="Pza de la Pescadería" fullAddress="Pza de la Pescadería  " lat="37.390403" lng="-5.990650" open="1"/>
+    <marker name="069_CALLE JOSE LAGUILLO" number="69" address="Aprox. Pablo Iglesias" fullAddress="Aprox. Pablo Iglesias  " lat="37.392044" lng="-5.978283" open="1"/>
+    <marker name="070_ESTACIÓN RENFE SANTA JUSTA" number="70" address="Estación RENFE Santa Justa" fullAddress="Estación RENFE Santa Justa  " lat="37.391192" lng="-5.975961" open="1"/>
+    <marker name="073_PLAZA SAN AGUSTIN" number="73" address="Aprox. C/ Concepción" fullAddress="Aprox. C/ Concepción  " lat="37.38954740" lng="-5.98435259" open="1"/>
+    <marker name="075_PLAZA SAN FRANCISCO" number="75" address="Aprox C/ Hernando Colón" fullAddress="Aprox C/ Hernando Colón  " lat="37.38784344" lng="-5.99357761" open="1"/>
+    <marker name="077_PLAZA CHAPINA" number="77" address="Aprox. Hotel Abba Triana" fullAddress="Aprox. Hotel Abba Triana  " lat="37.38922463" lng="-6.00754902" open="1"/>
+    <marker name="078_CALLE ALFARERIA" number="78" address="Aprox. Ronda de Triana" fullAddress="Aprox. Ronda de Triana  " lat="37.38860468" lng="-6.01027209" open="1"/>
+    <marker name="079_PLAZA DE LAS MERCEDARIAS" number="79" address="Aprox. C/ Ibarra" fullAddress="Aprox. C/ Ibarra  " lat="37.38861903" lng="-5.98704516" open="1"/>
+    <marker name="081_CALLE LUIS MONTOTO" number="81" address="Aprox. C/ Benitos Mas y Prat" fullAddress="Aprox. C/ Benitos Mas y Prat  " lat="37.38718974" lng="-5.97100662" open="1"/>
+    <marker name="085_PASEO CATALINA RIBERA" number="85" address="Frente a la Diputación Provincial" fullAddress="Frente a la Diputación Provincial  " lat="37.386763" lng="-5.98624628" open="1"/>
+    <marker name="092_RONDA DE TRIANA" number="92" address="Aprox. C/ de Manuel Arellano" fullAddress="Aprox. C/ de Manuel Arellano  " lat="37.38587203" lng="-6.01121009" open="1"/>
+    <marker name="093_RONDA DE TRIANA" number="93" address="Aprox. C/ San Vicente de Paul" fullAddress="Aprox. C/ San Vicente de Paul  " lat="37.383157" lng="-6.010866" open="1"/>
+    <marker name="098_AVENIDA DE ROMA" number="98" address="Puerta de Jerez" fullAddress="Puerta de Jerez  " lat="37.38207692" lng="-5.99301995" open="1"/>
+    <marker name="100_PASEO CATALINA RIBERA" number="100" address="Aprox. C/ San Fernando" fullAddress="Aprox. C/ San Fernando  " lat="37.38154972" lng="-5.98898844" open="1"/>
+    <marker name="101_PRADO DE SAN SEBASTIAN" number="101" address="Estación de autobuses" fullAddress="Estación de autobuses  " lat="37.38114925" lng="-5.98693955" open="1"/>
+    <marker name="104_AVENIDA EDUARDO DATO" number="104" address="Aprox. C/ Fuenteovejuna" fullAddress="Aprox. C/ Fuenteovejuna  " lat="37.38416948" lng="-5.97966650" open="1"/>
+    <marker name="107_CALLE LUIS MORALES" number="107" address="Aprox. Nervión Plaza" fullAddress="Aprox. Nervión Plaza  " lat="37.384293" lng="-5.972581" open="1"/>
+    <marker name="108_AVENIDA EDUARDO DATO" number="108" address="Aprox. Avda de San Francisco Javier" fullAddress="Aprox. Avda de San Francisco Javier  " lat="37.38288606" lng="-5.97323934" open="1"/>
+    <marker name="109_AVENIDA SAN FRANCISCO JAVIER" number="109" address="Aprox. C/ Camilo José Cela" fullAddress="Aprox. C/ Camilo José Cela  " lat="37.37991770" lng="-5.97437262" open="1"/>
+    <marker name="113_PLAZA SAN MARTÍN DE PORRES" number="113" address="Aprox. Avda Alvar Núñez" fullAddress="Aprox. Avda Alvar Núñez  " lat="37.38112666" lng="-6.00914120" open="1"/>
+    <marker name="118_PLAZA DE CUBA" number="118" address="" fullAddress="  " lat="37.37982529" lng="-5.99709483" open="1"/>
+    <marker name="125_AVENIDA SAN FRANCISCO JAVIER" number="125" address="Aprox. Avda De Ramón y Cajal" fullAddress="Aprox. Avda De Ramón y Cajal  " lat="37.37783432" lng="-5.97472148" open="1"/>
+    <marker name="129_CALLE VIRGEN DE LUJAN" number="129" address="Aprox. Virgen de la Victoria" fullAddress="Aprox. Virgen de la Victoria  " lat="37.374702" lng="-6.002445" open="1"/>
+    <marker name="130_GLORIETA REPUBLICA DOMINICANA" number="130" address="Aprox. C/ López de Gomara" fullAddress="Aprox. C/ López de Gomara  " lat="37.37577901" lng="-6.00523747" open="1"/>
+    <marker name="132_CALLE PAEZ DE RIBERA" number="132" address="Aprox. Paseo de la Palmera" fullAddress="Aprox. Paseo de la Palmera  " lat="37.374455" lng="-6.009003" open="1"/>
+    <marker name="133_AVENIDA SANTA FE" number="133" address="Aprox. C/ Virgen de la Oliva" fullAddress="Aprox. C/ Virgen de la Oliva  " lat="37.374073" lng="-6.004188" open="1"/>
+    <marker name="135_CALLE VIRGEN DE LUJÁN" number="135" address="Aprox. Glorieta las Cigarreras" fullAddress="Aprox. Glorieta las Cigarreras  " lat="37.374685" lng="-5.993791" open="1"/>
+    <marker name="138_CALLE RAMÓN CARANDE" number="138" address="Aprox. C/ San Salvador" fullAddress="Aprox. C/ San Salvador  " lat="37.374404" lng="-5.978924" open="1"/>
+    <marker name="139_AVENIDA DIEGO MARTINEZ BARRIO" number="139" address="Aprox. Avda Gal Garcia de la Herranz" fullAddress="Aprox. Avda Gal Garcia de la Herranz  " lat="37.375114" lng="-5.975849" open="1"/>
+    <marker name="142_CALLE RAMON DE CARRANZA" number="142" address="Aprox. C/ Asunción" fullAddress="Aprox. C/ Asunción  " lat="37.371685" lng="-5.997202" open="1"/>
+    <marker name="143_CALLE RAMON DE CARRANZA" number="143" address="Aprox. C/ Virgen de la Oliva" fullAddress="Aprox. C/ Virgen de la Oliva  " lat="37.371758" lng="-6.003302" open="1"/>
+    <marker name="145_AVENIDA REINA MERCEDES" number="145" address="Aprox. C/ Profesor García González" fullAddress="Aprox. C/ Profesor García González  " lat="37.36026688" lng="-5.98630805" open="1"/>
+    <marker name="146_AVENIDA REINA MERCEDES" number="146" address="Aprox. C/ Profesor García González" fullAddress="Aprox. C/ Profesor García González  " lat="37.36013428" lng="-5.98630279" open="1"/>
+    <marker name="148_CALLE THARSIS" number="148" address="Aprox. C/ Aorno" fullAddress="Aprox. C/ Aorno  " lat="37.39880117" lng="-5.97317223" open="1"/>
+    <marker name="149_CALLE ARROYO" number="149" address="Aprox. C/ Tena" fullAddress="Aprox. C/ Tena  " lat="37.39786343" lng="-5.97566155" open="1"/>
+    <marker name="152_CALLE SAMANIEGO" number="152" address="Aprox. C/ Esperanza de la Trinidad" fullAddress="Aprox. C/ Esperanza de la Trinidad  " lat="37.395824" lng="-5.974363" open="1"/>
+    <marker name="154_AVENIDA KANSAS CITY" number="154" address="Aprox. C/ Naranjito de Triana" fullAddress="Aprox. C/ Naranjito de Triana  " lat="37.394870" lng="-5.968416" open="1"/>
+    <marker name="155_AVENIDA KANSAS CITY" number="155" address="Aprox. Avda El Greco" fullAddress="Aprox. Avda El Greco  " lat="37.392944" lng="-5.970729" open="1"/>
+    <marker name="160_CALLE ARJONA" number="160" address="Aprox. Puente de Triana" fullAddress="Aprox. Puente de Triana  " lat="37.38741998" lng="-6.00157459" open="1"/>
+    <marker name="161_AVENIDA ALCALDE MANUEL DEL VALLE" number="161" address="Aprox. C/ Baltasar de Alcázar" fullAddress="Aprox. C/ Baltasar de Alcázar  " lat="37.400034" lng="-5.969093" open="1"/>
+    <marker name="009_CAMINO DE LOS DESCUBRIMIENTOS" number="9" address="Aprox. C/ Albert Einstein" fullAddress="Aprox. C/ Albert Einstein  " lat="37.403358" lng="-6.004010" open="1"/>
+    <marker name="122_CALLE ENRAMADILLA" number="122" address="Aprox. C/ Balbino Marrón" fullAddress="Aprox. C/ Balbino Marrón  " lat="37.378518" lng="-5.978379" open="1"/>
+    <marker name="124_CALLE ENRAMADILLA" number="124" address="Aprox. C/ Barrau" fullAddress="Aprox. C/ Barrau  " lat="37.377764" lng="-5.977234" open="1"/>
+    <marker name="157_AVENIDA CARDENAL BUENO MONREAL" number="157" address="Aprox. Avda Ramón Carande" fullAddress="Aprox. Avda Ramón Carande  " lat="37.369835" lng="-5.978181" open="1"/>
+    <marker name="159_AVENIDA CARDENAL BUENO MONREAL" number="159" address="Approx. Avda Manuel Siurot" fullAddress="Approx. Avda Manuel Siurot  " lat="37.36807900" lng="-5.98484400" open="1"/>
+    <marker name="158_AVENIDA CARDENAL BUENO MONREAL" number="158" address="Aprox. C/ Bogota" fullAddress="Aprox. C/ Bogota  " lat="37.368887" lng="-5.981608" open="1"/>
+    <marker name="140_CALLE FELIPE II" number="140" address="Aprox. Avda Diego Martínez Barrio" fullAddress="Aprox. Avda Diego Martínez Barrio  " lat="37.372404" lng="-5.977352" open="1"/>
+    <marker name="116_CALLE MANUEL SIUROT" number="116" address="Aprox. Hospital Universitario Virgen del Rocio" fullAddress="Aprox. Hospital Universitario Virgen del Rocio  " lat="37.361464" lng="-5.981593" open="1"/>
+    <marker name="141_CALLE FELIPE II" number="141" address="Aprox. C/ Ramón Carande" fullAddress="Aprox. C/ Ramón Carande  " lat="37.37177200" lng="-5.98188200" open="1"/>
+    <marker name="021_CALLE MANUEL VILLALOBOS" number="21" address="Aprox. C/ Madre San Marcelo" fullAddress="Aprox. C/ Madre San Marcelo  " lat="37.405507" lng="-5.981517" open="1"/>
+    <marker name="025_AVENIDA DE LA CRUZ ROJA" number="25" address="Aprox. C/ Albaida" fullAddress="Aprox. C/ Albaida  " lat="37.403166" lng="-5.981099" open="1"/>
+    <marker name="031_AVENIDA DE MIRAFLORES" number="31" address="Aprox. C/ Albaida" fullAddress="Aprox. C/ Albaida  " lat="37.4000575" lng="-5.979771" open="1"/>
+    <marker name="053_CALLE REYES CATÓLICOS" number="53" address="Aprox. C/ Gravina" fullAddress="Aprox. C/ Gravina  " lat="37.389375" lng="-5.999595" open="1"/>
+    <marker name="065_CALLE ALHÓNDIGA" number="65" address="Aprox. Card. Cervantes" fullAddress="Aprox. Card. Cervantes  " lat="37.391333" lng="-5.988130" open="1"/>
+    <marker name="072_CALLE AMADOR DE LOS RIOS" number="72" address="Aprox. C/ Lope de Vega" fullAddress="Aprox. C/ Lope de Vega  " lat="37.390746" lng="-5.982758" open="1"/>
+    <marker name="074_PLAZA PILATOS" number="74" address="Aprox. C/ San Esteban" fullAddress="Aprox. C/ San Esteban  " lat="37.389805" lng="-5.986887" open="1"/>
+    <marker name="083_AVENIDA LA BUHAIRA" number="83" address="Aprox. Avda Luis Montoto" fullAddress="Aprox. Avda Luis Montoto  " lat="37.386989" lng="-5.978041" open="1"/>
+    <marker name="084_CALLE JOSÉ MARÍA MORENO GALVÁN" number="84" address="Aprox. C/ Juan Antonio Cabestany" fullAddress="Aprox. C/ Juan Antonio Cabestany  " lat="37.387384" lng="-5.983058" open="1"/>
+    <marker name="097_PASEO DE CRISTÓBAL COLÓN" number="97" address="Aprox. Torre del Oro" fullAddress="Aprox. Torre del Oro  " lat="37.381569" lng="-5.995542" open="1"/>
+    <marker name="106_AVENIDA EDUARDO DATO" number="106" address="Aprox. C/ Oscar Carvallo" fullAddress="Aprox. C/ Oscar Carvallo  " lat="37.383831" lng="-5.977444" open="1"/>
+    <marker name="131_CALLE TABLADILLA" number="131" address="Aprox. C/ Cardenal Ilundaín" fullAddress="Aprox. C/ Cardenal Ilundaín  " lat="37.364784" lng="-5.981442" open="1"/>
+    <marker name="134_CALLE VIRGEN DE LUJÁN" number="134" address="Aprox. C/ Asunción" fullAddress="Aprox. C/ Asunción  " lat="37.374804" lng="-5.998526" open="1"/>
+    <marker name="137_AVENIDA DE LA BORBOLLA" number="137" address="Aprox. C/ Porvenir" fullAddress="Aprox. C/ Porvenir  " lat="37.373792" lng="-5.985507" open="1"/>
+    <marker name="150_CALLE SAN JUAN BOSCO" number="150" address="Aprox. C/ Arroyo" fullAddress="Aprox. C/ Arroyo  " lat="37.396782" lng="-5.978624" open="1"/>
+    <marker name="024_CALLE LEÓN XIII" number="24" address="Aprox. C/ Fray Isidoro de Sevilla" fullAddress="Aprox. C/ Fray Isidoro de Sevilla  " lat="37.405507" lng="-5.981517" open="1"/>
+    <marker name="032_CALLE MUÑOZ LEÓN" number="32" address="Aprox. C/ Morera" fullAddress="Aprox. C/ Morera  " lat="37.402053" lng="-5.986313" open="1"/>
+    <marker name="080_CALLE LUIS MONTOTO" number="80" address="Aprox. C/ Alberto Duero" fullAddress="Aprox. C/ Alberto Duero  " lat="37.387661" lng="-5.981017" open="1"/>
+    <marker name="082_CALLE LUIS MONTOTO" number="82" address="Aprox. C/ Maese Farfán" fullAddress="Aprox. C/ Maese Farfán  " lat="37.387132" lng="-5.974833" open="1"/>
+    <marker name="102_CALLE JUAN DE MATA CARRIAZO" number="102" address="Aprox. antigua estación San Bernardo" fullAddress="Aprox. antigua estación San Bernardo  " lat="37.382773" lng="-5.983710" open="1"/>
+    <marker name="110_PLAZA MARIA MERCEDES BORBÓN" number="110" address="Aprox. C/ Virgen de la Sierra" fullAddress="Aprox. C/ Virgen de la Sierra  " lat="37.380219" lng="-5.982997" open="1"/>
+    <marker name="005_CAMINO DE LOS DESCUBRIMIENTOS" number="5" address="Aprox. C/ Thomás Alba Edison" fullAddress="Aprox. C/ Thomás Alba Edison  " lat="37.411077" lng="-6.001949" open="1"/>
+    <marker name="068_CALLE JUAN ANTONIO CABESTANY" number="68" address="Aprox. Calle Júpiter" fullAddress="Aprox. Calle Júpiter  " lat="37.390326" lng="-5.979954" open="1"/>
+    <marker name="119_AVENIDA DE CHILE" number="119" address="Aprox. Costurero de la Reina" fullAddress="Aprox. Costurero de la Reina  " lat="37.377438" lng="-5.991955" open="1"/>
+    <marker name="164_CALLE LUIS MONTOTO" number="164" address="Aprox C/ El Greco" fullAddress="Aprox C/ El Greco  " lat="37.387681" lng="-5.965644" open="1"/>
+    <marker name="166_RONDA DEL TAMARGUILLO" number="166" address="Aprox. centro comercial Los Arcos" fullAddress="Aprox. centro comercial Los Arcos  " lat="37.388624" lng="-5.959230" open="1"/>
+    <marker name="165_AVENIDA DE ANDALUCIA" number="165" address="Aprox. centro comercial Los Arcos" fullAddress="Aprox. centro comercial Los Arcos  " lat="37.387679" lng="-5.960943" open="1"/>
+    <marker name="112_AVDA J.MA MARTÍNEZ SÁNCHEZ ARJONA" number="112" address="Aprox. Plaza Amadeo Janone" fullAddress="Aprox. Plaza Amadeo Janone  " lat="37.380187" lng="-6.004373" open="1"/>
+    <marker name="144_AVENIDA DE LA PALMERA" number="144" address="Aprox. Clinica de Fátima" fullAddress="Aprox. Clinica de Fátima  " lat="37.369157" lng="-5.988072" open="1"/>
+    <marker name="162_AVENIDA SOLEA" number="162" address="Aprox. C/ Media Granaína" fullAddress="Aprox. C/ Media Granaína  " lat="37.391574" lng="-5.968456" open="1"/>
+    <marker name="156_AVENIDA KANSAS CITY" number="156" address="Aprox. Baltasar Gracián" fullAddress="Aprox. Baltasar Gracián  " lat="37.391490" lng="-5.972747" open="1"/>
+    <marker name="076_PLAZA NUEVA" number="76" address="Aprox. C/ Jaen" fullAddress="Aprox. C/ Jaen  " lat="37.388952" lng="-5.995632" open="1"/>
+    <marker name="087_PLAZA NUEVA" number="87" address="Aprox. C/ Tetuan" fullAddress="Aprox. C/ Tetuan  " lat="37.389000" lng="-5.995284" open="1"/>
+    <marker name="121_CALLE DOCTOR PEDRO DE CASTRO" number="121" address="Aprox. C/ Doc. Gabriel Sánchez" fullAddress="Aprox. C/ Doc. Gabriel Sánchez  " lat="37.377192" lng="-5.981925" open="1"/>
+    <marker name="153_AVENIDA REINA MERCEDES" number="153" address="Aprox. Escuela de arquitectura" fullAddress="Aprox. Escuela de arquitectura  " lat="37.363005" lng="-5.986252" open="1"/>
+    <marker name="094_PLAZA DEL ZURRAQUE" number="94" address="Aprox. C/ Doc. Jeronimo Pou" fullAddress="Aprox. C/ Doc. Jeronimo Pou  " lat="37.383403" lng="-6.008284" open="1"/>
+    <marker name="038_CALLE DE INCA GARCILASO" number="38" address="Aprox. C/ Juan Antonio de Vizarrón" fullAddress="Aprox. C/ Juan Antonio de Vizarrón  " lat="37.392115" lng="-6.011041" open="1"/>
+    <marker name="114_GLORIETA PLUS ULTRA" number="114" address="Aprox. Estadio Manuel Ruiz de Lopera" fullAddress="Aprox. Estadio Manuel Ruiz de Lopera  " lat="37.356406" lng="-5.979252" open="1"/>
+    <marker name="136_CALLE ASUNCIÓN" number="136" address="Aprox. C/ Virgen de la Antigua" fullAddress="Aprox. C/ Virgen de la Antigua  " lat="37.373153" lng="-5.997600" open="1"/>
+    <marker name="018_AVENIDA EDUARDO DATO" number="18" address="Aprox. C/ Marqués del Nervión" fullAddress="Aprox. C/ Marqués del Nervión  " lat="37.382109" lng="-5.968111" open="1"/>
+    <marker name="128_CALLE ARQUEROS" number="128" address="Aprox. C/ Naos" fullAddress="Aprox. C/ Naos  " lat="37.376487" lng="-6.000622" open="1"/>
+    <marker name="168_AVENIDA RAMÓN Y CAJAL" number="168" address="Aprox. Avda de la ciudad Jardín" fullAddress="Aprox. Avda de la ciudad Jardín  " lat="37.375072" lng="-5.967624" open="1"/>
+    <marker name="105_CALLE FRANCISCO MURILLO" number="105" address="Aprox. C/ Manuel Siurot" fullAddress="Aprox. C/ Manuel Siurot  " lat="37.358944" lng="-5.980610" open="1"/>
+    <marker name="117_AVDA J.MA MARTÍNEZ SÁNCHEZ ARJONA" number="117" address="Aprox. Avda Republica Argentina" fullAddress="Aprox. Avda Republica Argentina  " lat="37.377840" lng="-6.002603" open="1"/>
+    <marker name="071_AVENIDA KANSAS CITY" number="71" address="Aprox. Hotel Occidental" fullAddress="Aprox. Hotel Occidental  " lat="37.390064" lng="-5.974481" open="1"/>
+    <marker name="002_GRAN PLAZA" number="2" address="Aprox. Calle Marquez de Pickman" fullAddress="Aprox. Calle Marquez de Pickman  " lat="37.381620" lng="-5.965207" open="1"/>
+    <marker name="167_GLORIETA BIZCO AMATE" number="167" address="Ramón y Cajal, Esq. Ronda Tamarguillo" fullAddress="Ramón y Cajal, Esq. Ronda Tamarguillo  " lat="37.373389" lng="-5.964923" open="1"/>
+    <marker name="126_AVENIDA REINA MERCEDES" number="126" address="Facultad de Informática" fullAddress="Facultad de Informática  " lat="37.358206" lng="-5.986471" open="1"/>
+    <marker name="169_AVENIDA RAMÓN Y CAJAL" number="169" address="Aprox. C/ Villegas Marmolejo" fullAddress="Aprox. C/ Villegas Marmolejo  " lat="37.376499" lng="-5.972548" open="1"/>
+    <marker name="170_PLAZA ANTONIO APARICIO HERRERO" number="170" address="Aprox. C/ San Juan de Dios" fullAddress="Aprox. C/ San Juan de Dios  " lat="37.379000" lng="-5.968913" open="1"/>
+    <marker name="028_CALLE RAFAEL SALGADO" number="28" address="Aprox. C/ Castillo Alcala de Guadaira" fullAddress="Aprox. C/ Castillo Alcala de Guadaira  " lat="37.360295" lng="-5.976649" open="1"/>
+    <marker name="033_CALLE LEÓN XIII" number="33" address="Aprox. C/ Antonio Pantión" fullAddress="Aprox. C/ Antonio Pantión  " lat="37.401494" lng="-5.983680" open="1"/>
+    <marker name="089_CALLE ADRIANO" number="89" address="Aprox. C/ Antonia Díaz" fullAddress="Aprox. C/ Antonia Díaz  " lat="37.386515" lng="-5.997780" open="1"/>
+    <marker name="171_CALLE ALFONSO LASO DE LA VEGA" number="171" address="Aprox. Parroco Antonio González" fullAddress="Aprox. Parroco Antonio González  " lat="37.366180" lng="-5.974860" open="1"/>
+    <marker name="172_RONDA TAMARGUILLO" number="172" address="Aprox. Alfonso Laso de la Vega" fullAddress="Aprox. Alfonso Laso de la Vega  " lat="37.367206" lng="-5.971201" open="1"/>
+    <marker name="173_RONDA TAMARGUILLO" number="173" address="Aprox. Avda de la Paz" fullAddress="Aprox. Avda de la Paz  " lat="37.370082" lng="-5.968054" open="1"/>
+    <marker name="030_AVENIDA EDUARDO DATO" number="30" address="Detrás Estadio Sánchez Pizjuan" fullAddress="Detrás Estadio Sánchez Pizjuan  " lat="37.382662" lng="-5.970843" open="1"/>
+    <marker name="111_PZA FARMACÉUTICO MURILLO HERRERA" number="111" address="Aprox. C/ Pajes de Corro" fullAddress="Aprox. C/ Pajes de Corro  " lat="37.381351" lng="-6.001043" open="1"/>
+    <marker name="115_CALLE LOPEZ DE GOMARA" number="115" address="En frente Instituto Adolfo Becker" fullAddress="En frente Instituto Adolfo Becker  " lat="37.377926" lng="-6.007227" open="1"/>
+    <marker name="163_CALLE SINAÍ" number="163" address="Aprox. C/ Baltazar Gracián" fullAddress="Aprox. C/ Baltazar Gracián  " lat="37.389988" lng="-5.970792" open="1"/>
+    <marker name="034_PLAZA PUMAREJO" number="34" address="Aprox. Calle San Luis" fullAddress="Aprox. Calle San Luis  " lat="37.401061" lng="-5.988568" open="1"/>
+    <marker name="047_CALLE HINIESTA" number="47" address="Aprox. Convento Santa Isabel" fullAddress="Aprox. Convento Santa Isabel  " lat="37.397166" lng="-5.987027" open="1"/>
+    <marker name="050_CALLE DE HERNÁN CORTÉS" number="50" address="Aprox. C/ Eslava" fullAddress="Aprox. C/ Eslava  " lat="37.397588" lng="-5.996685" open="1"/>
+    <marker name="174_RONDA TAMARGUILLO" number="174" address="Aprox. Marqués de Pickman" fullAddress="Aprox. Marqués de Pickman  " lat="37.380646" lng="-5.960564" open="1"/>
+    <marker name="151_CALLE URQUIZA" number="151" address="Esquina calle Venecia" fullAddress="Esquina calle Venecia  " lat="37.394576" lng="-5.979887" open="1"/>
+    <marker name="054_PLAZA SAN JUAN DE LA PALMA" number="54" address="Aprox. iglesia" fullAddress="Aprox. iglesia  " lat="37.395273" lng="-5.991040" open="1"/>
+    <marker name="039_AVENIDA DE TORNEO" number="39" address="Aprox. C/ Curtidurías" fullAddress="Aprox. C/ Curtidurías  " lat="0" lng="0" open="1"/>
+    <marker name="063_CALLE SAN PABLO" number="63" address="Aprox. C/ Bailén" fullAddress="Aprox. C/ Bailén  " lat="37.390490" lng="-5.998093" open="1"/>
+    <marker name="175_RONDA TAMARGUILLO" number="175" address="Plaza Ruperto Chapí" fullAddress="Plaza Ruperto Chapí  " lat="37.377791" lng="-5.960860" open="1"/>
+    <marker name="026_AVENIDA DE MIRAFLORES" number="26" address="Aprox. C/ Manuel Ródenas" fullAddress="Aprox. C/ Manuel Ródenas  " lat="37.402528" lng="-5.977668" open="1"/>
+    <marker name="041_PLAZA CALDERÓN DE LA BARCA" number="41" address="Aprox. C/ Amargura" fullAddress="Aprox. C/ Amargura  " lat="37.399616" lng="-5.991019" open="1"/>
+    <marker name="060_PLAZA DE LA CONCORDIA" number="60" address="Aprox. C/ Teniente Borges" fullAddress="Aprox. C/ Teniente Borges  " lat="37.393991" lng="-5.996889" open="1"/>
+    <marker name="176_AVENIDA DE LA CIUDAD JARDÍN" number="176" address="Aprox. C/ Profesor Braña" fullAddress="Aprox. C/ Profesor Braña  " lat="37.377593" lng="-5.966547" open="1"/>
+    <marker name="178_CALLE IBIZA" number="178" address="Aprox. Avda de la Paz" fullAddress="Aprox. Avda de la Paz  " lat="37.373344" lng="-5.973904" open="1"/>
+    <marker name="059_AVENIDA DE LA PALMERA" number="59" address="Aprox. Avenida del Líbano" fullAddress="Aprox. Avenida del Líbano  " lat="37.371272" lng="-5.989200" open="1"/>
+    <marker name="147_CARRETERA DE CARMONA" number="147" address="Aprox. C/ Maestro Solano" fullAddress="Aprox. C/ Maestro Solano  " lat="37.400829" lng="-5.975218" open="1"/>
+    <marker name="013_CALLE FERIA" number="13" address="Aprox. C/ Resolana" fullAddress="Aprox. C/ Resolana  " lat="37.403167" lng="-5.991908" open="1"/>
+    <marker name="003_PUERTA DE LA BARQUETA" number="3" address="Aprox. Puente de la Barqueta" fullAddress="Aprox. Puente de la Barqueta  " lat="37.405675" lng="-5.998478" open="1"/>
+    <marker name="045_CARRETERA DE CARMONA" number="45" address="Aprox. C/ de Francisco de Ariño" fullAddress="Aprox. C/ de Francisco de Ariño  " lat="0" lng="0" open="1"/>
+    <marker name="088_CALLE AMERICO VESPUCIO" number="88" address="Aprox. C/ Hermanos d'Eluyar" fullAddress="Aprox. C/ Hermanos d'Eluyar  " lat="37.409360" lng="-6.006907" open="1"/>
+    <marker name="067_CALLE LEONARDO DA VINCI" number="67" address="Aprox. C/ Albert Einstein" fullAddress="Aprox. C/ Albert Einstein  " lat="37.404196" lng="-6.007292" open="1"/>
+    <marker name="095_CALLE AMÉRICO VESPUCIO" number="95" address="Aprox. C/ Juan Bautista Muñoz" fullAddress="Aprox. C/ Juan Bautista Muñoz  " lat="37.412207" lng="-6.006328" open="1"/>
+    <marker name="184_AVENIDA ALCALDE MANUEL DEL VALLE" number="184" address="Aprox. C/ San Juan de la Salle" fullAddress="Aprox. C/ San Juan de la Salle  " lat="37.408558" lng="-5.970483" open="1"/>
+    <marker name="099_CALLE AMÉRICO VESPUCIO" number="99" address="Aprox. Gerencia de Urbanismo de Sevilla" fullAddress="Aprox. Gerencia de Urbanismo de Sevilla  " lat="37.397428" lng="-6.010631" open="1"/>
+    <marker name="179_RONDA URBANA NORTE" number="179" address="Joventudes Musicales" fullAddress="Joventudes Musicales  " lat="37.413200" lng="-5.985123" open="1"/>
+    <marker name="091_CALLE PROCURADOR" number="91" address="Clara de Jesús Monteto" fullAddress="Clara de Jesús Monteto  " lat="0" lng="0" open="1"/>
+    <marker name="180_CALLE DOCTOR JAIME MARCOS" number="180" address="Aprox. Avda. Doc. Fedriani" fullAddress="Aprox. Avda. Doc. Fedriani  " lat="37.409683" lng="-5.984391" open="1"/>
+    <marker name="181_RONDA URBANA NORTE" number="181" address="Aprox. C/ Doctor Fedriani" fullAddress="Aprox. C/ Doctor Fedriani  " lat="0" lng="0" open="1"/>
+    <marker name="185_AVENIDA ALCALDE MANUEL DEL VALLE" number="185" address="Calle Alejandro Sawa" fullAddress="Calle Alejandro Sawa  " lat="37.405130" lng="-5.968851" open="1"/>
+    <marker name="186_CALLE ORFEBRE DOMINGUEZ VÁZQUEZ" number="186" address="Aprox. C/ Pino Montano" fullAddress="Aprox. C/ Pino Montano  " lat="0" lng="0" open="1"/>
+    <marker name="197_CALLE AGRICULTORES" number="197" address="Aprox. C/ estrella Betelgeuse" fullAddress="Aprox. C/ estrella Betelgeuse  " lat="37.423472" lng="-5.966394" open="1"/>
+    <marker name="196_CALLE ESTRELLA CANOPUS" number="196" address="Aprox. C/ estrella Betelgeuse" fullAddress="Aprox. C/ estrella Betelgeuse  " lat="37.424735" lng="-5.970091" open="1"/>
+    <marker name="194_CALLE PARQUE DE DOÑANA" number="194" address="Aprox. Calle Corral de los Olmos" fullAddress="Aprox. Calle Corral de los Olmos  " lat="37.418766" lng="-5.973184" open="1"/>
+    <marker name="182_CALLE VICTORIA KENT" number="182" address="Aprox. Avda Alcalde Manuel del Valle" fullAddress="Aprox. Avda Alcalde Manuel del Valle  " lat="0" lng="0" open="1"/>
+    <marker name="198_CALLE MAR DE ALBORÁN" number="198" address="Aprox. C/ Camino de los Toros" fullAddress="Aprox. C/ Camino de los Toros  " lat="37.420480" lng="-5.967946" open="1"/>
+    <marker name="191_GLORIETA CARLOS CANO" number="191" address="Aprox. C/ Blas Infante" fullAddress="Aprox. C/ Blas Infante  " lat="0" lng="0" open="1"/>
+    <marker name="066_CALLE ARROYO" number="66" address="Aprox. Avda. José Laguillo" fullAddress="Aprox. Avda. José Laguillo  " lat="37.393659" lng="-5.981859" open="1"/>
+    <marker name="201_CALLE PINO MONTANO" number="201" address="Aprox. C/ Estafeta" fullAddress="Aprox. C/ Estafeta  " lat="37.415717" lng="-5.967858" open="1"/>
+    <marker name="061_PLAZA DEL MUSEO" number="61" address="Aprox. C/ Alfonso XII" fullAddress="Aprox. C/ Alfonso XII  " lat="0" lng="0" open="1"/>
+    <marker name="086_CAMINO DE LOS DESCUBRIMIENTOS" number="86" address="Aprox. Pasarela de la Cartuja" fullAddress="Aprox. Pasarela de la Cartuja  " lat="37.397106" lng="-6.006294" open="1"/>
+    <marker name="096_CALLE BETIS" number="96" address="Aprox. C/ Juan de Lugo" fullAddress="Aprox. C/ Juan de Lugo  " lat="37.383590" lng="-5.999940" open="1"/>
+    <marker name="183_ALCALDE MANUEL DEL VALLE" number="183" address="Aprox. C/ Pino Montano" fullAddress="Aprox. C/ Pino Montano  " lat="37.411051" lng="-5.971209" open="1"/>
+    <marker name="203_CALLE TESALÓNICA" number="203" address="Calle Mazzantini" fullAddress="Calle Mazzantini  " lat="37.396127" lng="-5.958754" open="1"/>
+    <marker name="200_CAMINO DE LOS TOROS" number="200" address="Aprox. C/ Mediterráneo" fullAddress="Aprox. C/ Mediterráneo  " lat="37.418947" lng="-5.963207" open="1"/>
+    <marker name="187_CALLE DOCTOR LAFFON" number="187" address="Aprox. C/ Efeso" fullAddress="Aprox. C/ Efeso  " lat="37.395434" lng="-5.964033" open="1"/>
+    <marker name="199_MAR DE ALBORÁN" number="199" address="Aprox. Corral de los Olmos" fullAddress="Aprox. Corral de los Olmos  " lat="37.417889" lng="-5.969286" open="1"/>
+    <marker name="202_AVENIDA MUJER TRABAJADORA" number="202" address="Aprox. Avda Miraflores" fullAddress="Aprox. Avda Miraflores  " lat="37.411500" lng="-5.966753" open="1"/>
+    <marker name="195_CALLE CORRAL DEL AGUA" number="195" address="Aprox. Camino de los toros" fullAddress="Aprox. Camino de los toros  " lat="37.421749" lng="-5.971638" open="1"/>
+    <marker name="177_" number="177" address="" fullAddress="  " lat="0" lng="0" open="1"/>
+    <marker name="207_CALLE IFNI" number="207" address="Aprox. Avda de Holanda" fullAddress="Aprox. Avda de Holanda  " lat="37.355050" lng="-5.982360" open="1"/>
+    <marker name="205_AVENIDA KANSAS CITY" number="205" address="Aprox. Plaza el Tato" fullAddress="Aprox. Plaza el Tato  " lat="37.399832" lng="-5.962048" open="1"/>
+    <marker name="208_AVENIDA DE GRECIA" number="208" address="Aprox. Avda de Italia" fullAddress="Aprox. Avda de Italia  " lat="37.350690" lng="-5.984180" open="1"/>
+    <marker name="193_AVENIDA DE CORIA" number="193" address="Aprox. C/ Coruña" fullAddress="Aprox. C/ Coruña  " lat="37.381145" lng="-6.011995" open="1"/>
+  </markers>
+  <arrondissements>
+    <arrondissement number="" minLat="" minLng="" maxLat="37.424735" maxLng="0"/>
+  </arrondissements>
+</carto>

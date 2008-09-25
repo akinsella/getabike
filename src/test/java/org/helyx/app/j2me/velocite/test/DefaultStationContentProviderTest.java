@@ -4,8 +4,8 @@ import java.util.Vector;
 
 import junit.framework.TestCase;
 
+import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.ContentAccessorException;
-import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
@@ -20,13 +20,17 @@ import org.helyx.app.j2me.velocite.data.city.domain.City;
 public class DefaultStationContentProviderTest extends TestCase {
 
 	private static final Log log = LogFactory.getLog("DEFAULT_STATION_CONTENT_PROVIDER_TEST");
+
+	public DefaultStationContentProviderTest() {
+		super();
+	}
 	
 	public void testStationContentLoaderParis() throws ContentProviderException, ContentAccessorException {
 		City city = new City();
 		city.key = "SEVILLE";
-		city.stationList = "http://www.sevici.es/service/carto/";
+		city.stationList = "/org/helyx/app/j2me/velocite/test/data/station/carto_seville.xml";
 		
-		IContentAccessor stationContentAccessor = new HttpContentAccessor(city.stationList);
+		IContentAccessor stationContentAccessor = new ClasspathContentAccessor(city.stationList);
 		IContentProvider stationContentLoader = new DefaultStationContentProvider(stationContentAccessor);
 		
 		final Vector stationList = new Vector();

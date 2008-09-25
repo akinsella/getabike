@@ -16,8 +16,12 @@ public class LocalCityContentAccessorTest extends TestCase {
 
 	private static final Log log = LogFactory.getLog("LOCAL_CITY_CONTENT_ACCESSOR_TEST");
 
+	public LocalCityContentAccessorTest() {
+		super();
+	}
+
 	public void testLocalCityContentAccessor() throws ContentAccessorException, IOException {
-		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/cities.xml");
+		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/data/city/cities.xml");
 		InputStreamProvider inputStreamProvider = cityContentAccessor.getInputStreamProvider();
 		
 		assertNotNull(inputStreamProvider);

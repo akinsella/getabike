@@ -23,14 +23,14 @@ public class HttpConnectionInputStreamProvider implements InputStreamProvider {
 		super();
 		this.url = url;
 	}
-	
+
 	public InputStream createInputStream() throws IOException {
 		if (httpConnection != null) {
 			throw new RuntimeException("InputStream already Opened");
 		}
 		httpConnection = (HttpConnection)Connector.open(url);
         httpConnection.setRequestMethod(HttpConnection.GET);
-        httpConnection.setRequestProperty("User-Agent", "Profile/MIDP-1.0 Configuration/CLDC-1.0");
+        httpConnection.setRequestProperty("User-Agent", "Profile/MIDP-2.0 Configuration/CLDC-1.1");
         
         log.debug("About to open connection");
         

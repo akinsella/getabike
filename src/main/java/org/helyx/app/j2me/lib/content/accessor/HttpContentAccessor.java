@@ -10,6 +10,7 @@ public class HttpContentAccessor implements IContentAccessor {
 	
 	private static final Log log = LogFactory.getLog("HTTP_CONTENT_ACCESSOR");
 	
+	
 	private String url;
 
 	public HttpContentAccessor(String url) {
@@ -20,6 +21,7 @@ public class HttpContentAccessor implements IContentAccessor {
 	public InputStreamProvider getInputStreamProvider() throws ContentAccessorException {
 		log.debug("Url: " + url);
 		return new HttpConnectionInputStreamProvider(url);
+
 	}
 
 	public String getPath() {

@@ -4,10 +4,12 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.sort.FastQuickSort;
 import org.helyx.app.j2me.lib.task.IProgressDispatcher;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.city.CityConstants;
 import org.helyx.app.j2me.velocite.data.city.comparator.CityNameComparator;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
@@ -46,6 +48,16 @@ public class CityLoaderProgressListener extends ProgressAdapter {
 			
 			if (size % 5 == 0) {
 		   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, cityList.size() + " villes chargées");
+			}
+		}
+		else if (eventType == CityConstants.ON_DEFAULT_CITY) {
+			if (eventData == null) {
+				PrefManager.removePref(PrefConstants.CITY_DEFAULT_KEY);
+			}
+			else {
+				String defaultCityKey = (String)eventData;
+				log.debug("Default city key: '" + defaultCityKey + "'");
+				PrefManager.writePref(PrefConstants.CITY_DEFAULT_KEY, defaultCityKey);					
 			}
 		}
 	}

@@ -42,7 +42,7 @@ public class ReflectTest extends TestCase {
 		city.setString(OFFLINE_STATION_LIST, "/carto_paris.xml");
 		
 		
-		IContentAccessor contentAccessor = new ClasspathContentAccessor("/data/md/cities.md.xml");
+		IContentAccessor contentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/data/city/md/cities.md.xml");
 		IContentProvider metadataContentProvider = new RefObjectMetaDataContentProvider(contentAccessor);
 
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(metadataContentProvider);

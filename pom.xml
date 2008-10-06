@@ -102,157 +102,192 @@
 		
 		<finalName>VeloCite</finalName>
 	
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<configuration>
-						<debug>false</debug>
-						<encoding>ISO8859-15</encoding>
-						<fork>false</fork>
-						<source>1.3</source>
-						<target>1.1</target>
-					</configuration>
-				</plugin>
-				<plugin>
-					<artifactId>maven-resources-plugin</artifactId>
-					<configuration>
-						<encoding>ISO8859-15</encoding>
-					</configuration>
-				</plugin>
-				<plugin>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<configuration>
-						<forkMode>never</forkMode>
-					</configuration>
-				</plugin>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<debug>false</debug>
+					<encoding>ISO8859-15</encoding>
+					<fork>false</fork>
+					<source>1.3</source>
+					<target>1.1</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>ISO8859-15</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<forkMode>never</forkMode>
+				</configuration>
+			</plugin>
 
-				<!-- Configure Eclipse-Me -->
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-eclipse-plugin</artifactId>
-					<configuration>
-						<buildcommands>
-							<buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
-							<buildcommand>eclipseme.core.preverifier</buildcommand>
-						</buildcommands>
-						<projectnatures>
-							<projectnature>org.eclipse.jdt.core.javanature</projectnature>
-							<projectnature>eclipseme.core.nature</projectnature>
-						</projectnatures>
-						<classpathContainers>
-							<classpathContainer>J2MELIB</classpathContainer>
-							<classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
-						</classpathContainers>
-					</configuration>
-				</plugin>
+			<!-- Configure Eclipse-Me -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<buildcommands>
+						<buildcommand>org.eclipse.jdt.core.javabuilder</buildcommand>
+						<buildcommand>eclipseme.core.preverifier</buildcommand>
+					</buildcommands>
+					<projectnatures>
+						<projectnature>org.eclipse.jdt.core.javanature</projectnature>
+						<projectnature>eclipseme.core.nature</projectnature>
+					</projectnatures>
+					<classpathContainers>
+						<classpathContainer>J2MELIB</classpathContainer>
+						<classpathContainer>org.eclipse.jdt.launching.JRE_CONTAINER</classpathContainer>
+					</classpathContainers>
+				</configuration>
+			</plugin>
 
 
-				<!-- this is not part of the example, remove it when project used as template -->
-				<plugin>
-					<artifactId>maven-assembly-plugin</artifactId>
-					<configuration>
-						<descriptorRefs>
-							<descriptorRef>src</descriptorRef>
-						</descriptorRefs>
-					</configuration>
-					<executions>
-						<execution>
-							<id>make-assembly</id>
-							<phase>package</phase>
-							<goals>
-								<goal>attached</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
+			<!-- this is not part of the example, remove it when project used as template -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>src</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>com.pyx4me</groupId>
+				<artifactId>j2me-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>package</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<wtkHome>${env.WTK_HOME}</wtkHome>
+					
+					<test>true</test>
+                    <proguard>true</proguard>
+                    <obfuscate>true</obfuscate>
+                    <proguardInclude>${basedir}/proguard.conf</proguardInclude>
+                    <proguardPreverify>true</proguardPreverify>
+                    <preprocess>true</preprocess>
+                    <jourConfigTest>${basedir}/process-test-classes.jour.xml</jourConfigTest>
 
-				<plugin>
-					<groupId>com.pyx4me</groupId>
-					<artifactId>j2me-maven-plugin</artifactId>
-					<executions>
-						<execution>
-							<goals>
-								<goal>package</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<wtkHome>${env.WTK_HOME}</wtkHome>
-						<proguardInclude>${basedir}/proguard.conf</proguardInclude>
-						<proguard>true</proguard>
-						<obfuscate>true</obfuscate>
-						<!-- Optional, populated by default -->
-						<jadAttributes>
+					<!-- Optional, populated by default -->
+					<jadAttributes>
+						<MIDlet-Icon>${j2me.midlet.icon}</MIDlet-Icon>
+						<MicroEdition-Profile>${j2me.midlet.profile}</MicroEdition-Profile>
+						<MicroEdition-Configuration>${j2me.midlet.configuration}</MicroEdition-Configuration>
+						<MIDlet-Vendor>${project.organization.name}</MIDlet-Vendor>
+						<MIDlet-Info-URL>http://m.velocite.org</MIDlet-Info-URL>
+						<Created-By>${j2me.midlet.author}</Created-By>
+						<!-- <MIDlet-Permissions>javax.microedition.io.Connector.http</MIDlet-Permissions> -->
+					</jadAttributes>
+					<archive>
+						<manifestEntries>
+							<MIDlet-1>${j2me.midlet.name},${j2me.midlet.icon},${j2me.midlet.class}</MIDlet-1>
+							<MIDlet-Name>${j2me.midlet.name}</MIDlet-Name>
 							<MIDlet-Icon>${j2me.midlet.icon}</MIDlet-Icon>
-							<MicroEdition-Profile>${j2me.midlet.profile}</MicroEdition-Profile>
+							<MIDlet-Vendor>${j2me.midlet.vendor}</MIDlet-Vendor>
+							<MIDlet-Version>${j2me.midlet.version}</MIDlet-Version>
 							<MicroEdition-Configuration>${j2me.midlet.configuration}</MicroEdition-Configuration>
-							<MIDlet-Vendor>${project.organization.name}</MIDlet-Vendor>
-							<MIDlet-Info-URL>http://m.velocite.org</MIDlet-Info-URL>
-							<Created-By>${j2me.midlet.author}</Created-By>
-							<!-- <MIDlet-Permissions>javax.microedition.io.Connector.http</MIDlet-Permissions> -->
-						</jadAttributes>
-						<midlets>
-							<MIDlet>
-								<name>VeloCite</name>
-								<icon>${j2me.midlet.icon}</icon>
-								<class>org.helyx.app.j2me.velocite.midlet.VelociteMIDlet</class>
-							</MIDlet>
-						</midlets>
-						
-						<archive>
-							<manifestEntries>
-								<MIDlet-1>${j2me.midlet.name},${j2me.midlet.icon},${j2me.midlet.class}</MIDlet-1>
-								<MIDlet-Name>${j2me.midlet.name}</MIDlet-Name>
-								<MIDlet-Icon>/pyx.png</MIDlet-Icon>
-								<MIDlet-Vendor>${j2me.midlet.vendor}</MIDlet-Vendor>
-								<MIDlet-Version>${j2me.midlet.version}</MIDlet-Version>
-								<MicroEdition-Configuration>${j2me.midlet.configuration}</MicroEdition-Configuration>
-								<MicroEdition-Profile>${j2me.midlet.profile}</MicroEdition-Profile>
-							</manifestEntries>
-						</archive>
-					</configuration>
-					<!-- Use different version of proguard
-						<dependencies>
-							<dependency>
-								<groupId>net.sf.proguard</groupId>
-								<artifactId>proguard</artifactId>
-								<version>3.6</version>
-								<scope>runtime</scope>
-							</dependency>
-						</dependencies>
-					-->
-				</plugin>
+							<MicroEdition-Profile>${j2me.midlet.profile}</MicroEdition-Profile>
+						</manifestEntries>
+					</archive>
 
-	            <plugin>
-	                <groupId>net.sf.jour</groupId>
-	                <artifactId>jour-maven-plugin</artifactId>
-	                <version>2.0.2</version>
-	               <executions>
-	                    <execution>
-	                        <phase>test-compile</phase>
-	                        <goals>
-	                            <goal>instrument</goal>
-	                        </goals>
-	                        <configuration>
-	                            <jourConfig>${basedir}/process-test-classes.jour.xml</jourConfig>
-	                            <classesDirectory>${project.build.testOutputDirectory}</classesDirectory>
-	                            <output>test-classes</output>
-	                        </configuration>
-	                    </execution>
-	                </executions>
-	                <dependencies>
-	                    <dependency>
-	                        <groupId>com.pyx4me</groupId>
-	                        <artifactId>cldcunit-instrument</artifactId>
-	                        <version>2.0.2</version>
-	                    </dependency>
-	                </dependencies>
-	            </plugin>
+				    <assembly>
+				        <inclusions>
+							<inclusion>
+								<groupId>kxml2</groupId>
+								<artifactId>kxml2</artifactId>
+							</inclusion>
+							
+							<inclusion>
+								<groupId>org.helyx</groupId>
+								<artifactId>json4me</artifactId>
+							</inclusion>
+					
+							<inclusion>
+								<groupId>org.helyx</groupId>
+								<artifactId>basics4me</artifactId>
+							</inclusion>
+				        </inclusions>
+				        <exclusions>
+				            <exclusion>
+				                <!-- This is optional, exclude of junit is hardcoded -->
+				                <groupId>junit</groupId>
+				                <artifactId>junit</artifactId>
+				            </exclusion>
+				        </exclusions>
+				    </assembly>
+					<midlets>
+						<MIDlet>
+							<name>VeloCite</name>
+							<icon>${j2me.midlet.icon}</icon>
+							<class>org.helyx.app.j2me.velocite.midlet.VelociteMIDlet</class>
+						</MIDlet>
+					</midlets>
+				</configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.pyx4me</groupId>
+                        <artifactId>cldcunit-instrument</artifactId>
+                        <version>2.0.2</version>
+                    </dependency>
+                </dependencies>
+				<!-- Use different version of proguard
+					<dependencies>
+						<dependency>
+							<groupId>net.sf.proguard</groupId>
+							<artifactId>proguard</artifactId>
+							<version>3.6</version>
+							<scope>runtime</scope>
+						</dependency>
+					</dependencies>
+				-->
+			</plugin>
 
-			</plugins>
+            <!-- plugin>
+                <groupId>net.sf.jour</groupId>
+                <artifactId>jour-maven-plugin</artifactId>
+                <version>2.0.2</version>
+               <executions>
+                    <execution>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>instrument</goal>
+                        </goals>
+                        <configuration>
+                            <jourConfig>${basedir}/process-test-classes.jour.xml</jourConfig>
+                            <classesDirectory>${project.build.testOutputDirectory}</classesDirectory>
+                            <output>test-classes</output>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.pyx4me</groupId>
+                        <artifactId>cldcunit-instrument</artifactId>
+                        <version>2.0.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin -->
 
-		</pluginManagement>
+		</plugins>
 	</build>
 
 	<reporting>
@@ -294,13 +329,6 @@
 	</reporting>
 
 	<dependencies>
-
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
 		
         <dependency>
             <groupId>com.pyx4me</groupId>
@@ -315,6 +343,13 @@
             <version>2.0.2</version>
             <scope>provided</scope>
         </dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
 	
 		<dependency>
 			<groupId>org.microemu</groupId>
@@ -346,7 +381,6 @@
 			<groupId>org.helyx</groupId>
 			<artifactId>basics4me</artifactId>
 			<version>1.0.0</version>
-			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>

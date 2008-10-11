@@ -9,14 +9,13 @@ import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
-import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
-import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.city.CityConstants;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
 import org.helyx.basics4me.io.BufferedInputStream;
 import org.xmlpull.v1.XmlPullParser;
 
@@ -27,9 +26,12 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 
 	private static final String CITIES = "cities";
 	private static final String CITY = "city";
+	private static final String QUARTIERS = "quartiers";
+	private static final String QUARTIER = "quartier";
 
 	private static final String KEY = "key";
 	private static final String NAME = "name";
+	private static final String SERVICE_NAME = "serviceName";
 	private static final String TYPE = "type";
 	private static final String DEFAULT = "default";
 	private static final String ACTIVE = "active";
@@ -37,7 +39,9 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 	private static final String STATION_DETAILS = "stationDetails";
 	private static final String OFFLINE_STATION_LIST = "offlineStationList";
 	private static final String WEB_SITE = "webSite";
-	private static final String CONTENT_PROVIDER_FACTORY = "contentProviderFactory";
+	
+	private static final String ID = "id";
+	private static final String ZIP_CODE = "zipCode";
 	
 	
 	private static final String INVALID_CONTENT = "Xml content is invalid";
@@ -63,6 +67,8 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 		InputStream inputStream = null;
 		InputStreamProvider cityInputStreamProvider = null;
 		
+		Vector cityList = new Vector();
+
 		try {
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
 			try {			
@@ -85,39 +91,57 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 								xppAttributeProcessor0.getAttrValueAsString(DEFAULT) : 
 								null );
 				
-				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
-				xppAttributeProcessor.addAll(new String[] { 
-					KEY, NAME, TYPE, ACTIVE, WEB_SITE, CONTENT_PROVIDER_FACTORY, 
+				XppAttributeProcessor cityXppAttributeProcessor = new XppAttributeProcessor();
+				cityXppAttributeProcessor.addAll(new String[] { 
+					KEY, NAME, SERVICE_NAME, TYPE, ACTIVE, WEB_SITE, 
 					STATION_DETAILS, STATION_LIST, OFFLINE_STATION_LIST
 				});
 
-				Vector cityList = new Vector();
-				while (XppUtil.readToNextElement(xpp, CITY)) {
+				XppAttributeProcessor quartierXppAttributeProcessor = new XppAttributeProcessor();
+				quartierXppAttributeProcessor.addAll(new String[] { 
+					ID, NAME, ZIP_CODE, CITY
+				});
+
+				while (XppUtil.readToNextElement(xpp, CITY, false)) {
 					if (cancel) {
 						progressDispatcher.fireEvent(ProgressEventType.ON_CANCEL);
 						return ;
 					}
 					City city = new City();
-					xppAttributeProcessor.processNode(xpp);
+					cityXppAttributeProcessor.processNode(xpp);
 
-					city.key = xppAttributeProcessor.getAttrValueAsString(KEY);
-					city.name = xppAttributeProcessor.getAttrValueAsString(NAME);
-					city.type = xppAttributeProcessor.getAttrValueAsString(TYPE);
-					city.active = xppAttributeProcessor.getAttrValueAsBoolean(ACTIVE);
-					city.webSite = xppAttributeProcessor.getAttrValueAsString(WEB_SITE);
-					city.contentProviderFactory = xppAttributeProcessor.getAttrValueAsString(CONTENT_PROVIDER_FACTORY);
-					city.offlineStationList = xppAttributeProcessor.getAttrValueAsString(OFFLINE_STATION_LIST);
-					city.stationList = xppAttributeProcessor.getAttrValueAsString(STATION_LIST);
-					city.stationDetails = xppAttributeProcessor.getAttrValueAsString(STATION_DETAILS);
-	
+					city.key = cityXppAttributeProcessor.getAttrValueAsString(KEY);
+					city.name = cityXppAttributeProcessor.getAttrValueAsString(NAME);
+					city.serviceName = cityXppAttributeProcessor.getAttrValueAsString(SERVICE_NAME);
+					city.type = cityXppAttributeProcessor.getAttrValueAsString(TYPE);
+					city.active = cityXppAttributeProcessor.getAttrValueAsBoolean(ACTIVE);
+					city.webSite = cityXppAttributeProcessor.getAttrValueAsString(WEB_SITE);
+					city.offlineStationList = cityXppAttributeProcessor.getAttrValueAsString(OFFLINE_STATION_LIST);
+					city.stationList = cityXppAttributeProcessor.getAttrValueAsString(STATION_LIST);
+					city.stationDetails = cityXppAttributeProcessor.getAttrValueAsString(STATION_DETAILS);
+					
+					if (XppUtil.readNextElement(xpp) && xpp.getName().equals(QUARTIERS)) {
+						while (XppUtil.readNextElement(xpp) && xpp.getName().equals(QUARTIER)) {
+							Quartier quartier = new Quartier();
+							quartierXppAttributeProcessor.processNode(xpp);
+							
+							quartier.id = quartierXppAttributeProcessor.getAttrValueAsInt(ID);
+							quartier.city = quartierXppAttributeProcessor.getAttrValueAsString(CITY);
+							quartier.name = quartierXppAttributeProcessor.getAttrValueAsString(NAME);
+							quartier.zipCode = quartierXppAttributeProcessor.getAttrValueAsString(ZIP_CODE);
+							city.quartierList.addElement(quartier);
+						}
+					}
+					
 					cityList.addElement(city);
 					progressDispatcher.fireEvent(CityConstants.ON_CITY_LOADED, city);				
 				}
-				progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, cityList);
 			}
 			finally {
 				cityInputStreamProvider.dispose();
 			}
+			progressDispatcher.fireEvent(CityConstants.ON_CITIES_LOADED);				
+			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, cityList);
 		}
 		catch (Throwable t) {
     		log.warn(t);

@@ -7,11 +7,11 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.DefaultStationContentProvider;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 
-public class HttpStationContentProviderFactory implements ICityContentProviderFactory {
+public class DefaultStationContentProviderFactory implements ICityContentProviderFactory {
 
 	private static final Log log = LogFactory.getLog("DEFAULT_STATION_CONTENT_PROVIDER_FACTORY");
 	
-	public HttpStationContentProviderFactory() {
+	public DefaultStationContentProviderFactory() {
 		super();
 	}
 	

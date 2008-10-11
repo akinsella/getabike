@@ -4,10 +4,6 @@ import java.util.Vector;
 
 import javax.microedition.lcdui.Canvas;
 
-import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
-import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
-import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.task.BasicTask;
@@ -15,7 +11,6 @@ import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ITask;
 import org.helyx.app.j2me.lib.task.ITaskFactory;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
-import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 
 // TODO: Fix Version Management
 public class ApplicationUpdateTaskFactory implements ITaskFactory {
@@ -49,9 +44,7 @@ public class ApplicationUpdateTaskFactory implements ITaskFactory {
 			});
 			
 			log.info("Reloading City Data");
-			IContentAccessor cityContentAccessor = new HttpContentAccessor("http://m.velocite.org/cities.xml");
-			IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
-			IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
+			IProgressTask progressTask = CityManager.refreshDataWithDefaults();
 
 			tasksToRun.addElement(progressTask);
 		}

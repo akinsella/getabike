@@ -2,99 +2,114 @@
 
 <cities default="PARIS">
 
-	<city key="AIX_EN_PROVENCE" name="Aix-en-Provence" type="DEFAULT" active="true" 
-		  contentProviderFactory="DEFAULT" 
-		  webSite="" 
+	<city key="AIX_EN_PROVENCE" name="Aix-en-Provence" type="VELIB" active="true" 
+	      serviceName="V'hello"
+		  webSite="http://www.vhello.fr/" 
 		  stationList="http://www.vhello.fr/service/carto/"
 		  stationDetails="http://www.vhello.fr/service/stationdetails/" 
 		  offlineStationList="/carto_aix_en_provence.xml" />
 		  
-	<city key="BESANCON" name="Besançon" type="KML" active="false" 
-		  contentProviderFactory="KML" 
+	<city key="BESANCON" name="Besançon" type="KML" active="false"
+	      serviceName="VéloCité" 
 		  webSite="http://www.velocite.besancon.fr/" 
 		  stationList="http://maps.google.fr/maps/ms?ie=UTF8&amp;hl=fr&amp;oe=UTF8&amp;msa=0&amp;msid=106550840013014095785.0004425c2be2b0a0fc077&amp;output=kml" 
 		  stationDetails="" 
 		  offlineStationList="" />
 		  
-	<city key="BRUXELLES" name="Bruxelles" type="DEFAULT" active="false" 
-		  contentProviderFactory="" 
-		  webSite="" 
+	<city key="BRUXELLES" name="Bruxelles" type="DEFAULT" active="false"
+	      serviceName="CycloCity" 
+		  webSite="http://www.cyclocity.be/" 
 		  stationList="" 
 		  stationDetails="" 
 		  offlineStationList="" />
 		  
 	<city key="DIJON" name="Dijon" type="DEFAULT" active="false" 
-		  contentProviderFactory="" 
+	      serviceName=""
 		  webSite="" 
 		  stationList="" 
 		  stationDetails="" 
 		  offlineStationList="" />
 		  
-	<city key="LYON" name="Lyon" type="LYON" active="true" 
-		  contentProviderFactory="LYON" 
-		  webSite="" 
+	<city key="LYON" name="Lyon" type="VELO_PLUS" active="true"
+	      serviceName="Vélo V"
+		  webSite="http://www.velov.grandlyon.com/" 
 		  stationList="http://www.velov.grandlyon.com/velovmap/zhp/inc/StationsParArrondissement.php?arrondissement=" 
 		  stationDetails="http://www.velov.grandlyon.com/velovmap/zhp/inc/DispoStationsParId.php?id=" 
-		  offlineStationList="" />
+		  offlineStationList="">
+		  <quartiers>
+		  	<quartier id="1" city="Lyon" name="1er arrondissement" zipCode="69381" />
+		  	<quartier id="2" city="Lyon" name="2ème arrondissement" zipCode="69382" />
+		  	<quartier id="3" city="Lyon" name="3ème arrondissement" zipCode="69383" />
+		  	<quartier id="4" city="Lyon" name="4ème arrondissement" zipCode="69384" />
+		  	<quartier id="5" city="Lyon" name="5ème arrondissement" zipCode="69385" />
+		  	<quartier id="6" city="Lyon" name="6ème arrondissement" zipCode="69386" />
+		  	<quartier id="7" city="Lyon" name="7ème arrondissement" zipCode="69387" />
+		  	<quartier id="8" city="Lyon" name="8ème arrondissement" zipCode="69388" />
+		  	<quartier id="9" city="Lyon" name="9ème arrondissement" zipCode="69389" />
+		  	<quartier id="10" city="Villeurbannes" name="Villeurbannes" zipCode="69266" />
+		  	<quartier id="11" city="Caluire" name="Caluire" zipCode="69034" />
+		  	<quartier id="12" city="Vaulx-en-Velin" name="Vaulx-en-Velin" zipCode="69256" />
+		  </quartiers>
+	</city>
 		  
-	<city key="MARSEILLE" name="Marseille" type="DEFAULT" active="true"
-		  contentProviderFactory="DEFAULT" 
+	<city key="MARSEILLE" name="Marseille" type="LE_VELO" active="true"
+	      serviceName="Le vélo"
 		  webSite="http://www.levelo-mpm.fr" 
 		  stationList="http://www.levelo-mpm.fr/service/carto/" 
 		  stationDetails="http://www.levelo-mpm.fr/service/stationdetails/" 
 		  offlineStationList="/carto_marseille.xml" />
 		  
-	<city key="MONTPELLIER" name="Montpellier" type="DEFAULT" active="false" 
-		  contentProviderFactory="" 
-		  webSite="" 
+	<city key="MONTPELLIER" name="Montpellier" type="DEFAULT" active="false"
+		  serviceName="Vélomagg'"
+		  webSite="http://www.montpellier-agglo.com/tam/page.php?id_rubrique=273" 
 		  stationList="" 
 		  stationDetails="" 
 		  offlineStationList="" />
 		  
-	<city key="MULHOUSE" name="Mulhouse" type="DEFAULT" active="false" 
-		  contentProviderFactory="" 
-		  webSite="" 
+	<city key="MULHOUSE" name="Mulhouse" type="DEFAULT" active="false"
+		  serviceName="VéloCité"
+		  webSite="http://www.mulhouse.fr/fr/demarche.php?PAGEID=3551" 
 		  stationList="" 
 		  stationDetails="" 
 		  offlineStationList="" />
 		  
-	<city key="NANTE" name="Nante" type="KML" active="false" 
-		  contentProviderFactory="KML" 
+	<city key="NANTES" name="Nantes" type="KML" active="false" 
+	      serviceName="Bicloo"
 		  webSite="http://www.bicloo.nantesmetropole.fr" 
 		  stationList="http://maps.google.fr/maps/ms?ie=UTF8&amp;hl=fr&amp;oe=UTF8&amp;msa=0&amp;msid=106550840013014095785.00044cde56c5fcae93d24&amp;output=kml" 
 		  stationDetails="" 
 		  offlineStationList="" />
 
-	<city key="ORLEANS" name="Orléans" type="ORLEANS" active="true" 
-		  contentProviderFactory="ORLEANS" 
-		  webSite="" 
+	<city key="ORLEANS" name="Orléans" type="VELO_PLUS" active="true" 
+	      serviceName="Vélo+"
+		  webSite="http://www.ville-orleans.fr/Deplacements/VelosPietons01.cfm" 
 		  stationList="http://www.agglo-veloplus.fr/component/data.xml" 
 		  stationDetails="http://www.agglo-veloplus.fr/getStatusBorne?idBorne=" 
 		  offlineStationList="/carto_orleans.xml" />
 		  
-	<city key="PARIS" name="Paris" type="DEFAULT" active="true" 
-		  contentProviderFactory="DEFAULT" 
+	<city key="PARIS" name="Paris" type="VELIB" active="true" 
+	      serviceName="Vélib'"
 		  webSite="http://www.velib.paris.fr" 
 		  stationList="http://www.velib.paris.fr/service/carto/" 
 		  stationDetails="http://www.velib.paris.fr/service/stationdetails/" 
 		  offlineStationList="/carto_paris.xml" />
 		  
 	<city key="RENNES" name="Rennes" type="DEFAULT" active="false" 
-		  contentProviderFactory="" 
-		  webSite="" 
+	      serviceName="Vélo à la carte"
+		  webSite="http://www.rennes.fr/index.php?id=414" 
 		  stationList="" 
 		  stationDetails="" 
 		  offlineStationList="" />
 		  
-	<city key="SEVILLE" name="Seville" type="DEFAULT" active="true" 
-		  contentProviderFactory="DEFAULT" 
-		  webSite="" 
+	<city key="SEVILLE" name="Seville" type="SEVICI" active="true"
+		  serviceName="Sevici"
+		  webSite="http://www.sevici.es/" 
 		  stationList="http://www.sevici.es/service/carto/" 
 		  stationDetails="http://www.sevici.es/service/stationdetails/" 
 		  offlineStationList="/carto_seville.xml" />
 		  
-	<city key="TOULOUSE" name="Toulouse" type="DEFAULT" active="true" 
-		  contentProviderFactory="DEFAULT" 
+	<city key="TOULOUSE" name="Toulouse" type="VELO" active="true"
+	      serviceName="Vélo"
 		  webSite="http://www.velo.toulouse.fr" 
 		  stationList="http://www.velo.toulouse.fr/service/carto/" 
 		  stationDetails="http://www.velo.toulouse.fr/service/stationdetails/" 

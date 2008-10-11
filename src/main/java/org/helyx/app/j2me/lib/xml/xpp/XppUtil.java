@@ -49,13 +49,17 @@ public class XppUtil {
 	}
 
 	public static boolean readToNextElement(XmlPullParser xpp, String name) throws XmlPullParserException, IOException {
+		return readToNextElement(xpp, name, true);
+	}
 
-		xpp.next();
+	public static boolean readToNextElement(XmlPullParser xpp, String name, boolean iterateDirectly) throws XmlPullParserException, IOException {
+
+		if (iterateDirectly) {
+			xpp.next();
+		}
 		int eventType = xpp.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
-			log.debug("Xpp eventType name: " + XmlPullParser.TYPES[eventType]);
 			if (eventType == XmlPullParser.START_TAG) {
-				log.debug("Xpp element name: " + xpp.getName());
 				if (xpp.getName().equals(name)) {
 					return true;
 				}

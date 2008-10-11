@@ -12,6 +12,7 @@ public class ProgressAdapter implements ProgressListener {
 	}
 	
 	public void onEvent(int eventType, String eventMessage, Object eventData) {
+		
 		logEventMessage(eventType, eventMessage, eventData);
 		if (eventType == ProgressEventType.ON_START) {
 	   		onStart(eventMessage, eventData);

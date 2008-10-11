@@ -236,7 +236,7 @@ public class Log {
 	
 	
 	public boolean isLoggable(int level) {
-		return level > Log.thresholdLevel;
+		return level >= Log.thresholdLevel;
 	}
 	
 	public boolean isFatalEnabled() {

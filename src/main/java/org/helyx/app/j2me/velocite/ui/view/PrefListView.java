@@ -122,10 +122,12 @@ public class PrefListView extends PrefBaseListView {
 	private void fetchCityPref() {
 		try {
 			String cityKey = PrefManager.readPrefString(PrefConstants.CITY_SELECTED_KEY);
-			if (cityKey != null && !cityKey.equals(languageMenuItem.getData("city.key"))) {
+			if (cityKey != null && !cityKey.equals(cityMenuItem.getData("city.key"))) {
 				cityMenuItem.setData("city.key", cityKey);
 				City city = CityManager.findSelectedCity();
-				cityMenuItem.setData(PREF_VALUE, city.name);
+				if (city != null) {
+					cityMenuItem.setData(PREF_VALUE, city.name);
+				}
 			}
 		}
 		catch (CityManagerException e) {

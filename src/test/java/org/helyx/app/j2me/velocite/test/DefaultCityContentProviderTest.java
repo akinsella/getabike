@@ -1,5 +1,6 @@
 package org.helyx.app.j2me.velocite.test;
 
+import java.util.Enumeration;
 import java.util.Vector;
 
 import junit.framework.TestCase;
@@ -26,21 +27,29 @@ public class DefaultCityContentProviderTest extends TestCase {
 
 	public void testCityContentLoaderParis() throws ContentProviderException, ContentAccessorException {
 		
-		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/test/data/city/city_paris.xml");
+		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/data/city/cities.xml");
 		IContentProvider cityContentProvider = new DefaultCityContentProvider(cityContentAccessor);
 	
 		Vector cityList = (Vector)Future.get(new ContentProviderProgressTaskAdapter(cityContentProvider));
-
-		assertEquals(1, cityList.size());
-		City city = (City)cityList.elementAt(0);
-		assertNotNull(city);
-		assertEquals("PARIS", city.key);
-		assertEquals("Paris", city.name);
-		assertEquals("DEFAULT", city.type);
-		assertEquals(true, city.active);
-		assertEquals("http://www.velib.paris.fr/service/stationdetails/", city.stationDetails);
-		assertEquals("http://www.velib.paris.fr/service/carto/", city.stationList);
-		assertEquals("/carto_paris.xml", city.offlineStationList);
+		Enumeration _enum = cityList.elements();
+		
+		while (_enum.hasMoreElements()) {
+			
+			City city = (City)_enum.nextElement();
+			if ("PARIS".equals(city.key)) {
+				assertNotNull(city);
+				assertEquals("PARIS", city.key);
+				assertEquals("Paris", city.name);
+				assertEquals("Vélib'", city.serviceName);
+				assertEquals("VELIB", city.type);
+				assertEquals(true, city.active);
+				assertEquals("http://www.velib.paris.fr/service/stationdetails/", city.stationDetails);
+				assertEquals("http://www.velib.paris.fr/service/carto/", city.stationList);
+				assertEquals("/carto_paris.xml", city.offlineStationList);
+			}
+			
+			log.info(city);
+		}
 	}
 	
 	public void testCityContentLoader() throws ContentProviderException, ContentAccessorException {

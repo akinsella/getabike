@@ -38,5 +38,21 @@ public class StreamUtil {
 		
 		return false;
 	}
+
+	public static String readStream(InputStream inputStream, boolean b) throws IOException {
+		int length = -1;
+		StringBuffer sb = new StringBuffer();
+		byte[] bytes = new byte[1024];
+		while((length = inputStream.read(bytes)) >= 0) {
+			if (length == 0) {
+				continue;
+			}
+			String line = new String(bytes);
+			sb.append(line);
+		}
+		String content = sb.toString();
+		
+		return content;
+	}
 	
 }

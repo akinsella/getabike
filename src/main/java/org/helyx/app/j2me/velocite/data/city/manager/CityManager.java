@@ -3,7 +3,7 @@ package org.helyx.app.j2me.velocite.data.city.manager;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
+import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
@@ -20,13 +20,15 @@ public class CityManager {
 
 	private static final Log log = LogFactory.getLog("CITY_MANAGER");
 	
+	private static final String CITIES_URL = "http://m.velocite.org/cities_v2.xml";
+	
 	private CityManager() {
 		super();
 	}
 
 	public static IProgressTask refreshDataWithDefaults() {
 		
-		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/data/city/cities.xml");
+		IContentAccessor cityContentAccessor = new HttpContentAccessor(CITIES_URL);
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 
@@ -40,7 +42,7 @@ public class CityManager {
 		return selectedCity;
 	}
 	
-	public static City findSelectedCity(Vector cityList) throws CityManagerException {
+	public static City findSelectedCity(Vector cityList) {
 		City selectedCity = null;
 
 		String citySelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.CITY_SELECTED_KEY);
@@ -70,15 +72,18 @@ public class CityManager {
 		}
 		
 		if (selectedCity == null) {
-			throw new CityManagerException("No default/active city exception");
+			log.debug("No Selected city");
+		}
+		else {
+			log.debug("Selected city: " + selectedCity);
 		}
 
-		log.debug("Selected city: " + selectedCity);
 		
 		return selectedCity;
 	}
 
 	public static Vector findAllCities() {
+		log.debug("Loading all cities ...");
 		CityPersistenceService cityPersistenceService = new CityPersistenceService();
 		try {
 			Vector cityList = cityPersistenceService.findAllCities();

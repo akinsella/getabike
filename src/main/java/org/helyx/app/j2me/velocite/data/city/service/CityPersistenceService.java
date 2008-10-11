@@ -6,6 +6,7 @@ import java.util.Vector;
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.rms.DaoException;
 import org.helyx.app.j2me.lib.rms.IMultiRecordDao;
 import org.helyx.app.j2me.lib.rms.MultiRecordDao;
 import org.helyx.app.j2me.lib.rms.MultiRecordEnumeration;
@@ -54,7 +55,11 @@ public class CityPersistenceService implements ICityPersistenceService {
 	}
 
 	public void saveCityArray(City[] cityArray) {
+		log.debug("Saving cities ...");
+
 		getCityDao().saveRecordArray(cityArray);
+
+		log.debug("Cities saved ...");
 	}
 
 	public MultiRecordEnumeration createCityEnumeration(IRecordFilter recordFilter) {

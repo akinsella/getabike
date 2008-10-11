@@ -3,40 +3,45 @@ package org.helyx.app.j2me.velocite.data.carto.provider;
 import java.io.InputStream;
 
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
+import org.helyx.app.j2me.lib.content.accessor.IContentAccessorFactory;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
+import org.helyx.app.j2me.lib.stream.StreamUtil;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
 import org.json.me.JSONArray;
 import org.json.me.JSONObject;
 
 
-public class LyonStationContentProvider extends AbstractContentProvider {
+public class VeloVStationContentProvider extends AbstractContentProvider {
 	
-	private static final Log log = LogFactory.getLog("LYON_STATION_CONTENT_PROVIDER");
+	private static final Log log = LogFactory.getLog("VELOV_STATION_CONTENT_PROVIDER");
 	
 	private static final String NUM_STATION = "numStation";
 	private static final String NOM_STATION = "nomStation";
 	private static final String INFO_STATION = "infoStation";
 	private static final String LATITUDE = "lat";
 	private static final String LONGITUDE = "longitude";
-	private static final String LYON = "Lyon";
 	
 	private boolean cancel = false;
 
-	private IContentAccessor[] stationContentAccessors;
+	private IContentAccessorFactory contentAccessorFactory;
+	private City city;
 
-	public LyonStationContentProvider() {
+	public VeloVStationContentProvider() {
 		super();
 	}
 
-	public LyonStationContentProvider(IContentAccessor[] stationContentAccessors) {
+	public VeloVStationContentProvider(City city, IContentAccessorFactory contentAccessorFactory) {
 		super();
-		this.stationContentAccessors = stationContentAccessors;
+		this.contentAccessorFactory = contentAccessorFactory;
+		this.city = city;
 	}
 	
 	public void loadData() {
@@ -46,8 +51,9 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 		try {
 
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
-			int scaLength = stationContentAccessors.length;
-			for (int i = 0 ; i < scaLength ; i++) {
+			int quartierLength = city.quartierList.size();
+			for (int i = 0 ; i < quartierLength ; i++) {
+				Quartier quartier = (Quartier)city.quartierList.elementAt(i);
 				InputStream inputStream = null;
 				InputStreamProvider cartoInputStreamProvider = null;
 
@@ -57,29 +63,16 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 				}
 
 				try {
-					cartoInputStreamProvider = stationContentAccessors[i].getInputStreamProvider();
+					IContentAccessor contentAccessor = contentAccessorFactory.createContentAccessorFactory(quartier);
+					log.debug("contentAccessor: '" + contentAccessor.getPath() + "'");
+					cartoInputStreamProvider = contentAccessor.getInputStreamProvider();
 					inputStream = cartoInputStreamProvider.createInputStream();
 
 					log.debug("Parsing simple sample XML for id: " + i);
 					
-					int length = -1;
-					StringBuffer sb = new StringBuffer();
-					byte[] bytes = new byte[1024];
-					while((length = inputStream.read(bytes)) >= 0) {
-						if (cancel) {
-							progressDispatcher.fireEvent(ProgressEventType.ON_CANCEL);
-							return ;
-						}
-
-						if (length == 0) {
-							continue;
-						}
-						String line = new String(bytes);
-						sb.append(line);
-					}
-					String content = sb.toString();
-					log.info("JSON content: " + content);
-					JSONObject jsonContent = new JSONObject(content);
+					String jsonStreamContent = StreamUtil.readStream(inputStream, false);
+					log.info("JSON content: " + jsonStreamContent);
+					JSONObject jsonContent = new JSONObject(jsonStreamContent);
 					JSONArray markerArray = jsonContent.getJSONArray("markers");
 					int markerCount = markerArray.length();
 					
@@ -100,8 +93,8 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 						station.localization.lat = jsonMarker.optDouble(LATITUDE, 0);
 						station.localization.lat = jsonMarker.optDouble(LONGITUDE, 0);
 						station.open = true;
-						station.city = LYON;
-						station.zipCode = (markerOffset < 10 ? "6900": "690") + markerOffset;
+						station.city = quartier.city;
+						station.zipCode = quartier.zipCode;
 						
 						progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 					}
@@ -126,9 +119,9 @@ public class LyonStationContentProvider extends AbstractContentProvider {
 	public String getDescription() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("Fetchs station informations from path: [");
-		int length = stationContentAccessors.length;
+		int length = city.quartierList.size();
 		for (int i = 0 ; i < length ; i++) {
-			sb.append("'" + stationContentAccessors[i].getPath() + "'");
+			sb.append("'" + contentAccessorFactory.createContentAccessorFactory(city.quartierList.elementAt(i)).getPath() + "'");
 			if (i + 1 < length) {
 				sb.append(", ");
 			}

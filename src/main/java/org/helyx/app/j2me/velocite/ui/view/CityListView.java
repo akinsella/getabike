@@ -98,7 +98,7 @@ public class CityListView extends MenuListView {
 				MenuItem cityMenuItem = new MenuItem(city.name);
 				cityMenuItem.setData(city);
 				menu.addMenuItem(cityMenuItem);
-				if (city.key.equals(selectedCity.key)) {
+				if (selectedCity != null && city.key.equals(selectedCity.key)) {
 					menu.setCheckedMenuItem(cityMenuItem);
 				}
 			}

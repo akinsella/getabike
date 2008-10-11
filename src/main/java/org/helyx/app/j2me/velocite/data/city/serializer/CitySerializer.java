@@ -7,10 +7,13 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.serializer.AbstractObjectSerializer;
 import org.helyx.app.j2me.lib.serializer.SerializerException;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
 
 public class CitySerializer extends AbstractObjectSerializer {
 
 	private static final Log log = LogFactory.getLog("CITY_SERIALIZER");
+	
+	private static QuartierSerializer quartierSerializer = new QuartierSerializer();
 
 	public CitySerializer() {
 		super();
@@ -26,12 +29,20 @@ public class CitySerializer extends AbstractObjectSerializer {
 			dos.writeBoolean(city.active);
 			dos.writeUTF(city.type);
 			dos.writeUTF(city.name);
+			dos.writeUTF(city.serviceName);
 			dos.writeUTF(city.webSite);
-			dos.writeUTF(city.contentProviderFactory);
 			dos.writeUTF(city.stationList);
 			dos.writeUTF(city.stationDetails);
 			dos.writeUTF(city.offlineStationList);
 	
+			int quartierCount = city.quartierList.size();
+			dos.writeInt(quartierCount);
+			
+			for (int i = 0 ; i < quartierCount ; i++) {
+				Quartier quartier = (Quartier)city.quartierList.elementAt(i);
+				quartierSerializer.serialize(dos, quartier);
+			}
+
 			byte [] bytes = bos.toByteArray();
 			
 			return bytes;
@@ -52,11 +63,18 @@ public class CitySerializer extends AbstractObjectSerializer {
 			city.active = dis.readBoolean();
 			city.type = dis.readUTF();
 			city.name = dis.readUTF();
+			city.serviceName = dis.readUTF();
 			city.webSite = dis.readUTF();
-			city.contentProviderFactory = dis.readUTF();
 			city.stationList = dis.readUTF();
 			city.stationDetails = dis.readUTF();
 			city.offlineStationList = dis.readUTF();
+
+			int quartierCount = dis.readInt();
+			
+			for (int i = 0 ; i < quartierCount ; i++) {
+				Quartier quartier = (Quartier)quartierSerializer.deserialize(dis);
+				city.quartierList.addElement(quartier);
+			}
 			
 			return city;
 		}

@@ -35,59 +35,69 @@ public class CityLoaderProgressListener extends ProgressAdapter {
 		this.cityPersistenceService = new CityPersistenceService();
 		this.cityList = new Vector();
 
-//		progressDispatcher.fireEvent(ProgressEventType.ON_START);
-   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Suppression des villes");
+   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Suppression des villes ...");
 		cityPersistenceService.removeAllCities();
+   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Chargement des villes ...");
 	}
 	
 	public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
 		if (eventType == CityConstants.ON_CITY_LOADED) {
-			City city = (City)eventData;
-			cityList.addElement(city);
-			int size = cityList.size();
-			
-			if (size % 5 == 0) {
-		   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, cityList.size() + " villes chargées");
-			}
+			onCityLoaded((City)eventData);
 		}
 		else if (eventType == CityConstants.ON_DEFAULT_CITY) {
-			if (eventData == null) {
-				PrefManager.removePref(PrefConstants.CITY_DEFAULT_KEY);
-			}
-			else {
-				String defaultCityKey = (String)eventData;
-				log.debug("Default city key: '" + defaultCityKey + "'");
-				PrefManager.writePref(PrefConstants.CITY_DEFAULT_KEY, defaultCityKey);					
-			}
+			onDefaultCity((String)eventData);
+		}
+		else if (eventType == CityConstants.ON_CITIES_LOADED) {
+			onCitiesLoaded();
+		}
+	}
+	
+	private void onCityLoaded(City city) {
+		cityList.addElement(city);
+		int size = cityList.size();
+		
+		if (size % 5 == 0) {
+	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, cityList.size() + " villes chargées");
+		}
+	}
+	
+	private void onDefaultCity(String defaultCityKey) {
+		if (defaultCityKey == null) {
+			PrefManager.removePref(PrefConstants.CITY_DEFAULT_KEY);
+		}
+		else {
+			log.debug("Default city key: '" + defaultCityKey + "'");
+			PrefManager.writePref(PrefConstants.CITY_DEFAULT_KEY, defaultCityKey);					
 		}
 	}
 
-	public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
-		try {
-			int cityListSize = cityList.size();
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, cityListSize + " villes chargées");
-			cityArray = new City[cityListSize];
-			cityList.copyInto(cityArray);
+	private void onCitiesLoaded() {
+		int cityListSize = cityList.size();
+   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, cityListSize + " villes chargées");
+		cityArray = new City[cityListSize];
+		cityList.copyInto(cityArray);
 
-//			cityList = null;
-			System.gc();
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Tri des données");
-			try { new FastQuickSort(new CityNameComparator()).sort(cityArray); } catch (Exception e) { log.warn(e); }
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Sauvegarde des villes");
-//			log.debug("About to save cities");
-			cityPersistenceService.saveCityArray(cityArray);
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Chargement terminé");
-//			log.debug("Cities saved");
-			cityArray = null;
-			System.gc();
-	
-			// Notify end of progress 
-//			progressDispatcher.fireEvent(eventType, eventMessage, eventData);
-		}
-		finally {
-			log.debug("Disposing cityPersistenceService");
-			cityPersistenceService.dispose();
-		}
+		System.gc();
+   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Tri des données");
+		new FastQuickSort(new CityNameComparator()).sort(cityArray);
+   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Sauvegarde des villes");
+		log.debug("About to save cities");
+		
+		cityPersistenceService.saveCityArray(cityArray);
+
+   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Chargement terminé");
+		log.debug("Cities saved");
+		cityArray = null;
+		System.gc();
+	}
+
+	public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
+		log.debug("Disposing cityPersistenceService");
+		cityPersistenceService.dispose();
+	}
+
+	public void onError(String eventMessage, Object eventData) {
+		log.info("Message: " + eventMessage + ", data: " + eventData);
 	}
 
 }

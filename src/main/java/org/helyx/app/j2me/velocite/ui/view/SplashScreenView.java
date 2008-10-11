@@ -13,6 +13,7 @@ import org.helyx.app.j2me.lib.manager.TaskManager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.Pref;
 import org.helyx.app.j2me.lib.pref.PrefManager;
+import org.helyx.app.j2me.lib.task.BasicTask;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ITask;
 import org.helyx.app.j2me.lib.task.MultiTaskProgressTask;
@@ -23,6 +24,9 @@ import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.AbstractDialogResultCallback;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogView;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.util.VectorUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
@@ -66,10 +70,21 @@ public class SplashScreenView extends AbstractView {
 				String oldVersion = oldVersionPref == null ? null : oldVersionPref.value;
 				String newVersion = getMidlet().getAppProperty(PrefConstants.MIDLET_VERSION);
 				boolean applicationDataCleanUpNeeded = PrefManager.readPrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED);
+				boolean cityDataCleanUpNeeded = PrefManager.readPrefBoolean(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
 
 				if (applicationDataCleanUpNeeded) {
 					log.info("Application data need to be reseted");
 					VectorUtil.addElementsToVector(tasksToRun, new DataCleanUpTaskFactory().getTasks());
+				}
+				
+				if (cityDataCleanUpNeeded) {
+					log.info("City data need to be reseted");
+					tasksToRun.addElement(new BasicTask("Cleaning up cities related data") {
+						public void execute() {
+							CityManager.cleanUpSavedData();
+							PrefManager.removePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
+						}
+					});
 				}
 								
 				VectorUtil.addElementsToVector(tasksToRun, new EachRunTaskFactory(getMidlet(), getViewCanvas()).getTasks());
@@ -105,6 +120,25 @@ public class SplashScreenView extends AbstractView {
 
 								public void onSuccess(String eventMessage, Object eventData) {
 									showDisplayable(new MenuView(getMidlet()));
+								}
+								
+								public void onError(String eventMessage, Object eventData) {
+									Throwable t = (Throwable)eventData;
+									SplashScreenView.this.log.info(eventMessage);
+									String errorMessage = t.getMessage() == null ? "Erreur de chargement des villes" : t.getMessage();
+									DialogUtil.showMessageDialog(
+											getMidlet(), 
+											SplashScreenView.this, 
+											"Erreur", 
+											"L'application doit être redémarée: " + errorMessage, 
+											new AbstractDialogResultCallback() {
+
+										public void onResult(DialogView dialogView) {
+											getLog().info(SplashScreenView.log.getCategory(), "Writing reset demand to prefs");
+											PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
+											getMidlet().exit();								
+										}
+									});
 								}
 								
 							});

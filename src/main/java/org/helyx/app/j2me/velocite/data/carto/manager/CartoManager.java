@@ -5,11 +5,12 @@ import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.velocite.data.carto.provider.factory.HttpStationContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.factory.DefaultStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.ICityContentProviderFactory;
-import org.helyx.app.j2me.velocite.data.carto.provider.factory.LyonStationContentProviderFactory;
-import org.helyx.app.j2me.velocite.data.carto.provider.factory.OrleansStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.StationContentProviderFactoryNoFoundExcepton;
+import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloPlusStationContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloStationContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloVStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 
@@ -17,9 +18,12 @@ public class CartoManager {
 
 	private static final Log log = LogFactory.getLog("CARTO_MANAGER");
 	
-	private static final String DEFAULT = "DEFAULT";
-	private static final String LYON = "LYON";
-	private static final String ORLEANS = "ORLEANS";
+	private static final String VELIB = "VELIB";  // PARIS
+	private static final String VELO_PLUS = "VELO_PLUS";  // ORLEANS
+	private static final String VELO = "VELO";  // TOULOUSE
+	private static final String VELO_V = "VELO_V";  // LYON
+	private static final String LE_VELO = "LE_VELO";  // MARSEILLE
+	private static final String SEVICI = "SEVICI";  // SEVILLE
 	
 	private CartoManager() {
 		super();
@@ -29,17 +33,26 @@ public class CartoManager {
 
 		try {
 			ICityContentProviderFactory cpf = null;
-			if (DEFAULT.equals(city.contentProviderFactory)) {
-				cpf = new HttpStationContentProviderFactory();
+			if (VELIB.equals(city.type)) {
+				cpf = new DefaultStationContentProviderFactory();
 			}
-			else if (LYON.equals(city.contentProviderFactory)) {
-				cpf = new LyonStationContentProviderFactory();
+			else if (LE_VELO.equals(city.type)) {
+				cpf = new DefaultStationContentProviderFactory();
 			}
-			else if (ORLEANS.equals(city.contentProviderFactory)) {
-				cpf = new OrleansStationContentProviderFactory();
+			else if (VELO.equals(city.type)) {
+				cpf = new VeloStationContentProviderFactory();
+			}
+			else if (SEVICI.equals(city.type)) {
+				cpf = new DefaultStationContentProviderFactory();
+			}
+			else if (VELO_V.equals(city.type)) {
+				cpf = new VeloVStationContentProviderFactory();
+			}
+			else if (VELO_PLUS.equals(city.type)) {
+				cpf = new VeloPlusStationContentProviderFactory();
 			}
 			else {
-				throw new StationContentProviderFactoryNoFoundExcepton("ContentProviderFactory searched for city key: '" + city.key + "'");
+				throw new StationContentProviderFactoryNoFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");
 			}
 			
 			IContentProvider cp = cpf.getContentProviderFactory(city);

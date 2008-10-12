@@ -136,9 +136,9 @@ public class MenuView extends AbstractView {
 			if (selectedIndex > 0) {
 				selectedIndex--;
 			}
-			else {
-				selectedIndex = menu.menuItemCount() - 1;
-			}
+//			else {
+//				selectedIndex = menu.menuItemCount() - 1;
+//			}
 
 			viewCanvas.repaint();
 		}
@@ -147,9 +147,9 @@ public class MenuView extends AbstractView {
 			if (selectedIndex + 1 < menu.menuItemCount()) {
 				selectedIndex++;
 			}
-			else {
-				selectedIndex = 0;
-			}
+//			else {
+//				selectedIndex = 0;
+//			}
 			
 			viewCanvas.repaint();
 		}

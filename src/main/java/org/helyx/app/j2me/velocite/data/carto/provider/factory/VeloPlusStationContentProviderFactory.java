@@ -1,7 +1,6 @@
 package org.helyx.app.j2me.velocite.data.carto.provider.factory;
 
 import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
-import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.content.provider.IContentProviderFactory;
 import org.helyx.app.j2me.lib.log.Log;
@@ -21,9 +20,7 @@ public class VeloPlusStationContentProviderFactory implements IContentProviderFa
 	}
 	
 	public IContentProvider getContentProviderFactory() {
-		IContentAccessor stationContentAccessor = new HttpContentAccessor(city.stationList);
-
-		IContentProvider stationContentProvider = new VeloPlusStationContentProvider(stationContentAccessor);  
+		IContentProvider stationContentProvider = new VeloPlusStationContentProvider(new HttpContentAccessor(city.stationList));  
 		
 		return stationContentProvider;
 	}

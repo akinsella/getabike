@@ -39,7 +39,7 @@ public class CartoManager {
 				cpf = new DefaultStationContentProviderFactory(city);
 			}
 			else if (LE_VELO.equals(city.type)) {
-				cpf = new DefaultStationContentProviderFactory(city);
+				cpf = new VeloStationContentProviderFactory(city);
 			}
 			else if (VELO.equals(city.type)) {
 				cpf = new VeloStationContentProviderFactory(city);
@@ -77,10 +77,13 @@ public class CartoManager {
 				cpf = new DefaultStationDetailsContentProviderFactory(city, station);
 			}
 			else if (LE_VELO.equals(city.type)) {
-				cpf = new DefaultStationContentProviderFactory(city);
+				cpf = new DefaultStationDetailsContentProviderFactory(city, station);
 			}
 			else if (SEVICI.equals(city.type)) {
-				cpf = new DefaultStationContentProviderFactory(city);
+				cpf = new DefaultStationDetailsContentProviderFactory(city, station);
+			}
+			else if (VELO.equals(city.type)) {
+				cpf = new DefaultStationDetailsContentProviderFactory(city, station);
 			}
 			else {
 				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");

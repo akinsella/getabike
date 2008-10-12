@@ -9,10 +9,7 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.rms.IMultiRecordDao;
 import org.helyx.app.j2me.lib.rms.MultiRecordDao;
 import org.helyx.app.j2me.lib.rms.MultiRecordEnumeration;
-import org.helyx.app.j2me.velocite.data.carto.dao.IStationDetailsDao;
-import org.helyx.app.j2me.velocite.data.carto.dao.StationDetailsDao;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationNumberFilter;
 import org.helyx.app.j2me.velocite.data.carto.serializer.StationSerializer;
 
@@ -23,9 +20,7 @@ public class StationPersistenceService implements IStationPersistenceService {
 	private static final String STATION_RECORD_STORE_NAME = "station";
 	
 	private IMultiRecordDao stationDao;
-	private IStationDetailsDao stationDetailsDao;
 
-	
 	public StationPersistenceService() {
 		super();
 	}
@@ -33,9 +28,6 @@ public class StationPersistenceService implements IStationPersistenceService {
 	public void dispose() {
 		if (stationDao != null) {
 			stationDao.dispose();
-		}
-		if (stationDetailsDao != null) {
-			stationDetailsDao.dispose();
 		}
 	}
 	
@@ -45,14 +37,6 @@ public class StationPersistenceService implements IStationPersistenceService {
 		}
 		
 		return stationDao;
-	}
-	
-	private IStationDetailsDao getStationDetailsDao() {
-		if (stationDetailsDao == null) {
-			stationDetailsDao = new StationDetailsDao();
-		}
-		
-		return stationDetailsDao;
 	}
 
 	public Vector findAllStations() {
@@ -81,12 +65,6 @@ public class StationPersistenceService implements IStationPersistenceService {
 		getStationDao().saveRecordArray(stationArray);
 	}
 
-	public int saveStationDetails(StationDetails stationDetails) {
-		int stationDetailsId = getStationDetailsDao().saveStationDetails(stationDetails);
-		
-		return stationDetailsId;
-	}
-
 	public MultiRecordEnumeration createStationEnumeration(IRecordFilter recordFilter) {
 		return getStationDao().createRecordEnumeration(recordFilter);
 	}
@@ -97,10 +75,6 @@ public class StationPersistenceService implements IStationPersistenceService {
 
 	public int countStations() {
 		return getStationDao().countRecords();
-	}
-
-	public StationDetails findStationDetailsByNumber(int stationNumber) {
-		return getStationDetailsDao().findStationDetailsByNumber(stationNumber);
 	}
 
 }

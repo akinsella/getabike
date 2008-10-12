@@ -11,7 +11,8 @@ import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.rms.DefaultRecordEnumeration;
+import org.helyx.app.j2me.lib.task.IProgressTask;
+import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
@@ -21,8 +22,10 @@ import org.helyx.app.j2me.lib.ui.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
-import org.helyx.app.j2me.velocite.data.carto.service.IStationPersistenceService;
-import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
+import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
+import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
+import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
+import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
 
 public class StationDetailsView extends AbstractView {
@@ -32,6 +35,7 @@ public class StationDetailsView extends AbstractView {
 	private Image iconImage;
 	
 	private Station station;
+	private StationDetails stationDetails;
 
 	public StationDetailsView(AbstractMIDlet midlet, Station station)  {
 		super(midlet);
@@ -45,7 +49,7 @@ public class StationDetailsView extends AbstractView {
 		loadIconImage();
 
 		initActions();
-//		StationDetails stationDetails = getStationDetails(station.number);
+		fetchStationDetails();
 	}
 		
 	private void initActions() {
@@ -77,24 +81,28 @@ public class StationDetailsView extends AbstractView {
 		}
 	}
 
-	private StationDetails getStationDetails(int stationNumber) {
-		IStationPersistenceService stationPersistenceService = null;
-		DefaultRecordEnumeration stationEnumeration = null;
-
+	private void fetchStationDetails() {
+		log.info("Fetching Station Details for Station number: '" + station.number + "'");
 		try {
-			stationPersistenceService = new StationPersistenceService();
-			StationDetails stationDetails = stationPersistenceService.findStationDetailsByNumber(stationNumber);
-			return stationDetails;
-		}
-    	finally {
-    		if (stationEnumeration != null) {
-    			stationEnumeration.destroy();
-    		}
-    		if (stationPersistenceService != null) {
-    			stationPersistenceService.dispose();
-    		}
-    	}  	
+			IProgressTask progressTask = CartoManager.fetchStationDetails(CityManager.findSelectedCity(), station);
+			progressTask.addProgressListener(new ProgressAdapter() {
 
+				public void onSuccess(String eventMessage, Object eventData) {
+					StationDetailsView.this.log.info("Station Details fetched for Station number: '" + station.number + "'");
+					StationDetailsView.this.stationDetails = (StationDetails)eventData;
+					StationDetailsView.this.repaint();
+				}
+
+			});
+			progressTask.start();
+//			TaskManager.runLoadTaskView("Recherche des infos de station", progressTask, getMidlet(), StationDetailsView.this, StationDetailsView.this);
+		}
+		catch (CartoManagerException e) {
+			e.printStackTrace();
+		}
+		catch (CityManagerException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void paint(Graphics g) {
@@ -210,7 +218,7 @@ public class StationDetailsView extends AbstractView {
         height += smallFontHeight + 5;
 
         g.setColor(detailsBackgroundColor.intValue());
-        g.fillRect(5, height + 5, canvasWidth - 10, 5 + (mediumFontHeight + 1) * 3 + 5);
+        g.fillRect(5, height + 5, canvasWidth - 10, 5 + (mediumFontHeight + 1) * 4 + 5);
         
         height += 5 + 2;
         
@@ -221,12 +229,19 @@ public class StationDetailsView extends AbstractView {
         int contentLeftPos = canvasWidth / 2 - veloDispoWidth / 2;
         int contentRightPos = canvasWidth / 2 + veloDispoWidth / 2;
         
-        g.drawString("Vélos disponibles: ", contentLeftPos, height + 1, Graphics.TOP | Graphics.LEFT); 
-        g.drawString("20", contentRightPos - mediumFont.stringWidth("20"), height + 1, Graphics.TOP | Graphics.LEFT);
-        g.drawString("Places libres: ", contentLeftPos, height + mediumFontHeight + 1, Graphics.TOP | Graphics.LEFT); 
-        g.drawString("10", contentRightPos - mediumFont.stringWidth("10"), height + mediumFontHeight + 1, Graphics.TOP | Graphics.LEFT);
-        g.drawString("Hors service: ", contentLeftPos, height + (mediumFontHeight + 1) * 2, Graphics.TOP | Graphics.LEFT); 
-        g.drawString("5", contentRightPos - mediumFont.stringWidth("5"), height + (mediumFontHeight + 1) * 2, Graphics.TOP | Graphics.LEFT);
-	} 
+        String total = stationDetails != null ? String.valueOf(stationDetails.total) : "ND"; 
+        String available = stationDetails != null ? String.valueOf(stationDetails.available) : "ND"; 
+        String free = stationDetails != null ? String.valueOf(stationDetails.free) : "ND"; 
+        String hs = stationDetails != null ? String.valueOf(stationDetails.total - stationDetails.available - stationDetails.free) : "ND"; 
+        
+        g.drawString("Total vélos: ", contentLeftPos, height + 1, Graphics.TOP | Graphics.LEFT); 
+        g.drawString(total, contentRightPos - mediumFont.stringWidth(total), height + 1, Graphics.TOP | Graphics.LEFT);
+        g.drawString("Vélos disponibles: ", contentLeftPos, height + (mediumFontHeight + 1) * 1, Graphics.TOP | Graphics.LEFT); 
+        g.drawString(available, contentRightPos - mediumFont.stringWidth(available), height + (mediumFontHeight + 1) * 1, Graphics.TOP | Graphics.LEFT);
+        g.drawString("Places libres: ", contentLeftPos, height + (mediumFontHeight + 1) * 2, Graphics.TOP | Graphics.LEFT); 
+        g.drawString(free, contentRightPos - mediumFont.stringWidth(free), height + (mediumFontHeight + 1) * 2, Graphics.TOP | Graphics.LEFT);
+        g.drawString("Hors service: ", contentLeftPos, height + (mediumFontHeight + 1) * 3, Graphics.TOP | Graphics.LEFT); 
+        g.drawString(hs, contentRightPos - mediumFont.stringWidth(hs), height + (mediumFontHeight + 1) * 3, Graphics.TOP | Graphics.LEFT);
+	}
 
 }

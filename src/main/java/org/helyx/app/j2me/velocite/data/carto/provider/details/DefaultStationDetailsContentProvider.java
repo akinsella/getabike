@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.data.carto.provider;
+package org.helyx.app.j2me.velocite.data.carto.provider.details;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -19,7 +19,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class DefaultStationDetailsContentProvider extends AbstractContentProvider {
 	
-	private static final Log log = LogFactory.getLog("DEFAULT_STATION_CONTENT_PROVIDER");
+	private static final Log log = LogFactory.getLog("DEFAULT_STATION_DETAILS_CONTENT_PROVIDER");
 
 
 	private static final String STATION = "station";
@@ -59,6 +59,8 @@ public class DefaultStationDetailsContentProvider extends AbstractContentProvide
 				
 			try {
 
+				log.info("Path to station infos: '" + stationDetailsContentAccessor.getPath() + "'");
+				
 				progressDispatcher.fireEvent(ProgressEventType.ON_START);
 
 				stationDetailsInputStreamReaderProvider = stationDetailsContentAccessor.getInputStreamProvider();

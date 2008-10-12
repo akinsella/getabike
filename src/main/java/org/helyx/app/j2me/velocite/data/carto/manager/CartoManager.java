@@ -1,13 +1,15 @@
 package org.helyx.app.j2me.velocite.data.carto.manager;
 
+import org.helyx.app.j2me.lib.content.provider.ContentProviderFactoryNotFoundExcepton;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
+import org.helyx.app.j2me.lib.content.provider.IContentProviderFactory;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.task.IProgressTask;
+import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.DefaultStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.DefaultStationContentProviderFactory;
-import org.helyx.app.j2me.velocite.data.carto.provider.factory.ICityContentProviderFactory;
-import org.helyx.app.j2me.velocite.data.carto.provider.factory.StationContentProviderFactoryNoFoundExcepton;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloPlusStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloVStationContentProviderFactory;
@@ -32,36 +34,65 @@ public class CartoManager {
 	public static IProgressTask refreshAll(City city) throws CartoManagerException {
 
 		try {
-			ICityContentProviderFactory cpf = null;
+			IContentProviderFactory cpf = null;
 			if (VELIB.equals(city.type)) {
-				cpf = new DefaultStationContentProviderFactory();
+				cpf = new DefaultStationContentProviderFactory(city);
 			}
 			else if (LE_VELO.equals(city.type)) {
-				cpf = new DefaultStationContentProviderFactory();
+				cpf = new DefaultStationContentProviderFactory(city);
 			}
 			else if (VELO.equals(city.type)) {
-				cpf = new VeloStationContentProviderFactory();
+				cpf = new VeloStationContentProviderFactory(city);
 			}
 			else if (SEVICI.equals(city.type)) {
-				cpf = new DefaultStationContentProviderFactory();
+				cpf = new DefaultStationContentProviderFactory(city);
 			}
 			else if (VELO_V.equals(city.type)) {
-				cpf = new VeloVStationContentProviderFactory();
+				cpf = new VeloVStationContentProviderFactory(city);
 			}
 			else if (VELO_PLUS.equals(city.type)) {
-				cpf = new VeloPlusStationContentProviderFactory();
+				cpf = new VeloPlusStationContentProviderFactory(city);
 			}
 			else {
-				throw new StationContentProviderFactoryNoFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");
+				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");
 			}
 			
-			IContentProvider cp = cpf.getContentProviderFactory(city);
+			IContentProvider cp = cpf.getContentProviderFactory();
 			
 			IProgressTask progressTask = new ContentProviderProgressTaskAdapter(cp);
 	
 			return progressTask;
 		}
-		catch (StationContentProviderFactoryNoFoundExcepton e) {
+		catch (ContentProviderFactoryNotFoundExcepton e) {
+			throw new CartoManagerException(e);
+		}
+
+	}
+
+	public static IProgressTask fetchStationDetails(City city, Station station) throws CartoManagerException {
+
+		try {
+			IContentProviderFactory cpf = null;
+			if (VELIB.equals(city.type)) {
+				cpf = new DefaultStationDetailsContentProviderFactory(city, station);
+			}
+			else if (LE_VELO.equals(city.type)) {
+				cpf = new DefaultStationContentProviderFactory(city);
+			}
+			else if (SEVICI.equals(city.type)) {
+				cpf = new DefaultStationContentProviderFactory(city);
+			}
+			else {
+				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");
+			}
+			
+			IContentProvider cp = cpf.getContentProviderFactory();
+			
+			IProgressTask progressTask = new ContentProviderProgressTaskAdapter(cp);
+	
+			return progressTask;
+		}
+		catch (ContentProviderFactoryNotFoundExcepton e) {
 			throw new CartoManagerException(e);
 		}
 

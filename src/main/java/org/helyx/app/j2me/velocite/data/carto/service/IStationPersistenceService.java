@@ -5,7 +5,6 @@ import java.util.Vector;
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
 import org.helyx.app.j2me.lib.rms.MultiRecordEnumeration;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 
 public interface IStationPersistenceService {
 	
@@ -24,8 +23,6 @@ public interface IStationPersistenceService {
 	int countStations();
 	
 	void dispose();
-
-	StationDetails findStationDetailsByNumber(int stationNumber);
 
 }
 

@@ -21,6 +21,8 @@ public class Station {
 	public boolean hasLocalization;
 	
 	public Point localization;
+	
+	public boolean bonus;
 
 	public Station() {
 		super();
@@ -35,6 +37,7 @@ public class Station {
 		.append(", zipCode=").append(zipCode)
 		.append(", city=").append(city)
 		.append(", open=").append(open)
+		.append(", bonus").append(bonus)
 		.append(", hasLocalization=").append(hasLocalization)
 		.append(", localization=").append(localization);
 

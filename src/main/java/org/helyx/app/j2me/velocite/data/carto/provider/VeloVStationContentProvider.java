@@ -68,7 +68,7 @@ public class VeloVStationContentProvider extends AbstractContentProvider {
 					cartoInputStreamProvider = contentAccessor.getInputStreamProvider();
 					inputStream = cartoInputStreamProvider.createInputStream();
 
-					log.debug("Parsing simple sample XML for id: " + i);
+					log.debug("Parsing JSON for quartier: " + i);
 					
 					String jsonStreamContent = StreamUtil.readStream(inputStream, false);
 					log.info("JSON content: " + jsonStreamContent);
@@ -88,6 +88,7 @@ public class VeloVStationContentProvider extends AbstractContentProvider {
 						station.name = jsonMarker.getString(NOM_STATION);
 						station.address = jsonMarker.optString(INFO_STATION, "");
 						station.fullAddress = station.address;
+						station.bonus = false;
 						station.hasLocalization = true;
 						station.localization = new Point();
 						station.localization.lat = jsonMarker.optDouble(LATITUDE, 0);

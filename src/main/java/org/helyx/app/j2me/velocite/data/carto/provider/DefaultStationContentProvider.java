@@ -30,6 +30,7 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 	private static final String ADDRESS = "address";
 	private static final String FULL_ADDRESS = "fullAddress";
 	private static final String OPEN = "open";
+	private static final String BONUS = "bonus";
 	private static final String LNG = "lng";
 	private static final String LAT = "lat";
 	
@@ -70,7 +71,7 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
 
 				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
-				xppAttributeProcessor.addAll(new String[] { NUMBER, NAME, OPEN, ADDRESS, FULL_ADDRESS, LNG, LAT });
+				xppAttributeProcessor.addAll(new String[] { NUMBER, NAME, OPEN, BONUS, ADDRESS, FULL_ADDRESS, LNG, LAT });
 
 				while (XppUtil.readToNextElement(xpp, MARKER)) {
 					if (cancel) {
@@ -86,6 +87,7 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 					station.number = xppAttributeProcessor.getAttrValueAsInt(NUMBER);
 					station.name = xppAttributeProcessor.getAttrValueAsString(NAME);
 					station.open = xppAttributeProcessor.getAttrValueAsInt(OPEN) == openValue;
+					station.bonus = xppAttributeProcessor.getAttrValueAsBoolean(BONUS);
 					station.address = xppAttributeProcessor.getAttrValueAsString(ADDRESS);
 					station.fullAddress = xppAttributeProcessor.getAttrValueAsString(FULL_ADDRESS);
 					station.localization.lat = xppAttributeProcessor.getAttrValueAsDouble(LAT);
@@ -96,11 +98,11 @@ public class DefaultStationContentProvider extends AbstractContentProvider {
 					progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 				}
 				
-				progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 			}
 			finally {
 				cartoInputStreamProvider.dispose();
 			}
+			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 		}
 		catch (Throwable t) {
     		log.warn(t);

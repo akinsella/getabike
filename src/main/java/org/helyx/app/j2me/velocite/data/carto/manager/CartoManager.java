@@ -9,6 +9,8 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.DefaultStationDetailsContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VeloPlusStationDetailsContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VeloVStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.DefaultStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloPlusStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloStationContentProviderFactory;
@@ -84,6 +86,12 @@ public class CartoManager {
 			}
 			else if (VELO.equals(city.type)) {
 				cpf = new DefaultStationDetailsContentProviderFactory(city, station);
+			}
+			else if (VELO_V.equals(city.type)) {
+				cpf = new VeloVStationDetailsContentProviderFactory(city, station);
+			}
+			else if (VELO_PLUS.equals(city.type)) {
+				cpf = new VeloPlusStationDetailsContentProviderFactory(city, station);
 			}
 			else {
 				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");

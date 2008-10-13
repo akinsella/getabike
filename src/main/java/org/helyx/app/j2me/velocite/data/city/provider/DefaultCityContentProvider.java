@@ -37,8 +37,10 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 	private static final String ACTIVE = "active";
 	private static final String STATION_LIST = "stationList";
 	private static final String STATION_DETAILS = "stationDetails";
-	private static final String OFFLINE_STATION_LIST = "offlineStationList";
 	private static final String WEB_SITE = "webSite";
+	private static final String BONUS = "bonus";
+	private static final String TPE = "tpe";
+	private static final String STATE = "state";
 	
 	private static final String ID = "id";
 	private static final String ZIP_CODE = "zipCode";
@@ -94,7 +96,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 				XppAttributeProcessor cityXppAttributeProcessor = new XppAttributeProcessor();
 				cityXppAttributeProcessor.addAll(new String[] { 
 					KEY, NAME, SERVICE_NAME, TYPE, ACTIVE, WEB_SITE, 
-					STATION_DETAILS, STATION_LIST, OFFLINE_STATION_LIST
+					STATION_DETAILS, STATION_LIST, BONUS, TPE, STATE
 				});
 
 				XppAttributeProcessor quartierXppAttributeProcessor = new XppAttributeProcessor();
@@ -116,7 +118,9 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 					city.type = cityXppAttributeProcessor.getAttrValueAsString(TYPE);
 					city.active = cityXppAttributeProcessor.getAttrValueAsBoolean(ACTIVE);
 					city.webSite = cityXppAttributeProcessor.getAttrValueAsString(WEB_SITE);
-					city.offlineStationList = cityXppAttributeProcessor.getAttrValueAsString(OFFLINE_STATION_LIST);
+					city.bonus = cityXppAttributeProcessor.getAttrValueAsBoolean(BONUS);
+					city.tpe = cityXppAttributeProcessor.getAttrValueAsBoolean(TPE);
+					city.state = cityXppAttributeProcessor.getAttrValueAsBoolean(STATE);
 					city.stationList = cityXppAttributeProcessor.getAttrValueAsString(STATION_LIST);
 					city.stationDetails = cityXppAttributeProcessor.getAttrValueAsString(STATION_DETAILS);
 					

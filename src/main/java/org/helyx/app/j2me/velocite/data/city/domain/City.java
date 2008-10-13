@@ -24,7 +24,12 @@ public class City {
 	
 	public String stationDetails;
 	
-	public String offlineStationList;
+	public boolean bonus; 
+	
+	public boolean tpe; 
+	
+	public boolean state;
+	
 	
 	public Vector quartierList = new Vector();
 
@@ -38,7 +43,9 @@ public class City {
 		.append(", webSite=").append(webSite)
 		.append(", stationList=").append(stationList)
 		.append(", stationDetails=").append(stationDetails)
-		.append(", offlineStationList=").append(offlineStationList)
+		.append(", bonus=").append(bonus)
+		.append(", tpe=").append(tpe)
+		.append(", state=").append(state)
 		.append(", quartiers: [");
 		
 		int quartierCount = quartierList.size();

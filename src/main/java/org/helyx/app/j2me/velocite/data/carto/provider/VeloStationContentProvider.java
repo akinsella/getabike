@@ -82,6 +82,7 @@ public class VeloStationContentProvider extends AbstractContentProvider {
 					station.number = xppAttributeProcessor.getAttrValueAsInt(NUMBER);
 					station.name = xppAttributeProcessor.getAttrValueAsString(NAME);
 					station.open = true;
+					station.bonus = false;
 					station.address = xppAttributeProcessor.getAttrValueAsString(ADDRESS);
 					station.fullAddress = xppAttributeProcessor.getAttrValueAsString(FULL_ADDRESS);
 					station.localization.lat = xppAttributeProcessor.getAttrValueAsDouble(LAT);
@@ -91,12 +92,12 @@ public class VeloStationContentProvider extends AbstractContentProvider {
 					
 					progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 				}
-				
-				progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 			}
 			finally {
 				cartoInputStreamProvider.dispose();
 			}
+			
+			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
 		}
 		catch (Throwable t) {
     		log.warn(t);

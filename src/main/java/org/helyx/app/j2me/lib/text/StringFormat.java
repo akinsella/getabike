@@ -69,7 +69,7 @@ public class StringFormat {
 		return result;
 	}
 
-	public Object format(Object objectValue) {
+	public String format(Object objectValue) {
 		String result = null;
 		if (objectValue instanceof String) {
 			result = TextUtil.replaceAll(stringValue, FIRST, (String)objectValue);
@@ -81,7 +81,7 @@ public class StringFormat {
 		return result;
 	}
 
-	public Object format(Object[] objectValues) {
+	public String format(Object[] objectValues) {
 		int length = objectValues.length;
 		String result = stringValue;
 		for (int i = 0 ; i < length ; i++) {

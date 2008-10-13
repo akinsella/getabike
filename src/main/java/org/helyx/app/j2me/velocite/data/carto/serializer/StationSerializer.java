@@ -33,6 +33,8 @@ public class StationSerializer extends AbstractObjectSerializer {
 			dos.writeUTF(station.city == null ? "" : station.city);
 			
 			dos.writeBoolean(station.open);
+			dos.writeBoolean(station.bonus);
+			
 			dos.writeBoolean(station.hasLocalization);		
 			
 			dos.writeDouble(station.localization.lng);
@@ -63,6 +65,7 @@ public class StationSerializer extends AbstractObjectSerializer {
 			station.city = dis.readUTF();
 			
 			station.open = dis.readBoolean();
+			station.bonus = dis.readBoolean();
 			
 			station.hasLocalization = dis.readBoolean();
 			

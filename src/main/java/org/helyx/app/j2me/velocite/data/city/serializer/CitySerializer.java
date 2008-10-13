@@ -33,7 +33,9 @@ public class CitySerializer extends AbstractObjectSerializer {
 			dos.writeUTF(city.webSite);
 			dos.writeUTF(city.stationList);
 			dos.writeUTF(city.stationDetails);
-			dos.writeUTF(city.offlineStationList);
+			dos.writeBoolean(city.bonus);
+			dos.writeBoolean(city.state);
+			dos.writeBoolean(city.tpe);
 	
 			int quartierCount = city.quartierList.size();
 			dos.writeInt(quartierCount);
@@ -67,8 +69,10 @@ public class CitySerializer extends AbstractObjectSerializer {
 			city.webSite = dis.readUTF();
 			city.stationList = dis.readUTF();
 			city.stationDetails = dis.readUTF();
-			city.offlineStationList = dis.readUTF();
-
+			city.bonus = dis.readBoolean();
+			city.state = dis.readBoolean();
+			city.tpe = dis.readBoolean();
+			
 			int quartierCount = dis.readInt();
 			
 			for (int i = 0 ; i < quartierCount ; i++) {

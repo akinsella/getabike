@@ -6,36 +6,36 @@
 	      serviceName="V'hello"
 		  webSite="http://www.vhello.fr/" 
 		  stationList="http://www.vhello.fr/service/carto/"
-		  stationDetails="http://www.vhello.fr/service/stationdetails/" 
-		  offlineStationList="/carto_aix_en_provence.xml" />
+		  stationDetails="http://www.vhello.fr/service/stationdetails/{1}"
+		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="BESANCON" name="Besançon" type="KML" active="false"
 	      serviceName="VéloCité" 
 		  webSite="http://www.velocite.besancon.fr/" 
 		  stationList="http://maps.google.fr/maps/ms?ie=UTF8&amp;hl=fr&amp;oe=UTF8&amp;msa=0&amp;msid=106550840013014095785.0004425c2be2b0a0fc077&amp;output=kml" 
 		  stationDetails="" 
-		  offlineStationList="" />
+		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="BRUXELLES" name="Bruxelles" type="DEFAULT" active="false"
 	      serviceName="CycloCity" 
 		  webSite="http://www.cyclocity.be/" 
 		  stationList="" 
 		  stationDetails="" 
-		  offlineStationList="" />
+		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="DIJON" name="Dijon" type="DEFAULT" active="false" 
 	      serviceName=""
 		  webSite="" 
 		  stationList="" 
 		  stationDetails="" 
-		  offlineStationList="" />
+		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="LYON" name="Lyon" type="VELO_PLUS" active="true"
 	      serviceName="Vélo V"
 		  webSite="http://www.velov.grandlyon.com/" 
-		  stationList="http://www.velov.grandlyon.com/velovmap/zhp/inc/StationsParArrondissement.php?arrondissement=" 
-		  stationDetails="http://www.velov.grandlyon.com/velovmap/zhp/inc/DispoStationsParId.php?id=" 
-		  offlineStationList="">
+		  stationList="http://www.velov.grandlyon.com/velovmap/zhp/inc/StationsParArrondissement.php?arrondissement={1}" 
+		  stationDetails="http://www.velov.grandlyon.com/velovmap/zhp/inc/DispoStationsParId.php?id={1}&noCache={2}" 
+		  bonus="false" tpe="false" state="false">
 		  <quartiers>
 		  	<quartier id="1" city="Lyon" name="1er arrondissement" zipCode="69381" />
 		  	<quartier id="2" city="Lyon" name="2ème arrondissement" zipCode="69382" />
@@ -56,63 +56,63 @@
 	      serviceName="Le vélo"
 		  webSite="http://www.levelo-mpm.fr" 
 		  stationList="http://www.levelo-mpm.fr/service/carto/" 
-		  stationDetails="http://www.levelo-mpm.fr/service/stationdetails/" 
-		  offlineStationList="/carto_marseille.xml" />
+		  stationDetails="http://www.levelo-mpm.fr/service/stationdetails/{1}" 
+		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="MONTPELLIER" name="Montpellier" type="DEFAULT" active="false"
 		  serviceName="Vélomagg'"
 		  webSite="http://www.montpellier-agglo.com/tam/page.php?id_rubrique=273" 
 		  stationList="" 
 		  stationDetails="" 
-		  offlineStationList="" />
+		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="MULHOUSE" name="Mulhouse" type="DEFAULT" active="false"
 		  serviceName="VéloCité"
 		  webSite="http://www.mulhouse.fr/fr/demarche.php?PAGEID=3551" 
 		  stationList="" 
 		  stationDetails="" 
-		  offlineStationList="" />
+		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="NANTES" name="Nantes" type="KML" active="false" 
 	      serviceName="Bicloo"
 		  webSite="http://www.bicloo.nantesmetropole.fr" 
 		  stationList="http://maps.google.fr/maps/ms?ie=UTF8&amp;hl=fr&amp;oe=UTF8&amp;msa=0&amp;msid=106550840013014095785.00044cde56c5fcae93d24&amp;output=kml" 
 		  stationDetails="" 
-		  offlineStationList="" />
+		  bonus="false" tpe="false" state="false" />
 
 	<city key="ORLEANS" name="Orléans" type="VELO_PLUS" active="true" 
 	      serviceName="Vélo+"
 		  webSite="http://www.ville-orleans.fr/Deplacements/VelosPietons01.cfm" 
 		  stationList="http://www.agglo-veloplus.fr/component/data.xml" 
-		  stationDetails="http://www.agglo-veloplus.fr/getStatusBorne?idBorne=" 
-		  offlineStationList="/carto_orleans.xml" />
+		  stationDetails="http://www.agglo-veloplus.fr/getStatusBorne?idBorne={1}" 
+		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="PARIS" name="Paris" type="VELIB" active="true" 
 	      serviceName="Vélib'"
 		  webSite="http://www.velib.paris.fr" 
 		  stationList="http://www.velib.paris.fr/service/carto/" 
-		  stationDetails="http://www.velib.paris.fr/service/stationdetails/" 
-		  offlineStationList="/carto_paris.xml" />
+		  stationDetails="http://www.velib.paris.fr/service/stationdetails/{1}" 
+		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="RENNES" name="Rennes" type="DEFAULT" active="false" 
 	      serviceName="Vélo à la carte"
 		  webSite="http://www.rennes.fr/index.php?id=414" 
 		  stationList="" 
 		  stationDetails="" 
-		  offlineStationList="" />
+		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="SEVILLE" name="Seville" type="SEVICI" active="true"
 		  serviceName="Sevici"
 		  webSite="http://www.sevici.es/" 
 		  stationList="http://www.sevici.es/service/carto/" 
-		  stationDetails="http://www.sevici.es/service/stationdetails/" 
-		  offlineStationList="/carto_seville.xml" />
+		  stationDetails="http://www.sevici.es/service/stationdetails/{1}" 
+		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="TOULOUSE" name="Toulouse" type="VELO" active="true"
 	      serviceName="Vélo"
 		  webSite="http://www.velo.toulouse.fr" 
 		  stationList="http://www.velo.toulouse.fr/service/carto/" 
-		  stationDetails="http://www.velo.toulouse.fr/service/stationdetails/" 
-		  offlineStationList="/carto_toulouse.xml" />
+		  stationDetails="http://www.velo.toulouse.fr/service/stationdetails/{1}" 
+		  bonus="false" tpe="false" state="false" />
 		  
 </cities>

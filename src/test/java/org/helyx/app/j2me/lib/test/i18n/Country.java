@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.i18n;
+package org.helyx.app.j2me.lib.test.i18n;
 
 public class Country {
 

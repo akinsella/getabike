@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.i18n;
+package org.helyx.app.j2me.lib.test.i18n;
 
 import java.util.Enumeration;
 
@@ -7,6 +7,9 @@ import junit.framework.TestCase;
 import org.helyx.app.j2me.lib.concurrent.Future;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
+import org.helyx.app.j2me.lib.i18n.ClasspathResourceBundleContentProviderFactory;
+import org.helyx.app.j2me.lib.i18n.Locale;
+import org.helyx.app.j2me.lib.i18n.ResourceBundle;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 

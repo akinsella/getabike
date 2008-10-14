@@ -25,6 +25,7 @@ public class DefaultStationDetailsContentProviderFactory implements IContentProv
 	
 	public IContentProvider getContentProviderFactory() {
 		String url = new StringFormat(city.stationDetails).format(String.valueOf(station.number));
+		log.debug("URL: " + url);
 		IContentProvider stationContentProvider = new DefaultStationDetailsContentProvider(
 				new HttpContentAccessor(url),
 				city, 

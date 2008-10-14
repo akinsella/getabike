@@ -26,13 +26,14 @@ public class VeloVStationDetailsContentProviderFactory implements IContentProvid
 	}
 	
 	public IContentProvider getContentProviderFactory() {
+		String url = new StringFormat(city.stationDetails).format(new String[] { 
+				String.valueOf(station.number), 
+				String.valueOf((long)(new Random().nextDouble() * 100000 + 1))
+			});
+		log.debug("URL: " + url);
+
 		IContentProvider stationContentProvider = new VeloVStationDetailsContentProvider(
-			new HttpContentAccessor(
-				new StringFormat(city.stationDetails).format(new String[] { 
-						String.valueOf(station.number), 
-						String.valueOf((long)(new Random().nextDouble() * 100000 + 1))
-					})
-			), city, station
+			new HttpContentAccessor(url), city, station
 		);
 		
 		return stationContentProvider;

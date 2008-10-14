@@ -45,7 +45,6 @@ public class DefaultCityContentProviderTest extends TestCase {
 				assertEquals(true, city.active);
 				assertEquals("http://www.velib.paris.fr/service/stationdetails/", city.stationDetails);
 				assertEquals("http://www.velib.paris.fr/service/carto/", city.stationList);
-				assertEquals("/carto_paris.xml", city.offlineStationList);
 			}
 			
 			log.info(city);

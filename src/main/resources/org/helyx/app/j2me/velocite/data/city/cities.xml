@@ -34,7 +34,7 @@
 	      serviceName="Vélo V"
 		  webSite="http://www.velov.grandlyon.com/" 
 		  stationList="http://www.velov.grandlyon.com/velovmap/zhp/inc/StationsParArrondissement.php?arrondissement={1}" 
-		  stationDetails="http://www.velov.grandlyon.com/velovmap/zhp/inc/DispoStationsParId.php?id={1}&noCache={2}" 
+		  stationDetails="http://www.velov.grandlyon.com/velovmap/zhp/inc/DispoStationsParId.php?id={1}&amp;noCache={2}" 
 		  bonus="false" tpe="false" state="false">
 		  <quartiers>
 		  	<quartier id="1" city="Lyon" name="1er arrondissement" zipCode="69381" />
@@ -85,14 +85,14 @@
 		  webSite="http://www.ville-orleans.fr/Deplacements/VelosPietons01.cfm" 
 		  stationList="http://www.agglo-veloplus.fr/component/data.xml" 
 		  stationDetails="http://www.agglo-veloplus.fr/getStatusBorne?idBorne={1}" 
-		  bonus="false" tpe="false" state="false" />
+		  bonus="false" tpe="true" state="true" />
 		  
 	<city key="PARIS" name="Paris" type="VELIB" active="true" 
 	      serviceName="Vélib'"
 		  webSite="http://www.velib.paris.fr" 
 		  stationList="http://www.velib.paris.fr/service/carto/" 
 		  stationDetails="http://www.velib.paris.fr/service/stationdetails/{1}" 
-		  bonus="false" tpe="false" state="false" />
+		  bonus="true" tpe="false" state="false" />
 		  
 	<city key="RENNES" name="Rennes" type="DEFAULT" active="false" 
 	      serviceName="Vélo à la carte"

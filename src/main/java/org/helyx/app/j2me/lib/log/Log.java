@@ -240,27 +240,27 @@ public class Log {
 	}
 	
 	public boolean isFatalEnabled() {
-		return FATAL > Log.thresholdLevel;
+		return FATAL >= Log.thresholdLevel;
 	}
 	
 	public boolean isErrorEnabled() {
-		return ERROR > Log.thresholdLevel;
+		return ERROR >= Log.thresholdLevel;
 	}
 	
 	public boolean isWarnEnabled() {
-		return WARN > Log.thresholdLevel;
+		return WARN >= Log.thresholdLevel;
 	}
 	
 	public boolean isInfoEnabled() {
-		return INFO > Log.thresholdLevel;
+		return INFO >= Log.thresholdLevel;
 	}
 	
 	public boolean isDebugEnabled() {
-		return DEBUG > Log.thresholdLevel;
+		return DEBUG >= Log.thresholdLevel;
 	}
 	
 	public boolean isTraceEnabled() {
-		return TRACE > Log.thresholdLevel;
+		return TRACE >= Log.thresholdLevel;
 	}
 
 	public int getLevel() {

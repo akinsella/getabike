@@ -187,7 +187,7 @@ public class MenuView extends AbstractView {
 				}
 
 			}));
-			menu.addMenuItem(new MenuItem("Stations favories", false, new IAction() {
+			menu.addMenuItem(new MenuItem("Stations favorites", false, new IAction() {
 				public void run(Object data) {
 					DialogUtil.showAlertMessage(getMidlet(), getDisplayable(), "Information", "Station favories");
 				}

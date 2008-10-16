@@ -29,7 +29,8 @@ public class VeloVStationContentProviderFactory implements IContentProviderFacto
 			public IContentAccessor createContentAccessorFactory(Object object) {
 				
 				Quartier quartier = (Quartier)object;
-				String url = new StringFormat(city.stationDetails).format(quartier.zipCode);
+				String url = new StringFormat(city.stationList).format(quartier.zipCode);
+				log.info("Url: " + url);
 				return new HttpContentAccessor(url);
 			}
 			

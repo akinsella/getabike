@@ -30,7 +30,7 @@
 		  stationDetails="" 
 		  bonus="false" tpe="false" state="false" />
 		  
-	<city key="LYON" name="Lyon" type="VELO_PLUS" active="true"
+	<city key="LYON" name="Lyon" type="VELO_V" active="true"
 	      serviceName="Vélo V"
 		  webSite="http://www.velov.grandlyon.com/" 
 		  stationList="http://www.velov.grandlyon.com/velovmap/zhp/inc/StationsParArrondissement.php?arrondissement={1}" 

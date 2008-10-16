@@ -13,6 +13,7 @@ import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.stream.StreamUtil;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
+import org.helyx.app.j2me.lib.xml.xpp.XppTreeWalker;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
@@ -25,9 +26,6 @@ import org.xmlpull.v1.XmlPullParser;
 public class VeloVStationDetailsContentProvider extends AbstractContentProvider {
 	
 	private static final Log log = LogFactory.getLog("VELO_PLUS_STATION_DETAILS_CONTENT_PROVIDER");
-
-
-	private static final String STATION = "station";
 	
 	private static final String ID = "id";
 	private static final String LABEL = "label";
@@ -35,12 +33,15 @@ public class VeloVStationDetailsContentProvider extends AbstractContentProvider 
 	private static final String TOTAL_BIKE_BASE = "totalBikeBase";
 	private static final String AVAILABLE_BIKE = "availableBike";
 	private static final String FREE_BIKE_BASE = "freeBikeBase";
+	
+	private static final String ENABLED = "enabled";
+	private static final String DISABLED = "disabled";
 
 	
 	private static final String INFOS = "Infos";
 	
 	
-	private static final String INVALID_CONTENT = "Json content is invalid";
+	private static final String INVALID_CONTENT = "Xml content is invalid";
 	
 	private City city;
 	private Station station;
@@ -77,18 +78,32 @@ public class VeloVStationDetailsContentProvider extends AbstractContentProvider 
 				
 				inputStream = new BufferedInputStream(stationDetailsInputStreamReaderProvider.createInputStream());
 				
-				String jsonStreamContent = StreamUtil.readStream(inputStream, false);
-				log.info("JSON content: " + jsonStreamContent);
-				JSONObject jsonContent = new JSONObject(jsonStreamContent);
-				JSONObject jsonMarker = jsonContent.getJSONObject(INFOS);
 				
-				
+				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
+				if (!XppUtil.readToNextElement(xpp, INFOS)) {
+					throw new ContentProviderException(INVALID_CONTENT);
+				}
+	
 				stationDetails.date = new Date();
 				stationDetails.stationNumber = station.number;
-				stationDetails.open = jsonMarker.getBoolean(STATE);
-				stationDetails.available = jsonMarker.getInt(AVAILABLE_BIKE);
-				stationDetails.free = jsonMarker.getInt(FREE_BIKE_BASE);
-				stationDetails.total = jsonMarker.getInt(TOTAL_BIKE_BASE);
+				stationDetails.open = station.open;
+
+				while (XppUtil.readNextElement(xpp)) {
+					String elementName = xpp.getName();
+					if (elementName.equals(STATE)) {
+						stationDetails.open = ENABLED.equals(XppUtil.readNextText(xpp));
+					}
+					else if (elementName.equals(AVAILABLE_BIKE)) {
+						stationDetails.available = Integer.parseInt(XppUtil.readNextText(xpp));
+					}					
+					else if (elementName.equals(FREE_BIKE_BASE)) {
+						stationDetails.free = Integer.parseInt(XppUtil.readNextText(xpp));
+					}
+					else if (elementName.equals(TOTAL_BIKE_BASE)) {
+						stationDetails.total = Integer.parseInt(XppUtil.readNextText(xpp));
+					}
+				}
+				stationDetails.total = stationDetails.available + stationDetails.free;
 				stationDetails.hs = stationDetails.total - stationDetails.free - stationDetails.available;
 
 				if (log.isDebugEnabled()) {

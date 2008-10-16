@@ -10,6 +10,7 @@ import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
+import org.helyx.app.j2me.lib.stream.StreamUtil;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
@@ -67,41 +68,33 @@ public class DefaultStationDetailsContentProvider extends AbstractContentProvide
 				stationDetailsInputStreamReaderProvider = stationDetailsContentAccessor.getInputStreamProvider();
 				
 				inputStream = new BufferedInputStream(stationDetailsInputStreamReaderProvider.createInputStream());
-				
+								
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
-				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
-				xppAttributeProcessor.addAll(new String[] { AVAILABLE, FREE, TOTAL, TICKET });
 
-				if (XppUtil.readToNextElement(xpp, STATION)) {
+				if (!XppUtil.readToNextElement(xpp, STATION)) {
 					throw new ContentProviderException(INVALID_CONTENT);
 				}
-				
-				xppAttributeProcessor.processNode(xpp);
+	
 				stationDetails.date = new Date();
-				
 				stationDetails.stationNumber = station.number;
 				stationDetails.open = station.open;
-				stationDetails.available = xppAttributeProcessor.getAttrValueAsInt(AVAILABLE);
-				stationDetails.free = xppAttributeProcessor.getAttrValueAsInt(FREE);
-				stationDetails.total = xppAttributeProcessor.getAttrValueAsInt(TOTAL);
-				stationDetails.hs = stationDetails.total - stationDetails.free - stationDetails.available;
-				stationDetails.ticket = xppAttributeProcessor.getAttrValueAsInt(TICKET) == 1;
 
-				
-				
-				String elementName = xpp.getName();
-				if (elementName.equals(AVAILABLE)) {
-					stationDetails.available = Integer.parseInt(XppUtil.readNextText(xpp));
+				while (XppUtil.readNextElement(xpp)) {
+					String elementName = xpp.getName();
+					if (elementName.equals(AVAILABLE)) {
+						stationDetails.available = Integer.parseInt(XppUtil.readNextText(xpp));
+					}
+					else if (elementName.equals(FREE)) {
+						stationDetails.free = Integer.parseInt(XppUtil.readNextText(xpp));
+					}
+					else if (elementName.equals(TOTAL)) {
+						stationDetails.total = Integer.parseInt(XppUtil.readNextText(xpp));
+					}
+					else if (elementName.equals(TICKET)) {
+						stationDetails.ticket = Integer.parseInt(XppUtil.readNextText(xpp)) == 1;
+					}
 				}
-				else if (elementName.equals(FREE)) {
-					stationDetails.free = Integer.parseInt(XppUtil.readNextText(xpp));
-				}
-				else if (elementName.equals(TICKET)) {
-					stationDetails.ticket = Integer.parseInt(XppUtil.readNextText(xpp)) == 1;
-				}
-				else if (elementName.equals(TOTAL)) {
-					stationDetails.total = Integer.parseInt(XppUtil.readNextText(xpp));
-				}
+				stationDetails.hs = stationDetails.total - stationDetails.free - stationDetails.available;
 				
 				if (log.isDebugEnabled()) {
 					log.debug("Station loaded: " + stationDetails);

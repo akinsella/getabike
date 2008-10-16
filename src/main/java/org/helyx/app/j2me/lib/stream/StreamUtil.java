@@ -1,6 +1,7 @@
 package org.helyx.app.j2me.lib.stream;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -39,20 +40,26 @@ public class StreamUtil {
 		return false;
 	}
 
-	public static String readStream(InputStream inputStream, boolean b) throws IOException {
+	public static String readStream(InputStream inputStream, boolean closeStream) throws IOException {
 		int length = -1;
-		StringBuffer sb = new StringBuffer();
 		byte[] bytes = new byte[1024];
-		while((length = inputStream.read(bytes)) >= 0) {
-			if (length == 0) {
-				continue;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
+		try {
+			while((length = inputStream.read(bytes)) >= 0) {
+				if (length == 0) {
+					continue;
+				}
+				baos.write(bytes, 0, length);
 			}
-			String line = new String(bytes);
-			sb.append(line);
+			if (closeStream) {
+				inputStream.close();
+			}
+			return new String(baos.toByteArray());
 		}
-		String content = sb.toString();
+		finally {
+			baos.close();
+		}
 		
-		return content;
 	}
 	
 }

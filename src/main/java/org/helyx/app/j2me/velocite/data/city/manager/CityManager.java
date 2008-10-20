@@ -20,7 +20,7 @@ public class CityManager {
 
 	private static final Log log = LogFactory.getLog("CITY_MANAGER");
 	
-	private static final String CITIES_URL = "http://m.velocite.org/cities_v2.xml";
+	private static final String CITIES_URL = "http://m.velocite.org/cities/v2/data.xml";
 	
 	private CityManager() {
 		super();

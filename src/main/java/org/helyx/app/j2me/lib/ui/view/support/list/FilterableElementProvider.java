@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.lib.filter.IObjectFilter;
 
-public class FilterableElementProvider implements IElementProvider, IFilterableElementProvider {
+public class FilterableElementProvider implements IElementProvider {
 
 	private IElementProvider elementProvider;
 	private IObjectFilter objectFilter;
@@ -31,7 +31,7 @@ public class FilterableElementProvider implements IElementProvider, IFilterableE
 		return itemList.size();
 	}
 
-	public void filter() {
+	protected void filter() {
 		int length = elementProvider.length();
 		Vector itemList = new Vector(length);
 		for (int i = 0 ; i < length ; i++) {
@@ -42,14 +42,6 @@ public class FilterableElementProvider implements IElementProvider, IFilterableE
 			itemList.addElement(item);
 		}
 		this.itemList = itemList;
-	}
-
-	public IObjectFilter getFilter() {
-		return objectFilter;
-	}
-
-	public void setObjectFilter(IObjectFilter filter) {
-		this.objectFilter = objectFilter;
 	}
 
 }

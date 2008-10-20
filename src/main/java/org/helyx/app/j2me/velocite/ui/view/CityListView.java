@@ -14,7 +14,7 @@ import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
-import org.helyx.app.j2me.velocite.data.carto.listener.StationLoaderProgressListener;
+import org.helyx.app.j2me.velocite.data.carto.listener.StoreStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
@@ -65,7 +65,7 @@ public class CityListView extends MenuListView {
 				CityManager.saveSelectedCity(city);
 				try {
 					IProgressTask progressTask = CartoManager.refreshAll(city);
-					progressTask.addProgressListener(new StationLoaderProgressListener(progressTask.getProgressDispatcher()));
+					progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher()));
 
 					TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CityListView.this, getPreviousDisplayable());
 

@@ -49,7 +49,6 @@ public class VeloVStationContentProvider extends AbstractContentProvider {
 		log.debug("Loading Lyon carto info ...");
 
 		try {
-
 			progressDispatcher.fireEvent(ProgressEventType.ON_START);
 			int quartierLength = city.quartierList.size();
 			for (int i = 0 ; i < quartierLength ; i++) {

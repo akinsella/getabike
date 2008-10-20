@@ -8,26 +8,22 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.lib.task.ProgressListener;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
-import org.helyx.app.j2me.lib.ui.util.DialogUtil;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.view.support.LoadTaskView;
 import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
 import org.helyx.app.j2me.lib.ui.view.support.list.AbstractListView;
-import org.helyx.app.j2me.lib.ui.view.support.list.ArrayElementProvider;
-import org.helyx.app.j2me.lib.ui.view.support.list.IElementProvider;
 import org.helyx.app.j2me.lib.ui.view.transition.BasicTransition;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationNameFilter;
+import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.task.StationLoadTask;
 
 public class StationListView extends AbstractListView {
@@ -37,8 +33,8 @@ public class StationListView extends AbstractListView {
 	private Menu menu;
 	private MenuListView prefMenuListView;
 
-	public StationListView(AbstractMIDlet midlet) {
-		super(midlet, "Liste des stations");
+	public StationListView(AbstractMIDlet midlet, String title) {
+		super(midlet, title);
 		init();
 		initActions();
 	}
@@ -50,22 +46,6 @@ public class StationListView extends AbstractListView {
 	}
 	
 	protected void initActions() {
-		
-//		setPrimaryCommand(new Command("Voir", true, new IAction() {
-//
-//			public void run(Object data) {
-//				showCurrentStationSelected();
-//			}
-//			
-//		}));
-//
-//		setSecondaryCommand(new Command("Retour", true, new IAction() {
-//
-//			public void run(Object data) {
-//				returnToPreviousDisplayable();
-//			}
-//			
-//		}));
 		
 		setThirdCommand(new Command("Menu", true, new IAction() {
 
@@ -79,25 +59,31 @@ public class StationListView extends AbstractListView {
 		}));
 	}
 
+	protected void initData() {
+		// Nothing to do
+	}
+
 	protected void initComponents() {
 		menu = new Menu();
 		
 		menu.addMenuItem(new MenuItem("Chercher une station", new IAction() {
 			public void run(Object data) {
+				final String previousStationNameFilter = getStationNameFilter();
+				
 				showDisplayable(new StationSearchView(getMidlet(), new IReturnCallback() {
 
 					public void onReturn(Object data) {
-						loadListContent();
+						String newStationNameFilter = getStationNameFilter();
+						if ( (previousStationNameFilter == null  && newStationNameFilter != null ) ||
+							 (previousStationNameFilter != null && !previousStationNameFilter.equals(newStationNameFilter)) ) {
+							loadListContent(new UIStationLoaderProgressListener(StationListView.this));
+						}
 					}
 					
 				}), StationListView.this);
 			}
 		}));
 		
-	}
-
-	protected void initData() {
-		loadListContent();
 	}
 	
 	private String getStationNameFilter() {
@@ -111,7 +97,7 @@ public class StationListView extends AbstractListView {
 		showDisplayable(new StationDetailsView(getMidlet(), station), this);
 	}
 
-	public void loadListContent() {
+	public void loadListContent(ProgressListener progressListener) {
 		
 		IRecordFilter stationFilter = null;
 		String stationNameFilter = getStationNameFilter();
@@ -120,18 +106,13 @@ public class StationListView extends AbstractListView {
 		}
 
 		final StationLoadTask stationLoadTask = new StationLoadTask(this, stationFilter);
-		stationLoadTask.addProgressListener(loadStationListProgressListener);
+		stationLoadTask.addProgressListener(progressListener);
 		LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "Chargement des stations", stationLoadTask);
 		showDisplayable(loadTaskView, this);
 		selectedOffset = 0;
 		topOffset = 0;
 		loadTaskView.startTask();
 		log.info("Load List Content...");
-	}
-
-	public void setStations(Station[] stationArray) {
-		IElementProvider elementProvider = new ArrayElementProvider(stationArray != null ? stationArray : new Station[0]);
-		setElementProvider(elementProvider);
 	}
 
 	protected void paintItem(Graphics g, int offset, Rectangle itemClientArea, Object itemObject) {
@@ -168,30 +149,4 @@ public class StationListView extends AbstractListView {
     	g.drawString(station.fullAddress, itemClientArea.location.x + 5, itemClientArea.location.y + 2 + FontUtil.SMALL_BOLD.getHeight(), Graphics.LEFT | Graphics.TOP);
 	}
 	
-	private ProgressListener loadStationListProgressListener = new ProgressAdapter() {
-
-		public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
-			switch (eventType) {
-				case ProgressEventType.ON_SUCCESS:
-					showDisplayable(StationListView.this, new BasicTransition());
-					break;
-					
-				case ProgressEventType.ON_CANCEL:
-					showDisplayable(StationListView.this, new BasicTransition());
-					break;
-	
-				case ProgressEventType.ON_ERROR:
-					Throwable throwable = (Throwable)eventData;
-					getLog().warn(throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
-					DialogUtil.showAlertMessage(getMidlet(), getDisplayable(), "Erreur", throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
-					showDisplayable(StationListView.this, new BasicTransition());
-					break;
-					
-				default:
-					break;
-			}
-		}
-		
-	};
-
 }

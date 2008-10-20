@@ -15,7 +15,7 @@ public class FirstRunTaskFactory implements ITaskFactory {
 	
 	public ITask[] getTasks() {
 //		
-//		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://m.velocite.org/cities.xml");
+//		IContentAccessor cityContentAccessor = new HttpContentAccessor("http://m.velocite.org/cities/v2/data.xml");
 //		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 //		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 		

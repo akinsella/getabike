@@ -9,7 +9,6 @@ import org.helyx.app.j2me.lib.rms.MultiRecordEnumeration;
 import org.helyx.app.j2me.lib.task.AbstractProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.data.carto.filter.StationNameFilter;
 import org.helyx.app.j2me.velocite.data.carto.service.IStationPersistenceService;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.ui.view.StationListView;
@@ -32,40 +31,49 @@ public class StationLoadTask extends AbstractProgressTask {
 		System.gc();
 		IStationPersistenceService stationPersistenceService = null;
 		MultiRecordEnumeration stationEnumeration = null;
-
+		Station[] stationArray = new Station[0];
 		try {
-			progressDispatcher.fireEvent(ProgressEventType.ON_START);
-			
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Lecture des données");
-
-			stationPersistenceService = new StationPersistenceService();
+			try {
+				progressDispatcher.fireEvent(ProgressEventType.ON_START);
+				
+				progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Lecture des données");
 	
-			Vector stationList = new Vector(4096);
-			
-			stationEnumeration = stationPersistenceService.createStationEnumeration(recordFilter);
-
-			int count = 0;
-			while (stationEnumeration.hasMoreElements()) {
-
-				Station station = (Station)stationEnumeration.nextElement();
-				count++;
-				if (count % 5 == 0) {
-					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, count + " stations chargées");
+				stationPersistenceService = new StationPersistenceService();
+		
+				Vector stationList = new Vector(4096);
+				
+				stationEnumeration = stationPersistenceService.createStationEnumeration(recordFilter);
+	
+				int count = 0;
+				while (stationEnumeration.hasMoreElements()) {
+	
+					Station station = (Station)stationEnumeration.nextElement();
+					count++;
+					if (count % 5 == 0) {
+						progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, count + " stations chargées");
+					}
+	
+					stationList.addElement(station);
 				}
-
-				stationList.addElement(station);
-			}
-
-			
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, count + " stations chargées");
 	
-			log.info("Copying Station Array ...");
-			Station[] stationArray = new Station[stationList.size()];
-			stationList.copyInto(stationArray);
-			stationList = null;
-			System.gc();
-
-			stationListView.setStations(stationArray);
+				
+				progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, count + " stations chargées");
+		
+				log.info("Copying Station Array ...");
+				stationArray = new Station[stationList.size()];
+				stationList.copyInto(stationArray);
+				stationList = null;
+				System.gc();
+			}
+	    	finally {
+	    		if (stationEnumeration != null) {
+	    			stationEnumeration.destroy();
+	    		}
+	    		if (stationPersistenceService != null) {
+	    			stationPersistenceService.dispose();
+	    		}
+	    	}
+			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, stationArray);
 			stationArray = null;
 			System.gc();
 		}
@@ -73,22 +81,6 @@ public class StationLoadTask extends AbstractProgressTask {
 			log.warn(t);
 			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
 		}
-    	finally {
-    		try {
-	    		if (stationEnumeration != null) {
-	    			stationEnumeration.destroy();
-	    		}
-	    		if (stationPersistenceService != null) {
-	    			stationPersistenceService.dispose();
-	    		}
-    		}
-    		catch(Throwable t) {
-    			log.warn(t);
-    		}
-    		finally {
-    			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
-    		}
-    	}
 
 	}
 

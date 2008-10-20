@@ -8,8 +8,10 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
+import org.helyx.app.j2me.lib.filter.IObjectFilter;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.math.MathUtil;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
@@ -19,9 +21,14 @@ import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
+import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
+import org.helyx.app.j2me.lib.ui.view.transition.BasicTransition;
 import org.helyx.app.j2me.lib.ui.widget.Command;
+import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
+import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
+import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
@@ -53,6 +60,44 @@ public class StationDetailsView extends AbstractView {
 	}
 		
 	private void initActions() {
+		setThirdCommand(new Command("Menu", true, new IAction() {
+
+		
+			public void run(Object data) {
+				Menu menu = new Menu();
+				menu.addMenuItem(new MenuItem("Station Proches", new IAction() {
+					
+					public void run(Object data) {
+						StationListView stationListView = new StationListView(getMidlet(), "Station Proches");
+						stationListView.setPreviousDisplayable(StationDetailsView.this);
+						
+						UIStationLoaderProgressListener slpl = new UIStationLoaderProgressListener(stationListView, new IObjectFilter() {
+							public boolean matches(Object object) {
+								Station station = (Station)object;
+								double distanceInMeters = MathUtil.distance(
+										StationDetailsView.this.station.localization.lat,
+										StationDetailsView.this.station.localization.lng,
+										station.localization.lat,
+										station.localization.lng, MathUtil.KM) * 1000;
+								
+								log.info("Distance is: '" + distanceInMeters + "' meters between " + StationDetailsView.this.station + " and " + station);
+								return true;
+							}
+							
+						});
+						stationListView.loadListContent(slpl);
+						
+					}
+
+				}));
+
+				MenuListView prefMenuListView = new MenuListView(getMidlet(), "Menu", false);
+				prefMenuListView.setMenu(menu);
+				prefMenuListView.setPreviousDisplayable(StationDetailsView.this);
+				showDisplayable(prefMenuListView, new BasicTransition());
+			}
+			
+		}));
 		
 		setSecondaryCommand(new Command("Retour", true, new IAction() {
 
@@ -61,7 +106,9 @@ public class StationDetailsView extends AbstractView {
 			}
 			
 		}));
+
 	}
+	
 
 	private void loadIconImage() {
 		try {

@@ -20,6 +20,7 @@ import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
+import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
 
 public class MenuView extends AbstractView {
 	
@@ -177,12 +178,12 @@ public class MenuView extends AbstractView {
 				
 				public void run(Object data) {
 					if (stationListView == null) {
-						stationListView = new StationListView(getMidlet());
+						stationListView = new StationListView(getMidlet(), "Liste des stations");
 						stationListView.setPreviousDisplayable(MenuView.this);
-						stationListView.loadListContent();						
+						stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
 					}
 					else {
-						stationListView.loadListContent();						
+						stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
 					}
 				}
 

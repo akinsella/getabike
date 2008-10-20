@@ -14,7 +14,7 @@ import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.service.IStationPersistenceService;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 
-public class StationLoaderProgressListener extends ProgressAdapter {
+public class StoreStationLoaderProgressListener extends ProgressAdapter {
 	
 	private static final Log log = LogFactory.getLog("STATION_LOADER_PROGRESS_LISTENER");
 
@@ -24,7 +24,7 @@ public class StationLoaderProgressListener extends ProgressAdapter {
 	private Station[] stationArray;
 	private IProgressDispatcher progressDispatcher;
 
-	public StationLoaderProgressListener(IProgressDispatcher progressDispatcher) {
+	public StoreStationLoaderProgressListener(IProgressDispatcher progressDispatcher) {
 		super();
 		this.progressDispatcher = progressDispatcher;
 		this.stationList = new Vector(4096);

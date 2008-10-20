@@ -9,11 +9,11 @@
 		  stationDetails="http://www.vhello.fr/service/stationdetails/{1}"
 		  bonus="false" tpe="false" state="false" />
 		  
-	<city key="BESANCON" name="Besançon" type="KML" active="false"
+	<city key="BESANCON" name="Besançon" type="VELIB" active="true"
 	      serviceName="VéloCité" 
 		  webSite="http://www.velocite.besancon.fr/" 
-		  stationList="http://maps.google.fr/maps/ms?ie=UTF8&amp;hl=fr&amp;oe=UTF8&amp;msa=0&amp;msid=106550840013014095785.0004425c2be2b0a0fc077&amp;output=kml" 
-		  stationDetails="" 
+		  stationList="http://www.velocite.besancon.fr/service/carto/" 
+		  stationDetails="http://www.velocite.besancon.fr/service/stationdetails/{1}" 
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="BRUXELLES" name="Bruxelles" type="DEFAULT" active="false"
@@ -72,6 +72,13 @@
 		  stationList="" 
 		  stationDetails="" 
 		  bonus="false" tpe="false" state="false" />
+		  
+	<city key="NANCY" name="Nancy" type="VELIB" active="true"
+		serviceName="VéloStan"
+		webSite="http://www.velostanlib.fr"
+		stationList="http://www.velostanlib.fr/service/carto/"
+		stationDetails="http://www.velostanlib.fr/service/stationdetails/{1}"
+		bonus="false" tpe="false" state="false" />
 		  
 	<city key="NANTES" name="Nantes" type="KML" active="false" 
 	      serviceName="Bicloo"

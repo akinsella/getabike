@@ -30,18 +30,22 @@ public class PrefListView extends PrefBaseListView {
 	private MenuItem languageMenuItem;
 
 	public PrefListView(AbstractMIDlet midlet) {
-		super(midlet);
+		super(midlet, "Préférences");
 		init();
 	}
 	
 	public PrefListView(AbstractMIDlet midlet, IReturnCallback returnCallback) {
-		super(midlet, returnCallback);
+		super(midlet, "Préférences", returnCallback);
 		init();
 	}
-	
+	 
 	private void init() {
-		setFullScreenMode(true);
-		setTitle("Préférences");
+		initActions();
+		initData();
+		initComponents();
+	}
+
+	protected void initComponents() {
 		
 		Menu menu = new Menu();
 		
@@ -68,7 +72,7 @@ public class PrefListView extends PrefBaseListView {
 					languageListView.setPreviousDisplayable(PrefListView.this);
 					showDisplayable(languageListView);
 				}
-				catch (LanguageManagerException e) {
+				catch (RuntimeException e) {
 					log.warn(e);
 					showAlertMessage("Problème de configuration", "Le fichier des langues n'est pas valide: " + e.getMessage());
 				}
@@ -109,6 +113,11 @@ public class PrefListView extends PrefBaseListView {
 		menu.addMenuItem(resetMenuItem);
 		
 		setMenu(menu);
+
+	}
+
+	protected void initData() {
+
 	}
 
 	public void beforeDisplayableSelection(AbstractDisplayable current, AbstractDisplayable next) {

@@ -25,25 +25,23 @@ public class LanguageListView extends MenuListView {
 	
 	private Vector languageList;
 
-	public LanguageListView(AbstractMIDlet midlet, IReturnCallback returnCallback) throws LanguageManagerException {
-		super(midlet, true, returnCallback);
+	public LanguageListView(AbstractMIDlet midlet, IReturnCallback returnCallback) {
+		super(midlet, "Choix de la langue", true, returnCallback);
 		init();
 	}
 
-	public LanguageListView(AbstractMIDlet midlet) throws LanguageManagerException {
-		super(midlet, true);
+	public LanguageListView(AbstractMIDlet midlet) {
+		super(midlet, "Choix de la langue", true);
 		init();
 	}
 	
-	private void init() throws LanguageManagerException {
-		setFullScreenMode(true);
-		setTitle("Choix de la langue");
+	private void init() {
 		initData();
 		initComponents();
 		initActions();
 	}
 	
-	private void initActions() {
+	protected void initActions() {
 
 		setSecondaryCommand(new Command("Annuler", true, new IAction() {
 
@@ -68,14 +66,19 @@ public class LanguageListView extends MenuListView {
 		}));
 	}
 
-	private void initData() throws LanguageManagerException {
+	protected void initData() {
 		languageList = LanguageManager.findAllLanguages();
 		log.info("languageList: " + languageList);
-		selectedLanguage = LanguageManager.findSelectedLanguage(languageList);
+		try {
+			selectedLanguage = LanguageManager.findSelectedLanguage(languageList);
+		}
+		catch (LanguageManagerException lme) {
+			throw new RuntimeException(lme.getMessage());
+		}
 		log.info("selectedLanguage: " + languageList);
 	}
 	
-	private void initComponents() {
+	protected void initComponents() {
 		Menu menu = new Menu();
 
 		Enumeration _enum = languageList.elements();

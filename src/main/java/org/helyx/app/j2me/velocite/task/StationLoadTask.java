@@ -19,13 +19,13 @@ public class StationLoadTask extends AbstractProgressTask {
 	
 	private static final Log log = LogFactory.getLog("STATION_LOAD_TASK");
 
-	private String stationNameFilter;
+	private IRecordFilter recordFilter;
 	private StationListView stationListView;
 		
-	public StationLoadTask(StationListView stationListView, String stationNameFilter) {
+	public StationLoadTask(StationListView stationListView, IRecordFilter recordFilter) {
 		super(log.getCategory());
 		this.stationListView = stationListView;
-		this.stationNameFilter = stationNameFilter;
+		this.recordFilter = recordFilter;
 	}
 
 	public void execute() {
@@ -41,14 +41,8 @@ public class StationLoadTask extends AbstractProgressTask {
 			stationPersistenceService = new StationPersistenceService();
 	
 			Vector stationList = new Vector(4096);
-
 			
-			IRecordFilter stationFilter = null;
-			if (stationNameFilter != null && stationNameFilter.length() > 0) {
-				stationFilter = new StationNameFilter(stationNameFilter);
-			}
-			
-			stationEnumeration = stationPersistenceService.createStationEnumeration(stationFilter);
+			stationEnumeration = stationPersistenceService.createStationEnumeration(recordFilter);
 
 			int count = 0;
 			while (stationEnumeration.hasMoreElements()) {

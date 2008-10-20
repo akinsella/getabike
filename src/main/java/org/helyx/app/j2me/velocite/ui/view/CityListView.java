@@ -29,25 +29,23 @@ public class CityListView extends MenuListView {
 	
 	private Vector cityList;
 
-	public CityListView(AbstractMIDlet midlet, IReturnCallback returnCallback) throws CityManagerException {
-		super(midlet, true, returnCallback);
+	public CityListView(AbstractMIDlet midlet, IReturnCallback returnCallback) {
+		super(midlet, "Choix de la ville", true, returnCallback);
 		init();
 	}
 
 	public CityListView(AbstractMIDlet midlet) throws CityManagerException {
-		super(midlet, true);
+		super(midlet, "Choix de la ville", true);
 		init();
 	}
 	
-	private void init() throws CityManagerException {
-		setFullScreenMode(true);
-		setTitle("Choix de la ville");
+	private void init() {
 		initData();
 		initComponents();
 		initActions();
 	}
 	
-	private void initActions() {
+	protected void initActions() {
 
 		setSecondaryCommand(new Command("Annuler", true, new IAction() {
 
@@ -81,14 +79,14 @@ public class CityListView extends MenuListView {
 		}));
 	}
 
-	private void initData() throws CityManagerException {
+	protected void initData() {
 		cityList = CityManager.findAllCities();
 		log.info("cityList: " + cityList);
 		selectedCity = CityManager.findSelectedCity(cityList);
 		log.info("selectedCity: " + cityList);
 	}
 	
-	private void initComponents() {
+	protected void initComponents() {
 		Menu menu = new Menu();
 
 		Enumeration _enum = cityList.elements();

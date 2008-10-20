@@ -19,16 +19,16 @@ public abstract class PrefBaseListView extends MenuListView {
 	
 	protected static final String PREF_VALUE = "PREF_VALUE";
 
-	public PrefBaseListView(AbstractMIDlet midlet) {
-		super(midlet, false);
+	public PrefBaseListView(AbstractMIDlet midlet, String title) {
+		super(midlet, title, false);
 	}
 	
-	public PrefBaseListView(AbstractMIDlet midlet, IReturnCallback returnCallback) {
-		super(midlet, false, returnCallback);
+	public PrefBaseListView(AbstractMIDlet midlet, String title, IReturnCallback returnCallback) {
+		super(midlet, title, false, returnCallback);
 	}
 
-	protected void paintItem(Graphics g, int offset, Rectangle itemClientArea) {
-		super.paintItem(g, offset, itemClientArea);
+	protected void paintItem(Graphics g, int offset, Rectangle itemClientArea, Object itemObject) {
+		super.paintItem(g, offset, itemClientArea, itemObject);
 		
 		MenuItem menuItem = getMenu().getMenuItem(offset);
 		String prefValue = (String)menuItem.getData(PREF_VALUE);

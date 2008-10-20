@@ -1,7 +1,6 @@
 package org.helyx.app.j2me.lib.ui.view.support;
 
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
@@ -10,42 +9,32 @@ import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
-import org.helyx.app.j2me.lib.ui.graphics.Shade;
 import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
-import org.helyx.app.j2me.lib.ui.util.GraphicsUtil;
-import org.helyx.app.j2me.lib.ui.view.AbstractView;
+import org.helyx.app.j2me.lib.ui.view.support.list.AbstractListView;
+import org.helyx.app.j2me.lib.ui.view.support.list.MenuElementProvider;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
-public class MenuListView extends AbstractView {
+public class MenuListView extends AbstractListView {
 
 	private static final Log log = LogFactory.getLog("MENU_LIST_VIEW");
-	
-	private int selectedOffset = 0;
-	private int topOffset = 0;
-	private int visibleItemCount = 0;
-	private boolean checkable = false;
-	
-	private Menu menu;
 
-	public MenuListView(AbstractMIDlet midlet, boolean checkable) {
-		super(midlet);
+	private boolean checkable = false;
+
+	public MenuListView(AbstractMIDlet midlet, String title, boolean checkable) {
+		super(midlet, title);
 		this.checkable = checkable;
-		init();
 	}
 
-	public MenuListView(AbstractMIDlet midlet, boolean checkable, IReturnCallback returnCallback) {
-		super(midlet);
+	public MenuListView(AbstractMIDlet midlet, String title, boolean checkable, IReturnCallback returnCallback) {
+		super(midlet, title);
 		setReturnCallback(returnCallback);
 		this.checkable = checkable;
-		init();
 	}
-
-	private void init() {
-		setTitle("Menu");
-		setFullScreenMode(true);
+	
+	protected void initActions() {
 
 		log.debug("Menu List View Checkable: " + checkable);
 		
@@ -70,106 +59,35 @@ public class MenuListView extends AbstractView {
 			}
 			
 		}));
+
+	}
+
+	protected void initComponents() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	protected void initData() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public Menu getMenu() {
-		return menu;
+		return ((MenuElementProvider)getElementProvider()).getMenu();
 	}
 
 	public void setMenu(Menu menu) {
-		this.menu = menu;
 		menu.setSelectedMenuItemIndex(0);
-		viewCanvas.repaint();
+		setElementProvider(new MenuElementProvider(menu));
 	}
 
-	protected void paint(Graphics g) {
-		int length = getMenu().menuItemCount();
-		boolean isEmpty = length == 0;
+	protected void paintItem(Graphics g, int offset, Rectangle itemClientArea, Object itemObject) {
+		super.paintItem(g, offset, itemClientArea, itemObject);
 		
-		if (!isEmpty && topOffset > length) {
-			topOffset = length - 1;
-		}
-		if (!isEmpty && selectedOffset > length) {
-			selectedOffset = length - 1;
-		}
-			
-		Rectangle clientArea = computeClientArea(g);
-		
-//		g.setColor(ColorUtil.WHITE);
-//		g.fillRect(clientArea.location.x, clientArea.location.y, clientArea.location.x + clientArea.size.width, clientArea.location.y + clientArea.size.height);
-        g.setFont(FontUtil.SMALL);
-        
-        if (isEmpty) {
-        	g.drawString("Aucun élément chargé", clientArea.location.x + clientArea.size.width / 2, clientArea.location.y + clientArea.size.height / 2, Graphics.HCENTER | Graphics.BASELINE);
-        	return ;
-        }
-        
-        int smallFontHeight = FontUtil.SMALL.getHeight();
-        int smallBoldFontHeight = FontUtil.SMALL_BOLD.getHeight();
-        
-        int itemHeight = 1 + smallFontHeight + 1 + smallBoldFontHeight + 1 + 1;
-        
-        visibleItemCount = clientArea.size.height / itemHeight;
-
-        for (int i = 0 ; i < visibleItemCount + 1 ; i++) {
-        	int y = clientArea.location.y + i * itemHeight;
-        	Rectangle itemClientArea = new Rectangle(clientArea.location.x, y, clientArea.size.width, itemHeight);
-    		if (topOffset + i < getMenu().menuItemCount()) {
-            	paintItem(g, topOffset + i, itemClientArea);
-    		}
-        }
-        paintScrollBar(g, length, topOffset, selectedOffset, visibleItemCount, clientArea);
-	}
-	
-	private void paintScrollBar(Graphics g, int length, int topOffset, int selectedOffset, int visibleItemCount, Rectangle clientArea) {
-		if (length == 0 || length <= visibleItemCount) {
-			return;
-		}
-		Color scrollBackgroundColor = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BACKGROUND);
-		g.setColor(scrollBackgroundColor.intValue());
-		g.fillRect(clientArea.location.x + clientArea.size.width - 4, clientArea.location.y, 4, clientArea.size.height);
-		
-		int yHeight = Math.max(clientArea.size.height / 8, clientArea.size.height * visibleItemCount / length);
-		int yPos = clientArea.location.y + (int)((clientArea.size.height - yHeight) * ((double)selectedOffset / ((double)length - 1)));
-		
-		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_DARK);
-		Color shadeColor2 = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_LIGHT);
-		Shade shade = new Shade(shadeColor1.intValue(), shadeColor2.intValue());
-		Rectangle area = new Rectangle(clientArea.location.x + clientArea.size.width - 4, yPos, 4, yHeight);
-		GraphicsUtil.fillShade(g, area, shade, true);
-
-		Color scrollBorderColor = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BACKGROUND);
-		g.setColor(scrollBorderColor.intValue());
-		g.drawLine(clientArea.location.x + clientArea.size.width - 5, clientArea.location.y, clientArea.location.x + clientArea.size.width - 5, clientArea.location.y + clientArea.size.height);
-	}
-	
-	protected boolean isItemSelected(int offset) {
-    	boolean isSelected = selectedOffset == offset;
-    	return isSelected;
-	}
-
-	protected void paintItem(Graphics g, int offset, Rectangle itemClientArea) {
-		
-		MenuItem menuItem = getMenu().getMenuItem(offset);
+		MenuItem menuItem = (MenuItem)itemObject;
     	
     	boolean isSelected = isItemSelected(offset);
-    	
-    	if (isSelected) {
-    		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_LIGHT);
-    		Color shadeColor2 = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_LIGHT);
-    		Shade shade = new Shade(shadeColor1.intValue(), shadeColor2.intValue());
-    		GraphicsUtil.fillShade(g, itemClientArea, shade, false);
-     	}
-    	else {
-    		Color listColor = getTheme().getColor(ThemeConstants.WIDGET_LIST);
-    		g.setColor(listColor.intValue());
-    		g.fillRect(itemClientArea.location.x, itemClientArea.location.y, itemClientArea.size.width, itemClientArea.size.height);
-    	}
-    	
-		Color listSeparatorColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_SEPARATOR);
-		g.setColor(listSeparatorColor.intValue());
-    	g.drawLine(itemClientArea.location.x, itemClientArea.location.y + itemClientArea.size.height - 1, itemClientArea.location.x + itemClientArea.size.width, itemClientArea.location.y + itemClientArea.size.height - 1);
-	
+
     	if (isSelected) {
     		Color menuListFontSelectedColor = getTheme().getColor(ThemeConstants.WIDGET_MENU_LIST_FONT_SELECTED);
     		g.setColor(menuListFontSelectedColor.intValue());
@@ -192,38 +110,14 @@ public class MenuListView extends AbstractView {
         }
  	}
 
-	protected void onKeyPressed(int keyCode) {
-		int gameAction = viewCanvas.getGameAction(keyCode);
-		log.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
-	    if (gameAction == GameCanvas.DOWN) {
-	    	scrollDown();
-	    }
-	    else if (gameAction == GameCanvas.UP) {
-			scrollUp();
+	protected void onShowItemSelected(Object object) {
+		if (checkable) {
+			return;
 		}
-	    else if (gameAction == GameCanvas.LEFT) {
-			returnToPreviousDisplayable();
-		}
-	    else if (!checkable && gameAction == GameCanvas.RIGHT) {
-	    	executeCurrentMenuItemSelectedAction();
-		}
-	    else if (!checkable && gameAction == GameCanvas.FIRE) {
-	    	executeCurrentMenuItemSelectedAction();
-	    }
+		executeSelectedMenuItemAction();
 	}
 
-	protected void onKeyRepeated(int keyCode) {
-		int gameAction = viewCanvas.getGameAction(keyCode);
-		log.debug("[onKeyRepeated] gameAction: " + gameAction + ", keyCode: " + keyCode);
-	    if (gameAction == GameCanvas.DOWN) {
-	    	scrollDown();
-	    }
-	    else if (gameAction == GameCanvas.UP) {
-			scrollUp();
-		}
-	}
-
-	private void executeCurrentMenuItemSelectedAction() {
+	private void executeSelectedMenuItemAction() {
 		MenuItem menuItem = getMenu().getSelectedMenuItem();
 		log.debug("menuItem: " + menuItem);
 		if (menuItem.getAction() != null) {
@@ -231,37 +125,17 @@ public class MenuListView extends AbstractView {
 		}
 	}
 
-	private void scrollUp() {
-		if (selectedOffset > 0) {
-			selectedOffset--;
-		}
-		if (selectedOffset < topOffset) {
-			topOffset = selectedOffset;
-		}
-		getMenu().setSelectedMenuItemIndex(selectedOffset);
-		log.debug("Scroll Up - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset);
-		viewCanvas.repaint();
+	protected void onScrollDown() {
+		updateMenuSelected();
 	}
 
-	private void scrollDown() {
-		int length = getMenu().menuItemCount();
-		if (selectedOffset + 1 < length) {
-			selectedOffset++;
-		}
-		if (length <= visibleItemCount) {
-			topOffset = 0;
-		}
-		else {
-			if (topOffset >= length - visibleItemCount) {
-				topOffset = length - visibleItemCount;
-			}
-			if (topOffset + visibleItemCount <= selectedOffset) {
-				topOffset = selectedOffset - visibleItemCount + 1;
-			}	
-		}
+	protected void onScrollUp() {
+		updateMenuSelected();
+	}
+	
+	private void updateMenuSelected() {
 		getMenu().setSelectedMenuItemIndex(selectedOffset);
-		log.debug("Scroll Down - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset + ", visibleItemCount: " + visibleItemCount + ", length: " + length);
-		viewCanvas.repaint();
 	}
 
+	
 }

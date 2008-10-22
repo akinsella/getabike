@@ -29,5 +29,30 @@ public class DialogUtil {
 		
 		return dialogView;	
 	}
+
+	public static DialogView showYesNoDialog(AbstractMIDlet midlet, AbstractDisplayable displayable, String title, String text, AbstractDialogResultCallback dialogResultCallback) {
+		DialogView dialogView = new DialogView(midlet, title, text, DialogCommand.YES, DialogCommand.NO);
+		dialogView.setPreviousDisplayable(displayable);
+		dialogView.setReturnCallback(dialogResultCallback);
+		displayable.showDisplayable(dialogView);
+		
+		return dialogView;	
+	}
 	
+	public static void showAlertMessage(AbstractMIDlet midlet, AbstractDisplayable displayable, String title, String message) {
+		DialogView dialogView = new DialogView(midlet, title, message, DialogCommand.OK);
+		dialogView.setPreviousDisplayable(displayable);
+		dialogView.setReturnCallback(new AbstractDialogResultCallback() {
+			public void onResult(DialogView dialogView) {
+				int resultValue = dialogView.getResultCode();
+				switch (resultValue) {
+					case DialogResultConstants.OK:
+						dialogView.returnToPreviousDisplayable();
+						break;
+				}
+			}
+		});
+		displayable.showDisplayable(dialogView);
+	}
+
 }

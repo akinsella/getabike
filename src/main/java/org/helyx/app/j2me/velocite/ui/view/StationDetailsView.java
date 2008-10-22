@@ -8,10 +8,8 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
-import org.helyx.app.j2me.lib.filter.IObjectFilter;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
-import org.helyx.app.j2me.lib.math.MathUtil;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
@@ -22,13 +20,13 @@ import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
 import org.helyx.app.j2me.lib.ui.view.transition.BasicTransition;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
-import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
@@ -43,10 +41,13 @@ public class StationDetailsView extends AbstractView {
 	
 	private Station station;
 	private StationDetails stationDetails;
+	
+	private boolean nestedView = false;
 
-	public StationDetailsView(AbstractMIDlet midlet, Station station)  {
+	public StationDetailsView(AbstractMIDlet midlet, Station station, boolean nestedView)  {
 		super(midlet);
 		this.station = station;
+		this.nestedView = nestedView;
 		init();
 	}
 	
@@ -60,41 +61,73 @@ public class StationDetailsView extends AbstractView {
 	}
 		
 	private void initActions() {
+		
 		setThirdCommand(new Command("Menu", true, new IAction() {
 
-		
 			public void run(Object data) {
+
+				final MenuListView menuListView = new MenuListView(getMidlet(), "Menu", false);
+
 				Menu menu = new Menu();
-				menu.addMenuItem(new MenuItem("Station Proches", new IAction() {
+				
+				menu.addMenuItem(new MenuItem("Ajouter aux favoris", new IAction() {
 					
 					public void run(Object data) {
-						StationListView stationListView = new StationListView(getMidlet(), "Station Proches");
-						stationListView.setPreviousDisplayable(StationDetailsView.this);
-						
-						UIStationLoaderProgressListener slpl = new UIStationLoaderProgressListener(stationListView, new IObjectFilter() {
-							public boolean matches(Object object) {
-								Station station = (Station)object;
-								double distanceInMeters = MathUtil.distance(
-										StationDetailsView.this.station.localization.lat,
-										StationDetailsView.this.station.localization.lng,
-										station.localization.lat,
-										station.localization.lng, MathUtil.KM) * 1000;
-								
-								log.info("Distance is: '" + distanceInMeters + "' meters between " + StationDetailsView.this.station + " and " + station);
-								return true;
-							}
-							
-						});
-						stationListView.loadListContent(slpl);
-						
+						DialogUtil.showAlertMessage(getMidlet(), menuListView, "Attention", "La fonction n'est pas encore implémentée.");
 					}
 
 				}));
 
-				MenuListView prefMenuListView = new MenuListView(getMidlet(), "Menu", false);
-				prefMenuListView.setMenu(menu);
-				prefMenuListView.setPreviousDisplayable(StationDetailsView.this);
-				showDisplayable(prefMenuListView, new BasicTransition());
+				if (!nestedView) {
+					menu.addMenuItem(new MenuItem("Voir les stations proches", new IAction() {
+						
+						public void run(Object data) {
+							final MenuListView nearStationMenuListView = new MenuListView(getMidlet(), "Menu", false);
+
+							Menu nearStationMenu = new Menu();
+							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 250 m", new IAction() {
+								
+								public void run(Object data) {
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 250, false, true);
+								}
+			
+							}));
+							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 500 m", new IAction() {
+								
+								public void run(Object data) {
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 500, false, true);
+								}
+			
+							}));
+							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 1 km", new IAction() {
+								
+								public void run(Object data) {
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 1000, false, true);
+								}
+			
+							}));
+							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 2 km", new IAction() {
+								
+								public void run(Object data) {
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 2000, false, true);
+								}
+			
+							}));
+							
+							nearStationMenuListView.setMenu(nearStationMenu);
+							nearStationMenuListView.setPreviousDisplayable(menuListView);
+							showDisplayable(nearStationMenuListView, new BasicTransition());
+						}
+
+					}));
+
+					
+				}
+				
+				menuListView.setMenu(menu);
+				menuListView.setPreviousDisplayable(StationDetailsView.this);
+
+				showDisplayable(menuListView, new BasicTransition());
 			}
 			
 		}));
@@ -289,6 +322,10 @@ public class StationDetailsView extends AbstractView {
         g.drawString(free, contentRightPos - mediumFont.stringWidth(free), height + (mediumFontHeight + 1) * 2, Graphics.TOP | Graphics.LEFT);
         g.drawString("Hors service: ", contentLeftPos, height + (mediumFontHeight + 1) * 3, Graphics.TOP | Graphics.LEFT); 
         g.drawString(hs, contentRightPos - mediumFont.stringWidth(hs), height + (mediumFontHeight + 1) * 3, Graphics.TOP | Graphics.LEFT);
+	}
+
+	public boolean isNestedView() {
+		return nestedView;
 	}
 
 }

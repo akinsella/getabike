@@ -14,7 +14,7 @@ import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.displayable.listener.DisplayableListener;
 import org.helyx.app.j2me.lib.ui.theme.Theme;
-import org.helyx.app.j2me.lib.ui.util.DialogUtil;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
 import org.helyx.app.j2me.lib.ui.view.transition.BasicTransition;
 import org.helyx.app.j2me.lib.ui.view.transition.IViewTransition;
 
@@ -162,11 +162,7 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	}
 	
 	public void showAlertMessage(String title, String message) {
-		DialogUtil.showAlertMessage(getMidlet(), getDisplayable(), title, message);			
-	}
-
-	public void showAlertMessage(String title, String message, int timeout) {
-		DialogUtil.showAlertMessage(getMidlet(), getDisplayable(), title, message, timeout);			
+		DialogUtil.showAlertMessage(getMidlet(), this, title, message);			
 	}
 	
 }

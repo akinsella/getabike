@@ -14,10 +14,13 @@ import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.theme.Theme;
 import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.util.ColorUtil;
-import org.helyx.app.j2me.lib.ui.util.DialogUtil;
 import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.AbstractDialogResultCallback;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogResultConstants;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogView;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
@@ -172,13 +175,13 @@ public class MenuView extends AbstractView {
 
 		private void createMenu() {
 			menu = new Menu();
-			menu.addMenuItem(new MenuItem("Chercher une station", new IAction() {
+			menu.addMenuItem(new MenuItem("Liste des stations", new IAction() {
 				
 				private StationListView stationListView;
 				
 				public void run(Object data) {
 					if (stationListView == null) {
-						stationListView = new StationListView(getMidlet(), "Liste des stations");
+						stationListView = new StationListView(getMidlet(), "Liste des stations", false);
 						stationListView.setPreviousDisplayable(MenuView.this);
 						stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
 					}
@@ -190,12 +193,12 @@ public class MenuView extends AbstractView {
 			}));
 			menu.addMenuItem(new MenuItem("Stations favorites", false, new IAction() {
 				public void run(Object data) {
-					DialogUtil.showAlertMessage(getMidlet(), getDisplayable(), "Information", "Station favories");
+					DialogUtil.showAlertMessage(getMidlet(), MenuView.this, "Information", "Station favories");
 				}
 			}));
 			menu.addMenuItem(new MenuItem("Itineraire", false, new IAction() {
 				public void run(Object data) {
-					DialogUtil.showAlertMessage(getMidlet(), getDisplayable(), "Information", "Itinéraire");
+					DialogUtil.showAlertMessage(getMidlet(), MenuView.this, "Information", "Itinéraire");
 				}
 			}));
 			menu.addMenuItem(new MenuItem("Préférences", true, new IAction() {
@@ -228,7 +231,22 @@ public class MenuView extends AbstractView {
 			}));
 			menu.addMenuItem(new MenuItem("Quitter", new IAction() {
 				public void run(Object data) {
-					exit();
+					DialogUtil.showYesNoDialog(getMidlet(), MenuView.this, "Question", "Etes-vous sûr de vouloir quitter l'application ?", new AbstractDialogResultCallback() {
+
+						public void onResult(DialogView dialogView) {
+							int resultValue = dialogView.getResultCode();
+							switch (resultValue) {
+								case DialogResultConstants.YES:
+									Log.setThresholdLevel(Log.DEBUG);
+									exit();
+									break;
+								case DialogResultConstants.NO:
+									Log.setThresholdLevel(Log.INFO);
+									dialogView.returnToPreviousDisplayable();
+									break;
+							}
+						}
+					});
 				}
 			}));
 		}

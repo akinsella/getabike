@@ -267,12 +267,12 @@ public class Log {
 		return thresholdLevel;
 	}
 
-	public void setThresholdLevel(int thresholdLevel) {
-		Log.thresholdLevel = thresholdLevel;
-	}
-
 	public String getCategory() {
 		return category;
+	}
+
+	public static void setThresholdLevel(int thresholdLevel) {
+		Log.thresholdLevel = thresholdLevel;
 	}
 
 	public void setCategory(String category) {

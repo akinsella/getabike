@@ -26,12 +26,18 @@ public class MenuListView extends AbstractListView {
 	public MenuListView(AbstractMIDlet midlet, String title, boolean checkable) {
 		super(midlet, title);
 		this.checkable = checkable;
+		init();
 	}
 
 	public MenuListView(AbstractMIDlet midlet, String title, boolean checkable, IReturnCallback returnCallback) {
 		super(midlet, title);
 		setReturnCallback(returnCallback);
 		this.checkable = checkable;
+		init();
+	}
+	
+	private void init() {
+		initActions();
 	}
 	
 	protected void initActions() {

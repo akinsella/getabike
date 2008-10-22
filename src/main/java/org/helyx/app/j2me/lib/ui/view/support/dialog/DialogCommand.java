@@ -7,6 +7,9 @@ public class DialogCommand {
 
 	private static final Log log = LogFactory.getLog("DIALOG_COMMAND");
 
+	public static final DialogCommand YES = new DialogCommand("Oui", DialogResultConstants.YES);
+	public static final DialogCommand NO = new DialogCommand("Non", DialogResultConstants.NO);
+
 	public static final DialogCommand OK = new DialogCommand("Ok", DialogResultConstants.OK);
 	public static final DialogCommand CANCEL = new DialogCommand("Annuler", DialogResultConstants.CANCEL);
 

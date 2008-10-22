@@ -7,7 +7,7 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.ITask;
 import org.helyx.app.j2me.lib.task.ITaskFactory;
-import org.helyx.app.j2me.velocite.task.LanguageConfigurationTask;
+import org.helyx.app.j2me.velocite.data.language.task.LanguageConfigurationTask;
 import org.helyx.app.j2me.velocite.task.SoftKeyConfigurationTask;
 
 public class EachRunTaskFactory implements ITaskFactory {

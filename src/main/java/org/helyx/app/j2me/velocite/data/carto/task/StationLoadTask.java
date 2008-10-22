@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.task;
+package org.helyx.app.j2me.velocite.data.carto.task;
 
 import java.util.Vector;
 

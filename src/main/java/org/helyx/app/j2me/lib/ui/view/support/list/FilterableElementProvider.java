@@ -37,9 +37,8 @@ public class FilterableElementProvider implements IElementProvider {
 		for (int i = 0 ; i < length ; i++) {
 			Object item = elementProvider.get(i);
 			if (objectFilter.matches(item)) {
-				continue;
+				itemList.addElement(item);
 			}
-			itemList.addElement(item);
 		}
 		this.itemList = itemList;
 	}

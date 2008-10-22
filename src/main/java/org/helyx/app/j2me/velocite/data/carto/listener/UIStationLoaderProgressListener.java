@@ -1,20 +1,15 @@
 package org.helyx.app.j2me.velocite.data.carto.listener;
 
-import javax.microedition.midlet.MIDlet;
-
 import org.helyx.app.j2me.lib.filter.IObjectFilter;
-import org.helyx.app.j2me.lib.filter.IRecordFilter;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
-import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
-import org.helyx.app.j2me.lib.ui.util.DialogUtil;
+import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
 import org.helyx.app.j2me.lib.ui.view.support.list.ArrayElementProvider;
-import org.helyx.app.j2me.lib.ui.view.support.list.DynamicFilterableElementProvider;
+import org.helyx.app.j2me.lib.ui.view.support.list.FilterableElementProvider;
 import org.helyx.app.j2me.lib.ui.view.support.list.IElementProvider;
 import org.helyx.app.j2me.lib.ui.view.transition.BasicTransition;
-import org.helyx.app.j2me.velocite.data.carto.filter.StationNameFilter;
 import org.helyx.app.j2me.velocite.ui.view.StationListView;
 
 public class UIStationLoaderProgressListener extends ProgressAdapter {
@@ -40,7 +35,7 @@ public class UIStationLoaderProgressListener extends ProgressAdapter {
 			case ProgressEventType.ON_SUCCESS:
 				IElementProvider elementProvider = new ArrayElementProvider((Object[])eventData);
 				if (objectFilter != null) {
-					IElementProvider filteredElementProvider = new DynamicFilterableElementProvider(elementProvider, objectFilter);
+					IElementProvider filteredElementProvider = new FilterableElementProvider(elementProvider, objectFilter);
 					stationListView.setItems(filteredElementProvider);
 				}
 				else {
@@ -56,7 +51,7 @@ public class UIStationLoaderProgressListener extends ProgressAdapter {
 			case ProgressEventType.ON_ERROR:
 				Throwable throwable = (Throwable)eventData;
 				getLog().warn(throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
-				DialogUtil.showAlertMessage(stationListView.getMidlet(), stationListView.getDisplayable(), "Erreur", throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
+				DialogUtil.showAlertMessage(stationListView.getMidlet(), stationListView, "Erreur", throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
 				stationListView.showDisplayable(stationListView, new BasicTransition());
 				break;
 				

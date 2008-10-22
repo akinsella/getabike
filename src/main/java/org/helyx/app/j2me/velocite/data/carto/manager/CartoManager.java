@@ -4,10 +4,15 @@ import org.helyx.app.j2me.lib.content.provider.ContentProviderFactoryNotFoundExc
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.content.provider.IContentProviderFactory;
+import org.helyx.app.j2me.lib.filter.IObjectFilter;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.math.MathUtil;
 import org.helyx.app.j2me.lib.task.IProgressTask;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.velocite.data.carto.filter.StationDistanceFilter;
+import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.DefaultStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VeloPlusStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VeloVStationDetailsContentProviderFactory;
@@ -17,6 +22,7 @@ import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloStationConten
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloVStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.velocite.ui.view.StationListView;
 
 public class CartoManager {
 
@@ -117,6 +123,17 @@ public class CartoManager {
 		finally {
 			stationPersistenceService.dispose();
 		}	
+	}
+
+	public static void showStationByDistance(AbstractDisplayable displayable, AbstractDisplayable previousDisplayable, final Station station, final int distanceMax, boolean recordFilterEnabled, boolean nestedView) {
+		StationListView stationListView = new StationListView(displayable.getMidlet(), "Station Proches", nestedView);
+		stationListView.setPreviousDisplayable(previousDisplayable);
+		stationListView.setRecordFilterEnabled(recordFilterEnabled);
+		
+		UIStationLoaderProgressListener slpl = new UIStationLoaderProgressListener(
+				stationListView, 
+				new StationDistanceFilter(station, distanceMax));
+		stationListView.loadListContent(slpl);
 	}
 	
 }

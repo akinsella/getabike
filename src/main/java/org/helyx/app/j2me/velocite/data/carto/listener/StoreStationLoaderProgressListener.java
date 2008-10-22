@@ -16,7 +16,7 @@ import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 
 public class StoreStationLoaderProgressListener extends ProgressAdapter {
 	
-	private static final Log log = LogFactory.getLog("STATION_LOADER_PROGRESS_LISTENER");
+	private static final Log log = LogFactory.getLog("STORE_STATION_LOADER_PROGRESS_LISTENER");
 
 	private IStationPersistenceService stationPersistenceService;
 	

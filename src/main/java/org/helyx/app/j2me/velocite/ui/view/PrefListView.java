@@ -28,6 +28,8 @@ public class PrefListView extends PrefBaseListView {
 	
 	private MenuItem cityMenuItem;
 	private MenuItem languageMenuItem;
+	private MenuItem debugMenuItem;
+	private MenuItem resetMenuItem;
 
 	public PrefListView(AbstractMIDlet midlet) {
 		super(midlet, "Préférences");
@@ -79,8 +81,29 @@ public class PrefListView extends PrefBaseListView {
 			}
 		});
 		
+		debugMenuItem = new MenuItem("Debug mode", new IAction() {
+			public void run(Object data) {
+				DialogUtil.showYesNoDialog(getMidlet(), PrefListView.this, "Question", "Activer le mode Debug ?", new AbstractDialogResultCallback() {
+
+					public void onResult(DialogView dialogView) {
+						int resultValue = dialogView.getResultCode();
+						switch (resultValue) {
+							case DialogResultConstants.YES:
+								Log.setThresholdLevel(Log.DEBUG);
+								dialogView.returnToPreviousDisplayable();
+								break;
+							case DialogResultConstants.NO:
+								Log.setThresholdLevel(Log.INFO);
+								dialogView.returnToPreviousDisplayable();
+								break;
+						}
+					}
+				});
+			}
+		});
 		
-		MenuItem resetMenuItem = new MenuItem("Reset", new IAction() {
+		
+		resetMenuItem = new MenuItem("Reset", new IAction() {
 			public void run(Object data) {
 				PrefManager.writePrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, true);
 				DialogUtil.showConfirmDialog(getMidlet(), PrefListView.this, "Confirmation", "Etes-vous sur de vouloir reseter l'application ?", new AbstractDialogResultCallback() {
@@ -110,6 +133,7 @@ public class PrefListView extends PrefBaseListView {
 		
 		menu.addMenuItem(cityMenuItem);
 		menu.addMenuItem(languageMenuItem);
+		menu.addMenuItem(debugMenuItem);
 		menu.addMenuItem(resetMenuItem);
 		
 		setMenu(menu);
@@ -124,6 +148,7 @@ public class PrefListView extends PrefBaseListView {
 		if (next == this) {
 			fetchCityPref();
 			fetchLanguagePref();
+			fetchDebugMode();
 		}
 		super.beforeDisplayableSelection(current, next);
 	}
@@ -156,6 +181,10 @@ public class PrefListView extends PrefBaseListView {
 		catch (LanguageManagerException e) {
 			log.debug(e);
 		}
+	}
+
+	private void fetchDebugMode() {
+		debugMenuItem.setData(PREF_VALUE, Log.getThresholdLevel() == Log.DEBUG ? "Oui" : "Non");
 	}
 
 }

@@ -10,5 +10,7 @@ public class DialogResultConstants {
 	public static final int CONFIRM = 5;
 	public static final int ABORT = 6;
 	public static final int RETRY = 7;
+	public static final int YES = 8;
+	public static final int NO = 9;
 	
 }

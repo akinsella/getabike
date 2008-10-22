@@ -80,6 +80,11 @@ public abstract class AbstractListView extends AbstractView {
 		this.elementProvider = elementprovider;
 		repaint();
 	}
+	
+	protected void resetPosition() {
+		selectedOffset = 0;
+		topOffset = 0;
+	}
 
 	protected void paint(Graphics g) {
 		int length = getItemArrayLength();

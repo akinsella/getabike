@@ -1,4 +1,6 @@
--dontobfuscate
+-overloadaggressively
+-defaultpackage ''
+-allowaccessmodification
 -dontusemixedcaseclassnames
 -keep public class * extends javax.microedition.midlet.MIDlet
 -keep public class org.kxml2.io.KXmlParser

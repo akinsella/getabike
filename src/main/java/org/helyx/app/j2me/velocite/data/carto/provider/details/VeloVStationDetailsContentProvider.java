@@ -10,16 +10,12 @@ import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
-import org.helyx.app.j2me.lib.stream.StreamUtil;
 import org.helyx.app.j2me.lib.task.ProgressEventType;
-import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
-import org.helyx.app.j2me.lib.xml.xpp.XppTreeWalker;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.basics4me.io.BufferedInputStream;
-import org.json.me.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 
 

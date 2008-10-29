@@ -9,7 +9,6 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.manager.TaskManager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
@@ -28,12 +27,7 @@ public class CityListView extends MenuListView {
 	private City selectedCity;
 	
 	private Vector cityList;
-
-	public CityListView(AbstractMIDlet midlet, IReturnCallback returnCallback) {
-		super(midlet, "Choix de la ville", true, returnCallback);
-		init();
-	}
-
+	
 	public CityListView(AbstractMIDlet midlet) throws CityManagerException {
 		super(midlet, "Choix de la ville", true);
 		init();
@@ -50,7 +44,7 @@ public class CityListView extends MenuListView {
 		setSecondaryCommand(new Command("Annuler", true, new IAction() {
 
 			public void run(Object data) {
-				returnToPreviousDisplayable();
+				fireReturnCallback();
 			}
 			
 		}));
@@ -67,12 +61,12 @@ public class CityListView extends MenuListView {
 					IProgressTask progressTask = CartoManager.refreshAll(city);
 					progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher()));
 
-					TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CityListView.this, getPreviousDisplayable());
+					TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CityListView.this, getReturnCallback());
 
 				}
 				catch (CartoManagerException e) {
 					showAlertMessage("Erreur", e.getMessage() != null ? e.getMessage() : "CityManagerException");
-					returnToPreviousDisplayable();
+					fireReturnCallback();
 				}
 			}
 			

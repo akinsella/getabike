@@ -15,7 +15,7 @@ import org.helyx.app.j2me.lib.ui.widget.Command;
 
 public class DialogView extends AbstractView {
 	
-	private static final Log log = LogFactory.getLog("MESSAGE_VIEW");
+	private static final Log log = LogFactory.getLog("DIALOG_VIEW");
 		
 	private String text;
 	
@@ -61,7 +61,7 @@ public class DialogView extends AbstractView {
 
 			public void run(Object data) {
 				resultCode = dialogCommand.getResultCode();
-				fireReturnCallback(DialogView.this);
+				fireReturnCallback();
 			}
 			
 		});

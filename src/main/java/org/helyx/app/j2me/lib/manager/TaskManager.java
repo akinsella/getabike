@@ -6,6 +6,7 @@ import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
+import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.support.LoadTaskView;
 
 public class TaskManager {
@@ -20,35 +21,27 @@ public class TaskManager {
 		runLoadTaskView(taskDescription, progressTask, midlet, currentDisplayable, null);
 	}
 	
-	public static void runLoadTaskView(String taskDescription, IProgressTask progressTask, final AbstractMIDlet midlet, final AbstractDisplayable currentDisplayable, final AbstractDisplayable targetDisplayable) {
+	public static void runLoadTaskView(String taskDescription, IProgressTask progressTask, final AbstractMIDlet midlet, final AbstractDisplayable currentDisplayable, final IReturnCallback returnCallback) {
 
 		final LoadTaskView loadTaskView = new LoadTaskView(midlet, taskDescription, progressTask);
-		if (targetDisplayable != null) {
-			loadTaskView.setPreviousDisplayable(targetDisplayable);
+		loadTaskView.setReturnCallback(returnCallback);
 
-			progressTask.addProgressListener(new ProgressAdapter() {
+		progressTask.addProgressListener(new ProgressAdapter() {
 
-				public void onCancel(String eventMessage, Object eventData) {
-					if (targetDisplayable != null) {
-						loadTaskView.returnToPreviousDisplayable();
-					}
-				}
+			public void onCancel(String eventMessage, Object eventData) {
+				loadTaskView.fireReturnCallback();
+			}
 
-				public void onError(String eventMessage, Object eventData) {
+			public void onError(String eventMessage, Object eventData) {
 //					DialogUtil.showAlertMessage(midlet, currentDisplayable.getDisplayable(), "Erreur", eventMessage != null ? eventMessage : ErrorUtil.getMessage(eventData));
-					if (targetDisplayable != null) {
-						loadTaskView.returnToPreviousDisplayable();
-					}
-				}
+				loadTaskView.fireReturnCallback();
+			}
 
-				public void onSuccess(String eventMessage, Object eventData) {
-					if (targetDisplayable != null) {
-						loadTaskView.returnToPreviousDisplayable();
-					}
-				}
-				
-			});
-		}
+			public void onSuccess(String eventMessage, Object eventData) {
+				loadTaskView.fireReturnCallback();
+			}
+			
+		});
 		
 		currentDisplayable.showDisplayable(loadTaskView);
 		loadTaskView.startTask();

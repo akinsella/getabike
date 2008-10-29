@@ -11,10 +11,13 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
+import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
+import org.helyx.app.j2me.velocite.ui.view.CityListView;
 
 public class CityManager {
 
@@ -120,6 +123,31 @@ public class CityManager {
 		}
 		finally {
 			cityPersistenceService.dispose();
+		}
+	}
+	
+	public static void ShowCityListView(AbstractDisplayable abstractDisplayable, AbstractDisplayable previousDisplayable) {
+		CityListView cityListView;
+		try {
+			cityListView = new CityListView(abstractDisplayable.getMidlet());
+			cityListView.setPreviousDisplayable(previousDisplayable);
+			abstractDisplayable.showDisplayable(cityListView);
+		}
+		catch (CityManagerException e) {
+			log.warn(e);
+			abstractDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
+		}
+	}
+	
+	public static void ShowCityListView(AbstractDisplayable abstractDisplayable, IReturnCallback returnCallback) {
+		CityListView cityListView;
+		try {
+			cityListView = new CityListView(abstractDisplayable.getMidlet());
+			cityListView.setReturnCallback(returnCallback);
+		}
+		catch (CityManagerException e) {
+			log.warn(e);
+			abstractDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
 		}
 	}
 	

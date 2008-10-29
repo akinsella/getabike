@@ -195,7 +195,7 @@ public abstract class AbstractListView extends AbstractView {
 			scrollUp();
 		}
 	    else if (gameAction == GameCanvas.LEFT) {
-			returnToPreviousDisplayable();
+			fireReturnCallback();
 		}
 	    else if (gameAction == GameCanvas.RIGHT) {
 			onRightKeyPressed();

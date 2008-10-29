@@ -11,6 +11,7 @@ import org.helyx.app.j2me.lib.i18n.ResourceBundle;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.displayable.listener.DisplayableListener;
 import org.helyx.app.j2me.lib.ui.theme.Theme;
@@ -28,8 +29,6 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	
 	private AbstractMIDlet midlet;
 	
-	private AbstractDisplayable previousDisplayable;
-	
 	private IReturnCallback returnCallback;
 
 	public AbstractDisplayable(AbstractMIDlet midlet) {
@@ -42,15 +41,11 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	public void setReturnCallback(IReturnCallback returnCallback) {
 		this.returnCallback = returnCallback;
 	}
-	
-	public void setPreviousDisplayable(AbstractDisplayable previousDisplayable) {
-		this.previousDisplayable = previousDisplayable;
+
+	public IReturnCallback getReturnCallback() {
+		return returnCallback;
 	}
 
-	public AbstractDisplayable getPreviousDisplayable() {
-		return previousDisplayable;
-	}
-	
 	public void exit() {
 		getMidlet().exit();
 	}
@@ -99,25 +94,21 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	public void showDisplayable(AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
 		showDisplayableInternal(this, targetDisplayable, canvasTransition);
 	}
+	
+	public void setPreviousDisplayable(AbstractDisplayable previousDisplayable) {
+		setReturnCallback(new BasicReturnCallback(this));
+	}
 
-	public void returnToPreviousDisplayable() {
-		returnToPreviousDisplayable(new BasicTransition());
+	public void setPreviousDisplayable(AbstractDisplayable previousDisplayable, IViewTransition canvasTransition) {
+		setReturnCallback(new BasicReturnCallback(previousDisplayable, canvasTransition));
 	}
 	
-	public void returnToPreviousDisplayable(IViewTransition viewTransition) {
-		showDisplayableInternal(this, previousDisplayable, viewTransition);
-	}
-
 	public boolean hasReturnCallback() {
 		return returnCallback != null;
 	}
 	
 	public void fireReturnCallback() {
-		fireReturnCallback(null);
-	}
-	
-	public void fireReturnCallback(Object data) {
-		returnCallback.onReturn(data);
+		returnCallback.onReturn(this);
 	}
 
 	private void showDisplayableInternal(AbstractDisplayable srcDisplayable, AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
@@ -140,7 +131,7 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 			Display.getDisplay(getMidlet()).setCurrent(targetDisplayable.getDisplayable());
 		}
 	}
-
+	
 	public AbstractMIDlet getMidlet() {
 		return midlet;
 	}

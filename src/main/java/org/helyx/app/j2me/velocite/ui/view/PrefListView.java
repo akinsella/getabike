@@ -6,12 +6,7 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
-import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.support.PrefBaseListView;
-import org.helyx.app.j2me.lib.ui.view.support.dialog.AbstractDialogResultCallback;
-import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogResultConstants;
-import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
-import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogView;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.PrefConstants;
@@ -21,6 +16,7 @@ import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManagerException;
+import org.helyx.app.j2me.velocite.util.UtilManager;
 
 public class PrefListView extends PrefBaseListView {
 
@@ -33,11 +29,6 @@ public class PrefListView extends PrefBaseListView {
 
 	public PrefListView(AbstractMIDlet midlet) {
 		super(midlet, "Préférences");
-		init();
-	}
-	
-	public PrefListView(AbstractMIDlet midlet, IReturnCallback returnCallback) {
-		super(midlet, "Préférences", returnCallback);
 		init();
 	}
 	 
@@ -53,80 +44,26 @@ public class PrefListView extends PrefBaseListView {
 		
 		cityMenuItem = new MenuItem("Villes", new IAction() {
 			public void run(Object data) {
-				CityListView cityListView;
-				try {
-					cityListView = new CityListView(getMidlet());
-					cityListView.setPreviousDisplayable(PrefListView.this);
-					showDisplayable(cityListView);
-				}
-				catch (CityManagerException e) {
-					log.warn(e);
-					showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
-				}
+				CityManager.ShowCityListView(PrefListView.this, PrefListView.this);
 			}
 		});
 		
 		languageMenuItem = new MenuItem("Langues", new IAction() {
 			public void run(Object data) {
-				LanguageListView languageListView;
-				try {
-					languageListView = new LanguageListView(getMidlet());
-					languageListView.setPreviousDisplayable(PrefListView.this);
-					showDisplayable(languageListView);
-				}
-				catch (RuntimeException e) {
-					log.warn(e);
-					showAlertMessage("Problème de configuration", "Le fichier des langues n'est pas valide: " + e.getMessage());
-				}
+				LanguageManager.showLanguageView(PrefListView.this, PrefListView.this);
 			}
 		});
 		
 		debugMenuItem = new MenuItem("Debug mode", new IAction() {
 			public void run(Object data) {
-				DialogUtil.showYesNoDialog(getMidlet(), PrefListView.this, "Question", "Activer le mode Debug ?", new AbstractDialogResultCallback() {
-
-					public void onResult(DialogView dialogView) {
-						int resultValue = dialogView.getResultCode();
-						switch (resultValue) {
-							case DialogResultConstants.YES:
-								Log.setThresholdLevel(Log.DEBUG);
-								dialogView.returnToPreviousDisplayable();
-								break;
-							case DialogResultConstants.NO:
-								Log.setThresholdLevel(Log.INFO);
-								dialogView.returnToPreviousDisplayable();
-								break;
-						}
-					}
-				});
+				UtilManager.changeDebugMode(PrefListView.this, PrefListView.this);
 			}
 		});
 		
 		
 		resetMenuItem = new MenuItem("Reset", new IAction() {
 			public void run(Object data) {
-				PrefManager.writePrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, true);
-				DialogUtil.showConfirmDialog(getMidlet(), PrefListView.this, "Confirmation", "Etes-vous sur de vouloir reseter l'application ?", new AbstractDialogResultCallback() {
-
-					public void onResult(DialogView dialogView) {
-						int resultValue = dialogView.getResultCode();
-						switch (resultValue) {
-							case DialogResultConstants.OK:
-								DialogUtil.showMessageDialog(getMidlet(), PrefListView.this, "Attention", "L'application va quitter. L'application doit être relancée.", new AbstractDialogResultCallback() {
-
-									public void onResult(DialogView dialogView) {
-										getMidlet().exit();								
-									}
-								});
-
-								break;
-							case DialogResultConstants.CANCEL:
-								dialogView.returnToPreviousDisplayable();
-								break;
-						}
-					}
-					
-				});
+				UtilManager.reset(PrefListView.this, PrefListView.this);
 			}
 		});
 		
@@ -137,7 +74,6 @@ public class PrefListView extends PrefBaseListView {
 		menu.addMenuItem(resetMenuItem);
 		
 		setMenu(menu);
-
 	}
 
 	protected void initData() {

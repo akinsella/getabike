@@ -11,10 +11,12 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.provider.DefaultLanguageContentProvider;
 import org.helyx.app.j2me.velocite.data.language.service.LanguagePersistenceService;
+import org.helyx.app.j2me.velocite.ui.view.LanguageListView;
 
 public class LanguageManager {
 
@@ -115,6 +117,19 @@ public class LanguageManager {
 		}
 		finally {
 			languagePersistenceService.dispose();
+		}
+	}
+	
+	public static void showLanguageView(AbstractDisplayable abstractDisplayable, AbstractDisplayable previousDisplayable) {
+		LanguageListView languageListView;
+		try {
+			languageListView = new LanguageListView(abstractDisplayable.getMidlet());
+			languageListView.setPreviousDisplayable(previousDisplayable);
+			abstractDisplayable.showDisplayable(languageListView);
+		}
+		catch (RuntimeException e) {
+			log.warn(e);
+			abstractDisplayable.showAlertMessage("Problème de configuration", "Le fichier des langues n'est pas valide: " + e.getMessage());
 		}
 	}
 	

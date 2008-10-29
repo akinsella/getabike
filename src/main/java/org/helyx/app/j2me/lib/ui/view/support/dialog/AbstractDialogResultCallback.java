@@ -1,5 +1,6 @@
 package org.helyx.app.j2me.lib.ui.view.support.dialog;
 
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 
 public abstract class AbstractDialogResultCallback implements IReturnCallback, IDialogResultCallback {
@@ -8,8 +9,8 @@ public abstract class AbstractDialogResultCallback implements IReturnCallback, I
 		super(); 
 	}
 	
-	public void onReturn(Object data) {
-		DialogView dialogView = (DialogView)data;
+	public void onReturn(AbstractDisplayable currentDisplayable) {
+		DialogView dialogView = (DialogView)currentDisplayable;
 		onResult(dialogView);
 	}
 

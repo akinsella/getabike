@@ -9,6 +9,7 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.ProgressListener;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
@@ -33,7 +34,7 @@ public class StationListView extends AbstractListView {
 	private Menu menu;
 	private MenuListView prefMenuListView;
 	
-	private boolean recordFilterEnabled = false;
+	private boolean recordFilterEnabled = true;
 	private boolean nestedView = false;
 
 	public StationListView(AbstractMIDlet midlet, String title, boolean nestedView) {
@@ -74,7 +75,7 @@ public class StationListView extends AbstractListView {
 		setSecondaryCommand(new Command("Retour", true, new IAction() {
 	
 			public void run(Object data) {
-				returnToPreviousDisplayable();
+				fireReturnCallback();
 			}
 			
 		}));
@@ -94,7 +95,7 @@ public class StationListView extends AbstractListView {
 				
 				showDisplayable(new StationSearchView(getMidlet(), new IReturnCallback() {
 
-					public void onReturn(Object data) {
+					public void onReturn(AbstractDisplayable currentDisplayable) {
 						String newStationNameFilter = getStationNameFilter();
 						if ( (previousStationNameFilter == null  && newStationNameFilter != null ) ||
 							 (previousStationNameFilter != null && !previousStationNameFilter.equals(newStationNameFilter)) ) {
@@ -184,5 +185,5 @@ public class StationListView extends AbstractListView {
 	public boolean isNestedView() {
 		return nestedView;
 	}
-	
+
 }

@@ -22,10 +22,6 @@ public abstract class PrefBaseListView extends MenuListView {
 	public PrefBaseListView(AbstractMIDlet midlet, String title) {
 		super(midlet, title, false);
 	}
-	
-	public PrefBaseListView(AbstractMIDlet midlet, String title, IReturnCallback returnCallback) {
-		super(midlet, title, false, returnCallback);
-	}
 
 	protected void paintItem(Graphics g, int offset, Rectangle itemClientArea, Object itemObject) {
 		super.paintItem(g, offset, itemClientArea, itemObject);

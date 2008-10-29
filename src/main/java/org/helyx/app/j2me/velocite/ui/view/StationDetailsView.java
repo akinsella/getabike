@@ -135,7 +135,7 @@ public class StationDetailsView extends AbstractView {
 		setSecondaryCommand(new Command("Retour", true, new IAction() {
 
 			public void run(Object data) {
-				returnToPreviousDisplayable();
+				fireReturnCallback();
 			}
 			
 		}));
@@ -157,7 +157,7 @@ public class StationDetailsView extends AbstractView {
 		int gameAction = viewCanvas.getGameAction(keyCode);
 		log.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.LEFT) {
-			returnToPreviousDisplayable();
+	    	fireReturnCallback();
 		}
 	}
 

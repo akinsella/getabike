@@ -41,7 +41,7 @@ public class AboutView extends AbstractView {
 		setSecondaryCommand(new Command("Retour", true, new IAction() {
 
 			public void run(Object data) {
-				returnToPreviousDisplayable();
+				fireReturnCallback();
 			}
 			
 		}));
@@ -64,7 +64,7 @@ public class AboutView extends AbstractView {
 	protected void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
 	    if (gameAction == GameCanvas.LEFT) {
-	    	returnToPreviousDisplayable();
+	    	fireReturnCallback();
 		}
 	}
 	

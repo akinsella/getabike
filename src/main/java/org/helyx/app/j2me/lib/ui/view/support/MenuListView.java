@@ -6,7 +6,6 @@ import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
@@ -25,13 +24,6 @@ public class MenuListView extends AbstractListView {
 
 	public MenuListView(AbstractMIDlet midlet, String title, boolean checkable) {
 		super(midlet, title);
-		this.checkable = checkable;
-		init();
-	}
-
-	public MenuListView(AbstractMIDlet midlet, String title, boolean checkable, IReturnCallback returnCallback) {
-		super(midlet, title);
-		setReturnCallback(returnCallback);
 		this.checkable = checkable;
 		init();
 	}
@@ -61,7 +53,7 @@ public class MenuListView extends AbstractListView {
 		setSecondaryCommand(new Command("Retour", true, new IAction() {
 
 			public void run(Object data) {
-				returnToPreviousDisplayable();
+				fireReturnCallback();
 			}
 			
 		}));

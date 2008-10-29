@@ -9,6 +9,9 @@ import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
+import org.helyx.app.j2me.lib.ui.displayable.callback.BasicReturnCallback;
+import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.theme.Theme;
@@ -24,6 +27,9 @@ import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogView;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
+import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
+import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 
 public class MenuView extends AbstractView {
 	
@@ -173,20 +179,57 @@ public class MenuView extends AbstractView {
 			}
 		}
 
+		private StationListView stationListView;
+		
+		private void showStationListView() {
+			
+			if (stationListView == null) {
+				stationListView = new StationListView(getMidlet(), "Liste des stations", false);
+				stationListView.setPreviousDisplayable(MenuView.this);
+				stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
+			}
+			else {
+				stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
+			}
+
+		}
+
 		private void createMenu() {
 			menu = new Menu();
 			menu.addMenuItem(new MenuItem("Liste des stations", new IAction() {
 				
-				private StationListView stationListView;
-				
 				public void run(Object data) {
-					if (stationListView == null) {
-						stationListView = new StationListView(getMidlet(), "Liste des stations", false);
-						stationListView.setPreviousDisplayable(MenuView.this);
-						stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
+					City selectedCity;
+					try {
+						selectedCity = CityManager.findSelectedCity();
+						if (selectedCity != null) {
+							CityListView cityListView = new CityListView(getMidlet());
+							cityListView.setReturnCallback(new IReturnCallback() {
+
+								public void onReturn(AbstractDisplayable currentDisplayable) {
+									
+									try {
+										City city = CityManager.findSelectedCity();
+										if (city != null) {
+											showStationListView();
+										}
+										else {
+											showAlertMessage("Erreur", "Aucune ville sélectionnée. Vous devez sélectionner une ville.");
+										}
+									}
+									catch (CityManagerException e) {
+										log.warn(e);
+										showAlertMessage("Erreur", "Aucune ville sélectionnée. Vous devez sélectionner une ville.");
+									}
+								}
+								
+							});
+							showDisplayable(cityListView);
+						}
 					}
-					else {
-						stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
+					catch (CityManagerException e) {
+						showAlertMessage("Erreur", "Problème de sélection de la ville.");
+						log.warn(e);
 					}
 				}
 
@@ -242,7 +285,7 @@ public class MenuView extends AbstractView {
 									break;
 								case DialogResultConstants.NO:
 									Log.setThresholdLevel(Log.INFO);
-									dialogView.returnToPreviousDisplayable();
+									dialogView.fireReturnCallback();
 									break;
 							}
 						}

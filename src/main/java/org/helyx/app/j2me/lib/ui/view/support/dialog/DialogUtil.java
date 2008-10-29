@@ -47,7 +47,7 @@ public class DialogUtil {
 				int resultValue = dialogView.getResultCode();
 				switch (resultValue) {
 					case DialogResultConstants.OK:
-						dialogView.returnToPreviousDisplayable();
+						dialogView.fireReturnCallback();
 						break;
 				}
 			}

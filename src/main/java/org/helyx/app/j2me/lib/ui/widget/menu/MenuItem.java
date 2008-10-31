@@ -152,8 +152,8 @@ public class MenuItem {
 		
 		return resultObject;
 	}
-	
-	public void clearData(String key) {
+
+	public void removeData(String key) {
 		checkDataMap();
 		dataMap.remove(key);
 	}
@@ -162,5 +162,6 @@ public class MenuItem {
 		checkDataMap();
 		dataMap.clear();
 	}
+
 
 }

@@ -81,6 +81,8 @@ public class PrefListView extends PrefBaseListView {
 	}
 
 	public void beforeDisplayableSelection(AbstractDisplayable current, AbstractDisplayable next) {
+		log.info("Current: " + current);
+		log.info("Next: " + next);
 		if (next == this) {
 			fetchCityPref();
 			fetchLanguagePref();
@@ -99,6 +101,9 @@ public class PrefListView extends PrefBaseListView {
 					cityMenuItem.setData(PREF_VALUE, city.name);
 				}
 			}
+			else {
+				cityMenuItem.removeData("city.key");
+			}
 		}
 		catch (CityManagerException e) {
 			log.debug(e);
@@ -112,6 +117,9 @@ public class PrefListView extends PrefBaseListView {
 				languageMenuItem.setData("language.key", languageKey);
 				Language language = LanguageManager.findSelectedLanguage();
 				languageMenuItem.setData(PREF_VALUE, language.name);
+			}
+			else {
+				cityMenuItem.removeData("language.key");
 			}
 		}
 		catch (LanguageManagerException e) {

@@ -38,7 +38,7 @@ public class DialogUtil {
 	public static void showAlertMessage(final AbstractDisplayable currentDisplayable, String title, String message) {
 		DialogView dialogView = new DialogView(currentDisplayable.getMidlet(), title, message, DialogCommand.OK);
 		dialogView.setReturnCallback(new AbstractDialogResultCallback() {
-			public void onResult(DialogView dialogView) {
+			public void onResult(DialogView dialogView, Object data) {
 				int resultValue = dialogView.getResultCode();
 				switch (resultValue) {
 					case DialogResultConstants.OK:

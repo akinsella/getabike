@@ -23,13 +23,13 @@ public class DataCleanUpTaskFactory implements ITaskFactory {
 		ITask[] tasks = new ITask[] {
 			new BasicTask("Cleaning up cities related data") {
 				public void execute() {
-					CityManager.cleanUpSavedData();
+					CityManager.cleanUpData();
 				}
 			}, 
 			
 			new BasicTask("Cleaning up station related data") {
 				public void execute() {
-					CartoManager.cleanUpSavedData();
+					CartoManager.cleanUpData();
 				}
 			}, 
 			

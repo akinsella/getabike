@@ -39,7 +39,7 @@ public class ApplicationUpdateTaskFactory implements ITaskFactory {
 			tasksToRun.addElement(new BasicTask("Cleaning up City related data") {
 				public void execute() {
 					log.info("Cleaning up City related data");
-					CityManager.cleanUpSavedData();
+					CityManager.cleanUpData();
 				}
 			});
 			

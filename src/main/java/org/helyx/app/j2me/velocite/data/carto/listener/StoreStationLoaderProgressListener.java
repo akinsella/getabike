@@ -7,7 +7,7 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.sort.FastQuickSort;
 import org.helyx.app.j2me.lib.task.IProgressDispatcher;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.comparator.StationNameComparator;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
@@ -32,7 +32,7 @@ public class StoreStationLoaderProgressListener extends ProgressAdapter {
 
 	public void onStart(String eventMessage, Object eventData) {
 		stationPersistenceService = new StationPersistenceService();
-   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Suppression des stations");
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Suppression des stations");
 		stationPersistenceService.removeAllStations();
 	}
 
@@ -43,23 +43,23 @@ public class StoreStationLoaderProgressListener extends ProgressAdapter {
 			int size = stationList.size();
 			
 			if (size % 5 == 0) {
-		   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, stationList.size() + " stations chargées");
+		   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, stationList.size() + " stations chargées");
 			}
 		}
 	}
 	
 	public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
    		try {
-   			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, stationList.size() + " stations chargées");
+   			progressDispatcher.fireEvent(EventType.ON_PROGRESS, stationList.size() + " stations chargées");
 	 		stationArray = new Station[stationList.size()];
 			stationList.copyInto(stationArray);
 			stationList = null;
 			System.gc();
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Tri des données");
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Tri des données");
 			try { new FastQuickSort(new StationNameComparator()).sort(stationArray); } catch (Exception e) { log.warn(e); }
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Sauvegarde des stations");
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Sauvegarde des stations");
 			stationPersistenceService.saveStationArray(stationArray);
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Chargement terminé");
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Chargement terminé");
 			stationArray = null;
 			System.gc();
    		}

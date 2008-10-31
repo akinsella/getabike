@@ -108,9 +108,13 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	}
 	
 	public void fireReturnCallback() {
-		log.info("ReturnCallback Fired: " + this + ", " + returnCallback);
+		fireReturnCallback(null);
+	}
+	
+	public void fireReturnCallback(Object data) {
+		log.info("ReturnCallback Fired from: '" + this + "', Return callback: '" + returnCallback + "', data: '" + data + "'");
 		if (returnCallback != null) {
-			returnCallback.onReturn(this);
+			returnCallback.onReturn(this, data);
 		}
 	}
 
@@ -136,21 +140,12 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	
 	protected void changeDisplayable(AbstractDisplayable srcDisplayable, AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
 		Displayable currentDisplayable = Display.getDisplay(getMidlet()).getCurrent();
-		log.info("いいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい");
-		log.info("srcDisplayable: " + srcDisplayable);
-		log.info("currentDisplayable: " + currentDisplayable);
-		log.info("targetDisplayable: " + targetDisplayable);
-		log.info("targetDisplayable.getDisplayable(): " + targetDisplayable.getDisplayable());
 
 		if (srcDisplayable != null) {
 			srcDisplayable.onLeave();
 		}
 		if (currentDisplayable == null || currentDisplayable != targetDisplayable.getDisplayable()) {
-			log.info("Changing displayable to this displayable: " + targetDisplayable.getDisplayable());
-			log.info("Display: " + Display.getDisplay(getMidlet()));
 			Display.getDisplay(getMidlet()).setCurrent(targetDisplayable.getDisplayable());
-			log.info("Current Displayable: " + Display.getDisplay(getMidlet()).getCurrent());
-			log.info("isShown ? " + Display.getDisplay(getMidlet()).getCurrent().isShown());
 //			if (targetDisplayable.getDisplayable() instanceof Canvas) {
 //				Canvas canvas = (Canvas)targetDisplayable.getDisplayable();
 //				canvas.repaint();

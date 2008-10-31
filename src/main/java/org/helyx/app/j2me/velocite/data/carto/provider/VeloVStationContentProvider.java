@@ -9,7 +9,7 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.stream.StreamUtil;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
@@ -49,7 +49,7 @@ public class VeloVStationContentProvider extends AbstractContentProvider {
 		log.debug("Loading Lyon carto info ...");
 
 		try {
-			progressDispatcher.fireEvent(ProgressEventType.ON_START);
+			progressDispatcher.fireEvent(EventType.ON_START);
 			int quartierLength = city.quartierList.size();
 			for (int i = 0 ; i < quartierLength ; i++) {
 				Quartier quartier = (Quartier)city.quartierList.elementAt(i);
@@ -57,7 +57,7 @@ public class VeloVStationContentProvider extends AbstractContentProvider {
 				InputStreamProvider cartoInputStreamProvider = null;
 
 				if (cancel) {
-					progressDispatcher.fireEvent(ProgressEventType.ON_CANCEL);
+					progressDispatcher.fireEvent(EventType.ON_CANCEL);
 					return ;
 				}
 
@@ -77,7 +77,7 @@ public class VeloVStationContentProvider extends AbstractContentProvider {
 					
 					for (int markerOffset = 0 ; markerOffset < markerCount ; markerOffset++) {
 						if (cancel) {
-							progressDispatcher.fireEvent(ProgressEventType.ON_CANCEL);
+							progressDispatcher.fireEvent(EventType.ON_CANCEL);
 							return ;
 						}
 
@@ -104,11 +104,11 @@ public class VeloVStationContentProvider extends AbstractContentProvider {
 				}
 				
 			}
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);			
+			progressDispatcher.fireEvent(EventType.ON_SUCCESS);			
 		}
 		catch (Throwable t) {
     		log.warn(t);
-			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
+			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 	}
 

@@ -14,7 +14,7 @@ import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.AbstractProgressTask;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.listener.LanguageLoaderProgressListener;
@@ -35,9 +35,9 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 	
 	public void execute() {
 		try {
-			progressDispatcher.fireEvent(ProgressEventType.ON_START);
+			progressDispatcher.fireEvent(EventType.ON_START);
 	
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche de config. existante...");
+			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche de config. existante...");
 			String languageSelectedKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
 			
 			if (languageSelectedKey == null) {
@@ -47,11 +47,11 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 				progressTask.addProgressListener(new ProgressAdapter() {
 
 					public void onProgress(String eventMessage, Object eventData) {
-						progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, eventMessage, eventData);
+						progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage, eventData);
 					}
 
 					public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
-						progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, eventMessage, eventData);
+						progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage, eventData);
 					}
 					
 				});
@@ -68,11 +68,11 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 			Language selectedLanguage = LanguageManager.findSelectedLanguage();
 			midlet.setLocale(new Locale(selectedLanguage.localeCountry, selectedLanguage.localeLanguage));
 
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
+			progressDispatcher.fireEvent(EventType.ON_SUCCESS);
 		}
 		catch(Throwable t) {
 			log.warn(t);
-			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t.getMessage(), t);
+			progressDispatcher.fireEvent(EventType.ON_ERROR, t.getMessage(), t);
 		}
 		
 	}

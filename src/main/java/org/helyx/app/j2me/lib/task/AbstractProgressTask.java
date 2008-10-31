@@ -29,7 +29,7 @@ public abstract class AbstractProgressTask extends Thread implements IProgressTa
 		}
     	catch(Throwable t) {
     		log.warn(t);
-    		progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
+    		progressDispatcher.fireEvent(EventType.ON_ERROR, t);
     	}
  	}
 

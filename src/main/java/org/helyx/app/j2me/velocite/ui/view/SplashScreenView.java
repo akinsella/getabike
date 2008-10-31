@@ -81,7 +81,7 @@ public class SplashScreenView extends AbstractView {
 					log.info("City data need to be reseted");
 					tasksToRun.addElement(new BasicTask("Cleaning up cities related data") {
 						public void execute() {
-							CityManager.cleanUpSavedData();
+							CityManager.cleanUpData();
 							PrefManager.removePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
 						}
 					});
@@ -131,7 +131,7 @@ public class SplashScreenView extends AbstractView {
 											"Erreur", 
 											"L'application doit être redémarée: " + errorMessage, 
 											new AbstractDialogResultCallback() {
-												public void onResult(DialogView dialogView) {
+												public void onResult(DialogView dialogView, Object data) {
 													getLog().info(SplashScreenView.log.getCategory(), "Writing reset demand to prefs");
 													PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 													getMidlet().exit();								

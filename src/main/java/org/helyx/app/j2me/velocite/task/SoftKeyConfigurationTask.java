@@ -6,7 +6,7 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.AbstractProgressTask;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.lib.ui.util.KeyMap;
 import org.helyx.app.j2me.lib.ui.util.KeyMapConfig;
 import org.helyx.app.j2me.lib.ui.util.KeyUtil;
@@ -25,9 +25,9 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 	
 	public void execute() {
 		try {
-			progressDispatcher.fireEvent(ProgressEventType.ON_START);
+			progressDispatcher.fireEvent(EventType.ON_START);
 	
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche de config. existante...");
+			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche de config. existante...");
 			String softKeyDetectionTypeValue = PrefManager.readPrefString(PrefConstants.SOFT_KEY_DETECTION_TYPE);
 			
 			if (KeyUtil.SOFT_KEY_DETECTION_PLATFORM.equals(softKeyDetectionTypeValue)) {
@@ -40,8 +40,8 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 				}
 				else {
 					KeyUtil.keyMapConfig = platformKeyMapConfig;
-					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
-					progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
+					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
+					progressDispatcher.fireEvent(EventType.ON_SUCCESS);
 					return ;
 				}
 			}
@@ -56,8 +56,8 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 					
 					KeyUtil.keyMapConfig = new KeyMapConfig("CACHED_VALUES", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
 					log.debug("[SoftKey detection] Associating softkeys from cached values: " + KeyUtil.keyMapConfig);
-					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
-					progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
+					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
+					progressDispatcher.fireEvent(EventType.ON_SUCCESS);
 					return ;
 				}
 				catch(Throwable t) {
@@ -68,7 +68,7 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 			int leftSoftKey = 0;
 			int rightSoftKey = 0;
 
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche auto. en cours ...");
+			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche auto. en cours ...");
 			for (int i = 0 ; i <= 256 ; i++) {
 				String positiveKeyName = null;
 				String negativeKeyName = null;
@@ -102,10 +102,10 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 				
 				if (positiveKeyName != null || negativeKeyName != null) {
 					if (positiveKeyName != null) {
-						progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Touche détectée: '" + positiveKeyName + "'");
+						progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Touche détectée: '" + positiveKeyName + "'");
 					}
 					if (negativeKeyName != null) {
-						progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Touche détectée: '" + negativeKeyName + "'");
+						progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Touche détectée: '" + negativeKeyName + "'");
 					}
 					log.debug("[SoftKey detection] index=" + i + ", positiveKeyName='" + positiveKeyName + "', negativeKeyName='" + negativeKeyName + "', leftSoftKey=" + leftSoftKey + ", rightSoftKey=" + rightSoftKey);
 				}
@@ -115,25 +115,25 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 					log.debug("[SoftKey detection] Associating softkeys by automatic detection: " + KeyUtil.keyMapConfig);
 
 					KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_AUTO_DETECTION, leftSoftKey, rightSoftKey);
-					progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
-					progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
+					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
+					progressDispatcher.fireEvent(EventType.ON_SUCCESS);
 					return ;
 				}	
 			}
 			
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche auto. échouée");
+			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche auto. échouée");
 			log.info("[SoftKey detection] Automatic detection failed");
 			log.info("[SoftKey detection] Attempting to associate softkeys by platform");
 			
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Recherche par plateforme...");
+			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche par plateforme...");
 			KeyMapConfig platformKeyMapConfig = findPlatformKeyMapConfig();
 			
 			if (platformKeyMapConfig != null) {
 				KeyUtil.cleanUpSoftKeyPref();
 				PrefManager.writePref(PrefConstants.SOFT_KEY_DETECTION_TYPE, KeyUtil.SOFT_KEY_DETECTION_DEFAULT);
 				KeyUtil.keyMapConfig = platformKeyMapConfig;
-				progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Configuration des touches Ok");
-				progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
+				progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
+				progressDispatcher.fireEvent(EventType.ON_SUCCESS);
 				return ;
 			}
 			
@@ -143,12 +143,12 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 
 			KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_DEFAULT, KeyUtil.keyMapConfig.keyMapArray[0].softKeyLeft, KeyUtil.keyMapConfig.keyMapArray[0].softKeyRight);
 			log.debug("[SoftKey detection] Associating softkeys to defaults: " + KeyUtil.keyMapConfig);
-			progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Config. par défaut");
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
+			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Config. par défaut");
+			progressDispatcher.fireEvent(EventType.ON_SUCCESS);
 		}
 		catch(Throwable t) {
 			log.warn(t);
-			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t.getMessage(), t);
+			progressDispatcher.fireEvent(EventType.ON_ERROR, t.getMessage(), t);
 		}
 		
 	}

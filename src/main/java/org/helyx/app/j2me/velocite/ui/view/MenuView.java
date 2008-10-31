@@ -202,10 +202,10 @@ public class MenuView extends AbstractView {
 					try {
 						selectedCity = CityManager.findSelectedCity();
 						if (selectedCity == null) {
-							CityListView cityListView = new CityListView(getMidlet(), false);
+							CityListView cityListView = new CityListView(getMidlet(), true);
 							cityListView.setReturnCallback(new IReturnCallback() {
 
-								public void onReturn(AbstractDisplayable currentDisplayable) {
+								public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
 									
 									try {
 										City city = CityManager.findSelectedCity();
@@ -280,7 +280,7 @@ public class MenuView extends AbstractView {
 				public void run(Object data) {
 					DialogUtil.showYesNoDialog(MenuView.this, "Question", "Etes-vous sûr de vouloir quitter l'application ?", new AbstractDialogResultCallback() {
 
-						public void onResult(DialogView dialogView) {
+						public void onResult(DialogView dialogView, Object data) {
 							int resultValue = dialogView.getResultCode();
 							switch (resultValue) {
 								case DialogResultConstants.YES:

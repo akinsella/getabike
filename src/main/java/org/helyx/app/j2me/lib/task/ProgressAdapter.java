@@ -14,26 +14,26 @@ public class ProgressAdapter implements ProgressListener {
 	public void onEvent(int eventType, String eventMessage, Object eventData) {
 		
 		logEventMessage(eventType, eventMessage, eventData);
-		if (eventType == ProgressEventType.ON_START) {
+		if (eventType == EventType.ON_START) {
 	   		onStart(eventMessage, eventData);
 		}
-		if (eventType == ProgressEventType.ON_PROGRESS) {
+		if (eventType == EventType.ON_PROGRESS) {
 	   		onProgress(eventMessage, eventData);
 		}
-		else if (eventType >= ProgressEventType.ON_CUSTOM) {
+		else if (eventType >= EventType.ON_CUSTOM) {
 	   		onCustomEvent(eventType, eventMessage, eventData);
 		}
-		else if (eventType == ProgressEventType.ON_SUCCESS) {
+		else if (eventType == EventType.ON_SUCCESS) {
 			onBeforeCompletion(eventType, eventMessage, eventData);
 	   		onSuccess(eventMessage, eventData);
 	   		onAfterCompletion(eventType, eventMessage, eventData);
 		}
-		else if (eventType == ProgressEventType.ON_CANCEL) {
+		else if (eventType == EventType.ON_CANCEL) {
 			onBeforeCompletion(eventType, eventMessage, eventData);
 	   		onCancel(eventMessage, eventData);
 	   		onAfterCompletion(eventType, eventMessage, eventData);
 		}
-		else if (eventType == ProgressEventType.ON_ERROR) {
+		else if (eventType == EventType.ON_ERROR) {
 			onBeforeCompletion(eventType, eventMessage, eventData);
 	   		onError(eventMessage, eventData);
 	   		onAfterCompletion(eventType, eventMessage, eventData);
@@ -42,7 +42,7 @@ public class ProgressAdapter implements ProgressListener {
 
 	private void logEventMessage(int eventType, String eventMessage, Object eventData) {
 		StringBuffer messageSb = new StringBuffer();
-		messageSb.append("[").append(ProgressEventType.getEventTypeName(eventType)).append("]");
+		messageSb.append("[").append(EventType.getEventTypeName(eventType)).append("]");
 		if (eventMessage != null) {
 			messageSb.append(" message: " + eventMessage);
 		}

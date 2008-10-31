@@ -12,8 +12,10 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
+import org.helyx.app.j2me.lib.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
@@ -50,8 +52,6 @@ public class CityManager {
 
 		String citySelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.CITY_SELECTED_KEY);
 		log.info("Selected City key: " + citySelectedKeyPrefValue);
-		String cityDefaultKeyPrefValue = PrefManager.readPrefString(PrefConstants.CITY_DEFAULT_KEY);
-		log.info("Default City key: " + citySelectedKeyPrefValue);
 		
 		Enumeration _enum = cityList.elements();
 		while(_enum.hasMoreElements()) {
@@ -61,18 +61,12 @@ public class CityManager {
 				break;
 			}
 		}
-
-		if (selectedCity == null) {
-			_enum = cityList.elements();
-			while(_enum.hasMoreElements()) {
-				City city = (City)_enum.nextElement();
-				if (city.active && city.key.equals(cityDefaultKeyPrefValue)) {
-					selectedCity = city;
-					PrefManager.writePref(PrefConstants.CITY_SELECTED_KEY, selectedCity.key);
-					break;
-				}
-			}
-		}
+//
+//		if (selectedCity == null && cityList.size() > 0) {
+//			City city = (City)cityList.elementAt(0);
+//			selectedCity = city;
+//			PrefManager.writePref(PrefConstants.CITY_SELECTED_KEY, selectedCity.key);
+//		}
 		
 		if (selectedCity == null) {
 			log.debug("No Selected city");
@@ -114,9 +108,7 @@ public class CityManager {
 		PrefManager.writePref(PrefConstants.CITY_SELECTED_KEY, city.key);
 	}
 	
-	public static void cleanUpSavedData() {
-		PrefManager.removePref(PrefConstants.CITY_DEFAULT_KEY);
-		PrefManager.removePref(PrefConstants.CITY_SELECTED_KEY);
+	public static void cleanUpData() {
 		CityPersistenceService cityPersistenceService = new CityPersistenceService();
 		try {
 			cityPersistenceService.removeAllCities();
@@ -127,16 +119,7 @@ public class CityManager {
 	}
 	
 	public static void showCityListView(AbstractDisplayable currentDisplayable) {
-		CityListView cityListView;
-		try {
-			cityListView = new CityListView(currentDisplayable.getMidlet());
-			cityListView.setPreviousDisplayable(currentDisplayable);
-			currentDisplayable.showDisplayable(cityListView);
-		}
-		catch (CityManagerException e) {
-			log.warn(e);
-			currentDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
-		}
+		showCityListView(currentDisplayable, new BasicReturnCallback(currentDisplayable));
 	}
 	
 	public static void showCityListView(AbstractDisplayable currentDisplayable, IReturnCallback returnCallback) {
@@ -150,6 +133,10 @@ public class CityManager {
 			log.warn(e);
 			currentDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
 		}
+	}
+
+	public static void removeSelectedCity() {
+		PrefManager.removePref(PrefConstants.CITY_SELECTED_KEY);
 	}
 	
 }

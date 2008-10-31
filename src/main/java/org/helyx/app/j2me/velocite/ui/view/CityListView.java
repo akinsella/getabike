@@ -4,18 +4,21 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.action.IAction;
+import org.helyx.app.j2me.lib.content.provider.ContentProviderFactoryNotFoundExcepton;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.manager.TaskManager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
+import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
+import org.helyx.app.j2me.lib.ui.displayable.callback.ProgressTaskReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
+import org.helyx.app.j2me.velocite.data.app.manager.VeloCiteManager;
 import org.helyx.app.j2me.velocite.data.carto.listener.StoreStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
@@ -71,16 +74,30 @@ public class CityListView extends MenuListView {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());
 				MenuItem menuItem = getMenu().getCheckedMenuItem();
 				
-				City city = (City)menuItem.getData();
-				CityManager.saveSelectedCity(city);
+				final City city = (City)menuItem.getData();
+				
 				try {
-					IProgressTask progressTask = CartoManager.refreshAll(city);
+					IProgressTask progressTask = CartoManager.createUpdateCityStationsTask(city);
 					progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher()));
 
-					TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CityListView.this, getReturnCallback());
+					TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CityListView.this, new ProgressTaskReturnCallback() {
+
+						public void onError(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
+							log.info("Error: " + eventMessage + ", data: " + eventData);
+							VeloCiteManager.cleanUpCitySelectedData();
+							getReturnCallback().onReturn(currentDisplayable, eventData);
+						}
+
+						public void onSuccess(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
+							log.info("Success: " + eventMessage + ", data: " + eventData);
+							CityManager.saveSelectedCity(city);
+							getReturnCallback().onReturn(currentDisplayable, eventData);
+						}
+						
+					});
 				}
-				catch (CartoManagerException e) {
-					showAlertMessage("Erreur", e.getMessage() != null ? e.getMessage() : "CityManagerException");
+				catch (ContentProviderFactoryNotFoundExcepton e) {
+					showAlertMessage("Erreur", "Impossible de charger les stations pour la ville sélectionnée.");
 					fireReturnCallback();
 				}
 			}

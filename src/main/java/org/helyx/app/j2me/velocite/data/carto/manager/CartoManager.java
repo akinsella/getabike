@@ -4,10 +4,8 @@ import org.helyx.app.j2me.lib.content.provider.ContentProviderFactoryNotFoundExc
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.content.provider.IContentProviderFactory;
-import org.helyx.app.j2me.lib.filter.IObjectFilter;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
-import org.helyx.app.j2me.lib.math.MathUtil;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
@@ -39,41 +37,36 @@ public class CartoManager {
 		super();
 	}
 	
-	public static IProgressTask refreshAll(City city) throws CartoManagerException {
+	public static IProgressTask createUpdateCityStationsTask(City city) throws ContentProviderFactoryNotFoundExcepton {
 
-		try {
-			IContentProviderFactory cpf = null;
-			if (VELIB.equals(city.type)) {
-				cpf = new DefaultStationContentProviderFactory(city);
-			}
-			else if (LE_VELO.equals(city.type)) {
-				cpf = new VeloStationContentProviderFactory(city);
-			}
-			else if (VELO.equals(city.type)) {
-				cpf = new VeloStationContentProviderFactory(city);
-			}
-			else if (SEVICI.equals(city.type)) {
-				cpf = new DefaultStationContentProviderFactory(city);
-			}
-			else if (VELO_V.equals(city.type)) {
-				cpf = new VeloVStationContentProviderFactory(city);
-			}
-			else if (VELO_PLUS.equals(city.type)) {
-				cpf = new VeloPlusStationContentProviderFactory(city);
-			}
-			else {
-				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");
-			}
-			
-			IContentProvider cp = cpf.getContentProviderFactory();
-			
-			IProgressTask progressTask = new ContentProviderProgressTaskAdapter(cp);
-	
-			return progressTask;
+		IContentProviderFactory cpf = null;
+		if (VELIB.equals(city.type)) {
+			cpf = new DefaultStationContentProviderFactory(city);
 		}
-		catch (ContentProviderFactoryNotFoundExcepton e) {
-			throw new CartoManagerException(e);
+		else if (LE_VELO.equals(city.type)) {
+			cpf = new VeloStationContentProviderFactory(city);
 		}
+		else if (VELO.equals(city.type)) {
+			cpf = new VeloStationContentProviderFactory(city);
+		}
+		else if (SEVICI.equals(city.type)) {
+			cpf = new DefaultStationContentProviderFactory(city);
+		}
+		else if (VELO_V.equals(city.type)) {
+			cpf = new VeloVStationContentProviderFactory(city);
+		}
+		else if (VELO_PLUS.equals(city.type)) {
+			cpf = new VeloPlusStationContentProviderFactory(city);
+		}
+		else {
+			throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");
+		}
+		
+		IContentProvider cp = cpf.getContentProviderFactory();
+		
+		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(cp);
+
+		return progressTask;
 
 	}
 
@@ -115,7 +108,7 @@ public class CartoManager {
 
 	}
 
-	public static void cleanUpSavedData() {
+	public static void cleanUpData() {
 		StationPersistenceService stationPersistenceService = new StationPersistenceService();
 		try {
 			stationPersistenceService.removeAllStations();

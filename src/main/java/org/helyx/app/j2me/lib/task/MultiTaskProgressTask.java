@@ -33,7 +33,7 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 		}
 
 		internaleProgressListener = new InternalProgressMultiTaskListener();
-		progressDispatcher.fireEvent(ProgressEventType.ON_START);
+		progressDispatcher.fireEvent(EventType.ON_START);
 
 		startCurrentTask();
 	}
@@ -41,7 +41,7 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 	private void startCurrentTask() {
 		int length = tasks.length;
 		if (currentIndex >= length) {
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS);
+			progressDispatcher.fireEvent(EventType.ON_SUCCESS);
 			return;
 		}
 		ITask currentTask = tasks[currentIndex];
@@ -59,7 +59,7 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 			}
 			catch(Throwable t) { 
 				log.warn(t);
-				progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t.getMessage());
+				progressDispatcher.fireEvent(EventType.ON_ERROR, t.getMessage());
 				cleanUpCurrentTask();
 				return;
 			}
@@ -88,15 +88,15 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 		}
 		
 		public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, eventMessage);
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage);
 		}
 
 		public void onProgress(String eventMessage, Object eventData) {
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, eventMessage);
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage);
 		}
 		
 		public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
-			if (eventType == ProgressEventType.ON_SUCCESS) {
+			if (eventType == EventType.ON_SUCCESS) {
 				cleanUpCurrentTask();
 				currentIndex++;
 				startCurrentTask();

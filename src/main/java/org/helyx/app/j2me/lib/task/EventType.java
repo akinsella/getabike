@@ -1,6 +1,6 @@
 package org.helyx.app.j2me.lib.task;
 
-public class ProgressEventType {
+public class EventType {
 
 	public static final int ON_START = 1;
 	public static final String ON_START_STR = "ON_START";
@@ -21,7 +21,7 @@ public class ProgressEventType {
 	public static final String ON_CUSTOM_STR = "ON_CUSTOM";
 	
 	
-	private ProgressEventType() {
+	private EventType() {
 		super();
 	}
 	
@@ -41,7 +41,7 @@ public class ProgressEventType {
 			case ON_CANCEL:
 				return ON_CANCEL_STR;
 			default:
-				throw new ProgressEventTypeException("Type non supporté");
+				throw new EventTypeException("Type non supporté");
 		}
 	}
 	

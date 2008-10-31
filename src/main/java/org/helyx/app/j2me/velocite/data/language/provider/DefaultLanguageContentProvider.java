@@ -11,7 +11,7 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
@@ -58,7 +58,7 @@ public class DefaultLanguageContentProvider extends AbstractContentProvider {
 		InputStreamProvider languageInputStreamProvider = null;
 		
 		try {
-			progressDispatcher.fireEvent(ProgressEventType.ON_START);
+			progressDispatcher.fireEvent(EventType.ON_START);
 			try {			
 				languageInputStreamProvider = languageContentAccessor.getInputStreamProvider();
 				inputStream = new BufferedInputStream(languageInputStreamProvider.createInputStream());
@@ -90,7 +90,7 @@ public class DefaultLanguageContentProvider extends AbstractContentProvider {
 				Vector languageList = new Vector();
 				while (XppUtil.readToNextElement(xpp, LANGUAGE)) {
 					if (cancel) {
-						progressDispatcher.fireEvent(ProgressEventType.ON_CANCEL);
+						progressDispatcher.fireEvent(EventType.ON_CANCEL);
 						return ;
 					}
 					Language language = new Language();
@@ -105,7 +105,7 @@ public class DefaultLanguageContentProvider extends AbstractContentProvider {
 					languageList.addElement(language);
 					progressDispatcher.fireEvent(LanguageConstants.ON_LANGUAGE_LOADED, language);				
 				}
-				progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, languageList);
+				progressDispatcher.fireEvent(EventType.ON_SUCCESS, languageList);
 			}
 			finally {
 				languageInputStreamProvider.dispose();
@@ -113,7 +113,7 @@ public class DefaultLanguageContentProvider extends AbstractContentProvider {
 		}
 		catch (Throwable t) {
     		log.warn(t);
-			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
+			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 	}
 

@@ -7,7 +7,7 @@ import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.basics4me.util.Properties;
 
 
@@ -36,7 +36,7 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 		ResourceBundle resourceBundle = null;
 		try {
 
-			progressDispatcher.fireEvent(ProgressEventType.ON_START);
+			progressDispatcher.fireEvent(EventType.ON_START);
 			try {
 				
 				cartoInputStreamProvider = messageContentAccessor.getInputStreamProvider();
@@ -51,11 +51,11 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 			finally {
 				cartoInputStreamProvider.dispose();
 			}
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, resourceBundle);
+			progressDispatcher.fireEvent(EventType.ON_SUCCESS, resourceBundle);
 		}
 		catch (Throwable t) {
     		log.warn(t);
-			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
+			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 	}
 

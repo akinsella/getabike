@@ -4,6 +4,6 @@ import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 
 public interface IReturnCallback {
 
-	void onReturn(AbstractDisplayable currentDisplayable);
+	void onReturn(AbstractDisplayable currentDisplayable, Object data);
 	
 }

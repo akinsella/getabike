@@ -9,7 +9,7 @@ import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.basics4me.io.BufferedInputStream;
 import org.xmlpull.v1.XmlPullParser;
@@ -44,7 +44,7 @@ public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 		InputStreamProvider metadataInputStreamProvider = null;
 		
 		try {
-			progressDispatcher.fireEvent(ProgressEventType.ON_START);
+			progressDispatcher.fireEvent(EventType.ON_START);
 			
 			RefObjectMetaData refObjectMetaData = new RefObjectMetaData();
 			try {			
@@ -96,11 +96,11 @@ public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 			finally {
 				metadataInputStreamProvider.dispose();
 			}
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, refObjectMetaData);
+			progressDispatcher.fireEvent(EventType.ON_SUCCESS, refObjectMetaData);
 		}
 		catch (Throwable t) {
     		log.warn(t);
-			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
+			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 	}
 

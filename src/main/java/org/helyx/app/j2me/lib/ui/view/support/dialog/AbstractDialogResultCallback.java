@@ -9,9 +9,9 @@ public abstract class AbstractDialogResultCallback implements IReturnCallback, I
 		super(); 
 	}
 	
-	public void onReturn(AbstractDisplayable currentDisplayable) {
+	public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
 		DialogView dialogView = (DialogView)currentDisplayable;
-		onResult(dialogView);
+		onResult(dialogView, data);
 	}
 
 }

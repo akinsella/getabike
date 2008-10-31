@@ -7,7 +7,7 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.rms.MultiRecordEnumeration;
 import org.helyx.app.j2me.lib.task.AbstractProgressTask;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.service.IStationPersistenceService;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
@@ -34,9 +34,9 @@ public class StationLoadTask extends AbstractProgressTask {
 		Station[] stationArray = new Station[0];
 		try {
 			try {
-				progressDispatcher.fireEvent(ProgressEventType.ON_START);
+				progressDispatcher.fireEvent(EventType.ON_START);
 				
-				progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Lecture des données");
+				progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Lecture des données");
 	
 				stationPersistenceService = new StationPersistenceService();
 		
@@ -50,14 +50,14 @@ public class StationLoadTask extends AbstractProgressTask {
 					Station station = (Station)stationEnumeration.nextElement();
 					count++;
 					if (count % 5 == 0) {
-						progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, count + " stations chargées");
+						progressDispatcher.fireEvent(EventType.ON_PROGRESS, count + " stations chargées");
 					}
 	
 					stationList.addElement(station);
 				}
 	
 				
-				progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, count + " stations chargées");
+				progressDispatcher.fireEvent(EventType.ON_PROGRESS, count + " stations chargées");
 		
 				log.info("Copying Station Array ...");
 				stationArray = new Station[stationList.size()];
@@ -73,13 +73,13 @@ public class StationLoadTask extends AbstractProgressTask {
 	    			stationPersistenceService.dispose();
 	    		}
 	    	}
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, stationArray);
+			progressDispatcher.fireEvent(EventType.ON_SUCCESS, stationArray);
 			stationArray = null;
 			System.gc();
 		}
 		catch(Throwable t) {
 			log.warn(t);
-			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
+			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 
 	}

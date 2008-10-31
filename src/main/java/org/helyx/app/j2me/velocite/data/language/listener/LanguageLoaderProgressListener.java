@@ -7,7 +7,7 @@ import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.sort.FastQuickSort;
 import org.helyx.app.j2me.lib.task.IProgressDispatcher;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.velocite.data.language.LanguageConstants;
 import org.helyx.app.j2me.velocite.data.language.comparator.LanguageNameComparator;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
@@ -34,7 +34,7 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 		this.languageList = new Vector();
 
 //		progressDispatcher.fireEvent(ProgressEventType.ON_START);
-   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Suppression des langues");
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Suppression des langues");
 		languagePersistenceService.removeAllCities();
 	}
 	
@@ -45,7 +45,7 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 			int size = languageList.size();
 			
 			if (size % 5 == 0) {
-		   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, languageList.size() + " langues chargées");
+		   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, languageList.size() + " langues chargées");
 			}
 		}
 	}
@@ -53,18 +53,18 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 	public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
 		try {
 			int languageListSize = languageList.size();
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, languageListSize + " langues chargées");
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, languageListSize + " langues chargées");
 			languageArray = new Language[languageListSize];
 			languageList.copyInto(languageArray);
 
 //			languageList = null;
 			System.gc();
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Tri des données");
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Tri des données");
 			try { new FastQuickSort(new LanguageNameComparator()).sort(languageArray); } catch (Exception e) { log.warn(e); }
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Sauvegarde des villes");
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Sauvegarde des villes");
 //			log.debug("About to save cities");
 			languagePersistenceService.saveLanguageArray(languageArray);
-	   		progressDispatcher.fireEvent(ProgressEventType.ON_PROGRESS, "Chargement terminé");
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Chargement terminé");
 //			log.debug("Cities saved");
 			languageArray = null;
 			System.gc();

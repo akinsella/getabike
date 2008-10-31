@@ -94,7 +94,7 @@ public class StationListView extends AbstractListView {
 				StationSearchView stationSearchView = new StationSearchView(getMidlet());
 				stationSearchView.setReturnCallback(new IReturnCallback() {
 
-					public void onReturn(AbstractDisplayable currentDisplayable) {
+					public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
 						String newStationNameFilter = getStationNameFilter();
 						if ( (currentStationNameFilter == null  && newStationNameFilter != null ) ||
 							 (currentStationNameFilter != null && !currentStationNameFilter.equals(newStationNameFilter)) ) {

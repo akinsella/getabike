@@ -31,7 +31,7 @@ public class BasicReturnCallback implements IReturnCallback {
 		return canvasTransition;
 	}
 
-	public void onReturn(AbstractDisplayable currentDisplayable) {
+	public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
 		log.info("currentDisplayable: " + currentDisplayable);
 		log.info("previousDisplayable: " + previousDisplayable);
 		if (canvasTransition != null) {

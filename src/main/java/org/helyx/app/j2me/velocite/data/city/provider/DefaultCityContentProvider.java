@@ -10,7 +10,7 @@ import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.data.city.CityConstants;
@@ -72,7 +72,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 		Vector cityList = new Vector();
 
 		try {
-			progressDispatcher.fireEvent(ProgressEventType.ON_START);
+			progressDispatcher.fireEvent(EventType.ON_START);
 			try {			
 				cityInputStreamProvider = cityContentAccessor.getInputStreamProvider();
 				inputStream = new BufferedInputStream(cityInputStreamProvider.createInputStream());
@@ -106,7 +106,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 
 				while (XppUtil.readToNextElement(xpp, CITY, false)) {
 					if (cancel) {
-						progressDispatcher.fireEvent(ProgressEventType.ON_CANCEL);
+						progressDispatcher.fireEvent(EventType.ON_CANCEL);
 						return ;
 					}
 					City city = new City();
@@ -145,11 +145,11 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 				cityInputStreamProvider.dispose();
 			}
 			progressDispatcher.fireEvent(CityConstants.ON_CITIES_LOADED);				
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, cityList);
+			progressDispatcher.fireEvent(EventType.ON_SUCCESS, cityList);
 		}
 		catch (Throwable t) {
     		log.warn(t);
-			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
+			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 	}
 

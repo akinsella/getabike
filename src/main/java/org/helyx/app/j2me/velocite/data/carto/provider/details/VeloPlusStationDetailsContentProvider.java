@@ -10,7 +10,7 @@ import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
-import org.helyx.app.j2me.lib.task.ProgressEventType;
+import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
@@ -67,7 +67,7 @@ public class VeloPlusStationDetailsContentProvider extends AbstractContentProvid
 
 				log.info("Path to station details: '" + stationDetailsContentAccessor.getPath() + "'");
 				
-				progressDispatcher.fireEvent(ProgressEventType.ON_START);
+				progressDispatcher.fireEvent(EventType.ON_START);
 
 				stationDetailsInputStreamReaderProvider = stationDetailsContentAccessor.getInputStreamProvider();
 				
@@ -109,11 +109,11 @@ public class VeloPlusStationDetailsContentProvider extends AbstractContentProvid
 			finally {
 				stationDetailsInputStreamReaderProvider.dispose();
 			}
-			progressDispatcher.fireEvent(ProgressEventType.ON_SUCCESS, stationDetails);
+			progressDispatcher.fireEvent(EventType.ON_SUCCESS, stationDetails);
 		}
 		catch (Throwable t) {
     		log.warn(t);
-			progressDispatcher.fireEvent(ProgressEventType.ON_ERROR, t);
+			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 
 	}

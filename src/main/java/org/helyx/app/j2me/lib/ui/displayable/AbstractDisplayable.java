@@ -96,7 +96,7 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	}
 	
 	public void setPreviousDisplayable(AbstractDisplayable previousDisplayable) {
-		setReturnCallback(new BasicReturnCallback(this));
+		setReturnCallback(new BasicReturnCallback(previousDisplayable));
 	}
 
 	public void setPreviousDisplayable(AbstractDisplayable previousDisplayable, IViewTransition canvasTransition) {
@@ -108,30 +108,67 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	}
 	
 	public void fireReturnCallback() {
-		returnCallback.onReturn(this);
+		log.info("ReturnCallback Fired: " + this + ", " + returnCallback);
+		if (returnCallback != null) {
+			returnCallback.onReturn(this);
+		}
 	}
 
-	private void showDisplayableInternal(AbstractDisplayable srcDisplayable, AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
-		if (srcDisplayable != null) {
-			srcDisplayable.beforeDisplayableSelection(srcDisplayable, targetDisplayable);
-		}
-		targetDisplayable.beforeDisplayableSelection(srcDisplayable, targetDisplayable);
-		changeDisplayable(srcDisplayable, targetDisplayable, canvasTransition);
-		if (srcDisplayable != null) {
-			srcDisplayable.afterDisplayableSelection(srcDisplayable, targetDisplayable);
-		}
-		targetDisplayable.afterDisplayableSelection(srcDisplayable, targetDisplayable);
+	private void showDisplayableInternal(final AbstractDisplayable srcDisplayable, final AbstractDisplayable targetDisplayable, final IViewTransition canvasTransition) {
+//		Display.getDisplay(getMidlet()).callSerially(new Runnable() {
+//
+//			public void run() {
+				if (srcDisplayable != null) {
+					srcDisplayable.beforeDisplayableSelection(srcDisplayable, targetDisplayable);
+				}
+				targetDisplayable.beforeDisplayableSelection(srcDisplayable, targetDisplayable);
+				changeDisplayable(srcDisplayable, targetDisplayable, canvasTransition);
+				if (srcDisplayable != null) {
+					srcDisplayable.afterDisplayableSelection(srcDisplayable, targetDisplayable);
+				}
+				targetDisplayable.afterDisplayableSelection(srcDisplayable, targetDisplayable);
+//			}
+//				
+//		});
 	}
 	
 	public abstract Displayable getDisplayable();
 	
 	protected void changeDisplayable(AbstractDisplayable srcDisplayable, AbstractDisplayable targetDisplayable, IViewTransition canvasTransition) {
 		Displayable currentDisplayable = Display.getDisplay(getMidlet()).getCurrent();
-		if (currentDisplayable == null || currentDisplayable != targetDisplayable.getDisplayable()) {
-			Display.getDisplay(getMidlet()).setCurrent(targetDisplayable.getDisplayable());
+		log.info("いいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいいい");
+		log.info("srcDisplayable: " + srcDisplayable);
+		log.info("currentDisplayable: " + currentDisplayable);
+		log.info("targetDisplayable: " + targetDisplayable);
+		log.info("targetDisplayable.getDisplayable(): " + targetDisplayable.getDisplayable());
+
+		if (srcDisplayable != null) {
+			srcDisplayable.onLeave();
 		}
+		if (currentDisplayable == null || currentDisplayable != targetDisplayable.getDisplayable()) {
+			log.info("Changing displayable to this displayable: " + targetDisplayable.getDisplayable());
+			log.info("Display: " + Display.getDisplay(getMidlet()));
+			Display.getDisplay(getMidlet()).setCurrent(targetDisplayable.getDisplayable());
+			log.info("Current Displayable: " + Display.getDisplay(getMidlet()).getCurrent());
+			log.info("isShown ? " + Display.getDisplay(getMidlet()).getCurrent().isShown());
+//			if (targetDisplayable.getDisplayable() instanceof Canvas) {
+//				Canvas canvas = (Canvas)targetDisplayable.getDisplayable();
+//				canvas.repaint();
+//			}
+		}
+		targetDisplayable.onSelection();
 	}
 	
+	protected void onSelection() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	protected void onLeave() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public AbstractMIDlet getMidlet() {
 		return midlet;
 	}
@@ -153,7 +190,7 @@ public abstract class AbstractDisplayable implements DisplayableListener, Comman
 	}
 	
 	public void showAlertMessage(String title, String message) {
-		DialogUtil.showAlertMessage(getMidlet(), this, title, message);			
+		DialogUtil.showAlertMessage(this, title, message);			
 	}
 	
 }

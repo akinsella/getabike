@@ -120,16 +120,16 @@ public class LanguageManager {
 		}
 	}
 	
-	public static void showLanguageView(AbstractDisplayable abstractDisplayable, AbstractDisplayable previousDisplayable) {
+	public static void showLanguageView(AbstractDisplayable currentDisplayable) {
 		LanguageListView languageListView;
 		try {
-			languageListView = new LanguageListView(abstractDisplayable.getMidlet());
-			languageListView.setPreviousDisplayable(previousDisplayable);
-			abstractDisplayable.showDisplayable(languageListView);
+			languageListView = new LanguageListView(currentDisplayable.getMidlet());
+			languageListView.setPreviousDisplayable(currentDisplayable);
+			currentDisplayable.showDisplayable(languageListView);
 		}
 		catch (RuntimeException e) {
 			log.warn(e);
-			abstractDisplayable.showAlertMessage("Problème de configuration", "Le fichier des langues n'est pas valide: " + e.getMessage());
+			currentDisplayable.showAlertMessage("Problème de configuration", "Le fichier des langues n'est pas valide: " + e.getMessage());
 		}
 	}
 	

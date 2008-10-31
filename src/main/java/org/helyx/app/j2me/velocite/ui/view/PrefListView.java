@@ -44,26 +44,26 @@ public class PrefListView extends PrefBaseListView {
 		
 		cityMenuItem = new MenuItem("Villes", new IAction() {
 			public void run(Object data) {
-				CityManager.ShowCityListView(PrefListView.this, PrefListView.this);
+				CityManager.showCityListView(PrefListView.this);
 			}
 		});
 		
 		languageMenuItem = new MenuItem("Langues", new IAction() {
 			public void run(Object data) {
-				LanguageManager.showLanguageView(PrefListView.this, PrefListView.this);
+				LanguageManager.showLanguageView(PrefListView.this);
 			}
 		});
 		
 		debugMenuItem = new MenuItem("Debug mode", new IAction() {
 			public void run(Object data) {
-				UtilManager.changeDebugMode(PrefListView.this, PrefListView.this);
+				UtilManager.changeDebugMode(PrefListView.this);
 			}
 		});
 		
 		
 		resetMenuItem = new MenuItem("Reset", new IAction() {
 			public void run(Object data) {
-				UtilManager.reset(PrefListView.this, PrefListView.this);
+				UtilManager.reset(PrefListView.this);
 			}
 		});
 		

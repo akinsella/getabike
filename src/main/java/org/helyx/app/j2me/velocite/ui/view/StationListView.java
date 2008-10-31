@@ -32,7 +32,7 @@ public class StationListView extends AbstractListView {
 	private static final Log log = LogFactory.getLog("STATION_LIST_VIEW");
 	
 	private Menu menu;
-	private MenuListView prefMenuListView;
+	private MenuListView menuListView;
 	
 	private boolean recordFilterEnabled = true;
 	private boolean nestedView = false;
@@ -41,7 +41,6 @@ public class StationListView extends AbstractListView {
 		super(midlet, title);
 		this.nestedView = nestedView;
 		init();
-		initActions();
 	}
 	
 	private void init() {
@@ -55,10 +54,10 @@ public class StationListView extends AbstractListView {
 			setThirdCommand(new Command("Menu", true, new IAction() {
 	
 				public void run(Object data) {
-					prefMenuListView = new MenuListView(getMidlet(), "Actions", false);
-					prefMenuListView.setMenu(menu);
-					prefMenuListView.setPreviousDisplayable(StationListView.this);
-					showDisplayable(prefMenuListView, new BasicTransition());
+					menuListView = new MenuListView(getMidlet(), "Actions", false);
+					menuListView.setMenu(menu);
+					menuListView.setPreviousDisplayable(StationListView.this);
+					showDisplayable(menuListView, new BasicTransition());
 				}
 				
 			}));
@@ -91,28 +90,34 @@ public class StationListView extends AbstractListView {
 		
 		menu.addMenuItem(new MenuItem("Chercher une station", new IAction() {
 			public void run(Object data) {
-				final String previousStationNameFilter = getStationNameFilter();
-				
-				showDisplayable(new StationSearchView(getMidlet(), new IReturnCallback() {
+				final String currentStationNameFilter = getStationNameFilter();
+				StationSearchView stationSearchView = new StationSearchView(getMidlet());
+				stationSearchView.setReturnCallback(new IReturnCallback() {
 
 					public void onReturn(AbstractDisplayable currentDisplayable) {
 						String newStationNameFilter = getStationNameFilter();
-						if ( (previousStationNameFilter == null  && newStationNameFilter != null ) ||
-							 (previousStationNameFilter != null && !previousStationNameFilter.equals(newStationNameFilter)) ) {
+						if ( (currentStationNameFilter == null  && newStationNameFilter != null ) ||
+							 (currentStationNameFilter != null && !currentStationNameFilter.equals(newStationNameFilter)) ) {
 							loadListContent(new UIStationLoaderProgressListener(StationListView.this));
+						}
+						else {
+							currentDisplayable.showDisplayable(StationListView.this);
+//							StationListView.this.showDisplayable(StationListView.this);
 						}
 					}
 					
-				}), StationListView.this);
+				});
+				showDisplayable(stationSearchView);
+				
 			}
 		}));
 		
 	}
 	
 	private String getStationNameFilter() {
-		String stationName = PrefManager.readPrefString(StationSearchView.PREF_STATION_NAME);
-		
-		return stationName;
+		String stationNameFilter = PrefManager.readPrefString(StationSearchView.PREF_STATION_NAME_FILTER);
+		log.info("Station name filter: '" + stationNameFilter + "'");
+		return stationNameFilter;
 	}
 	
 	protected void onShowItemSelected(Object object) {

@@ -127,17 +127,15 @@ public class SplashScreenView extends AbstractView {
 									SplashScreenView.this.log.info(eventMessage);
 									String errorMessage = t.getMessage() == null ? "Erreur de chargement des villes" : t.getMessage();
 									DialogUtil.showMessageDialog(
-											getMidlet(), 
 											SplashScreenView.this, 
 											"Erreur", 
 											"L'application doit être redémarée: " + errorMessage, 
 											new AbstractDialogResultCallback() {
-
-										public void onResult(DialogView dialogView) {
-											getLog().info(SplashScreenView.log.getCategory(), "Writing reset demand to prefs");
-											PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
-											getMidlet().exit();								
-										}
+												public void onResult(DialogView dialogView) {
+													getLog().info(SplashScreenView.log.getCategory(), "Writing reset demand to prefs");
+													PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
+													getMidlet().exit();								
+												}
 									});
 								}
 								

@@ -126,28 +126,29 @@ public class CityManager {
 		}
 	}
 	
-	public static void ShowCityListView(AbstractDisplayable abstractDisplayable, AbstractDisplayable previousDisplayable) {
+	public static void showCityListView(AbstractDisplayable currentDisplayable) {
 		CityListView cityListView;
 		try {
-			cityListView = new CityListView(abstractDisplayable.getMidlet());
-			cityListView.setPreviousDisplayable(previousDisplayable);
-			abstractDisplayable.showDisplayable(cityListView);
+			cityListView = new CityListView(currentDisplayable.getMidlet());
+			cityListView.setPreviousDisplayable(currentDisplayable);
+			currentDisplayable.showDisplayable(cityListView);
 		}
 		catch (CityManagerException e) {
 			log.warn(e);
-			abstractDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
+			currentDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
 		}
 	}
 	
-	public static void ShowCityListView(AbstractDisplayable abstractDisplayable, IReturnCallback returnCallback) {
+	public static void showCityListView(AbstractDisplayable currentDisplayable, IReturnCallback returnCallback) {
 		CityListView cityListView;
 		try {
-			cityListView = new CityListView(abstractDisplayable.getMidlet());
+			cityListView = new CityListView(currentDisplayable.getMidlet());
 			cityListView.setReturnCallback(returnCallback);
+			currentDisplayable.showDisplayable(cityListView);
 		}
 		catch (CityManagerException e) {
 			log.warn(e);
-			abstractDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
+			currentDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
 		}
 	}
 	

@@ -26,10 +26,17 @@ public class CityListView extends MenuListView {
 	
 	private City selectedCity;
 	
-	private Vector cityList;
+	private boolean cancellable = false;
 	
+	private Vector cityList;
+
 	public CityListView(AbstractMIDlet midlet) throws CityManagerException {
+		this(midlet, true);
+	}
+	
+	public CityListView(AbstractMIDlet midlet, boolean cancellable) throws CityManagerException {
 		super(midlet, "Choix de la ville", true);
+		this.cancellable = cancellable;
 		init();
 	}
 	
@@ -38,16 +45,25 @@ public class CityListView extends MenuListView {
 		initComponents();
 		initActions();
 	}
+
+	protected void initData() {
+		cityList = CityManager.findAllCities();
+		log.info("cityList: " + cityList);
+		selectedCity = CityManager.findSelectedCity(cityList);
+		log.info("selectedCity: " + cityList);
+	}
 	
 	protected void initActions() {
 
-		setSecondaryCommand(new Command("Annuler", true, new IAction() {
-
-			public void run(Object data) {
-				fireReturnCallback();
-			}
-			
-		}));
+		if (cancellable) {
+			setSecondaryCommand(new Command("Annuler", true, new IAction() {
+	
+				public void run(Object data) {
+					fireReturnCallback();
+				}
+				
+			}));
+		}
 		
 		setPrimaryCommand(new Command("Ok", true, new IAction() {
 
@@ -62,7 +78,6 @@ public class CityListView extends MenuListView {
 					progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher()));
 
 					TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CityListView.this, getReturnCallback());
-
 				}
 				catch (CartoManagerException e) {
 					showAlertMessage("Erreur", e.getMessage() != null ? e.getMessage() : "CityManagerException");
@@ -71,13 +86,6 @@ public class CityListView extends MenuListView {
 			}
 			
 		}));
-	}
-
-	protected void initData() {
-		cityList = CityManager.findAllCities();
-		log.info("cityList: " + cityList);
-		selectedCity = CityManager.findSelectedCity(cityList);
-		log.info("selectedCity: " + cityList);
 	}
 	
 	protected void initComponents() {

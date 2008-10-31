@@ -73,7 +73,7 @@ public class StationDetailsView extends AbstractView {
 				menu.addMenuItem(new MenuItem("Ajouter aux favoris", new IAction() {
 					
 					public void run(Object data) {
-						DialogUtil.showAlertMessage(getMidlet(), menuListView, "Attention", "La fonction n'est pas encore implémentée.");
+						DialogUtil.showAlertMessage(menuListView, "Attention", "La fonction n'est pas encore implémentée.");
 					}
 
 				}));

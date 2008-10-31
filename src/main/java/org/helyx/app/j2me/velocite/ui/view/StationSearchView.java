@@ -7,22 +7,19 @@ import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.displayable.support.AbstractTextBox;
 
 public class StationSearchView extends AbstractTextBox {
 	
 	private static final Log log = LogFactory.getLog("STATION_SEARCH_VIEW");
 	
-	public static final String PREF_STATION_NAME = "search.stationName";
-	public static final String PREF_MAX_STATION_NUMBER = "search.maxStationNumber";
+	public static final String PREF_STATION_NAME_FILTER = "search.stationName";
 
 	private Command cmdBack;
 	private Command cmdValidate;
 	
-	public StationSearchView(AbstractMIDlet midlet, IReturnCallback returnCallback) {
+	public StationSearchView(AbstractMIDlet midlet) {
 		super(midlet, "Recherche de station");
-		setReturnCallback(returnCallback);
 		init();
 	}
 
@@ -50,14 +47,14 @@ public class StationSearchView extends AbstractTextBox {
 	}
 	
 	private void loadPrefs() {
-		String stationName = PrefManager.readPrefString(PREF_STATION_NAME);
+		String stationName = PrefManager.readPrefString(PREF_STATION_NAME_FILTER);
 		if (stationName != null) {
 			textBox.setString(stationName);
 		}
 	}
 	
 	private void savePrefs() {
-		PrefManager.writePref(PREF_STATION_NAME, textBox.getString());
+		PrefManager.writePref(PREF_STATION_NAME_FILTER, textBox.getString());
 	}
 	
 }

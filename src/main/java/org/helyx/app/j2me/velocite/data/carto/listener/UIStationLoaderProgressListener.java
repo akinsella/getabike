@@ -51,7 +51,7 @@ public class UIStationLoaderProgressListener extends ProgressAdapter {
 			case ProgressEventType.ON_ERROR:
 				Throwable throwable = (Throwable)eventData;
 				getLog().warn(throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
-				DialogUtil.showAlertMessage(stationListView.getMidlet(), stationListView, "Erreur", throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
+				DialogUtil.showAlertMessage(stationListView, "Erreur", throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
 				stationListView.showDisplayable(stationListView, new BasicTransition());
 				break;
 				

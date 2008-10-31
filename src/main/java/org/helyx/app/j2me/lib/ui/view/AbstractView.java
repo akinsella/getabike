@@ -275,15 +275,16 @@ public abstract class AbstractView extends AbstractDisplayable {
 			catch(Throwable t) { log.warn(t); }
 		}
 		
-		if (targetDisplayable instanceof AbstractView) {
-			AbstractView targetView = (AbstractView)targetDisplayable;
-			viewCanvas.setView(targetView);
-		} 
-		else {
-			viewCanvas.setView(null);
-		}
 		
 		super.changeDisplayable(srcDisplayable, targetDisplayable, viewTransition);
+	}
+	
+	protected void onSelection() {
+			viewCanvas.setView(this);
+	}
+	
+	protected void onLeave() {
+			viewCanvas.setView(null);
 	}
 
 	private void paintBackground(Graphics graphics) {

@@ -2,7 +2,6 @@ package org.helyx.app.j2me.lib.ui.view.support.dialog;
 
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
-import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 
 public class DialogUtil {
@@ -13,46 +12,42 @@ public class DialogUtil {
 		super();
 	}
 
-	public static DialogView showMessageDialog(AbstractMIDlet midlet, AbstractDisplayable displayable, String title, String text, AbstractDialogResultCallback dialogResultCallback) {
-		DialogView dialogView = new DialogView(midlet, title, text, DialogCommand.OK);
-		dialogView.setPreviousDisplayable(displayable);
+	public static DialogView showMessageDialog(AbstractDisplayable currentDisplayable, String title, String text, AbstractDialogResultCallback dialogResultCallback) {
+		DialogView dialogView = new DialogView(currentDisplayable.getMidlet(), title, text, DialogCommand.OK);
 		dialogView.setReturnCallback(dialogResultCallback);
-		displayable.showDisplayable(dialogView);
+		currentDisplayable.showDisplayable(dialogView);
 		return dialogView;	
 	}
 
-	public static DialogView showConfirmDialog(AbstractMIDlet midlet, AbstractDisplayable displayable, String title, String text, AbstractDialogResultCallback dialogResultCallback) {
-		DialogView dialogView = new DialogView(midlet, title, text, DialogCommand.OK, DialogCommand.CANCEL);
-		dialogView.setPreviousDisplayable(displayable);
+	public static DialogView showConfirmDialog(AbstractDisplayable currentDisplayable, String title, String text, AbstractDialogResultCallback dialogResultCallback) {
+		DialogView dialogView = new DialogView(currentDisplayable.getMidlet(), title, text, DialogCommand.OK, DialogCommand.CANCEL);
 		dialogView.setReturnCallback(dialogResultCallback);
-		displayable.showDisplayable(dialogView);
+		currentDisplayable.showDisplayable(dialogView);
 		
 		return dialogView;	
 	}
 
-	public static DialogView showYesNoDialog(AbstractMIDlet midlet, AbstractDisplayable displayable, String title, String text, AbstractDialogResultCallback dialogResultCallback) {
-		DialogView dialogView = new DialogView(midlet, title, text, DialogCommand.YES, DialogCommand.NO);
-		dialogView.setPreviousDisplayable(displayable);
+	public static DialogView showYesNoDialog(AbstractDisplayable currentDisplayable, String title, String text, AbstractDialogResultCallback dialogResultCallback) {
+		DialogView dialogView = new DialogView(currentDisplayable.getMidlet(), title, text, DialogCommand.YES, DialogCommand.NO);
 		dialogView.setReturnCallback(dialogResultCallback);
-		displayable.showDisplayable(dialogView);
+		currentDisplayable.showDisplayable(dialogView);
 		
 		return dialogView;	
 	}
 	
-	public static void showAlertMessage(AbstractMIDlet midlet, AbstractDisplayable displayable, String title, String message) {
-		DialogView dialogView = new DialogView(midlet, title, message, DialogCommand.OK);
-		dialogView.setPreviousDisplayable(displayable);
+	public static void showAlertMessage(final AbstractDisplayable currentDisplayable, String title, String message) {
+		DialogView dialogView = new DialogView(currentDisplayable.getMidlet(), title, message, DialogCommand.OK);
 		dialogView.setReturnCallback(new AbstractDialogResultCallback() {
 			public void onResult(DialogView dialogView) {
 				int resultValue = dialogView.getResultCode();
 				switch (resultValue) {
 					case DialogResultConstants.OK:
-						dialogView.fireReturnCallback();
+						dialogView.showDisplayable(currentDisplayable);
 						break;
 				}
 			}
 		});
-		displayable.showDisplayable(dialogView);
+		currentDisplayable.showDisplayable(dialogView);
 	}
 
 }

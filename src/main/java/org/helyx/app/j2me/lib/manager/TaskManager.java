@@ -6,6 +6,7 @@ import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
+import org.helyx.app.j2me.lib.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.support.LoadTaskView;
 

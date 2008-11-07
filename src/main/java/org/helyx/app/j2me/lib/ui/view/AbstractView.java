@@ -141,6 +141,10 @@ public abstract class AbstractView extends AbstractDisplayable {
 		
 		return false;
 	}
+	
+	public void flushGraphics() {
+		viewCanvas.flushGraphics();
+	}
 
 	protected void onKeyReleased(int keyCode) {
 		

@@ -6,6 +6,8 @@ import java.io.InputStream;
 public interface InputStreamProvider {
 
 	InputStream createInputStream() throws IOException;
+
+	InputStream createInputStream(boolean buffered) throws IOException;
 	
 	void dispose() throws IOException;
 	

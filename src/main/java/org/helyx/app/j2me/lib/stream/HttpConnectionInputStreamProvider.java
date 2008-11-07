@@ -8,6 +8,7 @@ import javax.microedition.io.HttpConnection;
 
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.basics4me.io.BufferedInputStream;
 
 public class HttpConnectionInputStreamProvider implements InputStreamProvider {
 
@@ -25,6 +26,11 @@ public class HttpConnectionInputStreamProvider implements InputStreamProvider {
 	}
 
 	public InputStream createInputStream() throws IOException {
+		return createInputStream(false);
+	}
+	
+	public InputStream createInputStream(boolean buffered) throws IOException {
+
 		if (httpConnection != null) {
 			throw new RuntimeException("InputStream already Opened");
 		}
@@ -39,7 +45,7 @@ public class HttpConnectionInputStreamProvider implements InputStreamProvider {
 		    throw new IOException(httpConnection.getResponseMessage());		 
 		}		
 
-		inputStream = httpConnection.openInputStream();
+		inputStream = buffered ? new BufferedInputStream(httpConnection.openInputStream()) : httpConnection.openInputStream();
 		isCreated = true;
 		
 		return inputStream;

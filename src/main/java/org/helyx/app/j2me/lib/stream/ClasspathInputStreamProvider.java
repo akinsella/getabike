@@ -5,6 +5,7 @@ import java.io.InputStream;
 
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.basics4me.io.BufferedInputStream;
 
 public class ClasspathInputStreamProvider implements InputStreamProvider {
 
@@ -21,8 +22,12 @@ public class ClasspathInputStreamProvider implements InputStreamProvider {
 	}
 	
 	public InputStream createInputStream() throws IOException {
+		return createInputStream(false);
+	}
 	
-		inputStream = StreamUtil.createsFromClassPath(path);
+	public InputStream createInputStream(boolean buffered) throws IOException {
+	
+		inputStream = buffered ? new BufferedInputStream(StreamUtil.createsFromClassPath(path)) : StreamUtil.createsFromClassPath(path);
 		isCreated = true;
 		
 		return inputStream;

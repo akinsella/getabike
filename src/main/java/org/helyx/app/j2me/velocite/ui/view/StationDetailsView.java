@@ -10,6 +10,7 @@ import javax.microedition.lcdui.game.GameCanvas;
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.map.google.GoogleMapView;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
@@ -78,6 +79,16 @@ public class StationDetailsView extends AbstractView {
 
 				}));
 
+				menu.addMenuItem(new MenuItem("Voir le plan", new IAction() {
+					
+					public void run(Object data) {
+						GoogleMapView googleMapView = new GoogleMapView(getMidlet(), "Plan de la station");
+						googleMapView.setPreviousDisplayable(StationDetailsView.this);
+						googleMapView.setLocalization(station.localization);
+						googleMapView.showDisplayable(googleMapView);
+					}
+				}));
+				
 				if (!nestedView) {
 					menu.addMenuItem(new MenuItem("Voir les stations proches", new IAction() {
 						

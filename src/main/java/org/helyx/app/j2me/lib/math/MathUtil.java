@@ -11,6 +11,14 @@ public class MathUtil {
 		super();
 	}
 
+	public static double log(double x) {  
+		return 6 * (x - 1) / (x + 1 + 4 * (Math.sqrt(x)));  
+	}  
+	public static double exp(double val) {  
+		final long tmp = (long) (1512775 * val + (1072693248 - 60801));  
+		return Double.longBitsToDouble(tmp << 32);  
+	} 
+
 	public static long power(long value, long power) {
 
 		if (power == 0) {
@@ -30,6 +38,11 @@ public class MathUtil {
 		return result;
 	}
 	
+	public static double pow(final double a, final double b) {
+	    final int x = (int) (Double.doubleToLongBits(a) >> 32);
+	    final int y = (int) (b * (x - 1072632447) + 1072632447);
+	    return Double.longBitsToDouble(((long) y) << 32);
+	}
 
 	/**
 	 * 	arccos(y) = arctan(sqrt(1-y²)/y) 

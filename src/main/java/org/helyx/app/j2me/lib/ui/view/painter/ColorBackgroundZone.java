@@ -9,12 +9,15 @@ import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
 
-public class DefaultBackgroundZone extends AbstractViewCanvasZone {
+public class ColorBackgroundZone extends AbstractViewCanvasZone {
 
-	private static final Log log = LogFactory.getLog("DEFAULT_BACKGROUND_ZONE");
+	private static final Log log = LogFactory.getLog("COLOR_BACKGROUND_ZONE");
 	
-	public DefaultBackgroundZone() {
+	private int backgroundColor;
+
+	public ColorBackgroundZone(int backgroundColor) {
 		super();
+		this.backgroundColor = backgroundColor;
 	}
 
 	public Rectangle computeArea(AbstractView view, Graphics graphics, Object data) {
@@ -22,9 +25,7 @@ public class DefaultBackgroundZone extends AbstractViewCanvasZone {
 	}
 
 	public void paintArea(AbstractView view, Graphics graphics, Rectangle rect, Object data) {
-		Color bgColor = view.getTheme().getColor(ThemeConstants.WIDGET_BACKGROUND);
-
-        graphics.setColor(bgColor.intValue());
+        graphics.setColor(backgroundColor);
         graphics.fillRect(0, 0, view.getViewCanvas().getWidth(), view.getViewCanvas().getHeight());
 	}
 	

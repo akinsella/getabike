@@ -41,6 +41,10 @@ public class StreamUtil {
 	}
 
 	public static String readStream(InputStream inputStream, boolean closeStream) throws IOException {
+		return new String(readStreamBinary(inputStream, closeStream));
+	}
+
+	public static byte[] readStreamBinary(InputStream inputStream, boolean closeStream) throws IOException {
 		int length = -1;
 		byte[] bytes = new byte[1024];
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
@@ -54,12 +58,11 @@ public class StreamUtil {
 			if (closeStream) {
 				inputStream.close();
 			}
-			return new String(baos.toByteArray());
+			return baos.toByteArray();
 		}
 		finally {
 			baos.close();
 		}
-		
 	}
 	
 }

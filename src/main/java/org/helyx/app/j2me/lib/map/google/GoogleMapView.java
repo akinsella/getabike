@@ -2,6 +2,7 @@ package org.helyx.app.j2me.lib.map.google;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.concurrent.Mutex;
@@ -34,6 +35,15 @@ public class GoogleMapView extends AbstractView {
 		setTitle(title);
 		init();
 	}
+	
+	public GoogleMapView(AbstractMIDlet midlet, String title, Point localization, int zoom) {
+		super(midlet);
+		setTitle(title);
+		init();
+		this.localization = localization;
+		this.zoom = zoom;
+		updateMap();
+	}
 	 
 	private void init() {
 		initActions();
@@ -46,8 +56,24 @@ public class GoogleMapView extends AbstractView {
 		setBackgroundZone(new ColorBackgroundZone(ColorUtil.WHITE));
 	}
 
-	protected void onKeyReleased(int keyCode) {
-		// TODO Auto-generated method stub
+	protected void onKeyPressed(int keyCode) {
+		int gameAction = viewCanvas.getGameAction(keyCode);
+		log.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
+	    if (gameAction == GameCanvas.LEFT) {
+			fireReturnCallback();
+		}
+	    else if (gameAction == GameCanvas.FIRE) {
+			zoomIn();
+		}
+	    else if (gameAction == GameCanvas.KEY_NUM3) {
+			zoomOut();
+		}
+	    else if (gameAction == GameCanvas.GAME_A) {
+			zoomIn();
+		}
+	    else if (gameAction == GameCanvas.GAME_B) {
+			zoomOut();
+		}
 	}
 
 	protected void initActions() {
@@ -62,15 +88,13 @@ public class GoogleMapView extends AbstractView {
 				
 				menu.addMenuItem(new MenuItem("Zoom In", new IAction() {				
 					public void run(Object data) {
-						setZoom(zoom < 19 ? zoom + 1 : zoom);
-						updateMap();
+						zoomIn();
 						menuListView.fireReturnCallback();
 					}
 				}));
 				menu.addMenuItem(new MenuItem("Zoom Out", new IAction() {				
 					public void run(Object data) {
-						setZoom(zoom > 1 ? zoom - 1 : zoom);
-						updateMap();
+						zoomOut();
 						menuListView.fireReturnCallback();
 					}
 				}));
@@ -92,9 +116,19 @@ public class GoogleMapView extends AbstractView {
 		}));
 		
 	}
+	
+	private void zoomIn() {
+		setZoom(zoom < 19 ? zoom + 1 : zoom);
+		updateMap();
+	}
+	
+	private void zoomOut() {
+		setZoom(zoom > 15 ? zoom - 1 : zoom);
+		updateMap();
+	}
 
 	protected void initData() {
-		updateMap();
+
 	}
 	
 	protected void paint(Graphics graphics) {

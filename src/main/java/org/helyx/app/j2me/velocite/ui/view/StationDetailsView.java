@@ -82,10 +82,10 @@ public class StationDetailsView extends AbstractView {
 				menu.addMenuItem(new MenuItem("Voir le plan", new IAction() {
 					
 					public void run(Object data) {
-						GoogleMapView googleMapView = new GoogleMapView(getMidlet(), "Plan de la station");
+						GoogleMapView googleMapView = new GoogleMapView(getMidlet(), "Plan de la station", station.localization, 15);
 						googleMapView.setPreviousDisplayable(StationDetailsView.this);
-						googleMapView.setLocalization(station.localization);
 						googleMapView.showDisplayable(googleMapView);
+						googleMapView.updateMap();
 					}
 				}));
 				

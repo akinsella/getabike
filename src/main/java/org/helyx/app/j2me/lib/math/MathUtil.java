@@ -10,10 +10,16 @@ public class MathUtil {
 	private MathUtil() {
 		super();
 	}
-
+	
+	public double ln(double val) {  
+	    final double x = (Double.doubleToLongBits(val) >> 32);  
+	    return (x - 1072632447) / 1512775;  
+	}
+	
 	public static double log(double x) {  
 		return 6 * (x - 1) / (x + 1 + 4 * (Math.sqrt(x)));  
-	}  
+	} 
+	
 	public static double exp(double val) {  
 		final long tmp = (long) (1512775 * val + (1072693248 - 60801));  
 		return Double.longBitsToDouble(tmp << 32);  

@@ -122,7 +122,7 @@ public class GoogleMapView extends AbstractView {
 	}
 	
 	public boolean updateMap() {
-		if (localization != null && !updateLock.tryLock()) {
+		if (localization == null || !updateLock.tryLock()) {
 			return false;
 		}
 		new Thread() {

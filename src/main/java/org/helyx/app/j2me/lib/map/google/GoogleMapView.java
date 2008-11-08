@@ -59,8 +59,25 @@ public class GoogleMapView extends AbstractView {
 	protected void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
 		log.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
-	    if (gameAction == GameCanvas.LEFT) {
-			fireReturnCallback();
+		
+		int width = viewCanvas.getWidth();
+		int height = viewCanvas.getHeight();
+
+		if (gameAction == GameCanvas.LEFT) {
+	    	setLocalization(googleMaps.adjust(localization, width / 2, 0, zoom));
+			updateMap();
+		}
+	    else if (gameAction == GameCanvas.RIGHT) {
+	    	setLocalization(googleMaps.adjust(localization, -width / 2, 0, zoom));
+			updateMap();
+		}
+	    else if (gameAction == GameCanvas.UP) {
+	    	setLocalization(googleMaps.adjust(localization, 0, height / 2, zoom));
+			updateMap();
+		}
+	    else if (gameAction == GameCanvas.DOWN) {
+	    	setLocalization(googleMaps.adjust(localization, 0, -height / 2, zoom));
+			updateMap();
 		}
 	    else if (gameAction == GameCanvas.FIRE) {
 			zoomIn();
@@ -118,12 +135,12 @@ public class GoogleMapView extends AbstractView {
 	}
 	
 	private void zoomIn() {
-		setZoom(zoom < 19 ? zoom + 1 : zoom);
+		setZoom(zoom < 17 ? zoom + 1 : zoom);
 		updateMap();
 	}
 	
 	private void zoomOut() {
-		setZoom(zoom > 15 ? zoom - 1 : zoom);
+		setZoom(zoom > 10 ? zoom - 1 : zoom);
 		updateMap();
 	}
 

@@ -11,6 +11,12 @@ public class Point {
 		super();
 	}
 	
+	public Point(double lng, double lat) {
+		super();
+		this.lng = lng;
+		this.lat = lat;
+	}
+	
 	public String toString() {
 		StringBuffer sb = new StringBuffer("[Point]")
 		.append(" lng=").append(lng)

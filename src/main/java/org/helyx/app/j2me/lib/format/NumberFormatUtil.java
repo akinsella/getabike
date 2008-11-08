@@ -29,7 +29,7 @@ public class NumberFormatUtil {
 			return result;
 		}
 		
-		long maxValue = MathUtil.power(10, digits);
+		long maxValue = MathUtil.pow((long)10, (long)digits);
 		
 		if (value >= maxValue) {
 			String result = String.valueOf(value);

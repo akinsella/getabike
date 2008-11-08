@@ -6,13 +6,21 @@ import java.util.Vector;
 import javax.microedition.lcdui.Image;
 
 import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
+import org.helyx.app.j2me.lib.dfp.dfp;
+import org.helyx.app.j2me.lib.dfp.dfpdec;
+import org.helyx.app.j2me.lib.dfp.dfpmath;
+import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.math.MathUtil;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.stream.StreamUtil;
+import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 
 public class GoogleMaps {
 	
 	private String apiKey = null;
+	
+	private static final Log log = LogFactory.getLog("GOOGLE_MAPS");
 
 	// these 2 properties will be used with map scrolling methods. You can
 	// remove them if not needed
@@ -21,25 +29,6 @@ public class GoogleMaps {
 
 	public GoogleMaps(String apiKey) {
 		this.apiKey = apiKey;
-	}
-
-	public double[] geocodeAddress(String address) throws Exception {
-		byte[] res = loadHttpFile(getGeocodeUrl(address));
-
-		String resString = new String(res, 0, res.length);
-
-		String[] data = split(resString, ',');
-
-		if (data[0].compareTo("200") != 0) {
-			int errorCode = Integer.parseInt(data[0]);
-
-			throw new Exception("Google Maps Exception: " + getGeocodeError(errorCode));
-		}
-		else {
-			return new double[] { 
-					Double.parseDouble(data[2]),
-					Double.parseDouble(data[3]) };
-		}
 	}
 
 	public Image retrieveStaticImage(int width, int height, double lat, double lng, int zoom, String format) throws Exception {
@@ -135,50 +124,55 @@ public class GoogleMaps {
 
 		return splitted;
 	}
+
+	public Point geocodeAddress(String address) throws Exception
+	{
+		byte[] res = loadHttpFile(getGeocodeUrl(address));
+		
+		String resString = new String(res, 0, res.length);
+		
+		String[] data = split(resString, ',');
+		
+		if(data[0].compareTo("200") != 0)
+		{
+			int errorCode = Integer.parseInt(data[0]);
+			
+			throw new Exception("Google Maps Exception: " + getGeocodeError(errorCode));
+		}
+		else
+		{
+			return new Point(
+				Double.parseDouble(data[3]),
+				Double.parseDouble(data[2]));
+		}
+	}
+
 	
-	public double[] adjust(double lat, double lng, int deltaX, int deltaY, int z)
-	{
-		return new double[]{
-			XToL(LToX(lat) + (deltaX << (21 - z))),
-			YToL(LToY(lng) + (deltaY << (21 - z)))
-		};
+	public Point adjust(Point localization, int deltaX, int deltaY, int zoom) {
+		return new Point(
+			YToL(LToY(localization.lng) + (deltaX << (21 - zoom))),		
+			XToL(LToX(localization.lat) + (deltaY << (21 - zoom)))
+		);
 	}
-	double LToX(double x)
-	{
-		return round(offset + radius * x * Math.PI / 180);
-	}
-	 
-	double LToY(double y) {
-		return round(
-			offset - radius * 
-			MathUtil.log(
-				Double.doubleToLongBits(
-				(1 + Math.sin(y * Math.PI / 180))
-				/
-				(1 - Math.sin(y * Math.PI / 180))
-				)
-			)) / 2;
+	
+	private double LToX(double x) {
+		return offset + radius * x * Math.PI / 180;
 	}
 	 
 	double XToL(double x) {
-		return ((round(x) - offset) / radius) * 180 / Math.PI;
+		return ((x - offset) / radius) * 180 / Math.PI;
 	}
 	 
-	double YToL(double y) {
-		return (Math.PI / 2 - 2 * 
-				MathUtil.arctan(
-						MathUtil.exp((round(y) - offset) / radius)
-					)
-				) * 180 / Math.PI;
-	}
-	double round(double num)
-	{
-		double floor = Math.floor(num);
-		
-		if(num - floor >= 0.5)
-			return Math.ceil(num);
-		else
-			return floor;
+	double LToY(double y) {
+		double tmp = Math.sin(y * Math.PI / 180);
+		return offset - radius * MathUtil.ln((1 + tmp) / (1 - tmp)) / 2;
 	}
 	
+	double YToL(double y) {
+		dfp exp = dfpmath.exp(new dfp(String.valueOf((y - offset) / radius)));
+		dfp atan = dfpmath.atan(exp);
+		double dblAtan = Double.parseDouble(atan.toString());
+		return (Math.PI / 2 - 2 * MathUtil.atan((y - offset) / radius)) * 180 / Math.PI;
+	}
+
 }

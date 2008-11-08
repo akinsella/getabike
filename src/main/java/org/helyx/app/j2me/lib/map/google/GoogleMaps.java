@@ -4,6 +4,7 @@ import javax.microedition.lcdui.Image;
 
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.math.DistanceUtil;
 import org.helyx.app.j2me.lib.math.MathUtil;
 import org.helyx.app.j2me.lib.text.TextUtil;
 import org.helyx.app.j2me.lib.util.HttpUtil;
@@ -87,30 +88,12 @@ public class GoogleMaps {
 				Double.parseDouble(data[2]));
 		}
 	}
-
 	
 	public Point adjust(Point localization, int deltaX, int deltaY, int zoom) {
 		return new Point(
-			YToL(LToY(localization.lng) + (deltaX << (21 - zoom))),		
-			XToL(LToX(localization.lat) + (deltaY << (21 - zoom)))
+			DistanceUtil.YToL(DistanceUtil.LToY(localization.lng) + (deltaX << (21 - zoom))),		
+			DistanceUtil.XToL(DistanceUtil.LToX(localization.lat) + (deltaY << (21 - zoom)))
 		);
-	}
-	
-	private double LToX(double x) {
-		return offset + radius * x * Math.PI / 180;
-	}
-	 
-	double XToL(double x) {
-		return ((x - offset) / radius) * 180 / Math.PI;
-	}
-	 
-	double LToY(double y) {
-		double tmp = Math.sin(y * Math.PI / 180);
-		return offset - radius * MathUtil.ln((1 + tmp) / (1 - tmp)) / 2;
-	}
-	
-	double YToL(double y) {
-		return (Math.PI / 2 - 2 * MathUtil.atan((y - offset) / radius)) * 180 / Math.PI;
 	}
 
 }

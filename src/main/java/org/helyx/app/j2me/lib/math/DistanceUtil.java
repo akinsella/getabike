@@ -7,6 +7,9 @@ public class DistanceUtil {
 	
 	private static final Log log = LogFactory.getLog("DISTANCE_UTIL");
 
+	private static int offset = 268435456;
+	private static double radius = offset / Math.PI;
+
 	public static final String KM = "KM";
 	public static final String MILES = "MILES";
 	public static final String NAUT = "NAUT";
@@ -36,6 +39,23 @@ public class DistanceUtil {
 	      distance = distance * 0.8684;
 	  }
 	  return distance;
+	}
+
+	public static double LToX(double x) {
+		return offset + radius * x * Math.PI / 180;
+	}
+	 
+	public static double XToL(double x) {
+		return ((x - offset) / radius) * 180 / Math.PI;
+	}
+	 
+	public static double LToY(double y) {
+		double tmp = Math.sin(y * Math.PI / 180);
+		return offset - radius * MathUtil.ln((1 + tmp) / (1 - tmp)) / 2;
+	}
+	
+	public static double YToL(double y) {
+		return (Math.PI / 2 - 2 * MathUtil.atan((y - offset) / radius)) * 180 / Math.PI;
 	}
 
 }

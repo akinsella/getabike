@@ -64,19 +64,19 @@ public class GoogleMapView extends AbstractView {
 		int height = viewCanvas.getHeight();
 
 		if (gameAction == GameCanvas.LEFT) {
-	    	setLocalization(googleMaps.adjust(localization, width / 2, 0, zoom));
+	    	setLocalization(googleMaps.adjust(localization, 2 * width / 3, 0, zoom));
 			updateMap();
 		}
 	    else if (gameAction == GameCanvas.RIGHT) {
-	    	setLocalization(googleMaps.adjust(localization, -width / 2, 0, zoom));
+	    	setLocalization(googleMaps.adjust(localization, -(2 * width / 3), 0, zoom));
 			updateMap();
 		}
 	    else if (gameAction == GameCanvas.UP) {
-	    	setLocalization(googleMaps.adjust(localization, 0, height / 2, zoom));
+	    	setLocalization(googleMaps.adjust(localization, 0, 2 * height / 3, zoom));
 			updateMap();
 		}
 	    else if (gameAction == GameCanvas.DOWN) {
-	    	setLocalization(googleMaps.adjust(localization, 0, -height / 2, zoom));
+	    	setLocalization(googleMaps.adjust(localization, 0, -(2 * height / 3), zoom));
 			updateMap();
 		}
 	    else if (gameAction == GameCanvas.FIRE) {

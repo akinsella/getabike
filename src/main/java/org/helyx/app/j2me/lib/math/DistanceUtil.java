@@ -55,7 +55,7 @@ public class DistanceUtil {
 	}
 	
 	public static double YToL(double y) {
-		return (Math.PI / 2 - 2 * MathUtil.atan((y - offset) / radius)) * 180 / Math.PI;
+		return (Math.PI / 2 - 2 * MathUtil.atan(MathUtil.exp((y - offset) / radius))) * 180 / Math.PI;
 	}
 
 }

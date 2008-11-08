@@ -29,6 +29,21 @@ public class TextUtil {
 		return stringArray;
 	}
 
+	public static String urlEncode(String str) {
+		StringBuffer buf = new StringBuffer();
+		char c;
+		for (int i = 0; i < str.length(); i++) {
+			c = str.charAt(i);
+			if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
+				buf.append(c);
+			}
+			else {
+				buf.append("%").append(Integer.toHexString((int)str.charAt(i)));
+			}
+		}
+		return buf.toString();
+	}
+
 	public static String replaceAll(String haystack, char needle, char replacement) {
 		int length = haystack.length();
 		

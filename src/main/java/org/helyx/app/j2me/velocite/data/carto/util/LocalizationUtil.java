@@ -14,10 +14,10 @@ public class LocalizationUtil {
 
 	public static boolean isSet(Point localization) {
 		if (localization == null) {
-			return true;
+			return false;
 		}
 		
-		return localization.lat == 0 || localization.lng == 0;
+		return localization.lat != 0 && localization.lng != 0;
 	}
 
 }

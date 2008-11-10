@@ -26,6 +26,7 @@ import org.helyx.app.j2me.lib.ui.view.transition.BasicTransition;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
 import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
+import org.helyx.app.j2me.velocite.data.carto.accessor.StationPoiInfoAccessor;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
@@ -82,8 +83,9 @@ public class StationDetailsView extends AbstractView {
 				menu.addMenuItem(new MenuItem("Voir le plan", new IAction() {
 					
 					public void run(Object data) {
-						GoogleMapView googleMapView = new GoogleMapView(getMidlet(), "Plan de la station", station.localization, 15);
+						GoogleMapView googleMapView = new GoogleMapView(getMidlet(), "Plan de la station", new StationPoiInfoAccessor(), station.localization, 15);
 						googleMapView.setPreviousDisplayable(StationDetailsView.this);
+						googleMapView.setSelectedPoi(station);
 						googleMapView.showDisplayable(googleMapView);
 						googleMapView.updateMap();
 					}

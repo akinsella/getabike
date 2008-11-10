@@ -13,6 +13,7 @@ import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
 import org.json.me.JSONArray;
@@ -92,6 +93,8 @@ public class VeloVStationContentProvider extends AbstractContentProvider {
 						station.localization = new Point();
 						station.localization.lat = jsonMarker.optDouble(LATITUDE, 0);
 						station.localization.lat = jsonMarker.optDouble(LONGITUDE, 0);
+						station.hasLocalization = LocalizationUtil.isSet(station.localization);
+
 						station.open = true;
 						station.city = quartier.city;
 						station.zipCode = quartier.zipCode;

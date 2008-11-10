@@ -5,7 +5,6 @@ import javax.microedition.lcdui.Image;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.math.DistanceUtil;
-import org.helyx.app.j2me.lib.math.MathUtil;
 import org.helyx.app.j2me.lib.text.TextUtil;
 import org.helyx.app.j2me.lib.util.HttpUtil;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;

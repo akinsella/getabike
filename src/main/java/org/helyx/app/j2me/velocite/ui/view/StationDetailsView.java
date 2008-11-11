@@ -22,6 +22,7 @@ import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
 import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
+import org.helyx.app.j2me.lib.ui.view.support.list.IElementProvider;
 import org.helyx.app.j2me.lib.ui.view.transition.BasicTransition;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
@@ -44,12 +45,19 @@ public class StationDetailsView extends AbstractView {
 	private Station station;
 	private StationDetails stationDetails;
 	
+	private IElementProvider relatedStations;
+	
 	private boolean nestedView = false;
 
 	public StationDetailsView(AbstractMIDlet midlet, Station station, boolean nestedView)  {
+		this(midlet, station, nestedView, null);
+	}
+
+	public StationDetailsView(AbstractMIDlet midlet, Station station, boolean nestedView, IElementProvider relatedStations)  {
 		super(midlet);
 		this.station = station;
 		this.nestedView = nestedView;
+		this.relatedStations = relatedStations;
 		init();
 	}
 	
@@ -86,6 +94,7 @@ public class StationDetailsView extends AbstractView {
 						GoogleMapView googleMapView = new GoogleMapView(getMidlet(), "Plan de la station", new StationPoiInfoAccessor(), station.localization, 15);
 						googleMapView.setPreviousDisplayable(StationDetailsView.this);
 						googleMapView.setSelectedPoi(station);
+						googleMapView.setPoiItems(relatedStations);
 						googleMapView.showDisplayable(googleMapView);
 						googleMapView.updateMap();
 					}
@@ -339,6 +348,14 @@ public class StationDetailsView extends AbstractView {
 
 	public boolean isNestedView() {
 		return nestedView;
+	}
+
+	public IElementProvider getRelatedStations() {
+		return relatedStations;
+	}
+
+	public void setRelatedStations(IElementProvider relatedStations) {
+		this.relatedStations = relatedStations;
 	}
 
 }

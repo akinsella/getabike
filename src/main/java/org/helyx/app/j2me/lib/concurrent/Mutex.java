@@ -15,7 +15,7 @@ public class Mutex {
 
 	public synchronized boolean tryLock() {
 		if (!islocked) {
-			log.info("locking: " + this);
+//			log.info("locking: " + this);
 			islocked = true;
 			return true;
 		}
@@ -23,7 +23,7 @@ public class Mutex {
 	}
 
 	public synchronized void unLock() {
-		log.info("unlocking: " + this);
+//		log.info("unlocking: " + this);
 		islocked = false;
 	}
 

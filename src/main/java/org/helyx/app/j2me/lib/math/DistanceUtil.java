@@ -41,21 +41,24 @@ public class DistanceUtil {
 	  return distance;
 	}
 
-	public static double LToX(double x) {
-		return offset + radius * x * Math.PI / 180;
+	public static double LToY(double lat) {
+//		return offset + radius * lat * Math.PI / 180;
+		double tmp = Math.sin(lat * Math.PI / 180);
+		return offset - radius * MathUtil.ln((1 + tmp) / (1 - tmp)) / 2;
 	}
 	 
-	public static double XToL(double x) {
-		return ((x - offset) / radius) * 180 / Math.PI;
+	public static double YToL(double y) {
+//		return ((y - offset) / radius) * 180 / Math.PI;
+		return (Math.PI / 2 - 2 * MathUtil.atan(MathUtil.exp((y - offset) / radius))) * 180 / Math.PI;
 	}
 	 
-	public static double LToY(double y) {
-		double tmp = Math.sin(y * Math.PI / 180);
+	public static double LToX(double lng) {
+		double tmp = Math.sin(lng * Math.PI / 180);
 		return offset - radius * MathUtil.ln((1 + tmp) / (1 - tmp)) / 2;
 	}
 	
-	public static double YToL(double y) {
-		return (Math.PI / 2 - 2 * MathUtil.atan(MathUtil.exp((y - offset) / radius))) * 180 / Math.PI;
+	public static double XToL(double x) {
+		return (Math.PI / 2 - 2 * MathUtil.atan(MathUtil.exp((x - offset) / radius))) * 180 / Math.PI;
 	}
 
 }

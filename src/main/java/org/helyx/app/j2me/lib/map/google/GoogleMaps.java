@@ -88,10 +88,10 @@ public class GoogleMaps {
 		}
 	}
 	
-	public Point adjust(Point localization, int deltaX, int deltaY, int zoom) {
+	public Point adjust(Point localization, int deltaX, int deltaY, int zoom) {		
 		return new Point(
-			DistanceUtil.YToL(DistanceUtil.LToY(localization.lng) + (deltaX << (21 - zoom))),		
-			DistanceUtil.XToL(DistanceUtil.LToX(localization.lat) + (deltaY << (21 - zoom)))
+			DistanceUtil.XToL(DistanceUtil.LToX(localization.lng) + (deltaX << (21 - zoom))),		
+			DistanceUtil.YToL(DistanceUtil.LToY(localization.lat) + (deltaY << (21 - zoom)))
 		);
 	}
 

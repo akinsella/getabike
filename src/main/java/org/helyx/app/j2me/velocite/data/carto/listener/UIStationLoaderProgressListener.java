@@ -43,10 +43,6 @@ public class UIStationLoaderProgressListener extends ProgressAdapter {
 				}
 				stationListView.showDisplayable(stationListView, new BasicTransition());
 				break;
-				
-			case EventType.ON_CANCEL:
-				stationListView.showDisplayable(stationListView, new BasicTransition());
-				break;
 
 			case EventType.ON_ERROR:
 				Throwable throwable = (Throwable)eventData;
@@ -56,6 +52,8 @@ public class UIStationLoaderProgressListener extends ProgressAdapter {
 				break;
 				
 			default:
+				DialogUtil.showAlertMessage(stationListView, "Erreur", "Unsupported result");
+				stationListView.showDisplayable(stationListView, new BasicTransition());
 				break;
 		}
 	}

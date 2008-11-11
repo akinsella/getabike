@@ -4,11 +4,11 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.lib.filter.IObjectFilter;
 
-public class FilterableElementProvider implements IElementProvider {
+public class FilterableElementProvider implements IElementProvider, IFilterableElementProvider {
 
-	private IElementProvider elementProvider;
-	private IObjectFilter objectFilter;
-	private Vector itemList = new Vector();
+	protected IElementProvider elementProvider;
+	protected IObjectFilter objectFilter;
+	protected Vector itemList = new Vector();
 	
 	public FilterableElementProvider(IElementProvider elementProvider, IObjectFilter objectFilter) {
 		super();
@@ -21,6 +21,10 @@ public class FilterableElementProvider implements IElementProvider {
 		super();
 		this.elementProvider = elementProvider;
 		filter();
+	}
+	
+	public IElementProvider getUnfilteredElements() {
+		return elementProvider;
 	}
 	
 	public Object get(int offset) {
@@ -41,6 +45,13 @@ public class FilterableElementProvider implements IElementProvider {
 			}
 		}
 		this.itemList = itemList;
+	}
+
+	public Object[] getElements() {
+		Object[] array = new Object[itemList.size()];
+		itemList.copyInto(array);
+
+		return array;
 	}
 
 }

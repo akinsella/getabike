@@ -27,4 +27,10 @@ public class MenuElementProvider implements IElementProvider {
 		return menu.menuItemCount();
 	}
 
+	public Object[] getElements() {
+		Object[] array = new Object[menu.menuItemCount()];
+		menu.getMenuItems().copyInto(array);
+		return array;
+	}
+
 }

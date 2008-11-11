@@ -38,7 +38,7 @@ public class StationPoiInfoAccessor implements POIInfoAccessor {
 		}
 		Station station = ((Station)object);
 		
-		log.info("station: " + station);
+//		log.info("station: " + station);
 		return station.hasLocalization ? station.localization : null;
 	}
 

@@ -104,5 +104,9 @@ public class Menu {
 		}
 	}
 
+	public Vector getMenuItems() {
+		return menuItems;
+	}
+
 	
 }

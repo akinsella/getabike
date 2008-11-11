@@ -1,5 +1,6 @@
 package org.helyx.app.j2me.lib.ui.view.support.list;
 
+
 public class ArrayElementProvider implements IElementProvider {
 
 	private Object[] elementArray;
@@ -15,6 +16,10 @@ public class ArrayElementProvider implements IElementProvider {
 
 	public int length() {
 		return elementArray.length;
+	}
+
+	public Object[] getElements() {
+		return elementArray;
 	}
 
 }

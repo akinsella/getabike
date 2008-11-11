@@ -42,6 +42,11 @@ public class MathUtil {
 		return result;
 	}
 
+
+	public static long pow(int value, int power) {
+		 return pow((long)value, (long)power);
+	}
+	
 	public static long pow(long value, long power) {
 
 		if (power == 0) {

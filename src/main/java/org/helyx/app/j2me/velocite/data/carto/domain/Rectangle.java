@@ -16,7 +16,7 @@ public class Rectangle {
 		this.max = max;
 	}	
 	
-	public Rectangle(double lat1, double lng1, double lat2, double lng2) {
+	public Rectangle(double lng1, double lat1, double lng2, double lat2) {
 		super();
 		this.min = new Point(lng1, lat1);
 		this.max = new Point(lng2, lat2);

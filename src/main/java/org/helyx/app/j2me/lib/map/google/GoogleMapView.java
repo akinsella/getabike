@@ -3,7 +3,6 @@ package org.helyx.app.j2me.lib.map.google;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Vector;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
@@ -18,6 +17,7 @@ import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.util.ColorUtil;
 import org.helyx.app.j2me.lib.ui.util.ImageUtil;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
+import org.helyx.app.j2me.lib.ui.view.support.list.IElementProvider;
 import org.helyx.app.j2me.lib.ui.view.painter.ColorBackgroundZone;
 import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
 import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
@@ -39,7 +39,7 @@ public class GoogleMapView extends AbstractView {
 	private Mutex updateLock = new Mutex();
 	private POIInfoAccessor poiInfoAccessor;
 	private Rectangle screenMapRect;
-	private Vector poiList;
+	private IElementProvider poiItems;
 	private Hashtable filteredPoiMap = new Hashtable();
 	private boolean stopCurrentPoiFiltering = true;
 	
@@ -93,19 +93,23 @@ public class GoogleMapView extends AbstractView {
 		int height = viewCanvas.getHeight();
 
 		if (gameAction == GameCanvas.LEFT) {
-	    	setLocalization(googleMaps.adjust(localization, 2 * width / 3, 0, zoom));
+			log.info("--- X: " + 2 * width / 3);
+	    	setLocalization(googleMaps.adjust(localization, width / 4, 0, zoom));
 			updateMap();
 		}
 	    else if (gameAction == GameCanvas.RIGHT) {
-	    	setLocalization(googleMaps.adjust(localization, -(2 * width / 3), 0, zoom));
+			log.info("--- X: " + -(2 * width / 3));
+	    	setLocalization(googleMaps.adjust(localization, -width / 4, 0, zoom));
 			updateMap();
 		}
 	    else if (gameAction == GameCanvas.UP) {
-	    	setLocalization(googleMaps.adjust(localization, 0, 2 * height / 3, zoom));
+			log.info("--- Y: " + -(height / 2));
+	    	setLocalization(googleMaps.adjust(localization, 0, -height / 4, zoom));
 			updateMap();
 		}
 	    else if (gameAction == GameCanvas.DOWN) {
-	    	setLocalization(googleMaps.adjust(localization, 0, -(2 * height / 3), zoom));
+			log.info("--- Y: " + (height / 2));
+	    	setLocalization(googleMaps.adjust(localization, 0, height / 4, zoom));
 			updateMap();
 		}
 	    else if (gameAction == GameCanvas.FIRE) {
@@ -198,17 +202,16 @@ public class GoogleMapView extends AbstractView {
 		}
 
 		Enumeration _enum = filteredPoiMap.keys();
-		
+//		log.info("Iterating points ...");
 		while (_enum.hasMoreElements()) {
 			org.helyx.app.j2me.lib.ui.geometry.Point point = (org.helyx.app.j2me.lib.ui.geometry.Point)_enum.nextElement();
+//			log.info("Point: " + point);
+			
 			if (poiImg != null) {
 				graphics.drawImage(poiImg, point.x - poiImg.getWidth() / 2, point.y - poiImg.getHeight(), Graphics.TOP | Graphics.LEFT);
 			}
 		}
 		
-		log.info("poiSelectedPoint: " + poiSelectedPoint);
-		log.info("poiImgSelected: " + poiImgSelected);
-		log.info("poiSelected: " + poiSelected);
 		if (poiSelected != null && poiImgSelected != null) {
 			graphics.drawImage(poiImgSelected, poiSelectedPoint.x - poiImgSelected.getWidth() / 2, poiSelectedPoint.y - poiImgSelected.getHeight(), Graphics.TOP | Graphics.LEFT);
 		}
@@ -224,10 +227,10 @@ public class GoogleMapView extends AbstractView {
 		int height = viewCanvas.getHeight();
 
 		screenMapRect = new Rectangle(
-			DistanceUtil.XToL(DistanceUtil.LToX(localization.lat) - width / 2),
-			DistanceUtil.YToL(DistanceUtil.LToY(localization.lng) - height / 2),
-			DistanceUtil.XToL(DistanceUtil.LToX(localization.lat) + width / 2),
-			DistanceUtil.YToL(DistanceUtil.LToY(localization.lng) + height / 2)
+			DistanceUtil.XToL(DistanceUtil.LToX(localization.lng) + ((width / 2) << (21 - zoom))),
+			DistanceUtil.YToL(DistanceUtil.LToY(localization.lat) + ((height / 2) << (21 - zoom))),
+			DistanceUtil.XToL(DistanceUtil.LToX(localization.lng) - ((width / 2) << (21 - zoom))),
+			DistanceUtil.YToL(DistanceUtil.LToY(localization.lat) - ((height / 2) << (21 - zoom)))
 		);	
 		log.info("screenRectMap: " + screenMapRect);
 		
@@ -241,6 +244,7 @@ public class GoogleMapView extends AbstractView {
 		}
 
 		stopCurrentPoiFiltering = true;
+		filteredPoiMap.clear();
 
 		updateScreenRectMap();
 
@@ -286,26 +290,34 @@ public class GoogleMapView extends AbstractView {
 	}
 	
 	public void updatePoi() {
+		log.info("Updating Poi ...");
 		Thread updatePoiThread = new Thread() {
 			public void run() {
+				int height = viewCanvas.getHeight();
 				stopCurrentPoiFiltering = false;
 				filteredPoiMap.clear();
-				if (poiList == null) {
+				if (poiItems == null) {
 					return;
 				}
-				int length = poiList.size();
+				int length = poiItems.length();
+				log.info("Poi Items: " + length);
 				for (int i = 0 ; i < length ; i++) {
 					if (stopCurrentPoiFiltering) {
 						break;
 					}
-					Object poiItem = poiList.elementAt(i);
+					Object poiItem = poiItems.get(i);
+
 					Point poiLoc = poiInfoAccessor.getLocalization(poiItem);
-					if ( poiLoc.lat >= screenMapRect.min.lat &&
-						 poiLoc.lat <= screenMapRect.max.lat &&
-						 poiLoc.lng >= screenMapRect.min.lng &&
-						 poiLoc.lng >= screenMapRect.max.lng ) {
-						int x = (int)(DistanceUtil.LToX(poiLoc.lat) - DistanceUtil.LToX(screenMapRect.min.lat));
-						int y = (int)(DistanceUtil.LToY(poiLoc.lng) - DistanceUtil.LToY(screenMapRect.min.lng));
+//					log.info("poiLoc: " + poiLoc + ", screenMapRect: " + screenMapRect);
+					if ( poiLoc.lng >= screenMapRect.min.lng &&
+						 poiLoc.lng <= screenMapRect.max.lng &&
+						 poiLoc.lat >= screenMapRect.min.lat &&
+						 poiLoc.lat <= screenMapRect.max.lat ) {
+
+//						log.info("poiLoc: " + poiLoc + ", screenMapRect: " + screenMapRect);
+
+						int x = ((int)(DistanceUtil.LToX(screenMapRect.min.lng) - DistanceUtil.LToX(poiLoc.lng)) >> (21 - zoom));
+						int y = height - ((int)(DistanceUtil.LToY(screenMapRect.min.lat) - DistanceUtil.LToY(poiLoc.lat)) >> (21 - zoom));
 
 						filteredPoiMap.put(new org.helyx.app.j2me.lib.ui.geometry.Point(x, y), poiItem);
 						repaint();
@@ -318,12 +330,12 @@ public class GoogleMapView extends AbstractView {
 
 	}
 
-	public Vector getPoiList() {
-		return poiList;
+	public IElementProvider getPoiItems() {
+		return poiItems;
 	}
 
-	public void setPoiList(Vector poiList) {
-		this.poiList = poiList;
+	public void setPoiItems(IElementProvider poiItems) {
+		this.poiItems = poiItems;
 	}
 
 	public Object getSelectedPoi() {
@@ -338,17 +350,13 @@ public class GoogleMapView extends AbstractView {
 	
 	private void updatePoiSelectedPoint() {
 		if (poiSelected != null) {
-			log.info("DistanceUtil.LToX(poiSelectedLoc.lat): " + DistanceUtil.LToX(poiSelectedLoc.lat) + ", " + poiSelectedLoc.lat);
-			log.info("DistanceUtil.LToY(poiSelectedLoc.lng): " + DistanceUtil.LToY(poiSelectedLoc.lng) + ", " + poiSelectedLoc.lng);
-			log.info("DistanceUtil.LToX(screenMapRect.min.lat): " + DistanceUtil.LToX(screenMapRect.min.lat) + ", " + screenMapRect.min.lat);
-			log.info("DistanceUtil.LToY(screenMapRect.min.lng): " + DistanceUtil.LToY(screenMapRect.min.lng) + ", " + screenMapRect.min.lng);
-
-			int x = (int)(DistanceUtil.LToX(poiSelectedLoc.lat) - DistanceUtil.LToX(screenMapRect.min.lat));
-			int y = (int)(DistanceUtil.LToY(poiSelectedLoc.lng) - DistanceUtil.LToY(screenMapRect.min.lng));
+			
+			int x = ((int)(DistanceUtil.LToX(screenMapRect.min.lng) - DistanceUtil.LToX(poiSelectedLoc.lng)) >> (21 - zoom));
+			int y = viewCanvas.getHeight() - ((int)(DistanceUtil.LToY(screenMapRect.min.lat) - DistanceUtil.LToY(poiSelectedLoc.lat)) >> (21 - zoom));
 
 			poiSelectedPoint = new org.helyx.app.j2me.lib.ui.geometry.Point(x, y);
 			
-			log.info("poiSelectedPoint: " + poiSelectedPoint);
+//			log.info("poiSelectedPoint: " + poiSelectedPoint);
 		}
 	}
 

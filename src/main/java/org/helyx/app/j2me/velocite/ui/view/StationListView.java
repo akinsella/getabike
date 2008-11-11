@@ -18,6 +18,7 @@ import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.view.support.LoadTaskView;
 import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
 import org.helyx.app.j2me.lib.ui.view.support.list.AbstractListView;
+import org.helyx.app.j2me.lib.ui.view.support.list.IFilterableElementProvider;
 import org.helyx.app.j2me.lib.ui.view.transition.BasicTransition;
 import org.helyx.app.j2me.lib.ui.widget.Command;
 import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
@@ -32,7 +33,6 @@ public class StationListView extends AbstractListView {
 	private static final Log log = LogFactory.getLog("STATION_LIST_VIEW");
 	
 	private Menu menu;
-	private MenuListView menuListView;
 	
 	private boolean recordFilterEnabled = true;
 	private boolean nestedView = false;
@@ -54,7 +54,7 @@ public class StationListView extends AbstractListView {
 			setThirdCommand(new Command("Menu", true, new IAction() {
 	
 				public void run(Object data) {
-					menuListView = new MenuListView(getMidlet(), "Actions", false);
+					MenuListView menuListView = new MenuListView(getMidlet(), "Actions", false);
 					menuListView.setMenu(menu);
 					menuListView.setPreviousDisplayable(StationListView.this);
 					showDisplayable(menuListView, new BasicTransition());
@@ -102,7 +102,6 @@ public class StationListView extends AbstractListView {
 						}
 						else {
 							currentDisplayable.showDisplayable(StationListView.this);
-//							StationListView.this.showDisplayable(StationListView.this);
 						}
 					}
 					
@@ -127,6 +126,8 @@ public class StationListView extends AbstractListView {
 	private void showSelectedItem(Station object) {
 		Station station = (Station)object;
 		StationDetailsView stationDetailsView = new StationDetailsView(getMidlet(), station, nestedView);
+		stationDetailsView.setRelatedStations(elementProvider instanceof IFilterableElementProvider ? ((IFilterableElementProvider)elementProvider).getUnfilteredElements() : elementProvider);
+
 		showDisplayable(stationDetailsView, this);
 	}
 

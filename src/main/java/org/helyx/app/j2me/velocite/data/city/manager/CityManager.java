@@ -15,7 +15,6 @@ import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.velocite.PrefConstants;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
@@ -31,7 +30,7 @@ public class CityManager {
 		super();
 	}
 
-	public static IProgressTask refreshDataWithDefaults() {
+	public static IProgressTask createUpdateCitiesTask() {
 		
 		IContentAccessor cityContentAccessor = new HttpContentAccessor(CITIES_URL);
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);

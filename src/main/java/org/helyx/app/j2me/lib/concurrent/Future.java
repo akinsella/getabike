@@ -54,7 +54,7 @@ public class Future {
 			
 		});
 		
-		progressTask.execute();
+		progressTask.start();
 		
 		synchronized (future) {
 			try { 

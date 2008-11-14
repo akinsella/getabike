@@ -99,6 +99,7 @@ public class SplashScreenView extends AbstractView {
 
 		});
 
+		progressTask.start();
 	}
 
 }

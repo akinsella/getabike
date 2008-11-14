@@ -31,7 +31,7 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	}
 
 	protected void onStart() {
-		Log.setThresholdLevel(Log.INFO);
+		Log.setThresholdLevel(Log.DEBUG);
 		setThemeConfiguration("default", "org.helyx.app.j2me.velocite.theme");
 		setI18nConfiguration("messages", "org.helyx.app.j2me.velocite.i18n");
 		setLocale(Locale.FRANCE);

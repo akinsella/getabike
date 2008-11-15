@@ -20,6 +20,7 @@ public class ThemeConstants {
 	
 	public static final String WIDGET_SPLASH_FONT = "WIDGET_SPLASH_FONT";
 	public static final String WIDGET_SPLASH_IMAGE = "WIDGET_SPLASH_IMAGE";
+	public static final String WIDGET_SPLASH_FONT_LOAD = "WIDGET_SPLASH_FONT_LOAD";
 	
 	public static final String WIDGET_MENU_FONT = "WIDGET_MENU_FONT";
 	public static final String WIDGET_MENU_FONT_DISABLED = "WIDGET_MENU_FONT_DISABLED";

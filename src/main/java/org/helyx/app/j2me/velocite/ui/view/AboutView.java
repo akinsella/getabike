@@ -88,10 +88,10 @@ public class AboutView extends AbstractView {
 
         g.setFont(FontUtil.SMALL);
 
-        g.drawString("Copyright - 2008", width / 2, clientArea.location.y + clientArea.size.height - 2, Graphics.HCENTER | Graphics.BOTTOM);
-        g.drawString("contact@velocite.org", width / 2, clientArea.location.y + clientArea.size.height - FontUtil.SMALL.getHeight() - 2, Graphics.HCENTER | Graphics.BOTTOM);
-        g.drawString("http://www.velocite.org", width / 2, clientArea.location.y + clientArea.size.height - FontUtil.SMALL.getHeight() * 2 - 2, Graphics.HCENTER | Graphics.BOTTOM);
-        g.drawString("Alexis Kinsella", width / 2, clientArea.location.y + clientArea.size.height - FontUtil.SMALL.getHeight() * 3 - 2, Graphics.HCENTER | Graphics.BOTTOM);
+        g.drawString("Copyright - 2008", width / 2, y + height - 2, Graphics.HCENTER | Graphics.BOTTOM);
+        g.drawString("contact@velocite.org", width / 2, y + height - 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.BOTTOM);
+        g.drawString("http://www.velocite.org", width / 2, y + height - 2 - FontUtil.SMALL.getHeight() * 2, Graphics.HCENTER | Graphics.BOTTOM);
+        g.drawString("Alexis Kinsella", width / 2, y + height - 2 - FontUtil.SMALL.getHeight() * 3, Graphics.HCENTER | Graphics.BOTTOM);
 	}
 
 }

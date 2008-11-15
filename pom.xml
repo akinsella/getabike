@@ -85,7 +85,7 @@
 		<j2me.midlet.icon>/org/helyx/app/j2me/velocite/image/vcIcon.png</j2me.midlet.icon>
 		<j2me.midlet.name>VeloCite</j2me.midlet.name>
 		<j2me.midlet.class>org.helyx.app.j2me.velocite.midlet.VelociteMIDlet</j2me.midlet.class>
-		<j2me.midlet.version>1.2.0</j2me.midlet.version>
+		<j2me.midlet.version>1.2.1</j2me.midlet.version>
 		<j2me.midlet.configuration>CLDC-1.1</j2me.midlet.configuration>
 		<j2me.midlet.profile>MIDP-2.0</j2me.midlet.profile>
 		<j2me.midlet.author>${project.organization.name}</j2me.midlet.author>

@@ -1,7 +1,5 @@
 package org.helyx.app.j2me.velocite.ui.view;
 
-import javax.microedition.lcdui.Graphics;
-
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
 import org.helyx.app.j2me.lib.log.Log;
@@ -11,10 +9,6 @@ import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.ProgressListener;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
-import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
-import org.helyx.app.j2me.lib.ui.graphics.Color;
-import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
-import org.helyx.app.j2me.lib.ui.util.FontUtil;
 import org.helyx.app.j2me.lib.ui.view.support.LoadTaskView;
 import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
 import org.helyx.app.j2me.lib.ui.view.support.list.AbstractListView;
@@ -35,11 +29,14 @@ public class StationListView extends AbstractListView {
 	private Menu menu;
 	
 	private boolean recordFilterEnabled = true;
-	private boolean nestedView = false;
+	
+	private Station referentStation;
+	
+	private boolean allowMenu = true;
+	private boolean allowNested = true;
 
-	public StationListView(AbstractMIDlet midlet, String title, boolean nestedView) {
+	public StationListView(AbstractMIDlet midlet, String title) {
 		super(midlet, title);
-		this.nestedView = nestedView;
 		init();
 	}
 	
@@ -49,36 +46,39 @@ public class StationListView extends AbstractListView {
 		initComponents();
 	}
 	
-	protected void initActions() {
-		if (!nestedView) {		
+	protected void initActions() {	
+		
+		if (allowMenu) {
 			setThirdCommand(new Command("Menu", true, new IAction() {
-	
 				public void run(Object data) {
-					MenuListView menuListView = new MenuListView(getMidlet(), "Actions", false);
-					menuListView.setMenu(menu);
-					menuListView.setPreviousDisplayable(StationListView.this);
-					showDisplayable(menuListView, new BasicTransition());
+					showMenuView();
 				}
-				
 			}));
 		}
 
 		setPrimaryCommand(new Command("Voir", true, new IAction() {
-
 			public void run(Object data) {
-				onShowItemSelected(elementProvider.get(selectedOffset));
+				showItemSelected();
 			}
-			
 		}));
 	
 		setSecondaryCommand(new Command("Retour", true, new IAction() {
-	
 			public void run(Object data) {
 				fireReturnCallback();
 			}
-			
 		}));
 
+	}
+	
+	protected void showMenuView() {
+		MenuListView menuListView = new MenuListView(getMidlet(), "Actions", false);
+		menuListView.setMenu(menu);
+		menuListView.setPreviousDisplayable(StationListView.this);
+		showDisplayable(menuListView, new BasicTransition());
+	}
+	
+	protected void showItemSelected() {
+		onShowItemSelected(elementProvider.get(selectedOffset));
 	}
 
 	protected void initData() {
@@ -90,30 +90,33 @@ public class StationListView extends AbstractListView {
 		
 		menu.addMenuItem(new MenuItem("Chercher une station", new IAction() {
 			public void run(Object data) {
-				final String currentStationNameFilter = getStationNameFilter();
-				StationSearchView stationSearchView = new StationSearchView(getMidlet());
-				stationSearchView.setReturnCallback(new IReturnCallback() {
-
-					public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
-						String newStationNameFilter = getStationNameFilter();
-						if ( (currentStationNameFilter == null  && newStationNameFilter != null ) ||
-							 (currentStationNameFilter != null && !currentStationNameFilter.equals(newStationNameFilter)) ) {
-							loadListContent(new UIStationLoaderProgressListener(StationListView.this));
-						}
-						else {
-							currentDisplayable.showDisplayable(StationListView.this);
-						}
-					}
-					
-				});
-				showDisplayable(stationSearchView);
-				
+				searchStation();
 			}
 		}));
 		
 	}
 	
-	private String getStationNameFilter() {
+	protected void searchStation() {
+		final String currentStationNameFilter = getStationNameFilter();
+		StationSearchView stationSearchView = new StationSearchView(getMidlet());
+		stationSearchView.setReturnCallback(new IReturnCallback() {
+
+			public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
+				String newStationNameFilter = getStationNameFilter();
+				if ( (currentStationNameFilter == null  && newStationNameFilter != null ) ||
+					 (currentStationNameFilter != null && !currentStationNameFilter.equals(newStationNameFilter)) ) {
+					loadListContent(new UIStationLoaderProgressListener(StationListView.this));
+				}
+				else {
+					currentDisplayable.showDisplayable(StationListView.this);
+				}
+			}
+			
+		});
+		showDisplayable(stationSearchView);
+	}
+	
+	protected String getStationNameFilter() {
 		String stationNameFilter = PrefManager.readPrefString(StationSearchView.PREF_STATION_NAME_FILTER);
 		log.info("Station name filter: '" + stationNameFilter + "'");
 		return stationNameFilter;
@@ -123,9 +126,10 @@ public class StationListView extends AbstractListView {
 		showSelectedItem((Station)object);
 	}
 
-	private void showSelectedItem(Station object) {
+	protected void showSelectedItem(Station object) {
 		Station station = (Station)object;
-		StationDetailsView stationDetailsView = new StationDetailsView(getMidlet(), station, nestedView);
+		StationDetailsView stationDetailsView = new StationDetailsView(getMidlet(), station);
+		stationDetailsView.setAllowSearchNearStation(allowNested);
 		stationDetailsView.setRelatedStations(elementProvider instanceof IFilterableElementProvider ? ((IFilterableElementProvider)elementProvider).getUnfilteredElements() : elementProvider);
 
 		showDisplayable(stationDetailsView, this);
@@ -150,46 +154,32 @@ public class StationListView extends AbstractListView {
 		log.info("Load List Content...");
 	}
 
-	protected void paintItem(Graphics g, int offset, Rectangle itemClientArea, Object itemObject) {
-
-		Station station = (Station)itemObject;
-    	
-    	boolean isSelected = isItemSelected(offset);
-
-    	super.paintItem(g, offset, itemClientArea, itemObject);
-     	if (isSelected) {
-    		Color listFontSelectedColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SELECTED);
-    		g.setColor(listFontSelectedColor.intValue());
-    	}
-    	else {
-    		Color listFontColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT);
-    		g.setColor(listFontColor.intValue());
-    	}
-        if (!station.open) {
-    		Color listErrorColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_ERROR);
-         	g.setColor(listErrorColor.intValue());
-        }
-        g.setFont(FontUtil.SMALL_BOLD);
-        g.drawString(station.number + " - " + station.name, itemClientArea.location.x + 5, itemClientArea.location.y + 2, Graphics.LEFT | Graphics.TOP);
- 
-    	if (isSelected) {
-    		Color listFontSecondSelectedColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
-    		g.setColor(listFontSecondSelectedColor.intValue());
-    	}
-    	else {
-    		Color listFontSecondColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
-    		g.setColor(listFontSecondColor.intValue());
-    	}
-        g.setFont(FontUtil.SMALL);
-    	g.drawString(station.fullAddress, itemClientArea.location.x + 5, itemClientArea.location.y + 2 + FontUtil.SMALL_BOLD.getHeight(), Graphics.LEFT | Graphics.TOP);
-	}
-
 	public void setRecordFilterEnabled(boolean recordFilterEnabled) {
 		this.recordFilterEnabled = recordFilterEnabled;
 	}
 
-	public boolean isNestedView() {
-		return nestedView;
+	public Station getReferentStation() {
+		return referentStation;
+	}
+
+	public void setReferentStation(Station referentStation) {
+		this.referentStation = referentStation;
+	}
+
+	public boolean isAllowMenu() {
+		return allowMenu;
+	}
+
+	public void setAllowMenu(boolean allowMenu) {
+		this.allowMenu = allowMenu;
+	}
+
+	public boolean isAllowNested() {
+		return allowNested;
+	}
+
+	public void setAllowNested(boolean allowNested) {
+		this.allowNested = allowNested;
 	}
 
 }

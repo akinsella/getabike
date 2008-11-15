@@ -23,10 +23,18 @@ public abstract class AbstractListView extends AbstractView {
 	protected int selectedOffset = 0;
 	protected int topOffset = 0;
 	protected int visibleItemCount = 0;
+	
+	private ICellRenderer cellRenderer;
+	
+	private boolean preRender = true;
 
 	public AbstractListView(AbstractMIDlet midlet, String title) {
+		this(midlet, title, null);
+	}
+	public AbstractListView(AbstractMIDlet midlet, String title, ICellRenderer cellRenderer) {
 		super(midlet);
 		this.title = title;
+		this.cellRenderer = cellRenderer;
 		init();
 	}
 
@@ -149,7 +157,7 @@ public abstract class AbstractListView extends AbstractView {
 		g.drawLine(clientArea.location.x + clientArea.size.width - 5, clientArea.location.y, clientArea.location.x + clientArea.size.width - 5, clientArea.location.y + clientArea.size.height);
 	}
 	
-	protected boolean isItemSelected(int offset) {
+	public boolean isItemSelected(int offset) {
     	boolean isSelected = selectedOffset == offset;
     	return isSelected;
 	}
@@ -158,31 +166,36 @@ public abstract class AbstractListView extends AbstractView {
     	
 		boolean isSelected = isItemSelected(offset);
 		
-    	if (isSelected) {
-//    		g.setColor(ColorUtil.WIDGET_LIST_FONT_SELECTED);
-    		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_LIGHT);
-    		Color shadeColor2 = getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_DARK);
-    		Shade shade = new Shade(shadeColor1.intValue(), shadeColor2.intValue());
-    		GraphicsUtil.fillShade(g, itemClientArea, shade, false);
+		if (isPreRender()) {
+	    	if (isSelected) {
+	//    		g.setColor(ColorUtil.WIDGET_LIST_FONT_SELECTED);
+	    		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_LIGHT);
+	    		Color shadeColor2 = getTheme().getColor(ThemeConstants.WIDGET_LIST_SELECTED_SHADE_DARK);
+	    		Shade shade = new Shade(shadeColor1.intValue(), shadeColor2.intValue());
+	    		GraphicsUtil.fillShade(g, itemClientArea, shade, false);
+	     	}
+	    	else {
+	    		Color listColor = getTheme().getColor(ThemeConstants.WIDGET_LIST);
+	    		g.setColor(listColor.intValue());
+	    		g.fillRect(itemClientArea.location.x, itemClientArea.location.y, itemClientArea.size.width, itemClientArea.size.height);
+	    	}
+	    	
+			Color listSeparatorColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_SEPARATOR);
+	    	g.setColor(listSeparatorColor.intValue());
+	    	g.drawLine(itemClientArea.location.x, itemClientArea.location.y + itemClientArea.size.height - 1, itemClientArea.location.x + itemClientArea.size.width, itemClientArea.location.y + itemClientArea.size.height - 1);
+		
+	     	if (isSelected) {
+	    		Color listFontSelectedColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SELECTED);
+	    		g.setColor(listFontSelectedColor.intValue());
+	    	}
+	    	else {
+	    		Color listFontColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT);
+	    		g.setColor(listFontColor.intValue());
+	    	}
+		}
+     	if (cellRenderer != null) {
+     		cellRenderer.paintItem(this, g, offset, itemClientArea, itemObject);
      	}
-    	else {
-    		Color listColor = getTheme().getColor(ThemeConstants.WIDGET_LIST);
-    		g.setColor(listColor.intValue());
-    		g.fillRect(itemClientArea.location.x, itemClientArea.location.y, itemClientArea.size.width, itemClientArea.size.height);
-    	}
-    	
-		Color listSeparatorColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_SEPARATOR);
-    	g.setColor(listSeparatorColor.intValue());
-    	g.drawLine(itemClientArea.location.x, itemClientArea.location.y + itemClientArea.size.height - 1, itemClientArea.location.x + itemClientArea.size.width, itemClientArea.location.y + itemClientArea.size.height - 1);
-	
-     	if (isSelected) {
-    		Color listFontSelectedColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SELECTED);
-    		g.setColor(listFontSelectedColor.intValue());
-    	}
-    	else {
-    		Color listFontColor = getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT);
-    		g.setColor(listFontColor.intValue());
-    	}
 	}
 
 	protected void onKeyPressed(int keyCode) {
@@ -278,6 +291,16 @@ public abstract class AbstractListView extends AbstractView {
 
 	protected void onScrollDown() {
 		
+	}
+	
+	public void setCellRenderer(ICellRenderer cellRenderer) {
+		this.cellRenderer = cellRenderer;
+	}
+	public boolean isPreRender() {
+		return preRender;
+	}
+	public void setPreRender(boolean preRender) {
+		this.preRender = preRender;
 	}
 
 }

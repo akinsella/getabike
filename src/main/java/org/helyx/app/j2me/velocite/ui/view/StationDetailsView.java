@@ -14,6 +14,7 @@ import org.helyx.app.j2me.lib.map.google.GoogleMapView;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
+import org.helyx.app.j2me.lib.task.ProgressListener;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
@@ -47,17 +48,11 @@ public class StationDetailsView extends AbstractView {
 	
 	private IElementProvider relatedStations;
 	
-	private boolean nestedView = false;
+	private boolean allowSearchNearStation = true;
 
-	public StationDetailsView(AbstractMIDlet midlet, Station station, boolean nestedView)  {
-		this(midlet, station, nestedView, null);
-	}
-
-	public StationDetailsView(AbstractMIDlet midlet, Station station, boolean nestedView, IElementProvider relatedStations)  {
+	public StationDetailsView(AbstractMIDlet midlet, Station station)  {
 		super(midlet);
 		this.station = station;
-		this.nestedView = nestedView;
-		this.relatedStations = relatedStations;
 		init();
 	}
 	
@@ -69,6 +64,15 @@ public class StationDetailsView extends AbstractView {
 		initActions();
 		fetchStationDetails();
 	}
+	
+	private void showGoogleMapsView() {
+		GoogleMapView googleMapView = new GoogleMapView(getMidlet(), "Plan de la station", new StationPoiInfoAccessor(), station.localization, 15);
+		googleMapView.setPreviousDisplayable(StationDetailsView.this);
+		googleMapView.setSelectedPoi(station);
+		googleMapView.setPoiItems(relatedStations);
+		googleMapView.showDisplayable(googleMapView);
+		googleMapView.updateMap();
+	}
 		
 	private void initActions() {
 		
@@ -79,28 +83,15 @@ public class StationDetailsView extends AbstractView {
 				final MenuListView menuListView = new MenuListView(getMidlet(), "Menu", false);
 
 				Menu menu = new Menu();
-				
-				menu.addMenuItem(new MenuItem("Ajouter aux favoris", new IAction() {
-					
-					public void run(Object data) {
-						DialogUtil.showAlertMessage(menuListView, "Attention", "La fonction n'est pas encore implémentée.");
-					}
-
-				}));
 
 				menu.addMenuItem(new MenuItem("Voir le plan", new IAction() {
 					
 					public void run(Object data) {
-						GoogleMapView googleMapView = new GoogleMapView(getMidlet(), "Plan de la station", new StationPoiInfoAccessor(), station.localization, 15);
-						googleMapView.setPreviousDisplayable(StationDetailsView.this);
-						googleMapView.setSelectedPoi(station);
-						googleMapView.setPoiItems(relatedStations);
-						googleMapView.showDisplayable(googleMapView);
-						googleMapView.updateMap();
+						showGoogleMapsView();
 					}
 				}));
 				
-				if (!nestedView) {
+				if (allowSearchNearStation) {
 					menu.addMenuItem(new MenuItem("Voir les stations proches", new IAction() {
 						
 						public void run(Object data) {
@@ -110,28 +101,28 @@ public class StationDetailsView extends AbstractView {
 							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 250 m", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 250, false, true);
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 250, false, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 500 m", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 500, false, true);
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 500, false, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 1 km", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 1000, false, true);
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 1000, false, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 2 km", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 2000, false, true);
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 2000, false, false, false);
 								}
 			
 							}));
@@ -142,10 +133,17 @@ public class StationDetailsView extends AbstractView {
 						}
 
 					}));
-
-					
 				}
 				
+				
+				menu.addMenuItem(new MenuItem("Ajouter aux favoris", new IAction() {
+					
+					public void run(Object data) {
+						DialogUtil.showAlertMessage(menuListView, "Attention", "La fonction n'est pas encore implémentée.");
+					}
+
+				}));
+
 				menuListView.setMenu(menu);
 				menuListView.setPreviousDisplayable(StationDetailsView.this);
 
@@ -158,6 +156,14 @@ public class StationDetailsView extends AbstractView {
 
 			public void run(Object data) {
 				fireReturnCallback();
+			}
+			
+		}));
+		
+		setPrimaryCommand(new Command("Rafraîchir", true, new IAction() {
+
+			public void run(Object data) {
+				fetchStationDetails();
 			}
 			
 		}));
@@ -197,6 +203,18 @@ public class StationDetailsView extends AbstractView {
 
 			});
 			progressTask.start();
+			
+			progressTask.addProgressListener(new ProgressAdapter() {
+
+				public void onStart() {
+					setPrimaryCommandEnabled(false);
+				}
+				
+				public void onBeforeCompletion(int eventType, String eventMessage, Object eventData) {
+					setPrimaryCommandEnabled(true);
+				}
+				
+			});
 //			TaskManager.runLoadTaskView("Recherche des infos de station", progressTask, getMidlet(), StationDetailsView.this, StationDetailsView.this);
 		}
 		catch (CartoManagerException e) {
@@ -346,8 +364,8 @@ public class StationDetailsView extends AbstractView {
         g.drawString(hs, contentRightPos - mediumFont.stringWidth(hs), height + (mediumFontHeight + 1) * 3, Graphics.TOP | Graphics.LEFT);
 	}
 
-	public boolean isNestedView() {
-		return nestedView;
+	public boolean isAllowSearchNearStation() {
+		return allowSearchNearStation;
 	}
 
 	public IElementProvider getRelatedStations() {
@@ -356,6 +374,10 @@ public class StationDetailsView extends AbstractView {
 
 	public void setRelatedStations(IElementProvider relatedStations) {
 		this.relatedStations = relatedStations;
+	}
+
+	public void setAllowSearchNearStation(boolean allowSearchNearStation) {
+		this.allowSearchNearStation = allowSearchNearStation;
 	}
 
 }

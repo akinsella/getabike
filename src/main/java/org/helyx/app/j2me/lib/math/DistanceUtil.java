@@ -2,6 +2,7 @@ package org.helyx.app.j2me.lib.math;
 
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 
 public class DistanceUtil {
 	
@@ -13,6 +14,14 @@ public class DistanceUtil {
 	public static final String KM = "KM";
 	public static final String MILES = "MILES";
 	public static final String NAUT = "NAUT";
+	
+	
+	public static double distance(Point loc1, Point loc2, String unit) {
+		if (loc1 == null || loc2 == null) {
+			return Double.MAX_VALUE;
+		}
+		return distance(loc1.lat, loc1.lng, loc2.lat, loc2.lng, unit);
+	}
 	
 	/**
 	 * 
@@ -29,7 +38,7 @@ public class DistanceUtil {
 	  double theta = lon1 - lon2;
 	  double dist;
 	  dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(lat2)) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.cos(Math.toRadians(theta));
-	  dist = MathUtil.acos(dist);
+	  dist = MathApprox.acos(dist);
 	  dist = Math.toDegrees(dist);
 	  double distance = dist * 60 * 1.1515;
 	  if (KM.equals(unit)) {

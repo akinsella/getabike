@@ -33,6 +33,10 @@ public abstract class AbstractView extends AbstractDisplayable {
 	private Command primaryCommand;
 	private Command secondaryCommand;
 	private Command thirdCommand;
+	
+	private boolean primaryCommandEnabled = true;
+	private boolean secondaryCommandEnabled = true;
+	private boolean thirdCommandEnabled = true;
 		
 	protected boolean backgroundEnabled = true;
 	protected boolean titleEnabled = true;
@@ -338,6 +342,42 @@ public abstract class AbstractView extends AbstractDisplayable {
 			log.debug("afterDisplayableSelection[current]: " + current);
 			log.debug("fullScreenMode: " + fullScreenMode);
 			viewCanvas.setFullScreenMode(fullScreenMode);
+		}
+	}
+
+	public boolean isPrimaryCommandEnabled() {
+		return primaryCommandEnabled;
+	}
+
+	public void setPrimaryCommandEnabled(boolean primaryCommandEnabled) {
+		boolean changed = primaryCommandEnabled != this.primaryCommandEnabled;
+		this.primaryCommandEnabled = primaryCommandEnabled;
+		if (changed) {
+			repaint();
+		}
+	}
+
+	public boolean isSecondaryCommandEnabled() {
+		return secondaryCommandEnabled;
+	}
+
+	public void setSecondaryCommandEnabled(boolean secondaryCommandEnabled) {
+		boolean changed = primaryCommandEnabled != this.primaryCommandEnabled;
+		this.secondaryCommandEnabled = secondaryCommandEnabled;
+		if (changed) {
+			repaint();
+		}
+	}
+
+	public boolean isThirdCommandEnabled() {
+		return thirdCommandEnabled;
+	}
+
+	public void setThirdCommandEnabled(boolean thirdCommandEnabled) {
+		boolean changed = primaryCommandEnabled != this.primaryCommandEnabled;
+		this.thirdCommandEnabled = thirdCommandEnabled;
+		if (changed) {
+			repaint();
 		}
 	}
 

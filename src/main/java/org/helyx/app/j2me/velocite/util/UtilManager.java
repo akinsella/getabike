@@ -1,6 +1,6 @@
 package org.helyx.app.j2me.velocite.util;
 
-import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.log.Log; 
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.view.support.dialog.AbstractDialogResultCallback;

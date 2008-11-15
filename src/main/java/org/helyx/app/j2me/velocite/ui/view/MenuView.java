@@ -183,8 +183,11 @@ public class MenuView extends AbstractView {
 		private void showStationListView() {
 			
 			if (stationListView == null) {
-				stationListView = new StationListView(getMidlet(), "Liste des stations", false);
+				stationListView = new StationListView(getMidlet(), "Liste des stations");
 				stationListView.setPreviousDisplayable(MenuView.this);
+				stationListView.setCellRenderer(new StationItemRenderer());
+				stationListView.setAllowMenu(true);
+				stationListView.setAllowNested(true);
 				stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
 			}
 			else {

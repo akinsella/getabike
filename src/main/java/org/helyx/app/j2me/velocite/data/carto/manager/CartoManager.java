@@ -20,6 +20,7 @@ import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloStationConten
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloVStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.velocite.ui.view.StationItemRenderer;
 import org.helyx.app.j2me.velocite.ui.view.StationListView;
 
 public class CartoManager {
@@ -118,10 +119,14 @@ public class CartoManager {
 		}	
 	}
 
-	public static void showStationByDistance(AbstractDisplayable displayable, AbstractDisplayable previousDisplayable, final Station station, final int distanceMax, boolean recordFilterEnabled, boolean nestedView) {
-		StationListView stationListView = new StationListView(displayable.getMidlet(), "Station Proches", nestedView);
+	public static void showStationByDistance(AbstractDisplayable displayable, AbstractDisplayable previousDisplayable, final Station station, final int distanceMax, boolean recordFilterEnabled, boolean allowMenu, boolean allowNested) {
+		StationListView stationListView = new StationListView(displayable.getMidlet(), "Station Proches");
+		stationListView.setReferentStation(station);
+		stationListView.setAllowMenu(allowMenu);
 		stationListView.setPreviousDisplayable(previousDisplayable);
+		stationListView.setCellRenderer(new StationItemRenderer());
 		stationListView.setRecordFilterEnabled(recordFilterEnabled);
+		stationListView.setAllowNested(allowNested);
 		
 		UIStationLoaderProgressListener slpl = new UIStationLoaderProgressListener(
 				stationListView, 

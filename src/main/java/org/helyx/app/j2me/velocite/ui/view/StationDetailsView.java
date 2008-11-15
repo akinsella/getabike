@@ -14,7 +14,6 @@ import org.helyx.app.j2me.lib.map.google.GoogleMapView;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.task.ProgressListener;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
@@ -129,7 +128,7 @@ public class StationDetailsView extends AbstractView {
 							
 							nearStationMenuListView.setMenu(nearStationMenu);
 							nearStationMenuListView.setPreviousDisplayable(menuListView);
-							showDisplayable(nearStationMenuListView, new BasicTransition());
+							showDisplayable(nearStationMenuListView);
 						}
 
 					}));

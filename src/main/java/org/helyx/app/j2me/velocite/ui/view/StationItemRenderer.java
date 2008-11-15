@@ -38,8 +38,14 @@ public class StationItemRenderer implements ICellRenderer {
     		Color listErrorColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_ERROR);
          	g.setColor(listErrorColor.intValue());
         }
+
+        int x = itemClientArea.location.x;
+        int y = itemClientArea.location.y;
+//        int width = itemClientArea.size.width;
+//        int height = itemClientArea.size.height;
+
         g.setFont(FontUtil.SMALL_BOLD);
-        g.drawString(station.number + " - " + station.name, itemClientArea.location.x + 5, itemClientArea.location.y + 2, Graphics.LEFT | Graphics.TOP);
+        g.drawString(station.number + " - " + station.name, x + 5, y + 2, Graphics.LEFT | Graphics.TOP);
  
     	if (isSelected) {
     		Color listFontSecondSelectedColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
@@ -50,7 +56,7 @@ public class StationItemRenderer implements ICellRenderer {
     		g.setColor(listFontSecondColor.intValue());
     	}
         g.setFont(FontUtil.SMALL);
-    	g.drawString(station.fullAddress, itemClientArea.location.x + 5, itemClientArea.location.y + 2 + FontUtil.SMALL_BOLD.getHeight(), Graphics.LEFT | Graphics.TOP);
+    	g.drawString(station.fullAddress, x + 5, y + 2 + FontUtil.SMALL_BOLD.getHeight(), Graphics.LEFT | Graphics.TOP);
 		
 	}
 

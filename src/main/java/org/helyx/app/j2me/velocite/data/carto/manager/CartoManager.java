@@ -20,7 +20,7 @@ import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloStationConten
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloVStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.ui.view.StationItemRenderer;
+import org.helyx.app.j2me.velocite.ui.view.DistanceStationItemRenderer;
 import org.helyx.app.j2me.velocite.ui.view.StationListView;
 
 public class CartoManager {
@@ -124,7 +124,7 @@ public class CartoManager {
 		stationListView.setReferentStation(station);
 		stationListView.setAllowMenu(allowMenu);
 		stationListView.setPreviousDisplayable(previousDisplayable);
-		stationListView.setCellRenderer(new StationItemRenderer());
+		stationListView.setCellRenderer(new DistanceStationItemRenderer());
 		stationListView.setRecordFilterEnabled(recordFilterEnabled);
 		stationListView.setAllowNested(allowNested);
 		

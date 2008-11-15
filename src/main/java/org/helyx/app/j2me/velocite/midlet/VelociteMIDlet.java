@@ -8,7 +8,6 @@ import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
 import org.helyx.app.j2me.lib.ui.view.support.dialog.AbstractDialogResultCallback;
 import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
@@ -31,7 +30,7 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	}
 
 	protected void onStart() {
-		Log.setThresholdLevel(Log.DEBUG);
+		Log.setThresholdLevel(Log.INFO);
 		setThemeConfiguration("default", "org.helyx.app.j2me.velocite.theme");
 		setI18nConfiguration("messages", "org.helyx.app.j2me.velocite.i18n");
 		setLocale(Locale.FRANCE);

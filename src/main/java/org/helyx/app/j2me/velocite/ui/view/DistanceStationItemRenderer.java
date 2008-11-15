@@ -12,29 +12,33 @@ import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 
 public class DistanceStationItemRenderer extends StationItemRenderer {
 
-	private Log log = LogFactory.getLog("STATION_ITEM_RENDERER");
+	private Log log = LogFactory.getLog("DISTANCE_STATION_ITEM_RENDERER");
 	
-	public DistanceStationItemRenderer(Station station) {
+	public DistanceStationItemRenderer() {
 		super();
 	}
 
 	public void paintItem(AbstractListView view, Graphics g, int offset, Rectangle itemClientArea, Object itemObject) {
 
-		StationListView distanceStationListView = (StationListView)view;
-		Station originStation = distanceStationListView.getReferentStation();
+		super.paintItem(view, g, offset, itemClientArea, itemObject);
+		StationListView stationListView = (StationListView)view;
+		Station referentStation = stationListView.getReferentStation();
 		Station station = (Station)itemObject;
     	
-		double distance = DistanceUtil.distance(originStation.localization, station.localization, DistanceUtil.KM);
-		
-		if (distance  < Double.MAX_VALUE) {
+		double distance = DistanceUtil.distance(referentStation.localization, station.localization, DistanceUtil.KM);
+		log.info("Distance: " + new String((long)(distance * 1000) + " m"));
+		log.info("itemClientArea: " + itemClientArea);
+		if (distance < Double.MAX_VALUE) {
 	        g.setFont(FontUtil.SMALL);
 
 	        int x = itemClientArea.location.x;
 	        int y = itemClientArea.location.y;
 	        int width = itemClientArea.size.width;
 	        int height = itemClientArea.size.height;
-			String distanceStr = new String((long)distance + " m");
-			g.drawString(distanceStr, x + width - FontUtil.SMALL.stringWidth(distanceStr) - 2, y + height - 2, Graphics.LEFT | Graphics.TOP);
+			String distanceStr = new String((long)(distance * 1000) + " m");
+			g.drawString(distanceStr, x + width - FontUtil.SMALL.stringWidth(distanceStr) - 2, y + height - 2 - FontUtil.SMALL.getHeight(), Graphics.LEFT | Graphics.TOP);
+
+			log.info("y + height - 2: " + (y + height - 2));
 		}
 	}
 

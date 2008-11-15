@@ -121,40 +121,75 @@ public abstract class AbstractListView extends AbstractView {
         
         visibleItemCount = clientArea.size.height / itemHeight;
 
-        int elementProviderLength = elementProvider.length();
+        Rectangle itemsClientArea = computeClientAreaWithoutScrollbar(g);
+        
         for (int i = 0 ; i < visibleItemCount + 1 ; i++) {
         	int y = clientArea.location.y + i * itemHeight;
-        	Rectangle itemClientArea = new Rectangle(clientArea.location.x, y, clientArea.size.width, itemHeight);
+        	Rectangle itemClientArea = new Rectangle(itemsClientArea.location.x, y, itemsClientArea.size.width, itemHeight);
     		
         	int offset = topOffset + i;
-        	if (offset >= elementProviderLength) {
+        	if (offset >= length) {
     			break;
     		}
         	paintItem(g, offset, itemClientArea, elementProvider.get(offset));
         }
-        paintScrollBar(g, length, topOffset, selectedOffset, visibleItemCount, clientArea);
+        if (shouldPaintScrollBar()) {
+        	paintScrollBar(g, length, topOffset, selectedOffset, visibleItemCount, clientArea);
+        }
+	}
+	
+	protected Rectangle computeClientArea(Graphics graphics) {
+		Rectangle clientArea = super.computeClientArea(graphics);
+		
+		return clientArea;
+	}
+	protected Rectangle computeClientAreaWithoutScrollbar(Graphics graphics) {
+		Rectangle clientArea = super.computeClientArea(graphics);
+		
+		if (shouldPaintScrollBar()) {
+			clientArea.size.width -= 4;
+		}
+		
+		return clientArea;
+	}
+	
+	protected boolean shouldPaintScrollBar() {
+		int length = getItemArrayLength();
+		if (length == 0 || length <= visibleItemCount) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+	private int getScrollBarWidth() {
+		return 4;
 	}
 	
 	private void paintScrollBar(Graphics g, int length, int topOffset, int selectedOffset, int visibleItemCount, Rectangle clientArea) {
-		if (length == 0 || length <= visibleItemCount) {
-			return;
-		}
+        int x = clientArea.location.x;
+        int y = clientArea.location.y;
+        int width = clientArea.size.width;
+        int height = clientArea.size.height;
+        int scrollBarWidth = getScrollBarWidth();
+		
 		Color scrollBackgroundColor = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BACKGROUND);
 		g.setColor(scrollBackgroundColor.intValue());
-		g.fillRect(clientArea.location.x + clientArea.size.width - 4, clientArea.location.y, 4, clientArea.size.height);
+		g.fillRect(x + width - scrollBarWidth, y, scrollBarWidth, height);
 		
-		int yHeight = Math.max(clientArea.size.height / 8, clientArea.size.height * visibleItemCount / length);
-		int yPos = clientArea.location.y + (int)((clientArea.size.height - yHeight) * ((double)selectedOffset / ((double)length - 1)));
+		int yHeight = Math.max(height / 8, height * visibleItemCount / length);
+		int yPos = y + (int)((height - yHeight) * ((double)selectedOffset / ((double)length - 1)));
 		
 		Color shadeColor1 = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_DARK);
 		Color shadeColor2 = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_SHADE_LIGHT);
 		Shade shade = new Shade(shadeColor1.intValue(), shadeColor2.intValue());
-		Rectangle area = new Rectangle(clientArea.location.x + clientArea.size.width - 4, yPos, 4, yHeight);
+		Rectangle area = new Rectangle(x + width - scrollBarWidth, yPos, scrollBarWidth, yHeight);
 		GraphicsUtil.fillShade(g, area, shade, true);
 
 		Color scrollBorderColor = getTheme().getColor(ThemeConstants.WIDGET_SCROLL_BORDER);
 		g.setColor(scrollBorderColor.intValue());
-		g.drawLine(clientArea.location.x + clientArea.size.width - 5, clientArea.location.y, clientArea.location.x + clientArea.size.width - 5, clientArea.location.y + clientArea.size.height);
+		g.drawLine(x + width - (scrollBarWidth + 1), y, x + width - (scrollBarWidth + 1), y + height);
 	}
 	
 	public boolean isItemSelected(int offset) {

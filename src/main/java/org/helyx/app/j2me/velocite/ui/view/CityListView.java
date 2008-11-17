@@ -4,7 +4,6 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.action.IAction;
-import org.helyx.app.j2me.lib.content.provider.ContentProviderFactoryNotFoundExcepton;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.manager.TaskManager;
@@ -19,6 +18,7 @@ import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.app.manager.VeloCiteManager;
 import org.helyx.app.j2me.velocite.data.carto.listener.StoreStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
+import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
@@ -96,7 +96,7 @@ public class CityListView extends MenuListView {
 						
 					});
 				}
-				catch (ContentProviderFactoryNotFoundExcepton e) {
+				catch (CartoManagerException e) {
 					showAlertMessage("Erreur", "Impossible de charger les stations pour la ville sélectionnée.");
 					fireReturnCallback();
 				}

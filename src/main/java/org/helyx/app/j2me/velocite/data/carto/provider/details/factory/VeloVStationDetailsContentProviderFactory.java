@@ -5,6 +5,7 @@ import java.util.Random;
 import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.content.provider.IContentProviderFactory;
+import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderFactoryException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.text.StringFormat;
@@ -25,7 +26,7 @@ public class VeloVStationDetailsContentProviderFactory implements IContentProvid
 		this.station = station;
 	}
 	
-	public IContentProvider getContentProviderFactory() {
+	public IContentProvider createContentProvider() throws ContentProviderFactoryException {
 		String url = new StringFormat(city.stationDetails).format(new String[] { 
 				String.valueOf(station.number), 
 				String.valueOf((long)(new Random().nextDouble() * 100000 + 1))

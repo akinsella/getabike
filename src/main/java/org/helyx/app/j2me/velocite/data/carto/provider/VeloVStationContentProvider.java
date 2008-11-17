@@ -4,7 +4,6 @@ import java.io.InputStream;
 
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessorFactory;
-import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
@@ -13,6 +12,7 @@ import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
@@ -20,7 +20,7 @@ import org.json.me.JSONArray;
 import org.json.me.JSONObject;
 
 
-public class VeloVStationContentProvider extends AbstractContentProvider {
+public class VeloVStationContentProvider extends AbstractStationContentProvider {
 	
 	private static final Log log = LogFactory.getLog("VELOV_STATION_CONTENT_PROVIDER");
 	
@@ -75,6 +75,8 @@ public class VeloVStationContentProvider extends AbstractContentProvider {
 					JSONObject jsonContent = new JSONObject(jsonStreamContent);
 					JSONArray markerArray = jsonContent.getJSONArray("markers");
 					int markerCount = markerArray.length();
+
+					IStationInfoNormalizer stationNameNormalizer = getStationInfoNormalizer();
 					
 					for (int markerOffset = 0 ; markerOffset < markerCount ; markerOffset++) {
 						if (cancel) {
@@ -98,7 +100,9 @@ public class VeloVStationContentProvider extends AbstractContentProvider {
 						station.open = true;
 						station.city = quartier.city;
 						station.zipCode = quartier.zipCode;
-						
+
+						stationNameNormalizer.normalizeName(station);
+
 						progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 					}
 				}

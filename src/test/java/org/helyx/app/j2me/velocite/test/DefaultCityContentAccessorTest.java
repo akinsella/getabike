@@ -19,7 +19,7 @@ public class DefaultCityContentAccessorTest extends TestCase {
 	public DefaultCityContentAccessorTest() {
 		super();
 	}
-
+ 
 	public void testDefaultCityContentAccessor() throws ContentAccessorException, IOException {
 
 		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/data/city/cities.xml");

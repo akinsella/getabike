@@ -5,7 +5,7 @@ import java.io.InputStream;
 import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
-import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
+import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;

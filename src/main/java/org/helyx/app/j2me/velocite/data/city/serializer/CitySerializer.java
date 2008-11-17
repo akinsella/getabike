@@ -36,6 +36,7 @@ public class CitySerializer extends AbstractObjectSerializer {
 			dos.writeBoolean(city.bonus);
 			dos.writeBoolean(city.state);
 			dos.writeBoolean(city.tpe);
+			dos.writeUTF(city.normalizer);
 	
 			int quartierCount = city.quartierList.size();
 			dos.writeInt(quartierCount);
@@ -72,6 +73,7 @@ public class CitySerializer extends AbstractObjectSerializer {
 			city.bonus = dis.readBoolean();
 			city.state = dis.readBoolean();
 			city.tpe = dis.readBoolean();
+			city.normalizer = dis.readUTF();
 			
 			int quartierCount = dis.readInt();
 			

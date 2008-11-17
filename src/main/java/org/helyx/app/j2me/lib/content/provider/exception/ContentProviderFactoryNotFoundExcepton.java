@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.lib.content.provider;
+package org.helyx.app.j2me.lib.content.provider.exception;
 
 import org.helyx.app.j2me.lib.exception.NestedException;
 

@@ -1,9 +1,10 @@
 package org.helyx.app.j2me.velocite.data.carto.manager;
 
-import org.helyx.app.j2me.lib.content.provider.ContentProviderFactoryNotFoundExcepton;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.content.provider.IContentProviderFactory;
+import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderFactoryException;
+import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderFactoryNotFoundExcepton;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.task.IProgressTask;
@@ -18,6 +19,9 @@ import org.helyx.app.j2me.velocite.data.carto.provider.factory.DefaultStationCon
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloPlusStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloVStationContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.DefaultStationInfoNormalizer;
+import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
+import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.SimpleStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.ui.view.DistanceStationItemRenderer;
@@ -27,48 +31,75 @@ public class CartoManager {
 
 	private static final Log log = LogFactory.getLog("CARTO_MANAGER");
 	
-	private static final String VELIB = "VELIB";  // PARIS
-	private static final String VELO_PLUS = "VELO_PLUS";  // ORLEANS
-	private static final String VELO = "VELO";  // TOULOUSE
-	private static final String VELO_V = "VELO_V";  // LYON
-	private static final String LE_VELO = "LE_VELO";  // MARSEILLE
-	private static final String SEVICI = "SEVICI";  // SEVILLE
+	public static final String VELIB = "VELIB";  // PARIS
+	public static final String VELO_PLUS = "VELO_PLUS";  // ORLEANS
+	public static final String VELO = "VELO";  // TOULOUSE
+	public static final String VELO_V = "VELO_V";  // LYON
+	public static final String LE_VELO = "LE_VELO";  // MARSEILLE
+	public static final String SEVICI = "SEVICI";  // SEVILLE
+	
+	private static final String DEFAULT_NORMALIZER = "DEFAULT";
+	private static final String SIMPLE_NORMALIZER = "SIMPLE";
+	private static final String SIMPLE_2_NORMALIZER = "SIMPLE_2";
 	
 	private CartoManager() {
 		super();
 	}
 	
-	public static IProgressTask createUpdateCityStationsTask(City city) throws ContentProviderFactoryNotFoundExcepton {
+	public static IProgressTask createUpdateCityStationsTask(City city) throws CartoManagerException {
+		
+		try {
+			IContentProviderFactory cpf = null;
+			if (VELIB.equals(city.type)) {
+				cpf = new DefaultStationContentProviderFactory(city);
+			}
+			else if (LE_VELO.equals(city.type)) {
+				cpf = new VeloStationContentProviderFactory(city);
+			}
+			else if (VELO.equals(city.type)) {
+				cpf = new VeloStationContentProviderFactory(city);
+			}
+			else if (SEVICI.equals(city.type)) {
+				cpf = new DefaultStationContentProviderFactory(city);
+			}
+			else if (VELO_V.equals(city.type)) {
+				cpf = new VeloVStationContentProviderFactory(city);
+			}
+			else if (VELO_PLUS.equals(city.type)) {
+				cpf = new VeloPlusStationContentProviderFactory(city);
+			}
+			else {
+				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");
+			}
+			
+			IContentProvider cp = cpf.createContentProvider();
+			
+			IProgressTask progressTask = new ContentProviderProgressTaskAdapter(cp);
+	
+			return progressTask;
+		}
+		catch (ContentProviderFactoryException e) {
+			throw new CartoManagerException(e);
+		}
+		catch (ContentProviderFactoryNotFoundExcepton e) {
+			throw new CartoManagerException(e);
+		}
 
-		IContentProviderFactory cpf = null;
-		if (VELIB.equals(city.type)) {
-			cpf = new DefaultStationContentProviderFactory(city);
+	}
+
+	public static IStationInfoNormalizer getStationInfoNormalizer(City city) throws CartoManagerException {
+		if (city.normalizer == null || DEFAULT_NORMALIZER.equals(city.normalizer)) {
+			return new DefaultStationInfoNormalizer();
 		}
-		else if (LE_VELO.equals(city.type)) {
-			cpf = new VeloStationContentProviderFactory(city);
+		else if (SIMPLE_NORMALIZER.equals(city.normalizer)) {
+			return new SimpleStationInfoNormalizer("-");
 		}
-		else if (VELO.equals(city.type)) {
-			cpf = new VeloStationContentProviderFactory(city);
-		}
-		else if (SEVICI.equals(city.type)) {
-			cpf = new DefaultStationContentProviderFactory(city);
-		}
-		else if (VELO_V.equals(city.type)) {
-			cpf = new VeloVStationContentProviderFactory(city);
-		}
-		else if (VELO_PLUS.equals(city.type)) {
-			cpf = new VeloPlusStationContentProviderFactory(city);
+		else if (SIMPLE_2_NORMALIZER.equals(city.normalizer)) {
+			return new SimpleStationInfoNormalizer("_");
 		}
 		else {
-			throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");
+			throw new CartoManagerException("No StationInfoNormalizer for city: '" + city.type + "' and normalizer: '" + city.normalizer + "'");
 		}
-		
-		IContentProvider cp = cpf.getContentProviderFactory();
-		
-		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(cp);
-
-		return progressTask;
-
 	}
 
 	public static IProgressTask fetchStationDetails(City city, Station station) throws CartoManagerException {
@@ -97,16 +128,18 @@ public class CartoManager {
 				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");
 			}
 			
-			IContentProvider cp = cpf.getContentProviderFactory();
+			IContentProvider cp = cpf.createContentProvider();
 			
 			IProgressTask progressTask = new ContentProviderProgressTaskAdapter(cp);
 	
 			return progressTask;
 		}
+		catch (ContentProviderFactoryException e) {
+			throw new CartoManagerException(e);
+		}
 		catch (ContentProviderFactoryNotFoundExcepton e) {
 			throw new CartoManagerException(e);
 		}
-
 	}
 
 	public static void cleanUpData() {

@@ -6,7 +6,7 @@ import java.util.Vector;
 import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
-import org.helyx.app.j2me.lib.content.provider.ContentProviderException;
+import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
@@ -41,6 +41,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 	private static final String BONUS = "bonus";
 	private static final String TPE = "tpe";
 	private static final String STATE = "state";
+	private static final String NORMALIZER = "normalizer";
 	
 	private static final String ID = "id";
 	private static final String ZIP_CODE = "zipCode";
@@ -96,7 +97,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 				XppAttributeProcessor cityXppAttributeProcessor = new XppAttributeProcessor();
 				cityXppAttributeProcessor.addAll(new String[] { 
 					KEY, NAME, SERVICE_NAME, TYPE, ACTIVE, WEB_SITE, 
-					STATION_DETAILS, STATION_LIST, BONUS, TPE, STATE
+					STATION_DETAILS, STATION_LIST, BONUS, TPE, STATE, NORMALIZER
 				});
 
 				XppAttributeProcessor quartierXppAttributeProcessor = new XppAttributeProcessor();
@@ -123,6 +124,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 					city.state = cityXppAttributeProcessor.getAttrValueAsBoolean(STATE);
 					city.stationList = cityXppAttributeProcessor.getAttrValueAsString(STATION_LIST);
 					city.stationDetails = cityXppAttributeProcessor.getAttrValueAsString(STATION_DETAILS);
+					city.normalizer = cityXppAttributeProcessor.getAttrValueAsString(NORMALIZER);
 					
 					if (XppUtil.readNextElement(xpp) && xpp.getName().equals(QUARTIERS)) {
 						while (XppUtil.readNextElement(xpp) && xpp.getName().equals(QUARTIER)) {

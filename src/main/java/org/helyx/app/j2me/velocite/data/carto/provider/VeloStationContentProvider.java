@@ -4,7 +4,6 @@ import java.io.InputStream;
 
 import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
@@ -14,12 +13,13 @@ import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
 import org.helyx.basics4me.io.BufferedInputStream;
 import org.xmlpull.v1.XmlPullParser;
 
 
-public class VeloStationContentProvider extends AbstractContentProvider {
+public class VeloStationContentProvider extends AbstractStationContentProvider {
 	
 	private static final Log log = LogFactory.getLog("VELO_STATION_CONTENT_PROVIDER");
 
@@ -68,6 +68,8 @@ public class VeloStationContentProvider extends AbstractContentProvider {
 				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
 				xppAttributeProcessor.addAll(new String[] { NUMBER, NAME, OPEN, ADDRESS, FULL_ADDRESS, LNG, LAT });
 
+				IStationInfoNormalizer stationNameNormalizer = getStationInfoNormalizer();
+
 				while (XppUtil.readToNextElement(xpp, MARKER)) {
 					if (cancel) {
 						progressDispatcher.fireEvent(EventType.ON_CANCEL);
@@ -89,7 +91,9 @@ public class VeloStationContentProvider extends AbstractContentProvider {
 					station.localization.lng = xppAttributeProcessor.getAttrValueAsDouble(LNG);
 					station.hasLocalization = LocalizationUtil.isSet(station.localization);
 					processComplementaryInfo(station);
-					
+
+					stationNameNormalizer.normalizeName(station);
+
 					progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 				}
 			}

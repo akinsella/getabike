@@ -5,10 +5,16 @@ import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessorFactory;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.content.provider.IContentProviderFactory;
+import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderException;
+import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderFactoryException;
 import org.helyx.app.j2me.lib.log.Log;
 import org.helyx.app.j2me.lib.log.LogFactory;
 import org.helyx.app.j2me.lib.text.StringFormat;
+import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
+import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
+import org.helyx.app.j2me.velocite.data.carto.provider.AbstractStationContentProvider;
 import org.helyx.app.j2me.velocite.data.carto.provider.VeloVStationContentProvider;
+import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
 
@@ -23,20 +29,28 @@ public class VeloVStationContentProviderFactory implements IContentProviderFacto
 		this.city = city;
 	}
 	
-	public IContentProvider getContentProviderFactory() {
-		IContentProvider stationContentProvider = new VeloVStationContentProvider(city, new IContentAccessorFactory() {
+	public IContentProvider createContentProvider() throws ContentProviderFactoryException {
+		try {
+			AbstractStationContentProvider stationContentProvider = new VeloVStationContentProvider(city, new IContentAccessorFactory() {
 
-			public IContentAccessor createContentAccessorFactory(Object object) {
+				public IContentAccessor createContentAccessorFactory(Object object) {
+					
+					Quartier quartier = (Quartier)object;
+					String url = new StringFormat(city.stationList).format(quartier.zipCode);
+					log.info("Url: " + url);
+					return new HttpContentAccessor(url);
+				}
 				
-				Quartier quartier = (Quartier)object;
-				String url = new StringFormat(city.stationList).format(quartier.zipCode);
-				log.info("Url: " + url);
-				return new HttpContentAccessor(url);
-			}
+			});
 			
-		});    			
-		
-		return stationContentProvider;
+			IStationInfoNormalizer stationInfoNormalizer = CartoManager.getStationInfoNormalizer(city);
+			stationContentProvider.setStationInfoNormalizer(stationInfoNormalizer);
+			
+			return stationContentProvider;
+		}
+		catch(CartoManagerException cme) {
+			throw new ContentProviderFactoryException(cme);
+		}
 	}
 
 }

@@ -102,7 +102,7 @@ public class AbstractMIDlet extends MIDlet {
 			themeConfiguration = new ResourceBundleConfiguration("default", "org.helyx.app.j2me.lib.theme");
 		}
 		ClasspathResourceBundleContentProviderFactory cprbcpf = new ClasspathResourceBundleContentProviderFactory(locale, themeConfiguration.getPackageName(), themeConfiguration.getName());
-		ResourceBundle resourceBundle = (ResourceBundle)Future.get(new ContentProviderProgressTaskAdapter(cprbcpf.getContentProviderFactory()));
+		ResourceBundle resourceBundle = (ResourceBundle)Future.getSync(new ContentProviderProgressTaskAdapter(cprbcpf.getContentProviderFactory()));
 		Theme theme = new Theme(resourceBundle);
 		
 		this.theme = theme;
@@ -114,7 +114,7 @@ public class AbstractMIDlet extends MIDlet {
 		}
 		
 		ClasspathResourceBundleContentProviderFactory cprbcpf = new ClasspathResourceBundleContentProviderFactory(locale, i18nConfiguration.getPackageName(), i18nConfiguration.getName());
-		ResourceBundle resourceBundle = (ResourceBundle)Future.get(new ContentProviderProgressTaskAdapter(cprbcpf.getContentProviderFactory()));
+		ResourceBundle resourceBundle = (ResourceBundle)Future.getSync(new ContentProviderProgressTaskAdapter(cprbcpf.getContentProviderFactory()));
 
 		this.resourceBundle = resourceBundle;
 	}

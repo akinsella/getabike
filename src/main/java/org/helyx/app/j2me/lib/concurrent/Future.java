@@ -24,7 +24,19 @@ public class Future {
 		processed = true;
 	}
 
+	public static Object getSync(IProgressTask progressTask) {
+		return get(progressTask, false);
+	}
+
+	public static Object getASync(IProgressTask progressTask) {
+		return get(progressTask, true);
+	}
+
 	public static Object get(IProgressTask progressTask) {
+		return getASync(progressTask);
+	}
+
+	public static Object get(IProgressTask progressTask, boolean async) {
 		final Future future = new Future();
 		progressTask.addProgressListener(new ProgressAdapter() {
 
@@ -54,7 +66,12 @@ public class Future {
 			
 		});
 		
-		progressTask.start();
+		if (async) {
+			progressTask.start();
+		}
+		else {
+			progressTask.execute();
+		}
 		
 		synchronized (future) {
 			try { 

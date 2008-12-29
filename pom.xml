@@ -19,8 +19,8 @@
 
 	<licenses>
 		<license>
-			<name>VeloCite License</name>
-			<url>http://www.velocite.org/legal/license.txt</url>
+			<name>Helyx.org Binary License</name>
+			<url>http://www.velocite.org/legal/LICENSE_BINARY.txt</url>
 			<distribution>manual</distribution>
 			<comments>VeloCite Project License</comments>
 		</license>

@@ -19,10 +19,10 @@
 
 	<licenses>
 		<license>
-			<name>Apache 2</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-			<comments>A business-friendly OSS license</comments>
+			<name>VeloCite License</name>
+			<url>http://www.velocite.org/legal/license.txt</url>
+			<distribution>manual</distribution>
+			<comments>VeloCite Project License</comments>
 		</license>
 	</licenses>
 
@@ -34,16 +34,16 @@
 	<inceptionYear>2007</inceptionYear>
 
 	<scm>
-		<connection>scm:svn:https://r13491.ovh.net/svn/VeloCite/trunk</connection>
-		<developerConnection>scm:svn:https://r13491.ovh.net/svn/VeloCite/trunk</developerConnection>
+		<connection>scm:svn:https://helyx.devguard.com/svn/velocite/trunk</connection>
+		<developerConnection>scm:svn:https://helyx.devguard.com/svn/velocite/trunk</developerConnection>
 		<tag>HEAD</tag>
-		<url>http://r13491.ovh.net/websvn/velocite.org/listing.php?repname=VeloCite&amp;path=%2Ftrunk%2F#_trunk_</url>
+		<url>https://helyx.devguard.com/wsvn/listing.php?repname=velocite&amp;path=%2Ftrunk%2F#_trunk_</url>
 	</scm>
 
 	<distributionManagement>
 		<repository>
-			<id>velocite</id>
-			<url>file:///var/maven/repository-install</url>
+			<id>Helyx.org FTP Repository</id>
+			<url>ftp://ftp.helyx.org/www/maven/repository/install</url>
 		</repository>
 	</distributionManagement>
 
@@ -70,12 +70,12 @@
 
 	<repositories>
 		<repository>
-			<id>repository-manual</id>
-			<url>http://r13491.ovh.net/archiva/repository/manual</url>
+			<id>Helyx.org Manual</id>
+			<url>http://maven.helyx.org/repository/manual</url>
 		</repository>
 		<repository>
-			<id>repository-install</id>
-			<url>http://r13491.ovh.net/archiva/repository/install</url>
+			<id>Helyx.org Install</id>
+			<url>http://maven.helyx.org/repository/install</url>
 		</repository>
 	</repositories>
 

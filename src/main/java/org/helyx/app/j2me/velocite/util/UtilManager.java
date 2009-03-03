@@ -1,6 +1,7 @@
 package org.helyx.app.j2me.velocite.util;
 
-import org.helyx.app.j2me.lib.log.Log; 
+import org.helyx.app.j2me.lib.logger.Logger; 
+import org.helyx.app.j2me.lib.logger.LoggerManager;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.view.support.dialog.AbstractDialogResultCallback;
@@ -18,11 +19,11 @@ public class UtilManager {
 				int resultValue = dialogView.getResultCode();
 				switch (resultValue) {
 					case DialogResultConstants.YES:
-						Log.setThresholdLevel(Log.DEBUG);
+						LoggerManager.setThresholdLevel(Logger.DEBUG);
 						dialogView.showDisplayable(currentDisplayable);
 						break;
 					case DialogResultConstants.NO:
-						Log.setThresholdLevel(Log.INFO);
+						LoggerManager.setThresholdLevel(Logger.INFO);
 						dialogView.showDisplayable(currentDisplayable);
 						break;
 				}

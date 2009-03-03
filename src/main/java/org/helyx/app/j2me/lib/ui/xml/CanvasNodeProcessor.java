@@ -2,8 +2,8 @@ package org.helyx.app.j2me.lib.ui.xml;
 
 import java.util.Hashtable;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasException;
 import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasProcessingException;
 import org.helyx.app.j2me.lib.ui.view.support.xml.XmlView;
@@ -14,7 +14,7 @@ import org.kxml2.kdom.Element;
 
 public class CanvasNodeProcessor extends AbstractDomNodeProcessor {
 
-	private static final Log log = LogFactory.getLog("CANVAS_NODE_PROCESSOR");
+	private static final Logger logger = LoggerFactory.getLogger("CANVAS_NODE_PROCESSOR");
 	
 	private static final String CANVAS = "canvas";
 	private static final String COMMAND = "command";
@@ -45,7 +45,7 @@ public class CanvasNodeProcessor extends AbstractDomNodeProcessor {
 			throw new XmlCanvasProcessingException("Node name wanted: '" + elt.getName() + "', Node name fetched: '"  + CANVAS + "'");
 		}
 		
-		log.debug("Processing node start: 'canvas'");
+		logger.debug("Processing node start: 'canvas'");
 		
 		xmlView.setTitle(dap.attrExists(TITLE) ? dap.getAttrValueAsString(TITLE) : null);
 		xmlView.setTitleEnabled(dap.attrExists(TITLE_ENABLED) ? dap.getAttrValueAsBoolean(TITLE_ENABLED) : true);

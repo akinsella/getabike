@@ -5,8 +5,8 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
@@ -18,7 +18,7 @@ import org.helyx.app.j2me.lib.ui.widget.Command;
 
 public class AboutView extends AbstractView {
 
-	private static final Log log = LogFactory.getLog("SPLASH_SCREEN_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("SPLASH_SCREEN_VIEW");
 	
 	private Image logoImage;
 	private String fallbackLogoImageStr;
@@ -57,7 +57,7 @@ public class AboutView extends AbstractView {
 			if (fallbackLogoImageStr == null) {
 				fallbackLogoImageStr = t.toString();
 			}
-			log.warn(t);
+			logger.warn(t);
 		}
 	}
 

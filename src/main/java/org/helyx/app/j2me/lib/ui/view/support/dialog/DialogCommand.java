@@ -1,11 +1,11 @@
 package org.helyx.app.j2me.lib.ui.view.support.dialog;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class DialogCommand {
 
-	private static final Log log = LogFactory.getLog("DIALOG_COMMAND");
+	private static final Logger logger = LoggerFactory.getLogger("DIALOG_COMMAND");
 
 	public static final DialogCommand YES = new DialogCommand("Oui", DialogResultConstants.YES);
 	public static final DialogCommand NO = new DialogCommand("Non", DialogResultConstants.NO);

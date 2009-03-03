@@ -1,12 +1,12 @@
 package org.helyx.app.j2me.lib.math;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 
 public class DistanceUtil {
 	
-	private static final Log log = LogFactory.getLog("DISTANCE_UTIL");
+	private static final Logger logger = LoggerFactory.getLogger("DISTANCE_UTIL");
 
 	private static int offset = 268435456;
 	private static double radius = offset / Math.PI;

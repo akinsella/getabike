@@ -3,8 +3,8 @@ package org.helyx.app.j2me.lib.xml;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasException;
 import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasProcessingException;
 import org.helyx.app.j2me.lib.util.MapUtil;
@@ -15,7 +15,7 @@ import org.kxml2.kdom.Element;
 
 public abstract class AbstractDomNodeProcessor implements DomNodeProcessor {
 	
-	private static final Log log = LogFactory.getLog("ABSTRACT_XML_NODE_PROCESSOR");
+	private static final Logger logger = LoggerFactory.getLogger("ABSTRACT_XML_NODE_PROCESSOR");
 	
 	private Hashtable childNodeProcessorMap = new Hashtable();
 	
@@ -28,17 +28,17 @@ public abstract class AbstractDomNodeProcessor implements DomNodeProcessor {
 	}
 	
 	public void putNodeProcessor(String nodePath, DomNodeProcessor dnp) {
-		log.debug("Associating NodePath '" + nodePath + "' to XppNodeProcessor: '" + dnp + "'");
+		logger.debug("Associating NodePath '" + nodePath + "' to XppNodeProcessor: '" + dnp + "'");
 		childNodeProcessorMap.put(nodePath, dnp);
 	}
 	
 	public void removeNodeProcessor(String nodeName) {
-		log.debug("Removing NodePath association '" + nodeName + "'");
+		logger.debug("Removing NodePath association '" + nodeName + "'");
 		childNodeProcessorMap.remove(nodeName);
 	}
 	
 	public void removeAllNodeProcessors() {
-		log.debug("Removing All NodePath associations");
+		logger.debug("Removing All NodePath associations");
 		childNodeProcessorMap.clear();
 	}
 	

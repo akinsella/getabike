@@ -1,11 +1,11 @@
 package org.helyx.app.j2me.lib.math;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class MathApprox {
 	
-	private static final Log log = LogFactory.getLog("MATH_APPROX");
+	private static final Logger logger = LoggerFactory.getLogger("MATH_APPROX");
 
 	private MathApprox() {
 		super();

@@ -4,8 +4,8 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.action.IAction;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.manager.TaskManager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
@@ -25,7 +25,7 @@ import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 
 public class CityListView extends MenuListView {
 	
-	private static final Log log = LogFactory.getLog("CITY_LIST_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("CITY_LIST_VIEW");
 	
 	private City selectedCity;
 	
@@ -51,9 +51,9 @@ public class CityListView extends MenuListView {
 
 	protected void initData() {
 		cityList = CityManager.findAllCities();
-		log.info("cityList: " + cityList);
+		logger.info("cityList: " + cityList);
 		selectedCity = CityManager.findSelectedCity(cityList);
-		log.info("selectedCity: " + cityList);
+		logger.info("selectedCity: " + cityList);
 	}
 	
 	protected void initActions() {
@@ -83,13 +83,13 @@ public class CityListView extends MenuListView {
 					TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CityListView.this, new ProgressTaskReturnCallback() {
 
 						public void onError(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
-							log.info("Error: " + eventMessage + ", data: " + eventData);
+							logger.info("Error: " + eventMessage + ", data: " + eventData);
 							VeloCiteManager.cleanUpCitySelectedData();
 							getReturnCallback().onReturn(currentDisplayable, eventData);
 						}
 
 						public void onSuccess(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
-							log.info("Success: " + eventMessage + ", data: " + eventData);
+							logger.info("Success: " + eventMessage + ", data: " + eventData);
 							CityManager.saveSelectedCity(city);
 							getReturnCallback().onReturn(currentDisplayable, eventData);
 						}

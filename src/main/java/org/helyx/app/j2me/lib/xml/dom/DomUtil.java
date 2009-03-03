@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.Enumeration;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.kxml2.io.KXmlParser;
 import org.kxml2.kdom.Document;
 import org.kxml2.kdom.Element;
@@ -15,7 +15,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 public class DomUtil {
 
-	private static final Log log = LogFactory.getLog("DOM_UTIL");
+	private static final Logger logger = LoggerFactory.getLogger("DOM_UTIL");
 
 	public static Document parseDoc(Reader reader) throws XmlPullParserException, IOException {
 		KXmlParser parser = new KXmlParser();

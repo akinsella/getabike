@@ -10,8 +10,8 @@ import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.concurrent.Mutex;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.math.DistanceUtil;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.util.ColorUtil;
@@ -30,7 +30,7 @@ import org.helyx.app.j2me.velocite.data.carto.domain.Rectangle;
 
 public class GoogleMapView extends AbstractView {
 
-	private static final Log log = LogFactory.getLog("GOOGLE_MAP_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("GOOGLE_MAP_VIEW");
 	
 	private GoogleMaps googleMaps = new GoogleMaps("ABQIAAAAm-1Nv9nWhCjQxC3a4v-lBBR9EQxSSSz8gi3qW-McXAXnYGN8YxSBOridiu5I3THzW-_0oY2DecnShA");
 	private Image image;
@@ -81,34 +81,34 @@ public class GoogleMapView extends AbstractView {
 			poiImg = ImageUtil.createImageFromClassPath("/org/helyx/app/j2me/velocite/image/vcPointer.png");
 			poiImgSelected = ImageUtil.createImageFromClassPath("/org/helyx/app/j2me/velocite/image/vcPointerSelected.png");
 		} catch (IOException e) {
-			log.warn(e.getMessage());
+			logger.warn(e.getMessage());
 		}
 	}
 
 	protected void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		log.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		logger.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
 		
 		int width = viewCanvas.getWidth();
 		int height = viewCanvas.getHeight();
 
 		if (gameAction == GameCanvas.LEFT) {
-			log.info("--- X: " + 2 * width / 3);
+			logger.info("--- X: " + 2 * width / 3);
 	    	setLocalization(googleMaps.adjust(localization, width / 4, 0, zoom));
 			updateMap();
 		}
 	    else if (gameAction == GameCanvas.RIGHT) {
-			log.info("--- X: " + -(2 * width / 3));
+			logger.info("--- X: " + -(2 * width / 3));
 	    	setLocalization(googleMaps.adjust(localization, -width / 4, 0, zoom));
 			updateMap();
 		}
 	    else if (gameAction == GameCanvas.UP) {
-			log.info("--- Y: " + -(height / 2));
+			logger.info("--- Y: " + -(height / 2));
 	    	setLocalization(googleMaps.adjust(localization, 0, -height / 4, zoom));
 			updateMap();
 		}
 	    else if (gameAction == GameCanvas.DOWN) {
-			log.info("--- Y: " + (height / 2));
+			logger.info("--- Y: " + (height / 2));
 	    	setLocalization(googleMaps.adjust(localization, 0, height / 4, zoom));
 			updateMap();
 		}
@@ -202,10 +202,10 @@ public class GoogleMapView extends AbstractView {
 		}
 
 		Enumeration _enum = filteredPoiMap.keys();
-//		log.info("Iterating points ...");
+//		logger.info("Iterating points ...");
 		while (_enum.hasMoreElements()) {
 			org.helyx.app.j2me.lib.ui.geometry.Point point = (org.helyx.app.j2me.lib.ui.geometry.Point)_enum.nextElement();
-//			log.info("Point: " + point);
+//			logger.info("Point: " + point);
 			
 			if (poiImg != null) {
 				graphics.drawImage(poiImg, point.x - poiImg.getWidth() / 2, point.y - poiImg.getHeight(), Graphics.TOP | Graphics.LEFT);
@@ -232,7 +232,7 @@ public class GoogleMapView extends AbstractView {
 			DistanceUtil.XToL(DistanceUtil.LToX(localization.lng) - ((width / 2) << (21 - zoom))),
 			DistanceUtil.YToL(DistanceUtil.LToY(localization.lat) - ((height / 2) << (21 - zoom)))
 		);	
-		log.info("screenRectMap: " + screenMapRect);
+		logger.info("screenRectMap: " + screenMapRect);
 		
 		updatePoiSelectedPoint();
 	}
@@ -286,11 +286,11 @@ public class GoogleMapView extends AbstractView {
 
 	public void setZoom(int zoom) {
 		this.zoom = zoom;
-		log.info("Zoom: " + zoom);
+		logger.info("Zoom: " + zoom);
 	}
 	
 	public void updatePoi() {
-		log.info("Updating Poi ...");
+		logger.info("Updating Poi ...");
 		Thread updatePoiThread = new Thread() {
 			public void run() {
 				int height = viewCanvas.getHeight();
@@ -300,7 +300,7 @@ public class GoogleMapView extends AbstractView {
 					return;
 				}
 				int length = poiItems.length();
-				log.info("Poi Items: " + length);
+				logger.info("Poi Items: " + length);
 				for (int i = 0 ; i < length ; i++) {
 					if (stopCurrentPoiFiltering) {
 						break;
@@ -308,13 +308,13 @@ public class GoogleMapView extends AbstractView {
 					Object poiItem = poiItems.get(i);
 
 					Point poiLoc = poiInfoAccessor.getLocalization(poiItem);
-//					log.info("poiLoc: " + poiLoc + ", screenMapRect: " + screenMapRect);
+//					logger.info("poiLoc: " + poiLoc + ", screenMapRect: " + screenMapRect);
 					if ( poiLoc.lng >= screenMapRect.min.lng &&
 						 poiLoc.lng <= screenMapRect.max.lng &&
 						 poiLoc.lat >= screenMapRect.min.lat &&
 						 poiLoc.lat <= screenMapRect.max.lat ) {
 
-//						log.info("poiLoc: " + poiLoc + ", screenMapRect: " + screenMapRect);
+//						logger.info("poiLoc: " + poiLoc + ", screenMapRect: " + screenMapRect);
 
 						int x = ((int)(DistanceUtil.LToX(screenMapRect.min.lng) - DistanceUtil.LToX(poiLoc.lng)) >> (21 - zoom));
 						int y = height - ((int)(DistanceUtil.LToY(screenMapRect.min.lat) - DistanceUtil.LToY(poiLoc.lat)) >> (21 - zoom));
@@ -356,7 +356,7 @@ public class GoogleMapView extends AbstractView {
 
 			poiSelectedPoint = new org.helyx.app.j2me.lib.ui.geometry.Point(x, y);
 			
-//			log.info("poiSelectedPoint: " + poiSelectedPoint);
+//			logger.info("poiSelectedPoint: " + poiSelectedPoint);
 		}
 	}
 

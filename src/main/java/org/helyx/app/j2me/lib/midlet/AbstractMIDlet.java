@@ -10,17 +10,18 @@ import org.helyx.app.j2me.lib.i18n.ClasspathResourceBundleContentProviderFactory
 import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.i18n.ResourceBundle;
 import org.helyx.app.j2me.lib.i18n.ResourceBundleConfiguration;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
-import org.helyx.app.j2me.lib.log.appender.FileAppender;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
+import org.helyx.app.j2me.lib.logger.LoggerManager;
+import org.helyx.app.j2me.lib.logger.appender.FileAppender;
 import org.helyx.app.j2me.lib.ui.theme.Theme;
 import org.helyx.app.j2me.velocite.PrefConstants;
 
 public class AbstractMIDlet extends MIDlet {
 
-	private static final Log log = LogFactory.getLog("ABSTRACT_MIDLET");
+	private static final Logger logger = LoggerFactory.getLogger("ABSTRACT_MIDLET");
 	
-	private FileAppender flw;
+	private FileAppender fileAppender;
 	private Theme theme;
 	private ResourceBundle resourceBundle;
 	private Locale locale;
@@ -49,7 +50,7 @@ public class AbstractMIDlet extends MIDlet {
 		    notifyDestroyed();
 		}
 		catch (MIDletStateChangeException t) {
-		   log.warn(t);
+		   logger.warn(t);
 		}
 	}
 	
@@ -81,18 +82,18 @@ public class AbstractMIDlet extends MIDlet {
 		this.locale = locale;
 		try { loadI18nResourceBundle(getLocale()); } 
 		catch(Throwable t) {
-			log.warn(t);
+			logger.warn(t);
 			try { loadI18nResourceBundle(getDefaultLocale()); } 
 			catch(Throwable t1) {
-				log.warn(t1);
+				logger.warn(t1);
 			}
 		}
 		try { loadThemeResourceBundle(getLocale()); }
 		catch(Throwable t) {
-			log.warn(t);
+			logger.warn(t);
 			try { loadThemeResourceBundle(getDefaultLocale()); } 
 			catch(Throwable t1) {
-				log.warn(t1);
+				logger.warn(t1);
 			}
 		}
 	}
@@ -198,36 +199,36 @@ public class AbstractMIDlet extends MIDlet {
 		String platformName = System.getProperty(PrefConstants.MICROEDITION_PLATFORM);
 		String memoryCard = System.getProperty(PrefConstants.FILECONN_DIR_MEMORYCARD);
 		
-		log.info("Platform name: '" + platformName + "'");
-		log.info("Platform memory card: '" + memoryCard + "'");
+		logger.info("Platform name: '" + platformName + "'");
+		logger.info("Platform memory card: '" + memoryCard + "'");
 	}
 
 	
-	private void openFileLogWriter() {
-		if (flw == null) {
+	private void openFileAppender() {
+		if (fileAppender == null) {
 			try {
-				flw = new FileAppender("VeloCite.log");
-				flw.open();
-				log.addLogWriter(flw);
+				fileAppender = new FileAppender("VeloCite.log");
+				fileAppender.open();
+				LoggerManager.addAppender(fileAppender);
 			}
 			catch(Throwable t) {
-				log.warn(t);
-				flw = null;
+				logger.warn(t);
+				fileAppender = null;
 			}
 		}
 
 	}
 	
-	private void closeFileLogWriter() {
-		if (flw != null) {
+	private void closeFileAppender() {
+		if (fileAppender != null) {
 			try {
-				log.removeLogWriter(flw);
-				flw.flush();
-				flw.close();
+				LoggerManager.removeAppender(fileAppender);
+				fileAppender.flush();
+				fileAppender.close();
 			}
 			catch(Throwable t) {
 				t.printStackTrace();
-				flw = null;
+				fileAppender = null;
 			}
 		}
 

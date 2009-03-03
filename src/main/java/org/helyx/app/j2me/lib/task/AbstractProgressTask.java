@@ -1,11 +1,11 @@
 package org.helyx.app.j2me.lib.task;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public abstract class AbstractProgressTask extends Thread implements IProgressTask {
 	
-	private static final Log log = LogFactory.getLog("ABSTRACT_PROGRESS_TASK");
+	private static final Logger logger = LoggerFactory.getLogger("ABSTRACT_PROGRESS_TASK");
 	
 	protected IProgressDispatcher progressDispatcher;
 	protected String taskName;
@@ -23,12 +23,12 @@ public abstract class AbstractProgressTask extends Thread implements IProgressTa
 	}
 
 	public void run() {
-		log.debug("Task : '" + taskName + "' is starting");
+		logger.debug("Task : '" + taskName + "' is starting");
     	try {
     		execute();
 		}
     	catch(Throwable t) {
-    		log.warn(t);
+    		logger.warn(t);
     		progressDispatcher.fireEvent(EventType.ON_ERROR, t);
     	}
  	}

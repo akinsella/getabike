@@ -1,13 +1,13 @@
 package org.helyx.app.j2me.lib.ui.displayable.callback;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.view.transition.IViewTransition;
 
 public class BasicReturnCallback implements IReturnCallback {
 
-	private Log log = LogFactory.getLog("BASIC_RETURN_CALLBACK");
+	private Logger logger = LoggerFactory.getLogger("BASIC_RETURN_CALLBACK");
 	
 	private AbstractDisplayable previousDisplayable;
 	private IViewTransition canvasTransition;
@@ -32,8 +32,8 @@ public class BasicReturnCallback implements IReturnCallback {
 	}
 
 	public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
-		log.info("currentDisplayable: " + currentDisplayable);
-		log.info("previousDisplayable: " + previousDisplayable);
+		logger.info("currentDisplayable: " + currentDisplayable);
+		logger.info("previousDisplayable: " + previousDisplayable);
 		if (canvasTransition != null) {
 			currentDisplayable.showDisplayable(previousDisplayable, canvasTransition);
 		}

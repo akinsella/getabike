@@ -1,8 +1,8 @@
 package org.helyx.app.j2me.velocite.data.carto.listener;
 
 import org.helyx.app.j2me.lib.filter.IObjectFilter;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
@@ -14,18 +14,18 @@ import org.helyx.app.j2me.velocite.ui.view.StationListView;
 
 public class UIStationLoaderProgressListener extends ProgressAdapter {
 
-	private static final Log log = LogFactory.getLog("STATION_LOADING_PROGRESS_LISTENER");
+	private static final Logger logger = LoggerFactory.getLogger("STATION_LOADING_PROGRESS_LISTENER");
 	
 	private StationListView stationListView;
 	private IObjectFilter objectFilter;
 	
 	public UIStationLoaderProgressListener(StationListView stationListView) {
-		super();
+		super(logger.getCategory());
 		this.stationListView = stationListView;
 	}
 	
 	public UIStationLoaderProgressListener(StationListView stationListView, IObjectFilter objectFilter) {
-		super();
+		super(logger.getCategory());
 		this.stationListView = stationListView;
 		this.objectFilter = objectFilter;
 	}
@@ -46,7 +46,7 @@ public class UIStationLoaderProgressListener extends ProgressAdapter {
 
 			case EventType.ON_ERROR:
 				Throwable throwable = (Throwable)eventData;
-				getLog().warn(throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
+				getLogger().warn(throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
 				DialogUtil.showAlertMessage(stationListView, "Erreur", throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
 				stationListView.showDisplayable(stationListView, new BasicTransition());
 				break;

@@ -1,14 +1,14 @@
 package org.helyx.app.j2me.velocite.data.city.comparator;
 
 import org.helyx.app.j2me.lib.comparator.Comparator;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 
 
 public class CityNameComparator implements Comparator {
 
-	private static final Log log = LogFactory.getLog("CITY_NAME_COMPARATOR");
+	private static final Logger logger = LoggerFactory.getLogger("CITY_NAME_COMPARATOR");
 	
 	public int compare(Object object1, Object object2) {
 		if (object1 == null && object2 == null) {

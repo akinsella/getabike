@@ -1,12 +1,12 @@
 package org.helyx.app.j2me.velocite.data.carto.util;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 
 public class LocalizationUtil {
 	
-	private static final Log log = LogFactory.getLog("LOCALIZATION_UTIL");
+	private static final Logger logger = LoggerFactory.getLogger("LOCALIZATION_UTIL");
 	
 	private LocalizationUtil() {
 		super();

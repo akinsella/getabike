@@ -2,8 +2,9 @@ package org.helyx.app.j2me.velocite.midlet;
 
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
 import org.helyx.app.j2me.lib.i18n.Locale;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
+import org.helyx.app.j2me.lib.logger.LoggerManager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
@@ -20,17 +21,17 @@ import org.helyx.app.j2me.velocite.ui.view.SplashScreenView;
 
 public class VelociteMIDlet extends AbstractMIDlet {
 
-	private static final Log log = LogFactory.getLog("VELOCITE_MIDLET");
-
-	private static final String V_1_0_83 = "1.0.83";
-	private static final String V_1_0_82 = "1.0.82";
+	private static final Logger logger = LoggerFactory.getLogger("VELOCITE_MIDLET");
 
 	public VelociteMIDlet() {
 		super();
 	}
 
 	protected void onStart() {
-		Log.setThresholdLevel(Log.INFO);
+		LoggerManager.setThresholdLevel(Logger.DEBUG);
+		
+		LoggerManager.addCategory("org.helyx.app.j2me.lib", Logger.DEBUG);
+		LoggerManager.addCategory("org.helyx.app.j2me.velocite", "CONSOLE", Logger.DEBUG);
 		setThemeConfiguration("default", "org.helyx.app.j2me.velocite.theme");
 		setI18nConfiguration("messages", "org.helyx.app.j2me.velocite.i18n");
 		setLocale(Locale.FRANCE);
@@ -40,7 +41,7 @@ public class VelociteMIDlet extends AbstractMIDlet {
 		
 		IProgressTask appStartProgressTask = new AppStartProgressTask(splashScreenView);
 		
-		appStartProgressTask.addProgressListener(new ProgressAdapter() {
+		appStartProgressTask.addProgressListener(new ProgressAdapter(VelociteMIDlet.logger.getCategory()) {
 
 			public void onSuccess(String eventMessage, Object eventData) {
 				onStartSuccess(splashScreenView);
@@ -61,7 +62,7 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	}
 
 	private void onStartError(AbstractView view, String message, Throwable t) {
-		log.info(message);
+		logger.info(message);
 		String errorMessage = t.getMessage() == null ? "Erreur de chargement des villes" : t.getMessage();
 		DialogUtil.showMessageDialog(
 				view, 
@@ -69,7 +70,7 @@ public class VelociteMIDlet extends AbstractMIDlet {
 				"L'application doit être redémarée: " + errorMessage, 
 				new AbstractDialogResultCallback() {
 					public void onResult(DialogView dialogView, Object data) {
-						VelociteMIDlet.this.log.info("Writing reset demand to prefs");
+						VelociteMIDlet.this.logger.info("Writing reset demand to prefs");
 						PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 						VelociteMIDlet.this.exit();								
 					}

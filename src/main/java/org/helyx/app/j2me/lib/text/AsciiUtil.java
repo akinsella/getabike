@@ -2,13 +2,13 @@ package org.helyx.app.j2me.lib.text;
 
 import java.util.Random;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 
 public class AsciiUtil {
 
-	private static final Log log = LogFactory.getLog("ASCII_UTIL");
+	private static final Logger logger = LoggerFactory.getLogger("ASCII_UTIL");
 	
 	public static boolean isWhitespace(char c) {
         // Optimized case for ASCII

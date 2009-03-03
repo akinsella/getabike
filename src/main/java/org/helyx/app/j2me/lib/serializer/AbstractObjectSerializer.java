@@ -7,12 +7,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public abstract class AbstractObjectSerializer implements IObjectSerializer {
 	
-	private static final Log log = LogFactory.getLog("ABSTRACT_OBJECT_SERIALIZER");
+	private static final Logger logger = LoggerFactory.getLogger("ABSTRACT_OBJECT_SERIALIZER");
 	
 	private static final int BYTE_BUFFER_LENGTH = 1024;
 	
@@ -66,7 +66,7 @@ public abstract class AbstractObjectSerializer implements IObjectSerializer {
 	
 	private void tryCloseDos() {
 		if (dos != null) { 
-			try { dos.close();  } catch (IOException e) { log.warn(e); }
+			try { dos.close();  } catch (IOException e) { logger.warn(e); }
 			bos = null;
 			dos = null;
 		}
@@ -74,7 +74,7 @@ public abstract class AbstractObjectSerializer implements IObjectSerializer {
 	
 	private void tryCloseDis() {
 		if (dis != null) {
-			try { dis.close(); } catch (IOException e) { log.warn(e); }
+			try { dis.close(); } catch (IOException e) { logger.warn(e); }
 			bis = null;
 			dis = null;
 		}

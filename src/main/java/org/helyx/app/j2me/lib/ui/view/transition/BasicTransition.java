@@ -4,13 +4,13 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
 
 public class BasicTransition implements IViewTransition {
 
-	private static final Log log = LogFactory.getLog("BASIC_TRANSITION");
+	private static final Logger logger = LoggerFactory.getLogger("BASIC_TRANSITION");
 	
 	public BasicTransition() {
 		super();

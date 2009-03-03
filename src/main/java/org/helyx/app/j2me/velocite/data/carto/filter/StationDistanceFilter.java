@@ -1,15 +1,15 @@
 package org.helyx.app.j2me.velocite.data.carto.filter;
 
 import org.helyx.app.j2me.lib.filter.IObjectFilter;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.math.DistanceUtil;
 import org.helyx.app.j2me.lib.math.MathUtil;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 
 public class StationDistanceFilter implements IObjectFilter {
 	
-	private Log log = LogFactory.getLog("STATION_DISTANCE_FILTER");
+	private Logger logger = LoggerFactory.getLogger("STATION_DISTANCE_FILTER");
 	
 	private Station station;
 	
@@ -32,7 +32,7 @@ public class StationDistanceFilter implements IObjectFilter {
 		
 		boolean matches = distanceInMeters < distanceMax;
 		if (matches) {
-			log.info("Distance is: '" + distanceInMeters + "' meters between " + targetStation.name + "[" + targetStation.number + "] and " + station.name + "[" + station.number + "]");
+			logger.info("Distance is: '" + distanceInMeters + "' meters between " + targetStation.name + "[" + targetStation.number + "] and " + station.name + "[" + station.number + "]");
 		}
 		return matches;
 	}

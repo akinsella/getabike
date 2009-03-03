@@ -3,8 +3,8 @@ package org.helyx.app.j2me.velocite.data.carto.task;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.rms.MultiRecordEnumeration;
 import org.helyx.app.j2me.lib.task.AbstractProgressTask;
 import org.helyx.app.j2me.lib.task.EventType;
@@ -16,13 +16,13 @@ import org.helyx.app.j2me.velocite.ui.view.StationListView;
 
 public class StationLoadTask extends AbstractProgressTask {
 	
-	private static final Log log = LogFactory.getLog("STATION_LOAD_TASK");
+	private static final Logger logger = LoggerFactory.getLogger("STATION_LOAD_TASK");
 
 	private IRecordFilter recordFilter;
 	private StationListView stationListView;
 		
 	public StationLoadTask(StationListView stationListView, IRecordFilter recordFilter) {
-		super(log.getCategory());
+		super(logger.getCategory());
 		this.stationListView = stationListView;
 		this.recordFilter = recordFilter;
 	}
@@ -59,7 +59,7 @@ public class StationLoadTask extends AbstractProgressTask {
 				
 				progressDispatcher.fireEvent(EventType.ON_PROGRESS, count + " stations chargées");
 		
-				log.info("Copying Station Array ...");
+				logger.info("Copying Station Array ...");
 				stationArray = new Station[stationList.size()];
 				stationList.copyInto(stationArray);
 				stationList = null;
@@ -78,7 +78,7 @@ public class StationLoadTask extends AbstractProgressTask {
 			System.gc();
 		}
 		catch(Throwable t) {
-			log.warn(t);
+			logger.warn(t);
 			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 

@@ -7,8 +7,8 @@ import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderException;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
@@ -21,7 +21,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class VeloVStationDetailsContentProvider extends AbstractContentProvider {
 	
-	private static final Log log = LogFactory.getLog("VELO_PLUS_STATION_DETAILS_CONTENT_PROVIDER");
+	private static final Logger logger = LoggerFactory.getLogger("VELO_PLUS_STATION_DETAILS_CONTENT_PROVIDER");
 	
 	private static final String ID = "id";
 	private static final String LABEL = "label";
@@ -53,8 +53,8 @@ public class VeloVStationDetailsContentProvider extends AbstractContentProvider 
 	
 	public void loadData() {
 		
-		if (log.isDebugEnabled()) {
-			log.debug("Loading station '" + station.number + "' infos ...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Loading station '" + station.number + "' infos ...");
 		}
 		
 		InputStream inputStream = null;
@@ -66,7 +66,7 @@ public class VeloVStationDetailsContentProvider extends AbstractContentProvider 
 
 			try {
 
-				log.info("Path to station details: '" + stationDetailsContentAccessor.getPath() + "'");
+				logger.info("Path to station details: '" + stationDetailsContentAccessor.getPath() + "'");
 				
 				progressDispatcher.fireEvent(EventType.ON_START);
 
@@ -102,8 +102,8 @@ public class VeloVStationDetailsContentProvider extends AbstractContentProvider 
 				stationDetails.total = stationDetails.available + stationDetails.free;
 				stationDetails.hs = stationDetails.total - stationDetails.free - stationDetails.available;
 
-				if (log.isDebugEnabled()) {
-					log.debug("Station loaded: " + stationDetails);
+				if (logger.isDebugEnabled()) {
+					logger.debug("Station loaded: " + stationDetails);
 				}
 
 			}
@@ -113,7 +113,7 @@ public class VeloVStationDetailsContentProvider extends AbstractContentProvider 
 			progressDispatcher.fireEvent(EventType.ON_SUCCESS, stationDetails);
 		}
 		catch (Throwable t) {
-    		log.warn(t);
+    		logger.warn(t);
 			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 

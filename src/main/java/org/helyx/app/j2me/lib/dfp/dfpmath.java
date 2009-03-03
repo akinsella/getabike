@@ -379,7 +379,7 @@ public class dfpmath implements dfpconstants
     return a.newInstance(spz[0].add(spz[1]));
   }
 
-  /** Computes the natural log of a number between 0 and 2 */
+  /** Computes the natural logger of a number between 0 and 2 */
   /*
    *  Much better ln(x) algorithm....
    *

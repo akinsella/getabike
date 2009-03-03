@@ -4,19 +4,19 @@ package org.helyx.app.j2me.lib.test;
 import junit.framework.TestCase;
 
 import org.helyx.app.j2me.lib.comparator.Comparator;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.sort.FastQuickSort;
 
 public class FastQuickSortTest extends TestCase {
 
-	private static final Log log = LogFactory.getLog("FAST_QUICK_SORT_TEST");
+	private static final Logger logger = LoggerFactory.getLogger("FAST_QUICK_SORT_TEST");
 
 	public void testFastQuickSort() {
 		String[] values = new String[] { "aaa", "abd", "abc", "aa" };
 		showStringList(values);
 		
-		log.info("In Values: " + showStringList(values));
+		logger.info("In Values: " + showStringList(values));
 		FastQuickSort fqs = new FastQuickSort(new Comparator() {
 
 			public int compare(Object object1, Object object2) {
@@ -26,7 +26,7 @@ public class FastQuickSortTest extends TestCase {
 		});
 		
 		fqs.sort(values);
-		log.info("Out Values: " + showStringList(values));
+		logger.info("Out Values: " + showStringList(values));
 		
 		assertEquals(4, values.length);
 		assertEquals("aa", values[0]);

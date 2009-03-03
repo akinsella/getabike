@@ -6,8 +6,8 @@ import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderException;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
@@ -16,7 +16,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 	
-	private static final Log log = LogFactory.getLog("REF_OBJECT_METADATA_CONTENT_PROVIDER");
+	private static final Logger logger = LoggerFactory.getLogger("REF_OBJECT_METADATA_CONTENT_PROVIDER");
 	
 	private static final String INDEX = "index";
 	private static final String NAME = "name";
@@ -38,7 +38,7 @@ public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 
 	public void loadData() {
 		
-		log.debug("Loading metadata info ...");
+		logger.debug("Loading metadata info ...");
 		
 		InputStream inputStream = null;
 		InputStreamProvider metadataInputStreamProvider = null;
@@ -53,7 +53,7 @@ public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream,  EncodingConstants.UTF_8);
 	
-				log.debug("Parsing XML Document: '" + metadataContentAccessor.getPath() + "'");
+				logger.debug("Parsing XML Document: '" + metadataContentAccessor.getPath() + "'");
 				
 				if (!XppUtil.readToNextElement(xpp, METADATA)) {
 					throw new ContentProviderException(INVALID_CONTENT);
@@ -88,7 +88,7 @@ public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 	
 					++count;
 					if (count % 10 == 0) {
-//						log.debug("COUNT: " + String.valueOf(count));
+//						logger.debug("COUNT: " + String.valueOf(count));
 					}
 
 				}
@@ -99,7 +99,7 @@ public class RefObjectMetaDataContentProvider extends AbstractContentProvider {
 			progressDispatcher.fireEvent(EventType.ON_SUCCESS, refObjectMetaData);
 		}
 		catch (Throwable t) {
-    		log.warn(t);
+    		logger.warn(t);
 			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 	}

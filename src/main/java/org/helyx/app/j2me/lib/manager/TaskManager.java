@@ -1,7 +1,7 @@
 package org.helyx.app.j2me.lib.manager;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.Event;
 import org.helyx.app.j2me.lib.task.EventType;
@@ -13,7 +13,7 @@ import org.helyx.app.j2me.lib.ui.view.support.LoadTaskView;
 
 public class TaskManager {
 	
-	private static final Log log = LogFactory.getLog("TASK_MANAGER");
+	private static final Logger logger = LoggerFactory.getLogger("TASK_MANAGER");
 	
 	private TaskManager() {
 		super();
@@ -28,7 +28,9 @@ public class TaskManager {
 		final LoadTaskView loadTaskView = new LoadTaskView(midlet, taskDescription, progressTask);
 		loadTaskView.setReturnCallback(returnCallback);
 
-		progressTask.addProgressListener(new ProgressAdapter() {
+		progressTask.addProgressListener(new ProgressAdapter("TASK_MANAGER_LISTENER") {
+			
+			
 
 			public void onSuccess(String eventMessage, Object eventData) {
 				loadTaskView.fireReturnCallback(new Event(EventType.ON_SUCCESS, eventMessage, eventData));

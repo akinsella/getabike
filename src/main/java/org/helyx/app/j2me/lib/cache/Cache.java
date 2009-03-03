@@ -2,12 +2,12 @@ package org.helyx.app.j2me.lib.cache;
 
 import java.util.Hashtable;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class Cache {
 
-	private static final Log log = LogFactory.getLog("CACHE");
+	private static final Logger logger = LoggerFactory.getLogger("CACHE");
 	
 	private Hashtable dataMap;
 	

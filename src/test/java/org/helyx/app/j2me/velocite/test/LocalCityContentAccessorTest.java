@@ -8,13 +8,13 @@ import junit.framework.TestCase;
 import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.ContentAccessorException;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 
 public class LocalCityContentAccessorTest extends TestCase {
 
-	private static final Log log = LogFactory.getLog("LOCAL_CITY_CONTENT_ACCESSOR_TEST");
+	private static final Logger logger = LoggerFactory.getLogger("LOCAL_CITY_CONTENT_ACCESSOR_TEST");
 
 	public LocalCityContentAccessorTest() {
 		super();

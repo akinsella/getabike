@@ -1,8 +1,9 @@
 package org.helyx.app.j2me.velocite.ui.view;
 
 import org.helyx.app.j2me.lib.action.IAction;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
+import org.helyx.app.j2me.lib.logger.LoggerManager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
@@ -20,7 +21,7 @@ import org.helyx.app.j2me.velocite.util.UtilManager;
 
 public class PrefListView extends PrefBaseListView {
 
-	private static final Log log = LogFactory.getLog("PREF_LIST_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("PREF_LIST_VIEW");
 	
 	private MenuItem cityMenuItem;
 	private MenuItem languageMenuItem;
@@ -81,8 +82,8 @@ public class PrefListView extends PrefBaseListView {
 	}
 
 	public void beforeDisplayableSelection(AbstractDisplayable current, AbstractDisplayable next) {
-		log.info("Current: " + current);
-		log.info("Next: " + next);
+		logger.info("Current: " + current);
+		logger.info("Next: " + next);
 		if (next == this) {
 			fetchCityPref();
 			fetchLanguagePref();
@@ -106,7 +107,7 @@ public class PrefListView extends PrefBaseListView {
 			}
 		}
 		catch (CityManagerException e) {
-			log.debug(e);
+			logger.debug(e);
 		}
 	}
 
@@ -123,12 +124,12 @@ public class PrefListView extends PrefBaseListView {
 			}
 		}
 		catch (LanguageManagerException e) {
-			log.debug(e);
+			logger.debug(e);
 		}
 	}
 
 	private void fetchDebugMode() {
-		debugMenuItem.setData(PREF_VALUE, Log.getThresholdLevel() == Log.DEBUG ? "Oui" : "Non");
+		debugMenuItem.setData(PREF_VALUE, LoggerManager.getThresholdLevel() == Logger.DEBUG ? "Oui" : "Non");
 	}
 
 }

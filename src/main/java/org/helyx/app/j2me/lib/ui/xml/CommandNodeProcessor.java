@@ -2,8 +2,8 @@ package org.helyx.app.j2me.lib.ui.xml;
 
 import java.util.Hashtable;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasException;
 import org.helyx.app.j2me.lib.ui.view.support.xml.XmlCanvasProcessingException;
 import org.helyx.app.j2me.lib.ui.view.support.xml.XmlView;
@@ -15,7 +15,7 @@ import org.kxml2.kdom.Element;
 
 public class CommandNodeProcessor extends AbstractDomNodeProcessor {
 
-	private static final Log log = LogFactory.getLog("COMMAND_NODE_PROCESSOR");
+	private static final Logger logger = LoggerFactory.getLogger("COMMAND_NODE_PROCESSOR");
 	
 	private static final String CANVAS = "canvas";
 	
@@ -42,7 +42,7 @@ public class CommandNodeProcessor extends AbstractDomNodeProcessor {
 	}
 
 	public void processNode(Document doc, Element elt, Hashtable dataMap) throws XmlCanvasProcessingException, XmlCanvasException {
-		log.debug("Processing node start: 'command'");
+		logger.debug("Processing node start: 'command'");
 		xap.processNode(doc, elt);
 		
 		XmlView xmlView = (XmlView)dataMap.get(CANVAS);
@@ -52,7 +52,7 @@ public class CommandNodeProcessor extends AbstractDomNodeProcessor {
 		command.setEnabled(xap.attrExists(ENABLED) ? xap.getAttrValueAsBoolean(ENABLED) : true);
 		command.setAction(xmlView.getActionRegistry().get(xap.attrExists(ACTION) ? xap.getAttrValueAsString(ACTION) : EMPTY_ACTION));
 		
-		log.debug("Command: " + command.toString());
+		logger.debug("Command: " + command.toString());
 
 		if (!xap.attrExists(POSITION)) {
 			throw new XmlCanvasProcessingException("Command position is not provided");

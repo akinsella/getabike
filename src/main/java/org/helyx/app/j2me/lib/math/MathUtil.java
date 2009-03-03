@@ -2,12 +2,12 @@ package org.helyx.app.j2me.lib.math;
 
 import org.helyx.app.j2me.lib.dfp.dfp;
 import org.helyx.app.j2me.lib.dfp.dfpmath;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class MathUtil {
 	
-	private static final Log log = LogFactory.getLog("MATH_UTIL");
+	private static final Logger logger = LoggerFactory.getLogger("MATH_UTIL");
 
 	private MathUtil() {
 		super();
@@ -85,8 +85,8 @@ public class MathUtil {
 	}
 	
 	public static double ln(double value) {
-		dfp log = dfpmath.ln(new dfp( String.valueOf(value)));
-		double result = Double.parseDouble(log.toString());
+		dfp logger = dfpmath.ln(new dfp( String.valueOf(value)));
+		double result = Double.parseDouble(logger.toString());
 		return result;
 	}
 	

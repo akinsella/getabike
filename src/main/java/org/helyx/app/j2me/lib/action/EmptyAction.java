@@ -1,17 +1,17 @@
 package org.helyx.app.j2me.lib.action;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class EmptyAction extends BasicAction {
 	
-	public static final Log log = LogFactory.getLog("EMPTY_ACTION");
+	public static final Logger logger = LoggerFactory.getLogger("EMPTY_ACTION");
 	
 	public EmptyAction() {
 		super();
 	}
 	
 	public void run(Object data) {
-		log.debug("Empty action hited");
+		logger.debug("Empty action hited");
 	}
 }

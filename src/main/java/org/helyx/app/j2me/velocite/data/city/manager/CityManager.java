@@ -7,8 +7,8 @@ import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
@@ -22,7 +22,7 @@ import org.helyx.app.j2me.velocite.ui.view.CityListView;
 
 public class CityManager {
 
-	private static final Log log = LogFactory.getLog("CITY_MANAGER");
+	private static final Logger logger = LoggerFactory.getLogger("CITY_MANAGER");
 	
 	private static final String CITIES_URL = "http://m.velocite.org/cities/v2/data.xml";
 	
@@ -50,7 +50,7 @@ public class CityManager {
 		City selectedCity = null;
 
 		String citySelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.CITY_SELECTED_KEY);
-		log.info("Selected City key: " + citySelectedKeyPrefValue);
+		logger.info("Selected City key: " + citySelectedKeyPrefValue);
 		
 		Enumeration _enum = cityList.elements();
 		while(_enum.hasMoreElements()) {
@@ -68,10 +68,10 @@ public class CityManager {
 //		}
 		
 		if (selectedCity == null) {
-			log.debug("No Selected city");
+			logger.debug("No Selected city");
 		}
 		else {
-			log.debug("Selected city: " + selectedCity);
+			logger.debug("Selected city: " + selectedCity);
 		}
 
 		
@@ -79,7 +79,7 @@ public class CityManager {
 	}
 
 	public static Vector findAllCities() {
-		log.debug("Loading all cities ...");
+		logger.debug("Loading all cities ...");
 		CityPersistenceService cityPersistenceService = new CityPersistenceService();
 		try {
 			Vector cityList = cityPersistenceService.findAllCities();
@@ -129,7 +129,7 @@ public class CityManager {
 			currentDisplayable.showDisplayable(cityListView);
 		}
 		catch (CityManagerException e) {
-			log.warn(e);
+			logger.warn(e);
 			currentDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
 		}
 	}

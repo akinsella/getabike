@@ -10,8 +10,8 @@ import javax.microedition.rms.RecordStoreNotFoundException;
 import javax.microedition.rms.RecordStoreNotOpenException;
 
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.rms.exception.MultiRecordDaoException;
 import org.helyx.app.j2me.lib.serializer.AbstractObjectSerializer;
 import org.helyx.app.j2me.lib.serializer.MultiRecordSerializer;
@@ -19,7 +19,7 @@ import org.helyx.app.j2me.lib.serializer.SerializerException;
 
 public class MultiRecordDao implements IMultiRecordDao {
 	
-	private static final Log log = LogFactory.getLog("MULTI_RECORD_DAO");
+	private static final Logger logger = LoggerFactory.getLogger("MULTI_RECORD_DAO");
 	private static final int DEFAULT_RECORD_BUFFER_LENGTH = 1024;
 	
 	private int recordBufferLength;
@@ -127,7 +127,7 @@ public class MultiRecordDao implements IMultiRecordDao {
 				multiRecordSerializer.addRecord(bytes);
 			}
 			byte[] bytes = multiRecordSerializer.getOutBytes();
-			log.debug("Bytes length: " + bytes.length);
+			logger.debug("Bytes length: " + bytes.length);
 			recordStore.addRecord(bytes, 0, bytes.length);
 		}
 		catch (SerializerException e) {

@@ -5,8 +5,8 @@ import java.io.InputStream;
 import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
@@ -17,7 +17,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 	
-	private static final Log log = LogFactory.getLog("XML_RESOURCE_BUNDLE_CONTENT_PROVIDER");
+	private static final Logger logger = LoggerFactory.getLogger("XML_RESOURCE_BUNDLE_CONTENT_PROVIDER");
 
 	private static final String ENTRY = "entry";
 	
@@ -36,7 +36,7 @@ public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 
 	public void loadData() {
 		
-		log.debug("Loading messages ...");
+		logger.debug("Loading messages ...");
 		
 		InputStream inputStream = null;
 		InputStreamProvider cartoInputStreamProvider = null;
@@ -77,7 +77,7 @@ public class XmlResourceBundleContentProvider extends AbstractContentProvider {
 			progressDispatcher.fireEvent(EventType.ON_SUCCESS, resourceBundle);
 		}
 		catch (Throwable t) {
-    		log.warn(t);
+    		logger.warn(t);
 			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 	}

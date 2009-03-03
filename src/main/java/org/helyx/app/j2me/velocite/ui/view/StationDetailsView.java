@@ -8,8 +8,8 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.map.google.GoogleMapView;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
@@ -38,7 +38,7 @@ import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
 
 public class StationDetailsView extends AbstractView {
 	
-	private static final Log log = LogFactory.getLog("STATION_DETAILS_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("STATION_DETAILS_VIEW");
 	
 	private Image iconImage;
 	
@@ -175,27 +175,27 @@ public class StationDetailsView extends AbstractView {
 			iconImage = ImageUtil.createImageFromClassPath(getTheme().getString(AppThemeConstants.WIDGET_STATION_DETAILS_IMAGE));
 		}
 		catch (IOException e) {
-			log.warn(e);
+			logger.warn(e);
 		}
 		
 	}
 
 	protected void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		log.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		logger.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.LEFT) {
 	    	fireReturnCallback();
 		}
 	}
 
 	private void fetchStationDetails() {
-		log.info("Fetching Station Details for Station number: '" + station.number + "'");
+		logger.info("Fetching Station Details for Station number: '" + station.number + "'");
 		try {
 			IProgressTask progressTask = CartoManager.fetchStationDetails(CityManager.findSelectedCity(), station);
-			progressTask.addProgressListener(new ProgressAdapter() {
+			progressTask.addProgressListener(new ProgressAdapter(logger.getCategory()) {
 
 				public void onSuccess(String eventMessage, Object eventData) {
-					StationDetailsView.this.log.info("Station Details fetched for Station number: '" + station.number + "'");
+					StationDetailsView.this.logger.info("Station Details fetched for Station number: '" + station.number + "'");
 					StationDetailsView.this.stationDetails = (StationDetails)eventData;
 					StationDetailsView.this.repaint();
 				}
@@ -203,7 +203,7 @@ public class StationDetailsView extends AbstractView {
 			});
 			progressTask.start();
 			
-			progressTask.addProgressListener(new ProgressAdapter() {
+			progressTask.addProgressListener(new ProgressAdapter(logger.getCategory()) {
 
 				public void onStart() {
 					setPrimaryCommandEnabled(false);

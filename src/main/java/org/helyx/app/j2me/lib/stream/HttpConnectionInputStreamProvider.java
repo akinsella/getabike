@@ -6,13 +6,13 @@ import java.io.InputStream;
 import javax.microedition.io.Connector;
 import javax.microedition.io.HttpConnection;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.basics4me.io.BufferedInputStream;
 
 public class HttpConnectionInputStreamProvider implements InputStreamProvider {
 
-	private static final Log log = LogFactory.getLog("HTTP_CONNECTION_INPUT_STREAM_PROVIDER");
+	private static final Logger logger = LoggerFactory.getLogger("HTTP_CONNECTION_INPUT_STREAM_PROVIDER");
 	
 	private String url;
 	private HttpConnection httpConnection;
@@ -38,10 +38,10 @@ public class HttpConnectionInputStreamProvider implements InputStreamProvider {
         httpConnection.setRequestMethod(HttpConnection.GET);
         httpConnection.setRequestProperty("User-Agent", "Profile/MIDP-2.0 Configuration/CLDC-1.1");
         
-        log.debug("About to open connection");
+        logger.debug("About to open connection");
         
 		if (httpConnection.getResponseCode() != HttpConnection.HTTP_OK) {
-			log.debug("Closing connection: " + httpConnection.getResponseMessage());
+			logger.debug("Closing connection: " + httpConnection.getResponseMessage());
 		    throw new IOException(httpConnection.getResponseMessage());		 
 		}		
 

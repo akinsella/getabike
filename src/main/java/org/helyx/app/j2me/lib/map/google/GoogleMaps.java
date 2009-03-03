@@ -2,8 +2,8 @@ package org.helyx.app.j2me.lib.map.google;
 
 import javax.microedition.lcdui.Image;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.math.DistanceUtil;
 import org.helyx.app.j2me.lib.text.TextUtil;
 import org.helyx.app.j2me.lib.util.HttpUtil;
@@ -13,7 +13,7 @@ public class GoogleMaps {
 	
 	private String apiKey = null;
 	
-	private static final Log log = LogFactory.getLog("GOOGLE_MAPS");
+	private static final Logger logger = LoggerFactory.getLogger("GOOGLE_MAPS");
 
 	// these 2 properties will be used with map scrolling methods. You can
 	// remove them if not needed

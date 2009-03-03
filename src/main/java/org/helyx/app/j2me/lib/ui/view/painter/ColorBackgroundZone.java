@@ -2,8 +2,8 @@ package org.helyx.app.j2me.lib.ui.view.painter;
 
 import javax.microedition.lcdui.Graphics;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
@@ -11,7 +11,7 @@ import org.helyx.app.j2me.lib.ui.view.AbstractView;
 
 public class ColorBackgroundZone extends AbstractViewCanvasZone {
 
-	private static final Log log = LogFactory.getLog("COLOR_BACKGROUND_ZONE");
+	private static final Logger logger = LoggerFactory.getLogger("COLOR_BACKGROUND_ZONE");
 	
 	private int backgroundColor;
 

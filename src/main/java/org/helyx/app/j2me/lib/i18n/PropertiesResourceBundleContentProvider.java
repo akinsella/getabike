@@ -4,8 +4,8 @@ import java.io.InputStream;
 
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.basics4me.util.Properties;
@@ -13,7 +13,7 @@ import org.helyx.basics4me.util.Properties;
 
 public class PropertiesResourceBundleContentProvider extends AbstractContentProvider {
 	
-	private static final Log log = LogFactory.getLog("PROPERTIES_RESOURCE_BUNDLE_CONTENT_PROVIDER");
+	private static final Logger logger = LoggerFactory.getLogger("PROPERTIES_RESOURCE_BUNDLE_CONTENT_PROVIDER");
 
 	
 	private boolean cancel = false;
@@ -28,10 +28,10 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 
 	public void loadData() {
 		
-		log.debug("Loading messages ...");
+		logger.debug("Loading messages ...");
 		
 		InputStream inputStream = null;
-		InputStreamProvider cartoInputStreamProvider = null;
+		InputStreamProvider messageInputStreamProvider = null;
 		
 		ResourceBundle resourceBundle = null;
 		try {
@@ -39,8 +39,8 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 			progressDispatcher.fireEvent(EventType.ON_START);
 			try {
 				
-				cartoInputStreamProvider = messageContentAccessor.getInputStreamProvider();
-				inputStream = cartoInputStreamProvider.createInputStream();
+				messageInputStreamProvider = messageContentAccessor.getInputStreamProvider();
+				inputStream = messageInputStreamProvider.createInputStream();
 				Properties properties = new Properties();
 				properties.load(inputStream);
 				resourceBundle = new ResourceBundle();
@@ -49,12 +49,12 @@ public class PropertiesResourceBundleContentProvider extends AbstractContentProv
 				progressDispatcher.fireEvent(I18nConstants.ON_MESSAGES_LOADED, resourceBundle);
 			}
 			finally {
-				cartoInputStreamProvider.dispose();
+				messageInputStreamProvider.dispose();
 			}
 			progressDispatcher.fireEvent(EventType.ON_SUCCESS, resourceBundle);
 		}
 		catch (Throwable t) {
-    		log.warn(t);
+    		logger.warn(t);
 			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 	}

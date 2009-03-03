@@ -3,13 +3,13 @@ package org.helyx.app.j2me.lib.test;
 
 import junit.framework.TestCase;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.text.AsciiUtil;
 
 public class AsciiUtilTest extends TestCase {
 
-	private static final Log log = LogFactory.getLog("ASCII_UTIL_TEST");
+	private static final Logger logger = LoggerFactory.getLogger("ASCII_UTIL_TEST");
 	
 	public void testGenerateHexaString() throws Exception {
 		AsciiUtil.generateHexaString();
@@ -21,20 +21,20 @@ public class AsciiUtilTest extends TestCase {
 			fail("Should throw an exception");
 		}
 		catch(Exception e) {
-			log.info("Error handled: " + e.getMessage());
+			logger.info("Error handled: " + e.getMessage());
 		}
 	}
 
 	public void testGenerateHexaStringWithSizeOne() throws Exception {
 		String hexaString = AsciiUtil.generateHexaString(1);
-		log.info("Hexa String with size one generated: " + hexaString);
+		logger.info("Hexa String with size one generated: " + hexaString);
 		assertNotNull(hexaString);
 		assertEquals(1, hexaString.length());
 	}
 
 	public void testGenerateHexaStringWithSizeTen() throws Exception {
 		String hexaString = AsciiUtil.generateHexaString(10);
-		log.info("Hexa String with size ten generated: " + hexaString);
+		logger.info("Hexa String with size ten generated: " + hexaString);
 		assertNotNull(hexaString);
 		assertEquals(10, hexaString.length());
 	}

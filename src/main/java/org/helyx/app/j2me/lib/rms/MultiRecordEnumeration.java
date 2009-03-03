@@ -9,15 +9,15 @@ import javax.microedition.rms.RecordStoreException;
 import javax.microedition.rms.RecordStoreNotOpenException;
 
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.serializer.IObjectSerializer;
 import org.helyx.app.j2me.lib.serializer.MultiRecordDeserializer;
 import org.helyx.app.j2me.lib.serializer.SerializerException;
 
 public class MultiRecordEnumeration implements Enumeration {
 
-	public static final Log log = LogFactory.getLog("MULTI_RECORD_ENUMERATION");
+	public static final Logger logger = LoggerFactory.getLogger("MULTI_RECORD_ENUMERATION");
 	
 	private MultiRecordReader recordReader;
 	private boolean isFiltered;
@@ -39,7 +39,7 @@ public class MultiRecordEnumeration implements Enumeration {
 			}
 			hasRecords = true;
 			byte[] bytes = recordStore.getRecord(1);
-			log.debug("First Record bytes length: " + bytes.length);
+			logger.debug("First Record bytes length: " + bytes.length);
 			multiRecordDeserializer = new MultiRecordDeserializer(bytes);
 			recordReader = new MultiRecordReader(multiRecordDeserializer, recordSerializer, recordFilter);
 		}
@@ -77,23 +77,23 @@ public class MultiRecordEnumeration implements Enumeration {
 			return false;
 		}
 		catch (IOException e) {
-			log.warn(e);
+			logger.warn(e);
 			throw new DaoException(e);
 		}
 		catch (SerializerException e) {
-			log.warn(e);
+			logger.warn(e);
 			throw new DaoException(e);
 		}
 		catch (InvalidRecordIDException e) {
-			log.warn(e);
+			logger.warn(e);
 			throw new DaoException(e);
 		}
 		catch (RecordStoreNotOpenException e) {
-			log.warn(e);
+			logger.warn(e);
 			throw new DaoException(e);
 		}
 		catch (RecordStoreException e) {
-			log.warn(e);
+			logger.warn(e);
 			throw new DaoException(e);
 		}
 	}

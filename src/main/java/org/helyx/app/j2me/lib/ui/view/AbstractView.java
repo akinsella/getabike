@@ -4,8 +4,8 @@ import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
@@ -21,7 +21,7 @@ import org.helyx.app.j2me.lib.ui.widget.Command;
 
 public abstract class AbstractView extends AbstractDisplayable {
 
-	private static final Log log = LogFactory.getLog("ABSTRACT_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("ABSTRACT_VIEW");
 	
 	protected String title;
 	protected boolean fullScreenMode = false;
@@ -113,7 +113,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 	}
 
 	protected void keyPressed(int keyCode) {
-		log.debug("Key pressed: '" + viewCanvas.getKeyName(keyCode) + "' - Key code: '" + keyCode + "'");
+		logger.debug("Key pressed: '" + viewCanvas.getKeyName(keyCode) + "' - Key code: '" + keyCode + "'");
 
 		if (!checkMenuEvent(keyCode)) {
 			onKeyPressed(keyCode);
@@ -121,7 +121,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 	}
 
 	protected void keyRepeated(int keyCode) {
-		log.debug("Key repeated: '" + viewCanvas.getKeyName(keyCode) + "' - Key code: '" + keyCode + "'");
+		logger.debug("Key repeated: '" + viewCanvas.getKeyName(keyCode) + "' - Key code: '" + keyCode + "'");
 		onKeyRepeated(keyCode);
 	}
 
@@ -230,7 +230,7 @@ public abstract class AbstractView extends AbstractDisplayable {
 	}
 
 	public void onPaint(Graphics graphics) {
-		log.debug("Event: Painting screen");
+		logger.debug("Event: Painting screen");
 
 		paintBackground(graphics);
 		paint(graphics);
@@ -268,19 +268,19 @@ public abstract class AbstractView extends AbstractDisplayable {
 	
 	protected void changeDisplayable(AbstractDisplayable srcDisplayable, AbstractDisplayable targetDisplayable, IViewTransition viewTransition) {
 		if (srcDisplayable == null) {
-			log.debug("Current displayable: [" + null + "]");
+			logger.debug("Current displayable: [" + null + "]");
 		}
 		else {
-			log.debug("Current displayable: [" + srcDisplayable.getClass().getName() + "] title='" + srcDisplayable.getTitle() + "'");
+			logger.debug("Current displayable: [" + srcDisplayable.getClass().getName() + "] title='" + srcDisplayable.getTitle() + "'");
 		}
-		log.debug("Target displayable: [" + targetDisplayable.getClass().getName() + "] title='" + targetDisplayable.getTitle() + "'");
+		logger.debug("Target displayable: [" + targetDisplayable.getClass().getName() + "] title='" + targetDisplayable.getTitle() + "'");
 
 		if (srcDisplayable != null && (srcDisplayable instanceof AbstractView) && (targetDisplayable instanceof AbstractView)) {
 			AbstractView srcView = (AbstractView)srcDisplayable;
 			AbstractView targetView = (AbstractView)targetDisplayable;
 
 			try { viewCanvas.doCanvasTransition(srcView, targetView, viewTransition); }
-			catch(Throwable t) { log.warn(t); }
+			catch(Throwable t) { logger.warn(t); }
 		}
 		
 		
@@ -338,9 +338,9 @@ public abstract class AbstractView extends AbstractDisplayable {
 
 	public void afterDisplayableSelection(AbstractDisplayable previous, AbstractDisplayable current) {
 		if (current == this) {
-			log.debug("afterDisplayableSelection[previous]: " + previous);
-			log.debug("afterDisplayableSelection[current]: " + current);
-			log.debug("fullScreenMode: " + fullScreenMode);
+			logger.debug("afterDisplayableSelection[previous]: " + previous);
+			logger.debug("afterDisplayableSelection[current]: " + current);
+			logger.debug("fullScreenMode: " + fullScreenMode);
 			viewCanvas.setFullScreenMode(fullScreenMode);
 		}
 	}

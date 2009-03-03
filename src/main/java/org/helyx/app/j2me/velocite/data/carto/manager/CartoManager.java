@@ -5,8 +5,8 @@ import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.content.provider.IContentProviderFactory;
 import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderFactoryException;
 import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderFactoryNotFoundExcepton;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
@@ -29,7 +29,7 @@ import org.helyx.app.j2me.velocite.ui.view.StationListView;
 
 public class CartoManager {
 
-	private static final Log log = LogFactory.getLog("CARTO_MANAGER");
+	private static final Logger logger = LoggerFactory.getLogger("CARTO_MANAGER");
 	
 	public static final String VELIB = "VELIB";  // PARIS
 	public static final String VELO_PLUS = "VELO_PLUS";  // ORLEANS

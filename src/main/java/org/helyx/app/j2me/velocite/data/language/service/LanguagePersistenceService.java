@@ -4,8 +4,8 @@ package org.helyx.app.j2me.velocite.data.language.service;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.rms.IMultiRecordDao;
 import org.helyx.app.j2me.lib.rms.MultiRecordDao;
 import org.helyx.app.j2me.lib.rms.MultiRecordEnumeration;
@@ -14,7 +14,7 @@ import org.helyx.app.j2me.velocite.data.language.serializer.LanguageSerializer;
 
 public class LanguagePersistenceService implements ILanguagePersistenceService {
 	
-	private static final Log log = LogFactory.getLog("LANGUAGE_PERSISTENCE_SERVICE");
+	private static final Logger logger = LoggerFactory.getLogger("LANGUAGE_PERSISTENCE_SERVICE");
 	
 	private static final String LANGUAGE_RECORD_STORE_NAME = "language";
 	

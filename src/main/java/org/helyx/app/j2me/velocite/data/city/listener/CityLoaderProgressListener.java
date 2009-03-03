@@ -2,8 +2,8 @@ package org.helyx.app.j2me.velocite.data.city.listener;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.sort.FastQuickSort;
 import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.lib.task.IProgressDispatcher;
@@ -16,7 +16,7 @@ import org.helyx.app.j2me.velocite.data.city.service.ICityPersistenceService;
 
 public class CityLoaderProgressListener extends ProgressAdapter {
 
-	private static final Log log = LogFactory.getLog("CITY_LOADER_PROGRESS_LISTENER");
+	private static final Logger logger = LoggerFactory.getLogger("CITY_LOADER_PROGRESS_LISTENER");
 	
 	private ICityPersistenceService cityPersistenceService;
 	
@@ -25,7 +25,7 @@ public class CityLoaderProgressListener extends ProgressAdapter {
 	private IProgressDispatcher progressDispatcher;
 
 	public CityLoaderProgressListener(IProgressDispatcher progressDispatcher) {
-		super();
+		super(logger.getCategory());
 		this.progressDispatcher = progressDispatcher;
 	}
 
@@ -66,23 +66,23 @@ public class CityLoaderProgressListener extends ProgressAdapter {
    		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Tri des données");
 		new FastQuickSort(new CityNameComparator()).sort(cityArray);
    		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Sauvegarde des villes");
-		log.debug("About to save cities");
+		logger.debug("About to save cities");
 		
 		cityPersistenceService.saveCityArray(cityArray);
 
    		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Chargement terminé");
-		log.debug("Cities saved");
+		logger.debug("Cities saved");
 		cityArray = null;
 		System.gc();
 	}
 
 	public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
-		log.debug("Disposing cityPersistenceService");
+		logger.debug("Disposing cityPersistenceService");
 		cityPersistenceService.dispose();
 	}
 
 	public void onError(String eventMessage, Object eventData) {
-		log.info("Message: " + eventMessage + ", data: " + eventData);
+		logger.info("Message: " + eventMessage + ", data: " + eventData);
 	}
 
 }

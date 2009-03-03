@@ -2,14 +2,14 @@ package org.helyx.app.j2me.lib.ui.view.painter;
 
 import javax.microedition.lcdui.Graphics;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.view.AbstractView;
 
 public abstract class AbstractViewCanvasZone implements ViewCanvasZone {
 
-	private static final Log log = LogFactory.getLog("ABSTRACT_VIEW_CANVAS_ZONE");
+	private static final Logger logger = LoggerFactory.getLogger("ABSTRACT_VIEW_CANVAS_ZONE");
 	
 	public AbstractViewCanvasZone() {
 		super();

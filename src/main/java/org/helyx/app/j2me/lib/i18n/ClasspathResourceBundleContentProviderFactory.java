@@ -2,13 +2,13 @@ package org.helyx.app.j2me.lib.i18n;
 
 import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.text.TextUtil;
 
 public class ClasspathResourceBundleContentProviderFactory {
 
-	private static final Log log = LogFactory.getLog("DEFAULT_RESOURCE_BUNDLE_CONTENT_PROVIDER_FACTORY");
+	private static final Logger logger = LoggerFactory.getLogger("DEFAULT_RESOURCE_BUNDLE_CONTENT_PROVIDER_FACTORY");
 	
 	private Locale locale;
 	private String _package;
@@ -30,7 +30,7 @@ public class ClasspathResourceBundleContentProviderFactory {
 			.append(".properties")
 			.toString();
 		
-		log.debug("classpath: '" + classpath + "'");
+		logger.debug("classpath: '" + classpath + "'");
 		ClasspathContentAccessor classpathContentAccessor = new ClasspathContentAccessor(classpath);
 		IContentProvider resourceBundleContentProvider = new PropertiesResourceBundleContentProvider(classpathContentAccessor);
 		

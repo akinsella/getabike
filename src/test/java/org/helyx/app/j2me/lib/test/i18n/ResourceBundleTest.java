@@ -10,12 +10,12 @@ import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.i18n.ClasspathResourceBundleContentProviderFactory;
 import org.helyx.app.j2me.lib.i18n.Locale;
 import org.helyx.app.j2me.lib.i18n.ResourceBundle;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class ResourceBundleTest extends TestCase {
 
-	public static final Log log = LogFactory.getLog("RESOURCE_BUNDLE_TEST");
+	public static final Logger logger = LoggerFactory.getLogger("RESOURCE_BUNDLE_TEST");
 	
 	public ResourceBundleTest() {
 		super();
@@ -30,7 +30,7 @@ public class ResourceBundleTest extends TestCase {
 		while (_enum.hasMoreElements()) {
 			String key = (String)_enum.nextElement();
 			String value = (String)resourceBundle.get(key);
-			log.info("key='" + key + "', value='" + value + "'");
+			logger.info("key='" + key + "', value='" + value + "'");
 		}
 	}
 	

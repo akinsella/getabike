@@ -1,13 +1,13 @@
 package org.helyx.app.j2me.lib.content.provider;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.task.AbstractProgressTask;
 
 
 public class ContentProviderProgressTaskAdapter extends AbstractProgressTask {
 	
-	private static final Log log = LogFactory.getLog("CONTENT_PROVIDER_PROGRESS_TASK_ADAPTER");
+	private static final Logger logger = LoggerFactory.getLogger("CONTENT_PROVIDER_PROGRESS_TASK_ADAPTER");
 		
 	private IContentProvider contentProvider;
 	

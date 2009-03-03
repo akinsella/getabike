@@ -3,15 +3,15 @@ package org.helyx.app.j2me.velocite.ui.view;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.ui.displayable.support.AbstractTextBox;
 
 public class StationSearchView extends AbstractTextBox {
 	
-	private static final Log log = LogFactory.getLog("STATION_SEARCH_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("STATION_SEARCH_VIEW");
 	
 	public static final String PREF_STATION_NAME_FILTER = "search.stationName";
 

@@ -3,8 +3,8 @@ package org.helyx.app.j2me.velocite.ui.view;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
@@ -17,7 +17,7 @@ import org.helyx.app.j2me.lib.ui.view.AbstractView;
 
 public class SplashScreenView extends AbstractView {
 
-	private static final Log log = LogFactory.getLog("SPLASH_SCREEN_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("SPLASH_SCREEN_VIEW");
 	
 	private String label;
 	private Image logoImage;
@@ -38,6 +38,10 @@ public class SplashScreenView extends AbstractView {
 	
 	private void loadLogoImage() {
 		try {
+			String widgetSplashImage = getTheme().getString(ThemeConstants.WIDGET_SPLASH_IMAGE);
+			if (logger.isDebugEnabled()) {
+				logger.debug("widgetSplashImage: " + widgetSplashImage);
+			}
 			logoImage = ImageUtil.createImageFromClassPath(getTheme().getString(ThemeConstants.WIDGET_SPLASH_IMAGE));
 		}
 		catch(Throwable t) {
@@ -45,7 +49,7 @@ public class SplashScreenView extends AbstractView {
 			if (fallbackLogoImageStr == null) {
 				fallbackLogoImageStr = t.toString();
 			}
-			log.warn(t);
+			logger.warn(t);
 		}
 	}
 
@@ -65,11 +69,11 @@ public class SplashScreenView extends AbstractView {
         	g.drawImage(logoImage, x + width / 2, y + height / 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.VCENTER);
         }
         else if (fallbackLogoImageStr != null) {
-        	log.info(fallbackLogoImageStr);
+        	logger.info(fallbackLogoImageStr);
         	g.drawString(fallbackLogoImageStr, x + width / 2, y + height / 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.BASELINE);        	
         }
         else {
-        	log.info("fallbackLogoImageStr error");
+        	logger.info("fallbackLogoImageStr error");
         }
              
         g.drawString("Copyright - 2008", width / 2, y + height - 2, Graphics.HCENTER | Graphics.BOTTOM);
@@ -86,7 +90,7 @@ public class SplashScreenView extends AbstractView {
 	}
 
 	public void followProgressTask(IProgressTask progressTask) {
-		progressTask.addProgressListener(new ProgressAdapter() {
+		progressTask.addProgressListener(new ProgressAdapter(logger.getCategory()) {
 
 			public void onStart(String eventMessage, Object eventData) {
 				viewCanvas.repaint();
@@ -94,7 +98,7 @@ public class SplashScreenView extends AbstractView {
 			
 			public void onProgress(String eventMessage, Object eventData) {
 				if (eventData != null) {
-					getLog().debug(eventData.toString());
+					getLogger().debug(eventData.toString());
 				}
 				label = eventMessage;
 				repaint();

@@ -2,8 +2,8 @@ package org.helyx.app.j2me.velocite.ui.view;
 
 import javax.microedition.lcdui.Graphics;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
 import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
@@ -14,7 +14,7 @@ import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 
 public class StationItemRenderer implements ICellRenderer {
 
-	private Log log = LogFactory.getLog("STATION_ITEM_RENDERER");
+	private Logger logger = LoggerFactory.getLogger("STATION_ITEM_RENDERER");
 	
 	public StationItemRenderer() {
 		super();

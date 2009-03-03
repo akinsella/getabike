@@ -7,8 +7,8 @@ import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.content.provider.IContentProviderFactory;
 import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderException;
 import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderFactoryException;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.text.StringFormat;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
@@ -20,7 +20,7 @@ import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
 
 public class VeloVStationContentProviderFactory implements IContentProviderFactory {
 
-	private static final Log log = LogFactory.getLog("VELOV_STATION_CONTENT_PROVIDER_FACTORY");
+	private static final Logger logger = LoggerFactory.getLogger("VELOV_STATION_CONTENT_PROVIDER_FACTORY");
 	
 	private City city;
 	
@@ -37,7 +37,7 @@ public class VeloVStationContentProviderFactory implements IContentProviderFacto
 					
 					Quartier quartier = (Quartier)object;
 					String url = new StringFormat(city.stationList).format(quartier.zipCode);
-					log.info("Url: " + url);
+					logger.info("Url: " + url);
 					return new HttpContentAccessor(url);
 				}
 				

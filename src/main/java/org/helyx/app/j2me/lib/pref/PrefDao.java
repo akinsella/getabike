@@ -13,8 +13,8 @@ import javax.microedition.rms.RecordStoreFullException;
 import javax.microedition.rms.RecordStoreNotFoundException;
 import javax.microedition.rms.RecordStoreNotOpenException;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.rms.DefaultRecordEnumeration;
 import org.helyx.app.j2me.lib.rms.IRecordReader;
 import org.helyx.app.j2me.lib.rms.RecordReader;
@@ -23,7 +23,7 @@ import org.helyx.app.j2me.lib.serializer.SerializerException;
 
 public class PrefDao implements IPrefDao {
 	
-	private static final Log log = LogFactory.getLog("PREF_DAO");
+	private static final Logger logger = LoggerFactory.getLogger("PREF_DAO");
 
 	public static final String PREF_RECORD_STORE = "pref";
 	
@@ -143,13 +143,13 @@ public class PrefDao implements IPrefDao {
 		
 		try {
 			try {
-				log.debug("Reading prefs");
+				logger.debug("Reading prefs");
 
 				recordEnumeration = recordStore.enumerateRecords(null, null, false);
 				while (recordEnumeration.hasNextElement()) {
 					int recordId = recordEnumeration.nextRecordId();
 					Pref pref = (Pref)recordReader.readRecord(recordId);
-					log.debug("Readed pref: " + pref);
+					logger.debug("Readed pref: " + pref);
 					if (key.equals(pref.key)) {
 						return pref;
 					}
@@ -180,7 +180,7 @@ public class PrefDao implements IPrefDao {
 	}
 
 	public void removeAllPref() {
-		log.debug("Removing all prefs");
+		logger.debug("Removing all prefs");
 		RecordEnumeration recordEnumeration = null;
 		
 		try {
@@ -208,7 +208,7 @@ public class PrefDao implements IPrefDao {
 	}
 
 	public void removePref(String key) {
-		log.debug("Removing pref with key: '" + key + "'");
+		logger.debug("Removing pref with key: '" + key + "'");
 		RecordEnumeration recordEnumeration = null;
 		
 		try {
@@ -247,7 +247,7 @@ public class PrefDao implements IPrefDao {
 	}
 
 	public void writePref(Pref pref) {
-		log.debug("Writing pref : " + pref);
+		logger.debug("Writing pref : " + pref);
 		RecordEnumeration recordEnumeration = null;
 		
 		try {

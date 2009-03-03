@@ -4,8 +4,8 @@ import java.io.InputStream;
 
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessorFactory;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.stream.StreamUtil;
 import org.helyx.app.j2me.lib.task.EventType;
@@ -22,7 +22,7 @@ import org.json.me.JSONObject;
 
 public class VeloVStationContentProvider extends AbstractStationContentProvider {
 	
-	private static final Log log = LogFactory.getLog("VELOV_STATION_CONTENT_PROVIDER");
+	private static final Logger logger = LoggerFactory.getLogger("VELOV_STATION_CONTENT_PROVIDER");
 	
 	private static final String NUM_STATION = "numStation";
 	private static final String NOM_STATION = "nomStation";
@@ -47,7 +47,7 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 	
 	public void loadData() {
 		
-		log.debug("Loading Lyon carto info ...");
+		logger.debug("Loading Lyon carto info ...");
 
 		try {
 			progressDispatcher.fireEvent(EventType.ON_START);
@@ -64,14 +64,14 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 
 				try {
 					IContentAccessor contentAccessor = contentAccessorFactory.createContentAccessorFactory(quartier);
-					log.debug("contentAccessor: '" + contentAccessor.getPath() + "'");
+					logger.debug("contentAccessor: '" + contentAccessor.getPath() + "'");
 					cartoInputStreamProvider = contentAccessor.getInputStreamProvider();
 					inputStream = cartoInputStreamProvider.createInputStream();
 
-					log.debug("Parsing JSON for quartier: " + i);
+					logger.debug("Parsing JSON for quartier: " + i);
 					
 					String jsonStreamContent = StreamUtil.readStream(inputStream, false);
-					log.info("JSON content: " + jsonStreamContent);
+					logger.info("JSON content: " + jsonStreamContent);
 					JSONObject jsonContent = new JSONObject(jsonStreamContent);
 					JSONArray markerArray = jsonContent.getJSONArray("markers");
 					int markerCount = markerArray.length();
@@ -114,7 +114,7 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 			progressDispatcher.fireEvent(EventType.ON_SUCCESS);			
 		}
 		catch (Throwable t) {
-    		log.warn(t);
+    		logger.warn(t);
 			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 	}

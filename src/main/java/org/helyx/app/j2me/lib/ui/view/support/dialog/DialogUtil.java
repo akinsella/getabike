@@ -1,12 +1,12 @@
 package org.helyx.app.j2me.lib.ui.view.support.dialog;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 
 public class DialogUtil {
 
-	private static final Log log = LogFactory.getLog("DIALOG_UTIL");
+	private static final Logger logger = LoggerFactory.getLogger("DIALOG_UTIL");
 	
 	public DialogUtil() {
 		super();

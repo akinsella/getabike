@@ -4,8 +4,8 @@ package org.helyx.app.j2me.velocite.data.city.service;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.rms.DaoException;
 import org.helyx.app.j2me.lib.rms.IMultiRecordDao;
 import org.helyx.app.j2me.lib.rms.MultiRecordDao;
@@ -15,7 +15,7 @@ import org.helyx.app.j2me.velocite.data.city.serializer.CitySerializer;
 
 public class CityPersistenceService implements ICityPersistenceService {
 	
-	private static final Log log = LogFactory.getLog("CITY_PERSISTENCE_SERVICE");
+	private static final Logger logger = LoggerFactory.getLogger("CITY_PERSISTENCE_SERVICE");
 	
 	private static final String CITY_RECORD_STORE_NAME = "city";
 	
@@ -55,11 +55,11 @@ public class CityPersistenceService implements ICityPersistenceService {
 	}
 
 	public void saveCityArray(City[] cityArray) {
-		log.debug("Saving cities ...");
+		logger.debug("Saving cities ...");
 
 		getCityDao().saveRecordArray(cityArray);
 
-		log.debug("Cities saved ...");
+		logger.debug("Cities saved ...");
 	}
 
 	public MultiRecordEnumeration createCityEnumeration(IRecordFilter recordFilter) {

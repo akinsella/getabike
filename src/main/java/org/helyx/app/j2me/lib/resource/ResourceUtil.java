@@ -3,12 +3,12 @@ package org.helyx.app.j2me.lib.resource;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class ResourceUtil {
 	
-	public static final Log log = LogFactory.getLog("RESOURCE_UTIL");
+	public static final Logger logger = LoggerFactory.getLogger("RESOURCE_UTIL");
 
 	public  ResourceUtil() {
 		super();

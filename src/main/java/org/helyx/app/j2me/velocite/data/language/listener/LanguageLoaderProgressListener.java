@@ -2,8 +2,8 @@ package org.helyx.app.j2me.velocite.data.language.listener;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.sort.FastQuickSort;
 import org.helyx.app.j2me.lib.task.IProgressDispatcher;
 import org.helyx.app.j2me.lib.task.ProgressAdapter;
@@ -16,7 +16,7 @@ import org.helyx.app.j2me.velocite.data.language.service.LanguagePersistenceServ
 
 public class LanguageLoaderProgressListener extends ProgressAdapter {
 
-	private static final Log log = LogFactory.getLog("LANGUAGE_LOADER_PROGRESS_LISTENER");
+	private static final Logger logger = LoggerFactory.getLogger("LANGUAGE_LOADER_PROGRESS_LISTENER");
 	
 	private ILanguagePersistenceService languagePersistenceService;
 	
@@ -25,7 +25,7 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 	private IProgressDispatcher progressDispatcher;
 
 	public LanguageLoaderProgressListener(IProgressDispatcher progressDispatcher) {
-		super();
+		super(logger.getCategory());
 		this.progressDispatcher = progressDispatcher;
 	}
 
@@ -60,12 +60,12 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 //			languageList = null;
 			System.gc();
 	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Tri des données");
-			try { new FastQuickSort(new LanguageNameComparator()).sort(languageArray); } catch (Exception e) { log.warn(e); }
+			try { new FastQuickSort(new LanguageNameComparator()).sort(languageArray); } catch (Exception e) { logger.warn(e); }
 	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Sauvegarde des villes");
-//			log.debug("About to save cities");
+//			logger.debug("About to save cities");
 			languagePersistenceService.saveLanguageArray(languageArray);
 	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Chargement terminé");
-//			log.debug("Cities saved");
+//			logger.debug("Cities saved");
 			languageArray = null;
 			System.gc();
 	
@@ -73,7 +73,7 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 //			progressDispatcher.fireEvent(eventType, eventMessage, eventData);
 		}
 		finally {
-			log.debug("Disposing languagePersistenceService");
+			logger.debug("Disposing languagePersistenceService");
 			languagePersistenceService.dispose();
 		}
 	}

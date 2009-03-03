@@ -5,8 +5,8 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.i18n.Locale;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
@@ -19,7 +19,7 @@ import org.helyx.app.j2me.velocite.data.language.manager.LanguageManagerExceptio
 
 public class LanguageListView extends MenuListView {
 	
-	private static final Log log = LogFactory.getLog("LANGUAGE_LIST_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("LANGUAGE_LIST_VIEW");
 	
 	private Language selectedLanguage;
 	
@@ -63,14 +63,14 @@ public class LanguageListView extends MenuListView {
 
 	protected void initData() {
 		languageList = LanguageManager.findAllLanguages();
-		log.info("languageList: " + languageList);
+		logger.info("languageList: " + languageList);
 		try {
 			selectedLanguage = LanguageManager.findSelectedLanguage(languageList);
 		}
 		catch (LanguageManagerException lme) {
 			throw new RuntimeException(lme.getMessage());
 		}
-		log.info("selectedLanguage: " + languageList);
+		logger.info("selectedLanguage: " + languageList);
 	}
 	
 	protected void initComponents() {

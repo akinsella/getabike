@@ -7,8 +7,8 @@ import org.helyx.app.j2me.lib.constant.EncodingConstants;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderException;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.stream.InputStreamProvider;
 import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.lib.xml.xpp.XppAttributeProcessor;
@@ -21,7 +21,7 @@ import org.xmlpull.v1.XmlPullParser;
 
 public class DefaultCityContentProvider extends AbstractContentProvider {
 	
-	private static final Log log = LogFactory.getLog("DEFAULT_CITY_CONTENT_PROVIDER");
+	private static final Logger logger = LoggerFactory.getLogger("DEFAULT_CITY_CONTENT_PROVIDER");
 
 
 	private static final String CITIES = "cities";
@@ -65,7 +65,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 
 	public void loadData() {
 		
-		log.debug("Loading cities informations ...");
+		logger.debug("Loading cities informations ...");
 		
 		InputStream inputStream = null;
 		InputStreamProvider cityInputStreamProvider = null;
@@ -150,7 +150,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 			progressDispatcher.fireEvent(EventType.ON_SUCCESS, cityList);
 		}
 		catch (Throwable t) {
-    		log.warn(t);
+    		logger.warn(t);
 			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
 	}

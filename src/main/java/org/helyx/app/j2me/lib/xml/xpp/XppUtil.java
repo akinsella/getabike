@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.stream.StreamUtil;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -13,13 +13,13 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 public class XppUtil {
 	
-	private static final Log log = LogFactory.getLog("XPP_UTIL");
+	private static final Logger logger = LoggerFactory.getLogger("XPP_UTIL");
 
 	
 	public static XmlPullParser createXpp(InputStream inputStream, String encoding) throws XmlPullParserException {
 		boolean supportEncoding = StreamUtil.supportEncoding(encoding);
-		log.debug("Encoding '" + encoding + "' supported: " + supportEncoding);
-		log.debug("System encoding: " + System.getProperty("microedition.encoding"));
+		logger.debug("Encoding '" + encoding + "' supported: " + supportEncoding);
+		logger.debug("System encoding: " + System.getProperty("microedition.encoding"));
 		
 		XmlPullParser xpp = null;
 		

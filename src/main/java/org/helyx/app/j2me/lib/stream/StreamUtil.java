@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class StreamUtil {
 	
-	private static final Log log = LogFactory.getLog("STREAM_UTIL");
+	private static final Logger logger = LoggerFactory.getLogger("STREAM_UTIL");
 	
 	private static final byte[] ALPHABET = "abcdefghijklmnopkrstuvwxyz".getBytes();
 	
@@ -34,7 +34,7 @@ public class StreamUtil {
 			}
 		}
 		catch(Throwable t) {
-			log.warn(t);
+			logger.warn(t);
 		}
 		
 		return false;

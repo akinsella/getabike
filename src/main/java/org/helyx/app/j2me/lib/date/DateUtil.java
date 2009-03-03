@@ -3,12 +3,12 @@ package org.helyx.app.j2me.lib.date;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class DateUtil {
 	
-	private static final Log log = LogFactory.getLog("DATE_UTIL");
+	private static final Logger logger = LoggerFactory.getLogger("DATE_UTIL");
 
 	private DateUtil() {
 		super();

@@ -1,13 +1,15 @@
-package org.helyx.app.j2me.lib.log.appender;
+package org.helyx.app.j2me.lib.logger.appender;
 
 import java.util.Date;
 
-import org.helyx.app.j2me.lib.log.Log;
+import org.helyx.app.j2me.lib.logger.Logger;
 
 
 public interface Appender {
+	
+	public String getName();
 
-	public void write(int level, Log log, String message, Date date);
+	public void write(int level, Logger logger, String message, Date date);
 
 	public void open() throws Exception;
 

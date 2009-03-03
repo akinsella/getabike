@@ -4,12 +4,12 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 import org.helyx.app.j2me.lib.constant.BooleanConstants;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class AbstractXmlAttributeProcessor {
 	
-	private static final Log log = LogFactory.getLog("ABSTRACT_XML_ATTRIBUTE_PROCESSOR");
+	private static final Logger logger = LoggerFactory.getLogger("ABSTRACT_XML_ATTRIBUTE_PROCESSOR");
 		
 	protected Hashtable attributeMap;
 	protected Vector attributeList;

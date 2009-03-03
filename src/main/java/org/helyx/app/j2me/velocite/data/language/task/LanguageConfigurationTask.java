@@ -7,8 +7,8 @@ import javax.microedition.lcdui.Canvas;
 
 import org.helyx.app.j2me.lib.concurrent.Future;
 import org.helyx.app.j2me.lib.i18n.Locale;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.AbstractProgressTask;
@@ -22,7 +22,7 @@ import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 
 public class LanguageConfigurationTask extends AbstractProgressTask {
 	
-	private static final Log log = LogFactory.getLog("LANGUAGE_CONFIGURATION_TASK");
+	private static final Logger logger = LoggerFactory.getLogger("LANGUAGE_CONFIGURATION_TASK");
 	
 	private Canvas canvas;
 	private AbstractMIDlet midlet;
@@ -41,10 +41,10 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 			String languageSelectedKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
 			
 			if (languageSelectedKey == null) {
-				log.info("Chargement des langues ...");
+				logger.info("Chargement des langues ...");
 				IProgressTask progressTask = LanguageManager.refreshDataWithDefaults();
 				progressTask.addProgressListener(new LanguageLoaderProgressListener(progressTask.getProgressDispatcher()));
-				progressTask.addProgressListener(new ProgressAdapter() {
+				progressTask.addProgressListener(new ProgressAdapter(logger.getCategory()) {
 
 					public void onProgress(String eventMessage, Object eventData) {
 						progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage, eventData);
@@ -71,7 +71,7 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 			progressDispatcher.fireEvent(EventType.ON_SUCCESS);
 		}
 		catch(Throwable t) {
-			log.warn(t);
+			logger.warn(t);
 			progressDispatcher.fireEvent(EventType.ON_ERROR, t.getMessage(), t);
 		}
 		

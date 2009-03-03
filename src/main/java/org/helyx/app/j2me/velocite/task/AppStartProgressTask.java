@@ -1,7 +1,7 @@
 package org.helyx.app.j2me.velocite.task;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.AbstractProgressTask;
 import org.helyx.app.j2me.lib.task.EventType;
@@ -14,10 +14,11 @@ import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.velocite.data.language.task.LanguageConfigurationTask;
+import org.helyx.app.j2me.velocite.midlet.VelociteMIDlet;
 
 public class AppStartProgressTask extends AbstractProgressTask {
 
-	private Log log = LogFactory.getLog("APP_START_PROGRESS_TASK");
+	private static final Logger logger = LoggerFactory.getLogger("APP_START_PROGRESS_TASK");
 	
 	private static final String V_1_0_83 = "1.0.83";
 	private static final String V_1_0_82 = "1.0.82";
@@ -44,18 +45,18 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		if (applicationDataCleanUpNeeded) {
 			onProgress("Suppression des données ...");
 			
-			log.info("Application data need to be reseted");
+			logger.info("Application data need to be reseted");
 
-			log.info("Cleaning up cities related data");
+			logger.info("Cleaning up cities related data");
 			CityManager.cleanUpData();
 			
-			log.info("Cleaning up station related data");
+			logger.info("Cleaning up station related data");
 			CartoManager.cleanUpData();
 			
-			log.info("Cleaning up preference related data");
+			logger.info("Cleaning up preference related data");
 			PrefManager.cleanUpSavedData();
 			
-			log.info("Cleaning up language related data");
+			logger.info("Cleaning up language related data");
 			LanguageManager.cleanUpSavedData();
 			onProgress("Suppression des données terminée");
 		}
@@ -63,8 +64,8 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		boolean cityDataCleanUpNeeded = PrefManager.readPrefBoolean(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
 		if (cityDataCleanUpNeeded) {
 			onProgress("Suppression des villes enregistrées ...");
-			log.info("City data need to be reseted");
-			log.info("Cleaning up cities related data");
+			logger.info("City data need to be reseted");
+			logger.info("Cleaning up cities related data");
 			CityManager.cleanUpData();
 			PrefManager.removePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
 			onProgress("Suppression des villes terminée");
@@ -84,18 +85,18 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 	
 	private void onFirstRun(String newVersion) {
-		log.info("This is not an update of an older version. New version is: '" + newVersion + "'");
+		logger.info("This is not an update of an older version. New version is: '" + newVersion + "'");
 		checkCities();
 	}
 	
 	private void onAppUpdate(String oldVersion, String newVersion) {
-		log.info("This is  an update of an older version: '" + oldVersion + "'");
-		log.info("New version is: '" + newVersion + "'");
+		logger.info("This is  an update of an older version: '" + oldVersion + "'");
+		logger.info("New version is: '" + newVersion + "'");
 
-		log.info("Old version is different from new Version");
+		logger.info("Old version is different from new Version");
 		if (V_1_0_82.equals(newVersion) || V_1_0_83.equals(newVersion)) {
 			onProgress("Mise à jour des données ...");
-			log.info("Need to Clean Up Cities to support Lyon City.");
+			logger.info("Need to Clean Up Cities to support Lyon City.");
 			CityManager.cleanUpData();
 		}
 		
@@ -116,7 +117,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		onProgress("Chargement des villes ...");
 		IProgressTask progressTask = CityManager.createUpdateCitiesTask();
 		progressTask.addProgressListener(new CityLoaderProgressListener(progressTask.getProgressDispatcher()));
-		progressTask.addProgressListener(new ProgressAdapter() {
+		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory()) {
 
 			public void onSuccess(String eventMessage, Object eventData) {
 				configureLanguages();
@@ -137,7 +138,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	private  void configureLanguages() {
 		onProgress("Chargement des langues ...");
 		IProgressTask progressTask = new LanguageConfigurationTask(view.getMidlet(), view.getViewCanvas());
-		progressTask.addProgressListener(new ProgressAdapter() {
+		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory()) {
 
 			public void onSuccess(String eventMessage, Object eventData) {
 				configureSoftKeys();
@@ -158,7 +159,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	private void configureSoftKeys() {
 		onProgress("Configuration des touches ...");
 		IProgressTask progressTask = new SoftKeyConfigurationTask(view.getViewCanvas());
-		progressTask.addProgressListener(new ProgressAdapter() {
+		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory()) {
 
 			public void onSuccess(String eventMessage, Object eventData) {
 				AppStartProgressTask.this.onSuccess();

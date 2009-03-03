@@ -7,12 +7,12 @@ import javax.microedition.io.Connector;
 import javax.microedition.io.file.FileConnection;
 import javax.microedition.io.file.FileSystemRegistry;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class FileUtil {
 
-	private static final Log log = LogFactory.getLog("FILE_UTIL");
+	private static final Logger logger = LoggerFactory.getLogger("FILE_UTIL");
 	
 	private FileUtil() {
 		super();

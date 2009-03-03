@@ -2,14 +2,14 @@ package org.helyx.app.j2me.lib.pref;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 
 
 public class PrefService implements IPrefService {
 	
-	private static final Log log = LogFactory.getLog("PREF_SERVICE");
+	private static final Logger logger = LoggerFactory.getLogger("PREF_SERVICE");
 	
 	private IPrefDao prefDao;
 	

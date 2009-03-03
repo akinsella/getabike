@@ -3,14 +3,14 @@ package org.helyx.app.j2me.lib.reflect;
 import java.io.IOException;
 import java.util.Date;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.serializer.AbstractObjectSerializer;
 import org.helyx.app.j2me.lib.serializer.SerializerException;
 
 public class RefObjectDeserializer extends AbstractObjectSerializer {
 
-	private static final Log log = LogFactory.getLog("REF_OBJECT_SERIALIZER");
+	private static final Logger logger = LoggerFactory.getLogger("REF_OBJECT_SERIALIZER");
 		
 	private RefObjectMetaData refObjectMetaData;
 	private FieldInfo[] fieldInfoArray;

@@ -6,8 +6,9 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.lib.action.IAction;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
+import org.helyx.app.j2me.lib.logger.LoggerManager;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
@@ -32,7 +33,7 @@ import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 
 public class MenuView extends AbstractView {
 	
-		private static final Log log = LogFactory.getLog("MENU_VIEW");
+		private static final Logger logger = LoggerFactory.getLogger("MENU_VIEW");
 		
 		private Image logoImage;
 		private String fallbackLogoImageStr;
@@ -73,12 +74,12 @@ public class MenuView extends AbstractView {
 	        	_height += logoImage.getHeight() / 2;
 	        }
 	        else if (fallbackLogoImageStr != null) {
-	        	log.info(fallbackLogoImageStr);
+	        	logger.info(fallbackLogoImageStr);
 	        	g.drawString(fallbackLogoImageStr, x + width / 2, y + _height, Graphics.HCENTER | Graphics.BASELINE);        	
 	        	_height += FontUtil.LARGE_BOLD.getHeight() / 2;
 	        }
 	        else {
-	        	log.info("fallbackLogoImageStr error");
+	        	logger.info("fallbackLogoImageStr error");
 	        }
 
 	        int menuItemCount = menu.menuItemCount();
@@ -174,7 +175,7 @@ public class MenuView extends AbstractView {
 					fallbackLogoImageStr = t.toString();
 				}
 				
-				log.warn(t);
+				logger.warn(t);
 			}
 		}
 
@@ -220,7 +221,7 @@ public class MenuView extends AbstractView {
 										}
 									}
 									catch (CityManagerException e) {
-										log.warn(e);
+										logger.warn(e);
 										showAlertMessage("Erreur", "Aucune ville sélectionnée. Vous devez sélectionner une ville.");
 									}
 								}
@@ -234,7 +235,7 @@ public class MenuView extends AbstractView {
 					}
 					catch (CityManagerException e) {
 						showAlertMessage("Erreur", "Problème de sélection de la ville.");
-						log.warn(e);
+						logger.warn(e);
 					}
 				}
 
@@ -287,11 +288,9 @@ public class MenuView extends AbstractView {
 							int resultValue = dialogView.getResultCode();
 							switch (resultValue) {
 								case DialogResultConstants.YES:
-									Log.setThresholdLevel(Log.DEBUG);
 									exit();
 									break;
 								case DialogResultConstants.NO:
-									Log.setThresholdLevel(Log.INFO);
 									dialogView.showDisplayable(MenuView.this);
 									break;
 							}

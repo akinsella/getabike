@@ -1,14 +1,14 @@
 package org.helyx.app.j2me.velocite.data.carto.accessor;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.map.google.POIInfoAccessor;
 import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 
 public class StationPoiInfoAccessor implements POIInfoAccessor {
 
-	private static final Log log = LogFactory.getLog("STATION_POI_INFO_ACCESSOR");
+	private static final Logger logger = LoggerFactory.getLogger("STATION_POI_INFO_ACCESSOR");
 	
 	public StationPoiInfoAccessor() {
 		super();
@@ -38,7 +38,7 @@ public class StationPoiInfoAccessor implements POIInfoAccessor {
 		}
 		Station station = ((Station)object);
 		
-//		log.info("station: " + station);
+//		logger.info("station: " + station);
 		return station.hasLocalization ? station.localization : null;
 	}
 

@@ -1,14 +1,16 @@
 package org.helyx.app.j2me.lib.task;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class ProgressAdapter implements ProgressListener {
 
-	protected static Log log = LogFactory.getLog("PROGRESS_ADAPTER");
+	protected static Logger logger = LoggerFactory.getLogger("PROGRESS_ADAPTER");
+	private String name;
 	
-	public ProgressAdapter() {
+	public ProgressAdapter(String name) {
 		super();
+		this.name = name;
 	}
 	
 	public void onEvent(int eventType, String eventMessage, Object eventData) {
@@ -42,6 +44,7 @@ public class ProgressAdapter implements ProgressListener {
 
 	private void logEventMessage(int eventType, String eventMessage, Object eventData) {
 		StringBuffer messageSb = new StringBuffer();
+		messageSb.append("[").append(name).append("]");
 		messageSb.append("[").append(EventType.getEventTypeName(eventType)).append("]");
 		if (eventMessage != null) {
 			messageSb.append(" message: " + eventMessage);
@@ -55,7 +58,7 @@ public class ProgressAdapter implements ProgressListener {
 				messageSb.append(" data: " + eventData);
 			}
 		}
-		log.debug(messageSb.toString());
+		logger.debug(messageSb.toString());
 	}
 
 	public void onStart(String eventMessage, Object eventData) {
@@ -90,8 +93,8 @@ public class ProgressAdapter implements ProgressListener {
 
 	}
 
-	public static Log getLog() {
-		return log;
+	public static Logger getLogger() {
+		return logger;
 	}
 
 }

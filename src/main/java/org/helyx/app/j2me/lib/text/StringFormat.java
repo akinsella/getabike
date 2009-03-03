@@ -1,11 +1,11 @@
 package org.helyx.app.j2me.lib.text;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class StringFormat {
 	
-	private static final Log log = LogFactory.getLog("STRING_FORMAT");
+	private static final Logger logger = LoggerFactory.getLogger("STRING_FORMAT");
 	
 	private static final String NULL = "null";
 	

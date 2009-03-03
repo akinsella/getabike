@@ -2,8 +2,8 @@ package org.helyx.app.j2me.velocite.ui.view;
 
 import org.helyx.app.j2me.lib.action.IAction;
 import org.helyx.app.j2me.lib.filter.IRecordFilter;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.ProgressListener;
@@ -24,7 +24,7 @@ import org.helyx.app.j2me.velocite.data.carto.task.StationLoadTask;
 
 public class StationListView extends AbstractListView {
 	
-	private static final Log log = LogFactory.getLog("STATION_LIST_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("STATION_LIST_VIEW");
 	
 	private Menu menu;
 	
@@ -118,7 +118,7 @@ public class StationListView extends AbstractListView {
 	
 	protected String getStationNameFilter() {
 		String stationNameFilter = PrefManager.readPrefString(StationSearchView.PREF_STATION_NAME_FILTER);
-		log.info("Station name filter: '" + stationNameFilter + "'");
+		logger.info("Station name filter: '" + stationNameFilter + "'");
 		return stationNameFilter;
 	}
 	
@@ -151,7 +151,7 @@ public class StationListView extends AbstractListView {
 		showDisplayable(loadTaskView, this);
 		resetPosition();
 		loadTaskView.startTask();
-		log.info("Load List Content...");
+		logger.info("Load List Content...");
 	}
 
 	public void setRecordFilterEnabled(boolean recordFilterEnabled) {

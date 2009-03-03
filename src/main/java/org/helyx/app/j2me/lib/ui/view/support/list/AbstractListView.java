@@ -3,8 +3,8 @@ package org.helyx.app.j2me.lib.ui.view.support.list;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.game.GameCanvas;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
@@ -16,7 +16,7 @@ import org.helyx.app.j2me.lib.ui.view.AbstractView;
 
 public abstract class AbstractListView extends AbstractView {
 
-	private static final Log log = LogFactory.getLog("ABSTRACT_LIST_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("ABSTRACT_LIST_VIEW");
 
 	protected IElementProvider elementProvider = null;
 	
@@ -235,7 +235,7 @@ public abstract class AbstractListView extends AbstractView {
 
 	protected void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		log.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		logger.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
 	    }
@@ -277,7 +277,7 @@ public abstract class AbstractListView extends AbstractView {
 
 	protected void onKeyRepeated(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		log.debug("[onKeyRepeated] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		logger.debug("[onKeyRepeated] gameAction: " + gameAction + ", keyCode: " + keyCode);
 	    if (gameAction == GameCanvas.DOWN) {
 	    	scrollDown();
 	    }
@@ -293,7 +293,7 @@ public abstract class AbstractListView extends AbstractView {
 		if (selectedOffset < topOffset) {
 			topOffset = selectedOffset;
 		}
-		log.debug("Scroll Up - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset);
+		logger.debug("Scroll Up - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset);
 		onScrollDown();
 		repaint();
 	}
@@ -320,7 +320,7 @@ public abstract class AbstractListView extends AbstractView {
 			}	
 		}
 		onScrollDown();
-		log.debug("Scroll Down - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset + ", visibleItemCount: " + visibleItemCount + ", length: " + length);
+		logger.debug("Scroll Down - topOffset: " + topOffset + ", selectedOffset: " + selectedOffset + ", visibleItemCount: " + visibleItemCount + ", length: " + length);
 		repaint();
 	}
 

@@ -2,8 +2,8 @@ package org.helyx.app.j2me.velocite.data.city.serializer;
 
 import java.io.IOException;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.serializer.AbstractObjectSerializer;
 import org.helyx.app.j2me.lib.serializer.SerializerException;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
@@ -11,7 +11,7 @@ import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
 
 public class CitySerializer extends AbstractObjectSerializer {
 
-	private static final Log log = LogFactory.getLog("CITY_SERIALIZER");
+	private static final Logger logger = LoggerFactory.getLogger("CITY_SERIALIZER");
 	
 	private static QuartierSerializer quartierSerializer = new QuartierSerializer();
 

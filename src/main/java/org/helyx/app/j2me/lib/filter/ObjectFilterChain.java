@@ -2,12 +2,12 @@ package org.helyx.app.j2me.lib.filter;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class ObjectFilterChain implements IObjectFilter {
 	
-	private static final Log log = LogFactory.getLog("RECORD_FILTER_CHAIN");
+	private static final Logger logger = LoggerFactory.getLogger("RECORD_FILTER_CHAIN");
 
 	Vector chainList = new Vector();
 	

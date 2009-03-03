@@ -12,14 +12,14 @@ import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
 import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderException;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 
 public class DefaultCityContentProviderTest extends TestCase {
 
-	private static final Log log = LogFactory.getLog("DEFAULT_CITY_CONTENT_PROVIDER_TEST");
+	private static final Logger logger = LoggerFactory.getLogger("DEFAULT_CITY_CONTENT_PROVIDER_TEST");
 
 	public DefaultCityContentProviderTest() {
 		super();
@@ -47,7 +47,7 @@ public class DefaultCityContentProviderTest extends TestCase {
 				assertEquals("http://www.velib.paris.fr/service/carto/", city.stationList);
 			}
 			
-			log.info(city);
+			logger.info(city);
 		}
 	}
 	

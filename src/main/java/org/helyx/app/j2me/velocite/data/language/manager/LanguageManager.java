@@ -7,8 +7,8 @@ import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
 import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
 import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.app.j2me.lib.content.provider.IContentProvider;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.pref.PrefManager;
 import org.helyx.app.j2me.lib.task.IProgressTask;
 import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
@@ -20,7 +20,7 @@ import org.helyx.app.j2me.velocite.ui.view.LanguageListView;
 
 public class LanguageManager {
 
-	private static final Log log = LogFactory.getLog("LANGUAGE_MANAGER");
+	private static final Logger logger = LoggerFactory.getLogger("LANGUAGE_MANAGER");
 	
 	private LanguageManager() {
 		super();
@@ -46,9 +46,9 @@ public class LanguageManager {
 		Language selectedLanguage = null;
 
 		String languageSelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
-		log.info("Selected Language key: " + languageSelectedKeyPrefValue);
+		logger.info("Selected Language key: " + languageSelectedKeyPrefValue);
 		String languageDefaultKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_DEFAULT_KEY);
-		log.info("Default Language key: " + languageSelectedKeyPrefValue);
+		logger.info("Default Language key: " + languageSelectedKeyPrefValue);
 		
 		Enumeration _enum = languageList.elements();
 		while(_enum.hasMoreElements()) {
@@ -75,7 +75,7 @@ public class LanguageManager {
 			throw new LanguageManagerException("No default/active language exception");
 		}
 
-		log.debug("Selected language: " + selectedLanguage);
+		logger.debug("Selected language: " + selectedLanguage);
 		
 		return selectedLanguage;
 	}
@@ -128,7 +128,7 @@ public class LanguageManager {
 			currentDisplayable.showDisplayable(languageListView);
 		}
 		catch (RuntimeException e) {
-			log.warn(e);
+			logger.warn(e);
 			currentDisplayable.showAlertMessage("Problème de configuration", "Le fichier des langues n'est pas valide: " + e.getMessage());
 		}
 	}

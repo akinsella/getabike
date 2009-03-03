@@ -3,13 +3,13 @@ package org.helyx.app.j2me.lib.stream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.basics4me.io.BufferedInputStream;
 
 public class ClasspathInputStreamProvider implements InputStreamProvider {
 
-	private static final Log log = LogFactory.getLog("CLASSPATH_INPUT_STREAM_PROVIDER");
+	private static final Logger logger = LoggerFactory.getLogger("CLASSPATH_INPUT_STREAM_PROVIDER");
 	
 	private String path;
 	private InputStream inputStream;

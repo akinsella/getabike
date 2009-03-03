@@ -3,8 +3,8 @@ package org.helyx.app.j2me.lib.ui.view.support;
 import javax.microedition.lcdui.Graphics;
 
 import org.helyx.app.j2me.lib.action.IAction;
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
 import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
 import org.helyx.app.j2me.lib.ui.graphics.Color;
@@ -18,7 +18,7 @@ import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 
 public class MenuListView extends AbstractListView {
 
-	private static final Log log = LogFactory.getLog("MENU_LIST_VIEW");
+	private static final Logger logger = LoggerFactory.getLogger("MENU_LIST_VIEW");
 
 	private boolean checkable = false;
 
@@ -34,7 +34,7 @@ public class MenuListView extends AbstractListView {
 	
 	protected void initActions() {
 
-		log.debug("Menu List View Checkable: " + checkable);
+		logger.debug("Menu List View Checkable: " + checkable);
 		
 		if (checkable) {
 			setPrimaryCommand(new Command("Sélectionner", true, new IAction() {
@@ -117,7 +117,7 @@ public class MenuListView extends AbstractListView {
 
 	private void executeSelectedMenuItemAction() {
 		MenuItem menuItem = getMenu().getSelectedMenuItem();
-		log.debug("menuItem: " + menuItem);
+		logger.debug("menuItem: " + menuItem);
 		if (menuItem.getAction() != null) {
 			menuItem.getAction().run(null);
 		}

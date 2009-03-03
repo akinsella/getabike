@@ -2,12 +2,12 @@ package org.helyx.app.j2me.lib.text;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.log.Log;
-import org.helyx.app.j2me.lib.log.LogFactory;
+import org.helyx.app.j2me.lib.logger.Logger;
+import org.helyx.app.j2me.lib.logger.LoggerFactory;
 
 public class TextUtil {
 
-	private static final Log log = LogFactory.getLog("TEXT_UTIL");
+	private static final Logger logger = LoggerFactory.getLogger("TEXT_UTIL");
 
 	public static String[] split(final String str, final char c) {
 

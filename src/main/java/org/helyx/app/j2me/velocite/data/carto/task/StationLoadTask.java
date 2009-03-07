@@ -27,61 +27,68 @@ public class StationLoadTask extends AbstractProgressTask {
 		this.recordFilter = recordFilter;
 	}
 
-	public void execute() {
-		System.gc();
-		IStationPersistenceService stationPersistenceService = null;
-		MultiRecordEnumeration stationEnumeration = null;
-		Station[] stationArray = new Station[0];
-		try {
-			try {
-				progressDispatcher.fireEvent(EventType.ON_START);
-				
-				progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Lecture des données");
-	
-				stationPersistenceService = new StationPersistenceService();
-		
-				Vector stationList = new Vector(4096);
-				
-				stationEnumeration = stationPersistenceService.createStationEnumeration(recordFilter);
-	
-				int count = 0;
-				while (stationEnumeration.hasMoreElements()) {
-	
-					Station station = (Station)stationEnumeration.nextElement();
-					count++;
-					if (count % 5 == 0) {
-						progressDispatcher.fireEvent(EventType.ON_PROGRESS, count + " stations chargées");
-					}
-	
-					stationList.addElement(station);
-				}
-	
-				
-				progressDispatcher.fireEvent(EventType.ON_PROGRESS, count + " stations chargées");
-		
-				logger.info("Copying Station Array ...");
-				stationArray = new Station[stationList.size()];
-				stationList.copyInto(stationArray);
-				stationList = null;
-				System.gc();
-			}
-	    	finally {
-	    		if (stationEnumeration != null) {
-	    			stationEnumeration.destroy();
-	    		}
-	    		if (stationPersistenceService != null) {
-	    			stationPersistenceService.dispose();
-	    		}
-	    	}
-			progressDispatcher.fireEvent(EventType.ON_SUCCESS, stationArray);
-			stationArray = null;
-			System.gc();
-		}
-		catch(Throwable t) {
-			logger.warn(t);
-			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
-		}
+	public Runnable getRunnable() {
+		return new Runnable() {
 
+			public void run() {
+				System.gc();
+				IStationPersistenceService stationPersistenceService = null;
+				MultiRecordEnumeration stationEnumeration = null;
+				Station[] stationArray = new Station[0];
+				try {
+					try {
+						progressDispatcher.fireEvent(EventType.ON_START);
+						
+						progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Lecture des données");
+			
+						stationPersistenceService = new StationPersistenceService();
+				
+						Vector stationList = new Vector(4096);
+						
+						stationEnumeration = stationPersistenceService.createStationEnumeration(recordFilter);
+			
+						int count = 0;
+						while (stationEnumeration.hasMoreElements()) {
+			
+							Station station = (Station)stationEnumeration.nextElement();
+							count++;
+							if (count % 5 == 0) {
+								progressDispatcher.fireEvent(EventType.ON_PROGRESS, count + " stations chargées");
+							}
+			
+							stationList.addElement(station);
+						}
+			
+						
+						progressDispatcher.fireEvent(EventType.ON_PROGRESS, count + " stations chargées");
+				
+						logger.info("Copying Station Array ...");
+						stationArray = new Station[stationList.size()];
+						stationList.copyInto(stationArray);
+						stationList = null;
+						System.gc();
+					}
+			    	finally {
+			    		if (stationEnumeration != null) {
+			    			stationEnumeration.destroy();
+			    		}
+			    		if (stationPersistenceService != null) {
+			    			stationPersistenceService.dispose();
+			    		}
+			    	}
+					progressDispatcher.fireEvent(EventType.ON_SUCCESS, stationArray);
+					stationArray = null;
+					System.gc();
+				}
+				catch(Throwable t) {
+					logger.warn(t);
+					progressDispatcher.fireEvent(EventType.ON_ERROR, t);
+				}
+				
+			}
+			
+		};
+	
 	}
 
 	public boolean isCancellable() {

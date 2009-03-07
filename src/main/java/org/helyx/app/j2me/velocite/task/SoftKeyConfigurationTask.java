@@ -23,135 +23,142 @@ public class SoftKeyConfigurationTask extends AbstractProgressTask {
 		this.canvas = canvas;
 	}
 	
-	public void execute() {
-		try {
-			progressDispatcher.fireEvent(EventType.ON_START);
-	
-			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche de config. existante...");
-			String softKeyDetectionTypeValue = PrefManager.readPrefString(PrefConstants.SOFT_KEY_DETECTION_TYPE);
-			
-			if (KeyUtil.SOFT_KEY_DETECTION_PLATFORM.equals(softKeyDetectionTypeValue)) {
-				logger.info("[SoftKey detection] Attempting to associate softkeys by platform");
-				
-				KeyMapConfig platformKeyMapConfig = findPlatformKeyMapConfig();
-				
-				if (platformKeyMapConfig == null) {
-					KeyUtil.cleanUpSoftKeyPref();
-				}
-				else {
-					KeyUtil.keyMapConfig = platformKeyMapConfig;
-					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
-					progressDispatcher.fireEvent(EventType.ON_SUCCESS);
-					return ;
-				}
-			}
-			
-			String leftSoftKeyStr = PrefManager.readPrefString(PrefConstants.SOFT_KEY_LEFT);
-			String rightSoftKeyStr = PrefManager.readPrefString(PrefConstants.SOFT_KEY_RIGHT);
-			
-			if (leftSoftKeyStr != null && rightSoftKeyStr != null) {
+	public Runnable getRunnable() {
+		return new Runnable() {
+
+			public void run() {
 				try {
-					int leftSoftKey = Integer.parseInt(leftSoftKeyStr);
-					int rightSoftKey = Integer.parseInt(rightSoftKeyStr);
+					progressDispatcher.fireEvent(EventType.ON_START);
+			
+					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche de config. existante...");
+					String softKeyDetectionTypeValue = PrefManager.readPrefString(PrefConstants.SOFT_KEY_DETECTION_TYPE);
 					
-					KeyUtil.keyMapConfig = new KeyMapConfig("CACHED_VALUES", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
-					logger.debug("[SoftKey detection] Associating softkeys from cached values: " + KeyUtil.keyMapConfig);
-					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
+					if (KeyUtil.SOFT_KEY_DETECTION_PLATFORM.equals(softKeyDetectionTypeValue)) {
+						logger.info("[SoftKey detection] Attempting to associate softkeys by platform");
+						
+						KeyMapConfig platformKeyMapConfig = findPlatformKeyMapConfig();
+						
+						if (platformKeyMapConfig == null) {
+							KeyUtil.cleanUpSoftKeyPref();
+						}
+						else {
+							KeyUtil.keyMapConfig = platformKeyMapConfig;
+							progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
+							progressDispatcher.fireEvent(EventType.ON_SUCCESS);
+							return ;
+						}
+					}
+					
+					String leftSoftKeyStr = PrefManager.readPrefString(PrefConstants.SOFT_KEY_LEFT);
+					String rightSoftKeyStr = PrefManager.readPrefString(PrefConstants.SOFT_KEY_RIGHT);
+					
+					if (leftSoftKeyStr != null && rightSoftKeyStr != null) {
+						try {
+							int leftSoftKey = Integer.parseInt(leftSoftKeyStr);
+							int rightSoftKey = Integer.parseInt(rightSoftKeyStr);
+							
+							KeyUtil.keyMapConfig = new KeyMapConfig("CACHED_VALUES", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
+							logger.debug("[SoftKey detection] Associating softkeys from cached values: " + KeyUtil.keyMapConfig);
+							progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
+							progressDispatcher.fireEvent(EventType.ON_SUCCESS);
+							return ;
+						}
+						catch(Throwable t) {
+							logger.warn(t);
+						}
+					}
+					
+					int leftSoftKey = 0;
+					int rightSoftKey = 0;
+
+					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche auto. en cours ...");
+					for (int i = 0 ; i <= 256 ; i++) {
+						String positiveKeyName = null;
+						String negativeKeyName = null;
+						try {			
+							positiveKeyName = canvas.getKeyName(i);
+
+							if (positiveKeyName != null && positiveKeyName.toUpperCase().indexOf(KeyUtil.SOFT) >= 0) {
+								if (positiveKeyName.indexOf(KeyUtil.ONE) >= 0) {
+									leftSoftKey = i;
+								}
+								else if (positiveKeyName.indexOf(KeyUtil.TWO) >= 0) {
+									rightSoftKey = i;
+								}
+							}	
+						}
+						catch(Throwable t) { }
+
+						try {
+							negativeKeyName = canvas.getKeyName(-i);
+
+							if (negativeKeyName != null && negativeKeyName.toUpperCase().indexOf(KeyUtil.SOFT) >= 0) {
+								if (negativeKeyName.indexOf(KeyUtil.ONE) >= 0) {
+									leftSoftKey = -i;
+								}
+								else if (negativeKeyName.indexOf(KeyUtil.TWO) >= 0) {
+									rightSoftKey = -i;
+								}
+							}
+						}
+						catch(Throwable t) { }
+						
+						if (positiveKeyName != null || negativeKeyName != null) {
+							if (positiveKeyName != null) {
+								progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Touche détectée: '" + positiveKeyName + "'");
+							}
+							if (negativeKeyName != null) {
+								progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Touche détectée: '" + negativeKeyName + "'");
+							}
+							logger.debug("[SoftKey detection] index=" + i + ", positiveKeyName='" + positiveKeyName + "', negativeKeyName='" + negativeKeyName + "', leftSoftKey=" + leftSoftKey + ", rightSoftKey=" + rightSoftKey);
+						}
+						
+						if (leftSoftKey != 0 && rightSoftKey != 0) {
+							KeyUtil.keyMapConfig = new KeyMapConfig("AUTO_DETECTION", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
+							logger.debug("[SoftKey detection] Associating softkeys by automatic detection: " + KeyUtil.keyMapConfig);
+
+							KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_AUTO_DETECTION, leftSoftKey, rightSoftKey);
+							progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
+							progressDispatcher.fireEvent(EventType.ON_SUCCESS);
+							return ;
+						}	
+					}
+					
+					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche auto. échouée");
+					logger.info("[SoftKey detection] Automatic detection failed");
+					logger.info("[SoftKey detection] Attempting to associate softkeys by platform");
+					
+					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche par plateforme...");
+					KeyMapConfig platformKeyMapConfig = findPlatformKeyMapConfig();
+					
+					if (platformKeyMapConfig != null) {
+						KeyUtil.cleanUpSoftKeyPref();
+						PrefManager.writePref(PrefConstants.SOFT_KEY_DETECTION_TYPE, KeyUtil.SOFT_KEY_DETECTION_DEFAULT);
+						KeyUtil.keyMapConfig = platformKeyMapConfig;
+						progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
+						progressDispatcher.fireEvent(EventType.ON_SUCCESS);
+						return ;
+					}
+					
+					logger.info("[SoftKey detection] Softkeys association by platform failed");
+					
+					KeyUtil.keyMapConfig = KeyUtil.DEFAULT_KEY_MAP;
+
+					KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_DEFAULT, KeyUtil.keyMapConfig.keyMapArray[0].softKeyLeft, KeyUtil.keyMapConfig.keyMapArray[0].softKeyRight);
+					logger.debug("[SoftKey detection] Associating softkeys to defaults: " + KeyUtil.keyMapConfig);
+					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Config. par défaut");
 					progressDispatcher.fireEvent(EventType.ON_SUCCESS);
-					return ;
 				}
 				catch(Throwable t) {
 					logger.warn(t);
+					progressDispatcher.fireEvent(EventType.ON_ERROR, t.getMessage(), t);
 				}
 			}
 			
-			int leftSoftKey = 0;
-			int rightSoftKey = 0;
-
-			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche auto. en cours ...");
-			for (int i = 0 ; i <= 256 ; i++) {
-				String positiveKeyName = null;
-				String negativeKeyName = null;
-				try {			
-					positiveKeyName = canvas.getKeyName(i);
-
-					if (positiveKeyName != null && positiveKeyName.toUpperCase().indexOf(KeyUtil.SOFT) >= 0) {
-						if (positiveKeyName.indexOf(KeyUtil.ONE) >= 0) {
-							leftSoftKey = i;
-						}
-						else if (positiveKeyName.indexOf(KeyUtil.TWO) >= 0) {
-							rightSoftKey = i;
-						}
-					}	
-				}
-				catch(Throwable t) { }
-
-				try {
-					negativeKeyName = canvas.getKeyName(-i);
-
-					if (negativeKeyName != null && negativeKeyName.toUpperCase().indexOf(KeyUtil.SOFT) >= 0) {
-						if (negativeKeyName.indexOf(KeyUtil.ONE) >= 0) {
-							leftSoftKey = -i;
-						}
-						else if (negativeKeyName.indexOf(KeyUtil.TWO) >= 0) {
-							rightSoftKey = -i;
-						}
-					}
-				}
-				catch(Throwable t) { }
-				
-				if (positiveKeyName != null || negativeKeyName != null) {
-					if (positiveKeyName != null) {
-						progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Touche détectée: '" + positiveKeyName + "'");
-					}
-					if (negativeKeyName != null) {
-						progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Touche détectée: '" + negativeKeyName + "'");
-					}
-					logger.debug("[SoftKey detection] index=" + i + ", positiveKeyName='" + positiveKeyName + "', negativeKeyName='" + negativeKeyName + "', leftSoftKey=" + leftSoftKey + ", rightSoftKey=" + rightSoftKey);
-				}
-				
-				if (leftSoftKey != 0 && rightSoftKey != 0) {
-					KeyUtil.keyMapConfig = new KeyMapConfig("AUTO_DETECTION", new KeyMap[] { new KeyMap(leftSoftKey, rightSoftKey) });
-					logger.debug("[SoftKey detection] Associating softkeys by automatic detection: " + KeyUtil.keyMapConfig);
-
-					KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_AUTO_DETECTION, leftSoftKey, rightSoftKey);
-					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
-					progressDispatcher.fireEvent(EventType.ON_SUCCESS);
-					return ;
-				}	
-			}
-			
-			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche auto. échouée");
-			logger.info("[SoftKey detection] Automatic detection failed");
-			logger.info("[SoftKey detection] Attempting to associate softkeys by platform");
-			
-			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche par plateforme...");
-			KeyMapConfig platformKeyMapConfig = findPlatformKeyMapConfig();
-			
-			if (platformKeyMapConfig != null) {
-				KeyUtil.cleanUpSoftKeyPref();
-				PrefManager.writePref(PrefConstants.SOFT_KEY_DETECTION_TYPE, KeyUtil.SOFT_KEY_DETECTION_DEFAULT);
-				KeyUtil.keyMapConfig = platformKeyMapConfig;
-				progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Configuration des touches Ok");
-				progressDispatcher.fireEvent(EventType.ON_SUCCESS);
-				return ;
-			}
-			
-			logger.info("[SoftKey detection] Softkeys association by platform failed");
-			
-			KeyUtil.keyMapConfig = KeyUtil.DEFAULT_KEY_MAP;
-
-			KeyUtil.writeSoftKeyPref(KeyUtil.SOFT_KEY_DETECTION_DEFAULT, KeyUtil.keyMapConfig.keyMapArray[0].softKeyLeft, KeyUtil.keyMapConfig.keyMapArray[0].softKeyRight);
-			logger.debug("[SoftKey detection] Associating softkeys to defaults: " + KeyUtil.keyMapConfig);
-			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Config. par défaut");
-			progressDispatcher.fireEvent(EventType.ON_SUCCESS);
-		}
-		catch(Throwable t) {
-			logger.warn(t);
-			progressDispatcher.fireEvent(EventType.ON_ERROR, t.getMessage(), t);
-		}
-		
+		};
+	
 	}
+
 
 		private static KeyMapConfig findPlatformKeyMapConfig() {
 			

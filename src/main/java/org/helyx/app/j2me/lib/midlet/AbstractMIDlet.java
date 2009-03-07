@@ -103,7 +103,7 @@ public class AbstractMIDlet extends MIDlet {
 			themeConfiguration = new ResourceBundleConfiguration("default", "org.helyx.app.j2me.lib.theme");
 		}
 		ClasspathResourceBundleContentProviderFactory cprbcpf = new ClasspathResourceBundleContentProviderFactory(locale, themeConfiguration.getPackageName(), themeConfiguration.getName());
-		ResourceBundle resourceBundle = (ResourceBundle)Future.getSync(new ContentProviderProgressTaskAdapter(cprbcpf.getContentProviderFactory()));
+		ResourceBundle resourceBundle = (ResourceBundle)Future.get(new ContentProviderProgressTaskAdapter(cprbcpf.getContentProviderFactory()));
 		Theme theme = new Theme(resourceBundle);
 		
 		this.theme = theme;
@@ -115,7 +115,7 @@ public class AbstractMIDlet extends MIDlet {
 		}
 		
 		ClasspathResourceBundleContentProviderFactory cprbcpf = new ClasspathResourceBundleContentProviderFactory(locale, i18nConfiguration.getPackageName(), i18nConfiguration.getName());
-		ResourceBundle resourceBundle = (ResourceBundle)Future.getSync(new ContentProviderProgressTaskAdapter(cprbcpf.getContentProviderFactory()));
+		ResourceBundle resourceBundle = (ResourceBundle)Future.get(new ContentProviderProgressTaskAdapter(cprbcpf.getContentProviderFactory()));
 
 		this.resourceBundle = resourceBundle;
 	}
@@ -203,13 +203,11 @@ public class AbstractMIDlet extends MIDlet {
 		logger.info("Platform memory card: '" + memoryCard + "'");
 	}
 
-	
 	private void openFileAppender() {
 		if (fileAppender == null) {
 			try {
 				fileAppender = new FileAppender("VeloCite.log");
-				fileAppender.open();
-				LoggerManager.addAppender(fileAppender);
+				LoggerManager.addAppenderAndOpen(fileAppender);
 			}
 			catch(Throwable t) {
 				logger.warn(t);
@@ -222,12 +220,9 @@ public class AbstractMIDlet extends MIDlet {
 	private void closeFileAppender() {
 		if (fileAppender != null) {
 			try {
-				LoggerManager.removeAppender(fileAppender);
-				fileAppender.flush();
-				fileAppender.close();
+				LoggerManager.removeAppenderAndClose(fileAppender);
 			}
-			catch(Throwable t) {
-				t.printStackTrace();
+			finally {
 				fileAppender = null;
 			}
 		}

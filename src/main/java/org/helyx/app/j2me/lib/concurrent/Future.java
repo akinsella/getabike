@@ -15,6 +15,9 @@ public class Future {
 	protected String exceptionMessage;
 	protected boolean processed = false;
 
+	private Future() {
+		super();
+	}
 	
 	public synchronized void notifyResponse() {
 		notify();
@@ -24,32 +27,34 @@ public class Future {
 		processed = true;
 	}
 
-	public static Object getSync(IProgressTask progressTask) {
-		return get(progressTask, false);
-	}
-
-	public static Object getASync(IProgressTask progressTask) {
-		return get(progressTask, true);
-	}
-
 	public static Object get(IProgressTask progressTask) {
-		return getASync(progressTask);
+		return get(progressTask, 0);
 	}
 
-	public static Object get(IProgressTask progressTask, boolean async) {
+	public static Object get(IProgressTask progressTask, long timeout) {
 		final Future future = new Future();
 		progressTask.addProgressListener(new ProgressAdapter(logger.getCategory()) {
 
 			public void onCancel(String eventMessage, Object eventData) {
-				future.failed = true;
-				future.exceptionMessage = eventMessage != null ? eventMessage : "ON_CANCEL";
+				buildFutureException(future, eventMessage, eventData, "ON_CANCEL");
 			}
 
 			public void onError(String eventMessage, Object eventData) {
+				buildFutureException(future, eventMessage, eventData, "ON_ERROR");
+			}
+
+			private void buildFutureException(Future future, String eventMessage, Object eventData, String defaultMessage) {
 				future.failed = true;
-				future.exceptionMessage = eventMessage != null ? eventMessage : "ON_ERROR";
-				if (eventData instanceof FutureException) {
-					future.exception = (FutureException)eventData;
+				future.exceptionMessage = eventMessage != null ? eventMessage : defaultMessage;
+				if (eventData instanceof RuntimeException) {
+					future.exception = (RuntimeException)eventData;
+				}
+				else if(eventData instanceof Error) {
+					Throwable error = (Throwable)eventData;
+					future.exception = new FutureException(error);
+				}
+				else {
+					future.exception = new FutureException(future.exceptionMessage);
 				}
 			}
 
@@ -58,29 +63,40 @@ public class Future {
 			}
 
 			public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
+				future.markAsProcessed();
 				synchronized (future) {
 					future.notify();
 				}
-				future.markAsProcessed();
 			}
 			
 		});
 		
-		if (async) {
-			progressTask.start();
-		}
-		else {
-			progressTask.execute();
-		}
+		progressTask.execute();
 		
 		synchronized (future) {
 			try { 
 				if (!future.processed) {
-					future.wait(); 
+					if (timeout > 0)  {
+						future.wait(timeout);
+						if (!future.processed) {
+							if (logger.isDebugEnabled()) {
+								logger.debug("Future timeout reached");
+								logger.debug("Interrupting progress task");
+							}
+							progressTask.interrupt();
+							throw new FutureTimeoutException("Future timeout reached");
+						}
+					}
+					else {
+						future.wait();
+					}
 				}
 			}
 			catch(InterruptedException ie) {
 				throw new FutureException(ie.getMessage() != null ? ie.getMessage() : "Interrupted Exception");
+			}
+			catch(FutureException fe) {
+				throw fe;
 			}
 			catch(Throwable t) {
 				throw new FutureException(t);

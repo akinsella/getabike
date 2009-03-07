@@ -24,18 +24,25 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 		return false;
 	}
 	
-	public void execute() {
-		int taskToRunCount = tasks.length;
-		logger.debug("Starting Multitask executor");
-		logger.info("Scheduled task: ");
-		for (int i = 0 ; i < taskToRunCount ; i++) {
-			logger.info(i + " - " + tasks[i].getDescription());
-		}
+	public Runnable getRunnable() {
+		
+		return new Runnable() {
 
-		internaleProgressListener = new InternalProgressMultiTaskListener();
-		progressDispatcher.fireEvent(EventType.ON_START);
+			public void run() {
+				int taskToRunCount = tasks.length;
+				logger.debug("Starting Multitask executor");
+				logger.info("Scheduled task: ");
+				for (int i = 0 ; i < taskToRunCount ; i++) {
+					logger.info(i + " - " + tasks[i].getDescription());
+				}
 
-		startCurrentTask();
+				internaleProgressListener = new InternalProgressMultiTaskListener();
+				progressDispatcher.fireEvent(EventType.ON_START);
+
+				startCurrentTask();
+			}
+			
+		};
 	}
 	
 	private void startCurrentTask() {
@@ -50,7 +57,7 @@ public class MultiTaskProgressTask extends AbstractProgressTask {
 			IProgressTask currentProgressTask = (IProgressTask)currentTask;
 			logger.debug("Starting Progress task : '" + currentTask.getDescription() + "'.");
 			currentProgressTask.addProgressListener(internaleProgressListener);
-			currentProgressTask.start();
+			currentProgressTask.execute();
 		}
 		else {
 			try {

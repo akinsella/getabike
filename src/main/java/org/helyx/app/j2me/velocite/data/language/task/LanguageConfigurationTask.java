@@ -33,48 +33,54 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 		this.canvas = canvas;
 	}
 	
-	public void execute() {
-		try {
-			progressDispatcher.fireEvent(EventType.ON_START);
-	
-			progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche de config. existante...");
-			String languageSelectedKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
+	public Runnable getRunnable() {
+		return new Runnable() {
+
+			public void run() {
+				try {
+					progressDispatcher.fireEvent(EventType.ON_START);
 			
-			if (languageSelectedKey == null) {
-				logger.info("Chargement des langues ...");
-				IProgressTask progressTask = LanguageManager.refreshDataWithDefaults();
-				progressTask.addProgressListener(new LanguageLoaderProgressListener(progressTask.getProgressDispatcher()));
-				progressTask.addProgressListener(new ProgressAdapter(logger.getCategory()) {
-
-					public void onProgress(String eventMessage, Object eventData) {
-						progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage, eventData);
-					}
-
-					public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
-						progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage, eventData);
-					}
+					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche de config. existante...");
+					String languageSelectedKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
 					
-				});
-				Vector languageList = (Vector)Future.get(progressTask);
-				String defaultLanguageKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_DEFAULT_KEY);
-				Enumeration _enum = languageList.elements();
-				while(_enum.hasMoreElements()) {
-					Language language = (Language)_enum.nextElement();
-					if (language.key.equals(defaultLanguageKey)) {
-						PrefManager.writePref(PrefConstants.LANGUAGE_SELECTED_KEY, language.key);
-					}
-				}
-			}
-			Language selectedLanguage = LanguageManager.findSelectedLanguage();
-			midlet.setLocale(new Locale(selectedLanguage.localeCountry, selectedLanguage.localeLanguage));
+					if (languageSelectedKey == null) {
+						logger.info("Chargement des langues ...");
+						IProgressTask progressTask = LanguageManager.refreshDataWithDefaults();
+						progressTask.addProgressListener(new LanguageLoaderProgressListener(progressTask.getProgressDispatcher()));
+						progressTask.addProgressListener(new ProgressAdapter(logger.getCategory()) {
 
-			progressDispatcher.fireEvent(EventType.ON_SUCCESS);
-		}
-		catch(Throwable t) {
-			logger.warn(t);
-			progressDispatcher.fireEvent(EventType.ON_ERROR, t.getMessage(), t);
-		}
-		
+							public void onProgress(String eventMessage, Object eventData) {
+								progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage, eventData);
+							}
+
+							public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
+								progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage, eventData);
+							}
+							
+						});
+						Vector languageList = (Vector)Future.get(progressTask);
+						String defaultLanguageKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_DEFAULT_KEY);
+						Enumeration _enum = languageList.elements();
+						while(_enum.hasMoreElements()) {
+							Language language = (Language)_enum.nextElement();
+							if (language.key.equals(defaultLanguageKey)) {
+								PrefManager.writePref(PrefConstants.LANGUAGE_SELECTED_KEY, language.key);
+							}
+						}
+					}
+					Language selectedLanguage = LanguageManager.findSelectedLanguage();
+					midlet.setLocale(new Locale(selectedLanguage.localeCountry, selectedLanguage.localeLanguage));
+
+					progressDispatcher.fireEvent(EventType.ON_SUCCESS);
+				}
+				catch(Throwable t) {
+					logger.warn(t);
+					progressDispatcher.fireEvent(EventType.ON_ERROR, t.getMessage(), t);
+				}				
+			}
+			
+		};
 	}
+
 	
 }

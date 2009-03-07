@@ -9,10 +9,14 @@ public interface IProgressTask extends ITask, IProgressListenerManager {
 
 	void cancel();
 
-	void start();
-	
 	void execute();
 	
+	Runnable getRunnable();
+	
 	IProgressDispatcher getProgressDispatcher();
+
+	void interrupt();
+	
+	boolean isAlive();
 
 }

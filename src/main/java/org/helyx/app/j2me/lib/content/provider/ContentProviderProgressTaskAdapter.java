@@ -22,8 +22,15 @@ public class ContentProviderProgressTaskAdapter extends AbstractProgressTask {
 		return "Content provider adapter: '" + contentProvider.getDescription() + "'";
 	}
 
-	public void execute() {
-		contentProvider.loadData();
+	public Runnable getRunnable() {
+		
+		return new Runnable() {
+
+			public void run() {
+				contentProvider.loadData();
+			}
+			
+		};
 	}
 	
 }

@@ -30,15 +30,23 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		this.view = view;
 	}
 	
-	public void execute() {
-		try {
-			AppStartProgressTask.this.progressDispatcher.fireEvent(EventType.ON_START);			
-			executeStartUpTasks();
-		}
-		catch(Throwable t) {
-			AppStartProgressTask.this.progressDispatcher.fireEvent(EventType.ON_ERROR, t.getMessage(), t);			
-		}
+	public Runnable getRunnable() {
+		return new Runnable() {
+		
+			public void run() {
+				try {
+					AppStartProgressTask.this.progressDispatcher.fireEvent(EventType.ON_START);			
+					executeStartUpTasks();
+				}
+				catch(Throwable t) {
+					AppStartProgressTask.this.progressDispatcher.fireEvent(EventType.ON_ERROR, t.getMessage(), t);			
+				}
+			}
+		
+		};
 	}
+
+	
 	
 	private void executeStartUpTasks() {
 		boolean applicationDataCleanUpNeeded = PrefManager.readPrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED);
@@ -132,7 +140,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 			}
 			
 		});
-		progressTask.start();
+		progressTask.execute();
 	}
 	
 	private  void configureLanguages() {
@@ -153,7 +161,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 			}
 
 		});
-		progressTask.start();
+		progressTask.execute();
 	}
 	
 	private void configureSoftKeys() {
@@ -174,7 +182,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 			}
 
 		});
-		progressTask.start();
+		progressTask.execute();
 	}
 	
 	private void onSuccess() {

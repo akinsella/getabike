@@ -201,7 +201,7 @@ public class StationDetailsView extends AbstractView {
 				}
 
 			});
-			progressTask.start();
+			progressTask.execute();
 			
 			progressTask.addProgressListener(new ProgressAdapter(logger.getCategory()) {
 

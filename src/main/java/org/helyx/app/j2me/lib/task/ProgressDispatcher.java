@@ -51,8 +51,13 @@ public class ProgressDispatcher implements IProgressDispatcher {
 		int size = progressListenerList.size();
 		
 		for (int i = 0 ; i < size ; i++) {
-			ProgressListener progressListener = (ProgressListener)progressListenerList.elementAt(i);
-			progressListener.onEvent(eventType, eventMessage, eventData);
+			try {
+				ProgressListener progressListener = (ProgressListener)progressListenerList.elementAt(i);
+				progressListener.onEvent(eventType, eventMessage, eventData);
+			}
+			catch(Throwable t) {
+				logger.warn(t);
+			}
 		}
 	}
 

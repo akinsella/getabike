@@ -3,20 +3,20 @@ package org.helyx.app.j2me.velocite.data.language.manager;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
-import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
-import org.helyx.app.j2me.lib.content.provider.IContentProvider;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.provider.DefaultLanguageContentProvider;
 import org.helyx.app.j2me.velocite.data.language.service.LanguagePersistenceService;
 import org.helyx.app.j2me.velocite.ui.view.LanguageListView;
+import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
+import org.helyx.helyx4me.content.accessor.IContentAccessor;
+import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
+import org.helyx.helyx4me.content.provider.IContentProvider;
+import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.task.IProgressTask;
+import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class LanguageManager {
 

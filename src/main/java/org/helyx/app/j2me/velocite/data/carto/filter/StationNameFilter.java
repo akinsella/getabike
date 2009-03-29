@@ -3,9 +3,9 @@ package org.helyx.app.j2me.velocite.data.carto.filter;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import org.helyx.app.j2me.lib.filter.IRecordFilter;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
+import org.helyx.helyx4me.filter.IRecordFilter;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class StationNameFilter implements IRecordFilter {
 

@@ -1,8 +1,8 @@
 package org.helyx.app.j2me.velocite.data.carto.provider;
 
-import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.DefaultStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
+import org.helyx.helyx4me.content.provider.AbstractContentProvider;
 
 public abstract class AbstractStationContentProvider extends AbstractContentProvider {
 

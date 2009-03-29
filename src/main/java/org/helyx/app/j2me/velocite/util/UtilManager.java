@@ -1,14 +1,14 @@
 package org.helyx.app.j2me.velocite.util;
 
-import org.helyx.app.j2me.lib.logger.Logger; 
-import org.helyx.app.j2me.lib.logger.LoggerManager;
-import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
-import org.helyx.app.j2me.lib.ui.view.support.dialog.AbstractDialogResultCallback;
-import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogResultConstants;
-import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
-import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogView;
 import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.helyx4me.ui.view.support.dialog.AbstractDialogResultCallback;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogResultConstants;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerManager;
 
 public class UtilManager {
 

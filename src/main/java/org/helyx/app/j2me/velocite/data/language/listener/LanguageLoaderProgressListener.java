@@ -2,17 +2,17 @@ package org.helyx.app.j2me.velocite.data.language.listener;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.sort.FastQuickSort;
-import org.helyx.app.j2me.lib.task.IProgressDispatcher;
-import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.velocite.data.language.LanguageConstants;
 import org.helyx.app.j2me.velocite.data.language.comparator.LanguageNameComparator;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.service.ILanguagePersistenceService;
 import org.helyx.app.j2me.velocite.data.language.service.LanguagePersistenceService;
+import org.helyx.helyx4me.sort.FastQuickSort;
+import org.helyx.helyx4me.task.EventType;
+import org.helyx.helyx4me.task.IProgressDispatcher;
+import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class LanguageLoaderProgressListener extends ProgressAdapter {
 

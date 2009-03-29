@@ -1,20 +1,19 @@
 package org.helyx.app.j2me.velocite.task;
 
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.task.AbstractProgressTask;
-import org.helyx.app.j2me.lib.task.EventType;
-import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.ui.view.AbstractView;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.velocite.data.language.task.LanguageConfigurationTask;
-import org.helyx.app.j2me.velocite.midlet.VelociteMIDlet;
+import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.task.AbstractProgressTask;
+import org.helyx.helyx4me.task.EventType;
+import org.helyx.helyx4me.task.IProgressTask;
+import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class AppStartProgressTask extends AbstractProgressTask {
 

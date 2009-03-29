@@ -3,11 +3,11 @@ package org.helyx.app.j2me.velocite.ui.view;
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
 
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.ui.displayable.support.AbstractTextBox;
+import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.ui.displayable.support.AbstractTextBox;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class StationSearchView extends AbstractTextBox {
 	

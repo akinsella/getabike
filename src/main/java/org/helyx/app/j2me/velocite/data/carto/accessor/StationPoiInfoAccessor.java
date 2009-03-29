@@ -1,10 +1,10 @@
 package org.helyx.app.j2me.velocite.data.carto.accessor;
 
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.map.google.POIInfoAccessor;
-import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.helyx4me.localization.Point;
+import org.helyx.helyx4me.map.google.POIInfoAccessor;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class StationPoiInfoAccessor implements POIInfoAccessor {
 

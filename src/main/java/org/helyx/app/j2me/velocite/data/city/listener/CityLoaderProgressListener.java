@@ -2,17 +2,17 @@ package org.helyx.app.j2me.velocite.data.city.listener;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.sort.FastQuickSort;
-import org.helyx.app.j2me.lib.task.EventType;
-import org.helyx.app.j2me.lib.task.IProgressDispatcher;
-import org.helyx.app.j2me.lib.task.ProgressAdapter;
 import org.helyx.app.j2me.velocite.data.city.CityConstants;
 import org.helyx.app.j2me.velocite.data.city.comparator.CityNameComparator;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.service.ICityPersistenceService;
+import org.helyx.helyx4me.sort.FastQuickSort;
+import org.helyx.helyx4me.task.EventType;
+import org.helyx.helyx4me.task.IProgressDispatcher;
+import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class CityLoaderProgressListener extends ProgressAdapter {
 

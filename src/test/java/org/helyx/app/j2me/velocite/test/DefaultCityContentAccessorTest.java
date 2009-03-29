@@ -5,12 +5,12 @@ import java.io.InputStream;
 
 import junit.framework.TestCase;
 
-import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
-import org.helyx.app.j2me.lib.content.accessor.ContentAccessorException;
-import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.stream.InputStreamProvider;
+import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
+import org.helyx.helyx4me.content.accessor.ContentAccessorException;
+import org.helyx.helyx4me.content.accessor.IContentAccessor;
+import org.helyx.helyx4me.stream.InputStreamProvider;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class DefaultCityContentAccessorTest extends TestCase {
 

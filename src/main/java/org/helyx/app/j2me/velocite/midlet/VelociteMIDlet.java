@@ -1,22 +1,22 @@
 package org.helyx.app.j2me.velocite.midlet;
 
-import org.helyx.app.j2me.lib.constant.BooleanConstants;
-import org.helyx.app.j2me.lib.i18n.Locale;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.logger.LoggerManager;
-import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.ui.view.AbstractView;
-import org.helyx.app.j2me.lib.ui.view.support.dialog.AbstractDialogResultCallback;
-import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogUtil;
-import org.helyx.app.j2me.lib.ui.view.support.dialog.DialogView;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.task.AppStartProgressTask;
 import org.helyx.app.j2me.velocite.ui.view.MenuView;
 import org.helyx.app.j2me.velocite.ui.view.SplashScreenView;
+import org.helyx.helyx4me.constant.BooleanConstants;
+import org.helyx.helyx4me.i18n.Locale;
+import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.task.IProgressTask;
+import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.helyx4me.ui.view.support.dialog.AbstractDialogResultCallback;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
+import org.helyx.log4me.LoggerManager;
 
 
 public class VelociteMIDlet extends AbstractMIDlet {

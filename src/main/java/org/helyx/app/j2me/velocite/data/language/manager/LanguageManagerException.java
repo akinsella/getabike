@@ -1,6 +1,6 @@
 package org.helyx.app.j2me.velocite.data.language.manager;
 
-import org.helyx.app.j2me.lib.exception.NestedException;
+import org.helyx.helyx4me.exception.NestedException;
 
 public class LanguageManagerException extends NestedException {
 

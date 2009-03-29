@@ -2,17 +2,18 @@ package org.helyx.app.j2me.lib.midlet;
 
 import javax.microedition.midlet.MIDletStateChangeException;
 
-import org.helyx.app.j2me.lib.constant.BooleanConstants;
-import org.helyx.app.j2me.lib.constant.EncodingConstants;
-import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.logger.appender.ConsoleAppender;
-import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.stream.InputStreamProvider;
-import org.helyx.app.j2me.lib.ui.view.support.xml.XmlView;
-import org.helyx.app.j2me.lib.xml.dom.DomUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.helyx4me.constant.BooleanConstants;
+import org.helyx.helyx4me.constant.EncodingConstants;
+import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
+import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.stream.InputStreamProvider;
+import org.helyx.helyx4me.ui.view.support.xml.XmlView;
+import org.helyx.helyx4me.xml.dom.DomUtil;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
+import org.helyx.log4me.appender.ConsoleAppender;
 import org.kxml2.kdom.Document;
 
 public class XmlMIDlet extends AbstractMIDlet {

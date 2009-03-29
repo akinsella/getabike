@@ -3,17 +3,17 @@ package org.helyx.app.j2me.velocite.ui.view;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.ui.geometry.Rectangle;
-import org.helyx.app.j2me.lib.ui.graphics.Color;
-import org.helyx.app.j2me.lib.ui.theme.ThemeConstants;
-import org.helyx.app.j2me.lib.ui.util.FontUtil;
-import org.helyx.app.j2me.lib.ui.util.ImageUtil;
-import org.helyx.app.j2me.lib.ui.view.AbstractView;
+import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.task.IProgressTask;
+import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.helyx4me.ui.geometry.Rectangle;
+import org.helyx.helyx4me.ui.graphics.Color;
+import org.helyx.helyx4me.ui.theme.ThemeConstants;
+import org.helyx.helyx4me.ui.util.FontUtil;
+import org.helyx.helyx4me.ui.util.ImageUtil;
+import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class SplashScreenView extends AbstractView {
 

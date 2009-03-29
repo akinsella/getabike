@@ -1,14 +1,5 @@
 package org.helyx.app.j2me.velocite.data.carto.manager;
 
-import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
-import org.helyx.app.j2me.lib.content.provider.IContentProvider;
-import org.helyx.app.j2me.lib.content.provider.IContentProviderFactory;
-import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderFactoryException;
-import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderFactoryNotFoundExcepton;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationDistanceFilter;
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
@@ -26,6 +17,15 @@ import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.ui.view.DistanceStationItemRenderer;
 import org.helyx.app.j2me.velocite.ui.view.StationListView;
+import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
+import org.helyx.helyx4me.content.provider.IContentProvider;
+import org.helyx.helyx4me.content.provider.IContentProviderFactory;
+import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryException;
+import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryNotFoundExcepton;
+import org.helyx.helyx4me.task.IProgressTask;
+import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class CartoManager {
 

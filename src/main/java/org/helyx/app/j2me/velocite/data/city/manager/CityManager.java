@@ -3,22 +3,22 @@ package org.helyx.app.j2me.velocite.data.city.manager;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.content.accessor.HttpContentAccessor;
-import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
-import org.helyx.app.j2me.lib.content.provider.IContentProvider;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
-import org.helyx.app.j2me.lib.ui.displayable.callback.BasicReturnCallback;
-import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
 import org.helyx.app.j2me.velocite.ui.view.CityListView;
+import org.helyx.helyx4me.content.accessor.HttpContentAccessor;
+import org.helyx.helyx4me.content.accessor.IContentAccessor;
+import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
+import org.helyx.helyx4me.content.provider.IContentProvider;
+import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.task.IProgressTask;
+import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
+import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class CityManager {
 

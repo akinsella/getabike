@@ -5,17 +5,17 @@ import java.util.Vector;
 
 import junit.framework.TestCase;
 
-import org.helyx.app.j2me.lib.concurrent.Future;
-import org.helyx.app.j2me.lib.content.accessor.ClasspathContentAccessor;
-import org.helyx.app.j2me.lib.content.accessor.ContentAccessorException;
-import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.content.provider.ContentProviderProgressTaskAdapter;
-import org.helyx.app.j2me.lib.content.provider.IContentProvider;
-import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderException;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
+import org.helyx.helyx4me.concurrent.Future;
+import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
+import org.helyx.helyx4me.content.accessor.ContentAccessorException;
+import org.helyx.helyx4me.content.accessor.IContentAccessor;
+import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
+import org.helyx.helyx4me.content.provider.IContentProvider;
+import org.helyx.helyx4me.content.provider.exception.ContentProviderException;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class DefaultCityContentProviderTest extends TestCase {
 

@@ -1,5 +1,7 @@
 package org.helyx.app.j2me.velocite.data.carto.domain;
 
+import org.helyx.helyx4me.localization.Point;
+
 
 
 public class Station {

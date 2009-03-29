@@ -4,11 +4,11 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.serializer.BasicObjectSerializer;
-import org.helyx.app.j2me.lib.serializer.SerializerException;
 import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
+import org.helyx.helyx4me.serializer.BasicObjectSerializer;
+import org.helyx.helyx4me.serializer.SerializerException;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class QuartierSerializer implements BasicObjectSerializer {
 

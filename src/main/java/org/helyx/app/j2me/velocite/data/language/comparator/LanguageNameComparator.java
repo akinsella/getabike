@@ -1,9 +1,9 @@
 package org.helyx.app.j2me.velocite.data.language.comparator;
 
-import org.helyx.app.j2me.lib.comparator.Comparator;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
+import org.helyx.helyx4me.comparator.Comparator;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 
 public class LanguageNameComparator implements Comparator {

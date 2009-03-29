@@ -5,20 +5,20 @@ import java.util.Vector;
 
 import javax.microedition.lcdui.Canvas;
 
-import org.helyx.app.j2me.lib.concurrent.Future;
-import org.helyx.app.j2me.lib.i18n.Locale;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.task.AbstractProgressTask;
-import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.task.ProgressAdapter;
-import org.helyx.app.j2me.lib.task.EventType;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.listener.LanguageLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
+import org.helyx.helyx4me.concurrent.Future;
+import org.helyx.helyx4me.i18n.Locale;
+import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.task.AbstractProgressTask;
+import org.helyx.helyx4me.task.EventType;
+import org.helyx.helyx4me.task.IProgressTask;
+import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class LanguageConfigurationTask extends AbstractProgressTask {
 	

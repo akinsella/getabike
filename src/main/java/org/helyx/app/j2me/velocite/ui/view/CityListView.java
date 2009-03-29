@@ -3,18 +3,6 @@ package org.helyx.app.j2me.velocite.ui.view;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.action.IAction;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.manager.TaskManager;
-import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.task.IProgressTask;
-import org.helyx.app.j2me.lib.ui.displayable.AbstractDisplayable;
-import org.helyx.app.j2me.lib.ui.displayable.callback.ProgressTaskReturnCallback;
-import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
-import org.helyx.app.j2me.lib.ui.widget.Command;
-import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
-import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.app.manager.VeloCiteManager;
 import org.helyx.app.j2me.velocite.data.carto.listener.StoreStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
@@ -22,6 +10,18 @@ import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
+import org.helyx.helyx4me.action.IAction;
+import org.helyx.helyx4me.manager.TaskManager;
+import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.task.IProgressTask;
+import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.helyx4me.ui.displayable.callback.ProgressTaskReturnCallback;
+import org.helyx.helyx4me.ui.view.support.MenuListView;
+import org.helyx.helyx4me.ui.widget.Command;
+import org.helyx.helyx4me.ui.widget.menu.Menu;
+import org.helyx.helyx4me.ui.widget.menu.MenuItem;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class CityListView extends MenuListView {
 	

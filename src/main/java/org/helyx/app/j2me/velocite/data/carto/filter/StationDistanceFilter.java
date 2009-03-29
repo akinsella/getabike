@@ -1,11 +1,10 @@
 package org.helyx.app.j2me.velocite.data.carto.filter;
 
-import org.helyx.app.j2me.lib.filter.IObjectFilter;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.math.DistanceUtil;
-import org.helyx.app.j2me.lib.math.MathUtil;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.helyx4me.filter.IObjectFilter;
+import org.helyx.helyx4me.math.DistanceUtil;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class StationDistanceFilter implements IObjectFilter {
 	

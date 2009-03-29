@@ -2,12 +2,12 @@ package org.helyx.app.j2me.velocite.data.carto.serializer;
 
 import java.io.IOException;
 
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.serializer.AbstractObjectSerializer;
-import org.helyx.app.j2me.lib.serializer.SerializerException;
-import org.helyx.app.j2me.velocite.data.carto.domain.Point;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.helyx4me.localization.Point;
+import org.helyx.helyx4me.serializer.AbstractObjectSerializer;
+import org.helyx.helyx4me.serializer.SerializerException;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class StationSerializer extends AbstractObjectSerializer {
 	

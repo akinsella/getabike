@@ -2,9 +2,9 @@ package org.helyx.app.j2me.velocite.data.carto.service;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.filter.IRecordFilter;
-import org.helyx.app.j2me.lib.rms.MultiRecordEnumeration;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.helyx4me.filter.IRecordFilter;
+import org.helyx.helyx4me.rms.MultiRecordEnumeration;
 
 public interface IStationPersistenceService {
 	

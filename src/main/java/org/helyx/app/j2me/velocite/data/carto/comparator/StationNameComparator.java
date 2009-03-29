@@ -1,7 +1,7 @@
 package org.helyx.app.j2me.velocite.data.carto.comparator;
 
-import org.helyx.app.j2me.lib.comparator.Comparator;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.helyx4me.comparator.Comparator;
 
 
 public class StationNameComparator implements Comparator {

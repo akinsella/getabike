@@ -3,19 +3,18 @@ package org.helyx.app.j2me.velocite.ui.view;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.lib.action.IAction;
-import org.helyx.app.j2me.lib.i18n.Locale;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.midlet.AbstractMIDlet;
-import org.helyx.app.j2me.lib.ui.displayable.callback.IReturnCallback;
-import org.helyx.app.j2me.lib.ui.view.support.MenuListView;
-import org.helyx.app.j2me.lib.ui.widget.Command;
-import org.helyx.app.j2me.lib.ui.widget.menu.Menu;
-import org.helyx.app.j2me.lib.ui.widget.menu.MenuItem;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManagerException;
+import org.helyx.helyx4me.action.IAction;
+import org.helyx.helyx4me.i18n.Locale;
+import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.ui.view.support.MenuListView;
+import org.helyx.helyx4me.ui.widget.Command;
+import org.helyx.helyx4me.ui.widget.menu.Menu;
+import org.helyx.helyx4me.ui.widget.menu.MenuItem;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class LanguageListView extends MenuListView {
 	

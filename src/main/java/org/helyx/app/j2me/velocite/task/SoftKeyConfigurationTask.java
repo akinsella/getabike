@@ -2,15 +2,15 @@ package org.helyx.app.j2me.velocite.task;
 
 import javax.microedition.lcdui.Canvas;
 
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.pref.PrefManager;
-import org.helyx.app.j2me.lib.task.AbstractProgressTask;
-import org.helyx.app.j2me.lib.task.EventType;
-import org.helyx.app.j2me.lib.ui.util.KeyMap;
-import org.helyx.app.j2me.lib.ui.util.KeyMapConfig;
-import org.helyx.app.j2me.lib.ui.util.KeyUtil;
 import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.task.AbstractProgressTask;
+import org.helyx.helyx4me.task.EventType;
+import org.helyx.helyx4me.ui.util.KeyMap;
+import org.helyx.helyx4me.ui.util.KeyMapConfig;
+import org.helyx.helyx4me.ui.util.KeyUtil;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class SoftKeyConfigurationTask extends AbstractProgressTask {
 	

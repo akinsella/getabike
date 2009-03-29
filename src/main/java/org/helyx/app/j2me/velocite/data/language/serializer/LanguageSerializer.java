@@ -2,11 +2,11 @@ package org.helyx.app.j2me.velocite.data.language.serializer;
 
 import java.io.IOException;
 
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.serializer.AbstractObjectSerializer;
-import org.helyx.app.j2me.lib.serializer.SerializerException;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
+import org.helyx.helyx4me.serializer.AbstractObjectSerializer;
+import org.helyx.helyx4me.serializer.SerializerException;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 
 public class LanguageSerializer extends AbstractObjectSerializer {
 

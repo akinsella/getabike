@@ -3,19 +3,19 @@ package org.helyx.app.j2me.velocite.data.carto.provider.details;
 import java.io.InputStream;
 import java.util.Date;
 
-import org.helyx.app.j2me.lib.constant.EncodingConstants;
-import org.helyx.app.j2me.lib.content.accessor.IContentAccessor;
-import org.helyx.app.j2me.lib.content.provider.AbstractContentProvider;
-import org.helyx.app.j2me.lib.content.provider.exception.ContentProviderException;
-import org.helyx.app.j2me.lib.logger.Logger;
-import org.helyx.app.j2me.lib.logger.LoggerFactory;
-import org.helyx.app.j2me.lib.stream.InputStreamProvider;
-import org.helyx.app.j2me.lib.task.EventType;
-import org.helyx.app.j2me.lib.xml.xpp.XppUtil;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.basics4me.io.BufferedInputStream;
+import org.helyx.helyx4me.constant.EncodingConstants;
+import org.helyx.helyx4me.content.accessor.IContentAccessor;
+import org.helyx.helyx4me.content.provider.AbstractContentProvider;
+import org.helyx.helyx4me.content.provider.exception.ContentProviderException;
+import org.helyx.helyx4me.stream.InputStreamProvider;
+import org.helyx.helyx4me.task.EventType;
+import org.helyx.helyx4me.xml.xpp.XppUtil;
+import org.helyx.log4me.Logger;
+import org.helyx.log4me.LoggerFactory;
 import org.xmlpull.v1.XmlPullParser;
 
 

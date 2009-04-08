@@ -70,12 +70,12 @@
 
 	<repositories>
 		<repository>
-			<id>Helyx.org Manual</id>
+			<id>helyx.org-repo-manual</id>
 			<url>http://maven.helyx.org/repository/manual</url>
 		</repository>
 		<repository>
-			<id>Helyx.org Install</id>
-			<url>http://maven.helyx.org/repository/install</url>
+			<id>helyx.org-repo-release</id>
+			<url>http://maven.helyx.org/repository/release</url>
 		</repository>
 	</repositories>
 

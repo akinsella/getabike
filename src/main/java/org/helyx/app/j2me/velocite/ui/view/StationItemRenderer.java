@@ -9,8 +9,8 @@ import org.helyx.helyx4me.ui.theme.ThemeConstants;
 import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
 import org.helyx.helyx4me.ui.view.support.list.ICellRenderer;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class StationItemRenderer implements ICellRenderer {
 

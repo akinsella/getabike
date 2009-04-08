@@ -27,8 +27,8 @@ import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class MenuView extends AbstractView {
 	

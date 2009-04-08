@@ -9,8 +9,8 @@ import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
 import org.helyx.helyx4me.content.accessor.ContentAccessorException;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.stream.InputStreamProvider;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class DefaultCityContentAccessorTest extends TestCase {
 

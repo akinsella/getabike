@@ -1,8 +1,8 @@
 package org.helyx.app.j2me.velocite.data.carto.util;
 
 import org.helyx.helyx4me.localization.Point;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class LocalizationUtil {
 	

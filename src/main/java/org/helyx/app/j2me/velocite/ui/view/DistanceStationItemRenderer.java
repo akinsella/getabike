@@ -7,8 +7,8 @@ import org.helyx.helyx4me.math.DistanceUtil;
 import org.helyx.helyx4me.ui.geometry.Rectangle;
 import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class DistanceStationItemRenderer extends StationItemRenderer {
 

@@ -9,8 +9,8 @@ import org.helyx.helyx4me.ui.view.support.list.ArrayElementProvider;
 import org.helyx.helyx4me.ui.view.support.list.FilterableElementProvider;
 import org.helyx.helyx4me.ui.view.support.list.IElementProvider;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class UIStationLoaderProgressListener extends ProgressAdapter {
 

@@ -8,8 +8,8 @@ import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.content.provider.IContentProviderFactory;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryException;
 import org.helyx.helyx4me.text.StringFormat;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class DefaultStationDetailsContentProviderFactory implements IContentProviderFactory {
 

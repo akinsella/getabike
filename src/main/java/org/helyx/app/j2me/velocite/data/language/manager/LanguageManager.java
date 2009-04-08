@@ -15,8 +15,8 @@ import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class LanguageManager {
 

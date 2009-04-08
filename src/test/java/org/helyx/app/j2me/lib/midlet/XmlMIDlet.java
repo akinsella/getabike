@@ -11,9 +11,9 @@ import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.stream.InputStreamProvider;
 import org.helyx.helyx4me.ui.view.support.xml.XmlView;
 import org.helyx.helyx4me.xml.dom.DomUtil;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
-import org.helyx.log4me.appender.ConsoleAppender;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
+import org.helyx.logging4me.appender.ConsoleAppender;
 import org.kxml2.kdom.Document;
 
 public class XmlMIDlet extends AbstractMIDlet {

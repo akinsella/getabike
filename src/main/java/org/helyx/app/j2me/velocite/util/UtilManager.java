@@ -7,8 +7,8 @@ import org.helyx.helyx4me.ui.view.support.dialog.AbstractDialogResultCallback;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogResultConstants;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerManager;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerManager;
 
 public class UtilManager {
 

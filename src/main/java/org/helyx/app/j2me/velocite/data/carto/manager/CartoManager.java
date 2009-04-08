@@ -24,8 +24,8 @@ import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryExcep
 import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryNotFoundExcepton;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class CartoManager {
 

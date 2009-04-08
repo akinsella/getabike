@@ -13,8 +13,8 @@ import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.util.ImageUtil;
 import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.widget.Command;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class AboutView extends AbstractView {
 

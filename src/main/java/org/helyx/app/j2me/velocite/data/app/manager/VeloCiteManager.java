@@ -2,8 +2,8 @@ package org.helyx.app.j2me.velocite.data.app.manager;
 
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class VeloCiteManager {
 	

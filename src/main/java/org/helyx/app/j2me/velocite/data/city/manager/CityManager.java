@@ -17,8 +17,8 @@ import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class CityManager {
 

@@ -9,8 +9,8 @@ import org.helyx.helyx4me.filter.IRecordFilter;
 import org.helyx.helyx4me.rms.IMultiRecordDao;
 import org.helyx.helyx4me.rms.MultiRecordDao;
 import org.helyx.helyx4me.rms.MultiRecordEnumeration;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class CityPersistenceService implements ICityPersistenceService {
 	

@@ -14,8 +14,8 @@ import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderException;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class DefaultCityContentProviderTest extends TestCase {
 

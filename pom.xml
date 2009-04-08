@@ -396,8 +396,8 @@
 
 		<dependency>
 			<groupId>org.helyx</groupId>
-			<artifactId>log4me</artifactId>
-			<version>1.0.0</version>
+			<artifactId>logging4me</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>

@@ -14,8 +14,8 @@ import org.helyx.helyx4me.stream.InputStreamProvider;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.xml.xpp.XppAttributeProcessor;
 import org.helyx.helyx4me.xml.xpp.XppUtil;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 import org.xmlpull.v1.XmlPullParser;
 
 public class VeloPlusStationContentProvider extends AbstractStationContentProvider {

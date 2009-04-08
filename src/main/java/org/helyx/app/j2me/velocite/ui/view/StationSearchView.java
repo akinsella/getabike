@@ -6,8 +6,8 @@ import javax.microedition.lcdui.Displayable;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.ui.displayable.support.AbstractTextBox;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class StationSearchView extends AbstractTextBox {
 	

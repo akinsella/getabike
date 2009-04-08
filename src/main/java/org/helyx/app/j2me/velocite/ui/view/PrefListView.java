@@ -15,9 +15,9 @@ import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.view.support.PrefBaseListView;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
-import org.helyx.log4me.LoggerManager;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
+import org.helyx.logging4me.LoggerManager;
 
 public class PrefListView extends PrefBaseListView {
 

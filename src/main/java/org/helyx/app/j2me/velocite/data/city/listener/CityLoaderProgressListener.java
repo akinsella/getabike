@@ -11,8 +11,8 @@ import org.helyx.helyx4me.sort.FastQuickSort;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.IProgressDispatcher;
 import org.helyx.helyx4me.task.ProgressAdapter;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class CityLoaderProgressListener extends ProgressAdapter {
 

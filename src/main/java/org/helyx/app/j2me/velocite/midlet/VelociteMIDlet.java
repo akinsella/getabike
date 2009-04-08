@@ -14,9 +14,9 @@ import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.dialog.AbstractDialogResultCallback;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
-import org.helyx.log4me.LoggerManager;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
+import org.helyx.logging4me.LoggerManager;
 
 
 public class VelociteMIDlet extends AbstractMIDlet {

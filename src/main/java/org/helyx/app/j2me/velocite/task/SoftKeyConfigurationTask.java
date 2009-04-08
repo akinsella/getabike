@@ -9,8 +9,8 @@ import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.ui.util.KeyMap;
 import org.helyx.helyx4me.ui.util.KeyMapConfig;
 import org.helyx.helyx4me.ui.util.KeyUtil;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class SoftKeyConfigurationTask extends AbstractProgressTask {
 	

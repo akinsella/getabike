@@ -6,8 +6,8 @@ import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.helyx4me.localization.Point;
 import org.helyx.helyx4me.serializer.AbstractObjectSerializer;
 import org.helyx.helyx4me.serializer.SerializerException;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class StationSerializer extends AbstractObjectSerializer {
 	

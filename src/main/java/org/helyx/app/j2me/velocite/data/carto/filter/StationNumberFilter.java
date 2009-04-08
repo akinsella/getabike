@@ -4,8 +4,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 
 import org.helyx.helyx4me.filter.IRecordFilter;
-import org.helyx.log4me.Logger;
-import org.helyx.log4me.LoggerFactory;
+import org.helyx.logging4me.Logger;
+import org.helyx.logging4me.LoggerFactory;
 
 public class StationNumberFilter implements IRecordFilter {
 

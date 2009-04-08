@@ -37,19 +37,27 @@
 		<connection>scm:svn:https://helyx.devguard.com/svn/velocite/trunk</connection>
 		<developerConnection>scm:svn:https://helyx.devguard.com/svn/velocite/trunk</developerConnection>
 		<tag>HEAD</tag>
-		<url>https://helyx.devguard.com/wsvn/listing.php?repname=velocite&amp;path=%2Ftrunk%2F#_trunk_</url>
+		<url>https://helyx.devguard.com/wsvn/velocite/trunk/</url>
 	</scm>
 
 	<distributionManagement>
 		<repository>
-			<id>Helyx.org FTP Repository</id>
-			<url>ftp://ftp.helyx.org/maven/repository/install</url>
+			<id>helyx.org-repo-release</id>
+			<url>ftp://ftp.helyx.org/maven/repository/release</url>
 		</repository>
+		<snapshotRepository>
+			<id>helyx.org-repo-snapshot</id>
+			<url>ftp://ftp.helyx.org/maven/repository/snapshot</url>
+		</snapshotRepository>
+		<site>
+			<id>helyx.org-site-velocite</id>
+			<url>ftp://ftp.helyx.org/site/velocite</url>
+		</site>
 	</distributionManagement>
 
 	<issueManagement>
-		<system>bugzilla</system>
-		<url>http://r13491.ovh.net/bugzilla/</url>
+		<system>mantis</system>
+		<url>http://issues.helyx.org</url>
 	</issueManagement>
 
 	<developers>
@@ -99,8 +107,16 @@
 	</properties>
 
 	<build>
-		
+
 		<finalName>VeloCite</finalName>
+	
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>1.0-alpha-6</version>
+			</extension>
+		</extensions>
 	
 		<plugins>
 			<plugin>

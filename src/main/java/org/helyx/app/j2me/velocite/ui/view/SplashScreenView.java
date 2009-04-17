@@ -90,7 +90,7 @@ public class SplashScreenView extends AbstractView {
 	}
 
 	public void followProgressTask(IProgressTask progressTask) {
-		progressTask.addProgressListener(new ProgressAdapter(logger.getCategory()) {
+		progressTask.addProgressListener(new ProgressAdapter(logger.getCategory().getName()) {
 
 			public void onStart(String eventMessage, Object eventData) {
 				viewCanvas.repaint();

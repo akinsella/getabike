@@ -25,7 +25,7 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 	private IProgressDispatcher progressDispatcher;
 
 	public LanguageLoaderProgressListener(IProgressDispatcher progressDispatcher) {
-		super(logger.getCategory());
+		super(logger.getCategory().getName());
 		this.progressDispatcher = progressDispatcher;
 	}
 

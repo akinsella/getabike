@@ -124,7 +124,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		onProgress("Chargement des villes ...");
 		IProgressTask progressTask = CityManager.createUpdateCitiesTask();
 		progressTask.addProgressListener(new CityLoaderProgressListener(progressTask.getProgressDispatcher()));
-		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory()) {
+		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory().getName()) {
 
 			public void onSuccess(String eventMessage, Object eventData) {
 				configureLanguages();
@@ -145,7 +145,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	private  void configureLanguages() {
 		onProgress("Chargement des langues ...");
 		IProgressTask progressTask = new LanguageConfigurationTask(view.getMidlet(), view.getViewCanvas());
-		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory()) {
+		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory().getName()) {
 
 			public void onSuccess(String eventMessage, Object eventData) {
 				configureSoftKeys();
@@ -166,7 +166,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	private void configureSoftKeys() {
 		onProgress("Configuration des touches ...");
 		IProgressTask progressTask = new SoftKeyConfigurationTask(view.getViewCanvas());
-		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory()) {
+		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory().getName()) {
 
 			public void onSuccess(String eventMessage, Object eventData) {
 				AppStartProgressTask.this.onSuccess();

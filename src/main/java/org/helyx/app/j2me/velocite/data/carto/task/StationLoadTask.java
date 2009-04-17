@@ -22,7 +22,7 @@ public class StationLoadTask extends AbstractProgressTask {
 	private StationListView stationListView;
 		
 	public StationLoadTask(StationListView stationListView, IRecordFilter recordFilter) {
-		super(logger.getCategory());
+		super(logger.getCategory().getName());
 		this.stationListView = stationListView;
 		this.recordFilter = recordFilter;
 	}

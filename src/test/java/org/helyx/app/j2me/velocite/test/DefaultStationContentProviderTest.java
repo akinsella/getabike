@@ -35,7 +35,7 @@ public class DefaultStationContentProviderTest extends TestCase {
 		
 		final Vector stationList = new Vector();
 		
-		stationContentLoader.addProgressListener(new ProgressAdapter(logger.getCategory()) {
+		stationContentLoader.addProgressListener(new ProgressAdapter(logger.getCategory().getName()) {
 			
 			public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
 				if (eventType == CartoConstants.ON_STATION_LOADED) {

@@ -47,7 +47,7 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 						logger.info("Chargement des langues ...");
 						IProgressTask progressTask = LanguageManager.refreshDataWithDefaults();
 						progressTask.addProgressListener(new LanguageLoaderProgressListener(progressTask.getProgressDispatcher()));
-						progressTask.addProgressListener(new ProgressAdapter(logger.getCategory()) {
+						progressTask.addProgressListener(new ProgressAdapter(logger.getCategory().getName()) {
 
 							public void onProgress(String eventMessage, Object eventData) {
 								progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage, eventData);

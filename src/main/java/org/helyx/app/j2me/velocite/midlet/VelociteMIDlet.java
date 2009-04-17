@@ -41,7 +41,7 @@ public class VelociteMIDlet extends AbstractMIDlet {
 		
 		IProgressTask appStartProgressTask = new AppStartProgressTask(splashScreenView);
 		
-		appStartProgressTask.addProgressListener(new ProgressAdapter(VelociteMIDlet.logger.getCategory()) {
+		appStartProgressTask.addProgressListener(new ProgressAdapter(VelociteMIDlet.logger.getCategory().getName()) {
 
 			public void onSuccess(String eventMessage, Object eventData) {
 				onStartSuccess(splashScreenView);

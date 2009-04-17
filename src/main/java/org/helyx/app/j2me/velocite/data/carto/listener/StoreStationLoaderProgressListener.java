@@ -25,7 +25,7 @@ public class StoreStationLoaderProgressListener extends ProgressAdapter {
 	private IProgressDispatcher progressDispatcher;
 
 	public StoreStationLoaderProgressListener(IProgressDispatcher progressDispatcher) {
-		super(logger.getCategory());
+		super(logger.getCategory().getName());
 		this.progressDispatcher = progressDispatcher;
 		this.stationList = new Vector(4096);
 	}

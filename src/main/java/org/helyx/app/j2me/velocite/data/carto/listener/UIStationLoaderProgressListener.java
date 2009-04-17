@@ -20,12 +20,12 @@ public class UIStationLoaderProgressListener extends ProgressAdapter {
 	private IObjectFilter objectFilter;
 	
 	public UIStationLoaderProgressListener(StationListView stationListView) {
-		super(logger.getCategory());
+		super(logger.getCategory().getName());
 		this.stationListView = stationListView;
 	}
 	
 	public UIStationLoaderProgressListener(StationListView stationListView, IObjectFilter objectFilter) {
-		super(logger.getCategory());
+		super(logger.getCategory().getName());
 		this.stationListView = stationListView;
 		this.objectFilter = objectFilter;
 	}

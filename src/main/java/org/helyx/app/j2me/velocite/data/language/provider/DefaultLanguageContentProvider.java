@@ -17,12 +17,12 @@ import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.xml.xpp.XppAttributeProcessor;
 import org.helyx.helyx4me.xml.xpp.XppUtil;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 import org.xmlpull.v1.XmlPullParser;
 
 public class DefaultLanguageContentProvider extends AbstractContentProvider {
 	
-	private static final Logger logger = LoggerFactory.getLogger("DEFAULT_CITY_CONTENT_PROVIDER");
+	private static final Logger logger = Logger.getLogger("DEFAULT_CITY_CONTENT_PROVIDER");
 
 
 	private static final String LANGUAGES = "languages";

@@ -10,14 +10,16 @@ import org.helyx.helyx4me.content.accessor.ContentAccessorException;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.stream.InputStreamProvider;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+import org.helyx.logging4me.config.BasicConfigurer;
+
 
 public class DefaultCityContentAccessorTest extends TestCase {
 
-	private static final Logger logger = LoggerFactory.getLogger("DEFAULT_CITY_CONTENT_ACCESSOR_TEST");
+	private static final Logger logger = Logger.getLogger("DEFAULT_CITY_CONTENT_ACCESSOR_TEST");
 
 	public DefaultCityContentAccessorTest() {
 		super();
+		new BasicConfigurer().configure();
 	}
  
 	public void testDefaultCityContentAccessor() throws ContentAccessorException, IOException {

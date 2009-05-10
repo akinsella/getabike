@@ -5,11 +5,11 @@ import java.io.IOException;
 
 import org.helyx.helyx4me.filter.IRecordFilter;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class StationNameFilter implements IRecordFilter {
 
-	private static final Logger logger = LoggerFactory.getLogger("STATION_NAME_FILTER_3");
+	private static final Logger logger = Logger.getLogger("STATION_NAME_FILTER_3");
 	
 	private String stationNameFilter;
 	

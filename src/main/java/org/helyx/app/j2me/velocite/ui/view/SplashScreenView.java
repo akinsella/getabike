@@ -13,11 +13,11 @@ import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.util.ImageUtil;
 import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class SplashScreenView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger("SPLASH_SCREEN_VIEW");
+	private static final Logger logger = Logger.getLogger("SPLASH_SCREEN_VIEW");
 	
 	private String label;
 	private Image logoImage;

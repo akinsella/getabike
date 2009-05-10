@@ -7,11 +7,11 @@ import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
 import org.helyx.helyx4me.serializer.AbstractObjectSerializer;
 import org.helyx.helyx4me.serializer.SerializerException;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class CitySerializer extends AbstractObjectSerializer {
 
-	private static final Logger logger = LoggerFactory.getLogger("CITY_SERIALIZER");
+	private static final Logger logger = Logger.getLogger("CITY_SERIALIZER");
 	
 	private static QuartierSerializer quartierSerializer = new QuartierSerializer();
 

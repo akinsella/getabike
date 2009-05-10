@@ -11,12 +11,12 @@ import org.helyx.helyx4me.rms.MultiRecordEnumeration;
 import org.helyx.helyx4me.task.AbstractProgressTask;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 
 public class StationLoadTask extends AbstractProgressTask {
 	
-	private static final Logger logger = LoggerFactory.getLogger("STATION_LOAD_TASK");
+	private static final Logger logger = Logger.getLogger("STATION_LOAD_TASK");
 
 	private IRecordFilter recordFilter;
 	private StationListView stationListView;

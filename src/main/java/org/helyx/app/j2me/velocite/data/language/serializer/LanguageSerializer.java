@@ -6,11 +6,11 @@ import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.helyx4me.serializer.AbstractObjectSerializer;
 import org.helyx.helyx4me.serializer.SerializerException;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class LanguageSerializer extends AbstractObjectSerializer {
 
-	private static final Logger logger = LoggerFactory.getLogger("LANGUAGE_SERIALIZER");
+	private static final Logger logger = Logger.getLogger("LANGUAGE_SERIALIZER");
 
 	public LanguageSerializer() {
 		super();

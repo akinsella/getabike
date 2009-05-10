@@ -25,11 +25,11 @@ import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryNotFo
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class CartoManager {
 
-	private static final Logger logger = LoggerFactory.getLogger("CARTO_MANAGER");
+	private static final Logger logger = Logger.getLogger("CARTO_MANAGER");
 	
 	public static final String VELIB = "VELIB";  // PARIS
 	public static final String VELO_PLUS = "VELO_PLUS";  // ORLEANS

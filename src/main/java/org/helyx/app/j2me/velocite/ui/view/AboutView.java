@@ -14,11 +14,11 @@ import org.helyx.helyx4me.ui.util.ImageUtil;
 import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.widget.Command;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class AboutView extends AbstractView {
 
-	private static final Logger logger = LoggerFactory.getLogger("SPLASH_SCREEN_VIEW");
+	private static final Logger logger = Logger.getLogger("SPLASH_SCREEN_VIEW");
 	
 	private Image logoImage;
 	private String fallbackLogoImageStr;

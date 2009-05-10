@@ -13,11 +13,11 @@ import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class AppStartProgressTask extends AbstractProgressTask {
 
-	private static final Logger logger = LoggerFactory.getLogger("APP_START_PROGRESS_TASK");
+	private static final Logger logger = Logger.getLogger("APP_START_PROGRESS_TASK");
 	
 	private static final String V_1_0_83 = "1.0.83";
 	private static final String V_1_0_82 = "1.0.82";

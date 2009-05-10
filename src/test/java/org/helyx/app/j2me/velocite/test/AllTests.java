@@ -10,8 +10,8 @@ public class AllTests {
 				"Test for org.helyx.app.j2me.velocite.test");
 		//$JUnit-BEGIN$
 		suite.addTestSuite(DefaultStationContentProviderTest.class);
+		suite.addTestSuite(StationNameNormalizerTest.class);
 		suite.addTestSuite(DefaultCityContentProviderTest.class);
-		suite.addTest(AllTests.suite());
 		suite.addTestSuite(DefaultCityContentAccessorTest.class);
 		suite.addTestSuite(LocalCityContentAccessorTest.class);
 		//$JUnit-END$

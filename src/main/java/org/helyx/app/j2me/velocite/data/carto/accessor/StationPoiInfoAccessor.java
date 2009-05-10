@@ -4,11 +4,11 @@ import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.helyx4me.localization.Point;
 import org.helyx.helyx4me.map.google.POIInfoAccessor;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class StationPoiInfoAccessor implements POIInfoAccessor {
 
-	private static final Logger logger = LoggerFactory.getLogger("STATION_POI_INFO_ACCESSOR");
+	private static final Logger logger = Logger.getLogger("STATION_POI_INFO_ACCESSOR");
 	
 	public StationPoiInfoAccessor() {
 		super();

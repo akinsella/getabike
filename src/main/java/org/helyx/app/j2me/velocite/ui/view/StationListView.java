@@ -20,11 +20,11 @@ import org.helyx.helyx4me.ui.widget.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class StationListView extends AbstractListView {
 	
-	private static final Logger logger = LoggerFactory.getLogger("STATION_LIST_VIEW");
+	private static final Logger logger = Logger.getLogger("STATION_LIST_VIEW");
 	
 	private Menu menu;
 	

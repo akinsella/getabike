@@ -10,11 +10,11 @@ import org.helyx.helyx4me.rms.IMultiRecordDao;
 import org.helyx.helyx4me.rms.MultiRecordDao;
 import org.helyx.helyx4me.rms.MultiRecordEnumeration;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class CityPersistenceService implements ICityPersistenceService {
 	
-	private static final Logger logger = LoggerFactory.getLogger("CITY_PERSISTENCE_SERVICE");
+	private static final Logger logger = Logger.getLogger("CITY_PERSISTENCE_SERVICE");
 	
 	private static final String CITY_RECORD_STORE_NAME = "city";
 	

@@ -15,14 +15,16 @@ import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderException;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+import org.helyx.logging4me.config.BasicConfigurer;
+
 
 public class DefaultCityContentProviderTest extends TestCase {
 
-	private static final Logger logger = LoggerFactory.getLogger("DEFAULT_CITY_CONTENT_PROVIDER_TEST");
+	private static final Logger logger = Logger.getLogger("DEFAULT_CITY_CONTENT_PROVIDER_TEST");
 
 	public DefaultCityContentProviderTest() {
 		super();
+		new BasicConfigurer().configure();
 	}
 
 	public void testCityContentLoaderParis() throws ContentProviderException, ContentAccessorException {

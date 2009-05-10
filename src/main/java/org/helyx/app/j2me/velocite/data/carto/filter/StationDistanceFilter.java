@@ -4,11 +4,11 @@ import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.helyx4me.filter.IObjectFilter;
 import org.helyx.helyx4me.math.DistanceUtil;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class StationDistanceFilter implements IObjectFilter {
 	
-	private Logger logger = LoggerFactory.getLogger("STATION_DISTANCE_FILTER");
+	private Logger logger = Logger.getLogger("STATION_DISTANCE_FILTER");
 	
 	private Station station;
 	

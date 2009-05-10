@@ -8,11 +8,11 @@ import org.helyx.helyx4me.ui.geometry.Rectangle;
 import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class DistanceStationItemRenderer extends StationItemRenderer {
 
-	private Logger logger = LoggerFactory.getLogger("DISTANCE_STATION_ITEM_RENDERER");
+	private Logger logger = Logger.getLogger("DISTANCE_STATION_ITEM_RENDERER");
 	
 	public DistanceStationItemRenderer() {
 		super();

@@ -12,11 +12,11 @@ import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.IProgressDispatcher;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class LanguageLoaderProgressListener extends ProgressAdapter {
 
-	private static final Logger logger = LoggerFactory.getLogger("LANGUAGE_LOADER_PROGRESS_LISTENER");
+	private static final Logger logger = Logger.getLogger("LANGUAGE_LOADER_PROGRESS_LISTENER");
 	
 	private ILanguagePersistenceService languagePersistenceService;
 	

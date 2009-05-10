@@ -3,11 +3,11 @@ package org.helyx.app.j2me.velocite.data.app.manager;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class VeloCiteManager {
 	
-	private static final Logger logger = LoggerFactory.getLogger("VELOCITE_MANAGER");
+	private static final Logger logger = Logger.getLogger("VELOCITE_MANAGER");
 	
 	public static void cleanUpData() {
 		cleanUpCitySelectedData();

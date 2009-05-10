@@ -11,11 +11,11 @@ import org.helyx.helyx4me.rms.IMultiRecordDao;
 import org.helyx.helyx4me.rms.MultiRecordDao;
 import org.helyx.helyx4me.rms.MultiRecordEnumeration;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class StationPersistenceService implements IStationPersistenceService {
 	
-	private static final Logger logger = LoggerFactory.getLogger("STATION_PERSISTENCE_SERVICE");
+	private static final Logger logger = Logger.getLogger("STATION_PERSISTENCE_SERVICE");
 	
 	private static final String STATION_RECORD_STORE_NAME = "station";
 	

@@ -15,14 +15,14 @@ import org.helyx.helyx4me.stream.InputStreamProvider;
 import org.helyx.helyx4me.stream.StreamUtil;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 import org.json.me.JSONArray;
 import org.json.me.JSONObject;
 
 
 public class VeloVStationContentProvider extends AbstractStationContentProvider {
 	
-	private static final Logger logger = LoggerFactory.getLogger("VELOV_STATION_CONTENT_PROVIDER");
+	private static final Logger logger = Logger.getLogger("VELOV_STATION_CONTENT_PROVIDER");
 	
 	private static final String NUM_STATION = "numStation";
 	private static final String NOM_STATION = "nomStation";

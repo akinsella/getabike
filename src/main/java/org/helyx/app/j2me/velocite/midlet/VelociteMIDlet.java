@@ -15,13 +15,17 @@ import org.helyx.helyx4me.ui.view.support.dialog.AbstractDialogResultCallback;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
 import org.helyx.logging4me.LoggerManager;
+import org.helyx.logging4me.appender.ConsoleAppender;
+import org.helyx.logging4me.appender.FileAppender;
+import org.helyx.logging4me.layout.pattern.PatternLayout;
 
 
 public class VelociteMIDlet extends AbstractMIDlet {
 
-	private static final Logger logger = LoggerFactory.getLogger("VELOCITE_MIDLET");
+	private static final Logger logger = Logger.getLogger("VELOCITE_MIDLET");
+	
+	private FileAppender fileAppender = null;
 
 	public VelociteMIDlet() {
 		super();
@@ -30,8 +34,17 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	protected void onStart() {
 		LoggerManager.setThresholdLevel(Logger.DEBUG);
 		
-		LoggerManager.addCategory("org.helyx.app.j2me.lib", Logger.DEBUG);
-		LoggerManager.addCategory("org.helyx.app.j2me.velocite", "CONSOLE", Logger.DEBUG);
+		ConsoleAppender consoleAppender = new ConsoleAppender();
+		consoleAppender.setLayout(new PatternLayout("| %T | %L | %C | %D{yyyy/MM/dd, HH:mm:ss.ZZ} | "));
+		consoleAppender.setThresholdLevel(Logger.DEBUG);
+		
+		LoggerManager.registerAppender(consoleAppender);
+		
+		LoggerManager.getRootCategory().addAppender(consoleAppender);
+
+		LoggerManager.addCategory("org.helyx.app.j2me.lib", Logger.INFO);
+		LoggerManager.addCategory("org.helyx.app.j2me.velocite", Logger.DEBUG);
+		
 		setThemeConfiguration("default", "org.helyx.app.j2me.velocite.theme");
 		setI18nConfiguration("messages", "org.helyx.app.j2me.velocite.i18n");
 		setLocale(Locale.FRANCE);
@@ -76,5 +89,44 @@ public class VelociteMIDlet extends AbstractMIDlet {
 					}
 		});
 	}
+	
+
+	private void openFileAppender() {
+		if (fileAppender == null) {
+			try {
+				fileAppender = new FileAppender("VeloCite.log");
+				fileAppender.setLayout(new PatternLayout("| %T | %L | %C | %D{yyyy/MM/dd, HH:mm:ss.ZZ} | "));
+				fileAppender.open();
+				LoggerManager.registerAppender(fileAppender);
+				LoggerManager.getRootCategory().addAppender(fileAppender);
+			}
+			catch(Throwable t) {
+				logger.warn(t);
+				fileAppender = null;
+			}
+		}
+
+	}
+	
+	private void closeFileAppender() {
+		if (fileAppender != null) {
+			try {
+				LoggerManager.unregisterAppender(fileAppender);
+			}
+			finally {
+				try {
+					fileAppender.close();
+				}
+				catch (Exception e) {
+					logger.warn(e);
+				}
+				finally {
+					fileAppender = null;
+				}
+			}
+		}
+
+	}
+
 
 }

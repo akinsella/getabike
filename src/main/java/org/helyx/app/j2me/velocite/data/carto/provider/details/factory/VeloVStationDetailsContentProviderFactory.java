@@ -11,11 +11,11 @@ import org.helyx.helyx4me.content.provider.IContentProviderFactory;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryException;
 import org.helyx.helyx4me.text.StringFormat;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class VeloVStationDetailsContentProviderFactory implements IContentProviderFactory {
 
-	private static final Logger logger = LoggerFactory.getLogger("VELO_PLUS_STATION_DETAILS_CONTENT_PROVIDER_FACTORY");
+	private static final Logger logger = Logger.getLogger("VELO_PLUS_STATION_DETAILS_CONTENT_PROVIDER_FACTORY");
 	
 	private City city;
 	private Station station;

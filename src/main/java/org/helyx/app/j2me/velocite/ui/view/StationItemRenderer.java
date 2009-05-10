@@ -10,11 +10,11 @@ import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
 import org.helyx.helyx4me.ui.view.support.list.ICellRenderer;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class StationItemRenderer implements ICellRenderer {
 
-	private Logger logger = LoggerFactory.getLogger("STATION_ITEM_RENDERER");
+	private Logger logger = Logger.getLogger("STATION_ITEM_RENDERER");
 	
 	public StationItemRenderer() {
 		super();

@@ -15,17 +15,22 @@ import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderException;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+import org.helyx.logging4me.config.BasicConfigurer;
+
 
 public class DefaultStationContentProviderTest extends TestCase {
 
-	private static final Logger logger = LoggerFactory.getLogger("DEFAULT_STATION_CONTENT_PROVIDER_TEST");
+	private static final Logger logger = Logger.getLogger("DEFAULT_STATION_CONTENT_PROVIDER_TEST");
 
 	public DefaultStationContentProviderTest() {
 		super();
+		new BasicConfigurer().configure();
 	}
 	
 	public void testStationContentLoaderParis() throws ContentProviderException, ContentAccessorException {
+		
+		logger.info("Coucou!");
+		
 		City city = new City();
 		city.key = "SEVILLE";
 		city.stationList = "/org/helyx/app/j2me/velocite/test/data/station/carto_seville.xml";

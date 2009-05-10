@@ -10,11 +10,11 @@ import org.helyx.helyx4me.ui.view.support.list.FilterableElementProvider;
 import org.helyx.helyx4me.ui.view.support.list.IElementProvider;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class UIStationLoaderProgressListener extends ProgressAdapter {
 
-	private static final Logger logger = LoggerFactory.getLogger("STATION_LOADING_PROGRESS_LISTENER");
+	private static final Logger logger = Logger.getLogger("STATION_LOADING_PROGRESS_LISTENER");
 	
 	private StationListView stationListView;
 	private IObjectFilter objectFilter;

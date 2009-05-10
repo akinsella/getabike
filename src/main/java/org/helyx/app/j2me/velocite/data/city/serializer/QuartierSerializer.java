@@ -8,11 +8,11 @@ import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
 import org.helyx.helyx4me.serializer.BasicObjectSerializer;
 import org.helyx.helyx4me.serializer.SerializerException;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class QuartierSerializer implements BasicObjectSerializer {
 
-	private static final Logger logger = LoggerFactory.getLogger("QUARTIER_SERIALIZER");
+	private static final Logger logger = Logger.getLogger("QUARTIER_SERIALIZER");
 
 	public QuartierSerializer() {
 		super();

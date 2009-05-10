@@ -15,12 +15,12 @@ import org.helyx.helyx4me.stream.InputStreamProvider;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.xml.xpp.XppUtil;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 import org.xmlpull.v1.XmlPullParser;
 
 public class VeloPlusStationDetailsContentProvider extends AbstractContentProvider {
 	
-	private static final Logger logger = LoggerFactory.getLogger("VELO_PLUS_STATION_DETAILS_CONTENT_PROVIDER");
+	private static final Logger logger = Logger.getLogger("VELO_PLUS_STATION_DETAILS_CONTENT_PROVIDER");
 
 
 	private static final String STATION = "station";

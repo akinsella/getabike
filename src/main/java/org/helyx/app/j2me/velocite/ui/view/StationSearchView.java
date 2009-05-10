@@ -7,11 +7,11 @@ import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.ui.displayable.support.AbstractTextBox;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class StationSearchView extends AbstractTextBox {
 	
-	private static final Logger logger = LoggerFactory.getLogger("STATION_SEARCH_VIEW");
+	private static final Logger logger = Logger.getLogger("STATION_SEARCH_VIEW");
 	
 	public static final String PREF_STATION_NAME_FILTER = "search.stationName";
 

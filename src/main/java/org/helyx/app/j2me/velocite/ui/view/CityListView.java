@@ -21,11 +21,11 @@ import org.helyx.helyx4me.ui.widget.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class CityListView extends MenuListView {
 	
-	private static final Logger logger = LoggerFactory.getLogger("CITY_LIST_VIEW");
+	private static final Logger logger = Logger.getLogger("CITY_LIST_VIEW");
 	
 	private City selectedCity;
 	

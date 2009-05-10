@@ -10,11 +10,11 @@ import org.helyx.helyx4me.ui.util.KeyMap;
 import org.helyx.helyx4me.ui.util.KeyMapConfig;
 import org.helyx.helyx4me.ui.util.KeyUtil;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class SoftKeyConfigurationTask extends AbstractProgressTask {
 	
-	private static final Logger logger = LoggerFactory.getLogger("SOFT_KEY_CONFIGURATION_TASK");
+	private static final Logger logger = Logger.getLogger("SOFT_KEY_CONFIGURATION_TASK");
 	
 	private Canvas canvas;
 	

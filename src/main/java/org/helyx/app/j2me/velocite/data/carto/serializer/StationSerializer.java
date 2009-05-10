@@ -7,11 +7,11 @@ import org.helyx.helyx4me.localization.Point;
 import org.helyx.helyx4me.serializer.AbstractObjectSerializer;
 import org.helyx.helyx4me.serializer.SerializerException;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+
 
 public class StationSerializer extends AbstractObjectSerializer {
 	
-	private static final Logger logger = LoggerFactory.getLogger("STATION_SERIALIZER");
+	private static final Logger logger = Logger.getLogger("STATION_SERIALIZER");
 
 	public StationSerializer() {
 		super();

@@ -12,13 +12,14 @@ import org.helyx.helyx4me.stream.InputStreamProvider;
 import org.helyx.helyx4me.ui.view.support.xml.XmlView;
 import org.helyx.helyx4me.xml.dom.DomUtil;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerFactory;
+import org.helyx.logging4me.LoggerManager;
 import org.helyx.logging4me.appender.ConsoleAppender;
+import org.helyx.logging4me.layout.SimpleLayout;
 import org.kxml2.kdom.Document;
 
 public class XmlMIDlet extends AbstractMIDlet {
 
-	private static final Logger logger = LoggerFactory.getLogger("XML_MIDLET");
+	private static final Logger logger = Logger.getLogger("XML_MIDLET");
 	
 	public XmlMIDlet() {
 		super();
@@ -38,7 +39,16 @@ public class XmlMIDlet extends AbstractMIDlet {
 	protected void startApp() throws MIDletStateChangeException {
 		try { 
 			PrefManager.writePref(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
-			ConsoleAppender.getInstance().setThresholdLevel(Logger.DEBUG);
+			
+			LoggerManager.setThresholdLevel(Logger.DEBUG);
+			
+			ConsoleAppender consoleAppender = new ConsoleAppender();
+			consoleAppender.setLayout(new SimpleLayout());
+			consoleAppender.setThresholdLevel(Logger.DEBUG);
+			
+			LoggerManager.registerAppender(consoleAppender);
+			LoggerManager.getRootCategory().addAppender(consoleAppender);
+
 			logPlatformInfos();
 			
 			ClasspathContentAccessor cca = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/view/xml/welcomeView.xml");

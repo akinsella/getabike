@@ -1,10 +1,10 @@
-MIDlet-1: VeloCite,,org.helyx.app.j2me.velocite.midlet.VelociteMIDlet
-MIDlet-Description: VeloCite
-MIDlet-Icon: /org/helyx/app/j2me/velocite/image/vcIcon.png
-MIDlet-Info-URL: http://m.velocite.org
+MIDlet-1: VeloCite,/main/resources/org/helyx/app/j2me/velocite/image/vcIcon.png,org.helyx.app.j2me.velocite.midlet.VelociteMIDlet
 MIDlet-Jar-URL: velocite.jar
-MIDlet-Name: VeloCite
-MIDlet-Vendor: Helyx.org
-MIDlet-Version: 1.1.8
+MIDlet-Icon: /org/helyx/app/j2me/velocite/image/vcIcon.png
 MicroEdition-Configuration: CLDC-1.1
+MIDlet-Version: 1.1.8
+MIDlet-Info-URL: http://m.velocite.org
+MIDlet-Name: VeloCite
+MIDlet-Description: VeloCite
+MIDlet-Vendor: Helyx.org
 MicroEdition-Profile: MIDP-2.0

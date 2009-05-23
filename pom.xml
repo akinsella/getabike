@@ -108,7 +108,23 @@
 
 	<build>
 
-		<finalName>VeloCite</finalName>
+		<finalName>${artifactId}-${version}</finalName>
+
+		<directory>target</directory>
+		<outputDirectory>target/classes</outputDirectory>
+		<testOutputDirectory>target/test-classes</testOutputDirectory>
+		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>test/java</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>res</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>test/resources</directory>
+			</testResource>
+		</testResources>
 	
 		<extensions>
 			<extension>
@@ -187,7 +203,14 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>     
+			</plugin>   
+			
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<configuration>
+					<siteDirectory>site</siteDirectory>
+				</configuration>
+			</plugin>  
 			
 			<plugin>
 				<groupId>com.pyx4me</groupId>

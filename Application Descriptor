@@ -3,7 +3,7 @@ MIDlet-Jar-URL: velocite.jar
 MIDlet-Icon: /org/helyx/app/j2me/velocite/image/vcIcon.png
 MicroEdition-Configuration: CLDC-1.1
 MIDlet-Version: 1.1.8
-MIDlet-Info-URL: http://m.velocite.org
+MIDlet-Info-URL: http://velocite.helyx.org
 MIDlet-Name: VeloCite
 MIDlet-Description: VeloCite
 MIDlet-Vendor: Helyx.org

@@ -433,13 +433,13 @@
 		<dependency>
 			<groupId>org.helyx</groupId>
 			<artifactId>basics4me</artifactId>
-			<version>1.0.4</version>
+			<version>1.0.5</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.helyx</groupId>
 			<artifactId>logging4me</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.1</version>
 		</dependency>
 
 		<dependency>

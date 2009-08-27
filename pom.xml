@@ -145,7 +145,7 @@
 					<target>1.1</target>
           			 <compilerArguments>
 			            <verbose />
-			            <bootclasspath>${env.WTK_HOME}\lib\midpapi20.jar;${env.WTK_HOME}\lib\cldcapi11.jar</bootclasspath>
+			            <bootclasspath>${env.WTK_HOME}/lib/midpapi20.jar${path.separator}${env.WTK_HOME}/lib/cldcapi11.jar</bootclasspath>
 			         </compilerArguments>
 				</configuration>
 			</plugin>

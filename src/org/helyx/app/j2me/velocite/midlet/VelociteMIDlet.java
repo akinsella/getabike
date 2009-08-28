@@ -16,8 +16,9 @@ import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
 import org.helyx.logging4me.Logger;
 import org.helyx.logging4me.LoggerManager;
-import org.helyx.logging4me.appender.ConsoleAppender;
 import org.helyx.logging4me.appender.FileAppender;
+import org.helyx.logging4me.config.LoggerConfigurer;
+import org.helyx.logging4me.config.XmlConfigurer;
 import org.helyx.logging4me.layout.pattern.PatternLayout;
 
 
@@ -32,18 +33,21 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	}
 
 	protected void onStart() {
-		LoggerManager.setThresholdLevel(Logger.DEBUG);
-		
-		ConsoleAppender consoleAppender = new ConsoleAppender();
-		consoleAppender.setLayout(new PatternLayout("| %T | %L | %C | %D{yyyy/MM/dd, HH:mm:ss.ZZ} | "));
-		consoleAppender.setThresholdLevel(Logger.DEBUG);
-		
-		LoggerManager.registerAppender(consoleAppender);
-		
-		LoggerManager.getRootCategory().addAppender(consoleAppender);
+//		LoggerManager.setThresholdLevel(Logger.DEBUG);
+//		
+//		ConsoleAppender consoleAppender = new ConsoleAppender();
+//		consoleAppender.setLayout(new PatternLayout("| %T | %L | %C | %D{yyyy/MM/dd, HH:mm:ss.ZZ} | "));
+//		consoleAppender.setThresholdLevel(Logger.DEBUG);
+//		
+//		LoggerManager.registerAppender(consoleAppender);
+//		
+//		LoggerManager.getRootCategory().addAppender(consoleAppender);
+//
+//		LoggerManager.addCategory("org.helyx.app.j2me.lib", Logger.INFO);
+//		LoggerManager.addCategory("org.helyx.app.j2me.velocite", Logger.DEBUG);
 
-		LoggerManager.addCategory("org.helyx.app.j2me.lib", Logger.INFO);
-		LoggerManager.addCategory("org.helyx.app.j2me.velocite", Logger.DEBUG);
+		LoggerConfigurer loggerConfigurer = new XmlConfigurer("/org/helyx/app/j2me/velocite/logging4me.xml", true);
+		loggerConfigurer.configure();
 		
 		setThemeConfiguration("default", "org.helyx.app.j2me.velocite.theme");
 		setI18nConfiguration("messages", "org.helyx.app.j2me.velocite.i18n");

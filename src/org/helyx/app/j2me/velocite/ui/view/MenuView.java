@@ -9,6 +9,7 @@ import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressLi
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
+import org.helyx.app.j2me.velocite.ui.view.renderer.StationItemRenderer;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;

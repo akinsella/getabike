@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.ui.view;
+package org.helyx.app.j2me.velocite.ui.view.renderer;
 
 import javax.microedition.lcdui.Graphics;
 

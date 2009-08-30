@@ -41,23 +41,48 @@ public class StationItemRenderer implements ICellRenderer {
 
         int x = itemClientArea.location.x;
         int y = itemClientArea.location.y;
-//        int width = itemClientArea.size.width;
-//        int height = itemClientArea.size.height;
 
         g.setFont(FontUtil.SMALL_BOLD);
-        g.drawString(station.number + " - " + station.name, x + 5, y + 2, Graphics.LEFT | Graphics.TOP);
- 
-    	if (isSelected) {
-    		Color listFontSecondSelectedColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
-    		g.setColor(listFontSecondSelectedColor.intValue());
-    	}
-    	else {
-    		Color listFontSecondColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
-    		g.setColor(listFontSecondColor.intValue());
-    	}
-        g.setFont(FontUtil.SMALL);
-    	g.drawString(station.fullAddress, x + 5, y + 2 + FontUtil.SMALL_BOLD.getHeight(), Graphics.LEFT | Graphics.TOP);
-		
+        g.drawString(station.number + " - " + (station.name != null ? station.name : "Station sans nom"), x + 5, y + 2, Graphics.LEFT | Graphics.TOP);
+        
+        if (station.fullAddress != null) {
+	    	if (isSelected) {
+	    		Color listFontSecondSelectedColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
+	    		g.setColor(listFontSecondSelectedColor.intValue());
+	    	}
+	    	else {
+	    		Color listFontSecondColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
+	    		g.setColor(listFontSecondColor.intValue());
+	    	}
+	        g.setFont(FontUtil.SMALL);
+	    	g.drawString(station.fullAddress, x + 5, y + 2 + FontUtil.SMALL.getHeight(), Graphics.LEFT | Graphics.TOP);
+	    }
+        
+        if(station.zipCode != null || station.city != null) {
+	    	if (isSelected) {
+	    		Color listFontSecondSelectedColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
+	    		g.setColor(listFontSecondSelectedColor.intValue());
+	    	}
+	    	else {
+	    		Color listFontSecondColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
+	    		g.setColor(listFontSecondColor.intValue());
+	    	}
+	        g.setFont(FontUtil.SMALL);
+	        String value = (station.zipCode != null ? (station.zipCode + " - ") : "") + (station.city != null ? station.city : "");
+	    	g.drawString(station.fullAddress, x + 5, y + 2 + FontUtil.SMALL.getHeight(), Graphics.LEFT | Graphics.TOP);
+        }
+	}
+
+	public int computeHeight(AbstractListView view, Object itemObject, int offset) {
+    	
+//    	boolean isSelected = view.isItemSelected(offset);
+
+    	int smallFontHeight = FontUtil.SMALL.getHeight();
+        int smallBoldFontHeight = FontUtil.SMALL_BOLD.getHeight();
+        
+        int itemHeight = 1 + smallBoldFontHeight + 1 + (smallFontHeight + 1) * 2 + 1;
+ 	
+        return itemHeight;
 	}
 
 }

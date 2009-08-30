@@ -1,5 +1,7 @@
 package org.helyx.app.j2me.velocite.midlet;
 
+import javax.microedition.midlet.MIDletStateChangeException;
+
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.task.AppStartProgressTask;
 import org.helyx.app.j2me.velocite.ui.view.MenuView;
@@ -73,7 +75,7 @@ public class VelociteMIDlet extends AbstractMIDlet {
 		
 		splashScreenView.followProgressTask(appStartProgressTask);
 	}
-	
+
 	private void onStartSuccess(AbstractView view) {
 		view.showDisplayable(new MenuView(VelociteMIDlet.this));
 	}
@@ -93,7 +95,14 @@ public class VelociteMIDlet extends AbstractMIDlet {
 					}
 		});
 	}
-	
+
+	protected void onDestroy(boolean unconditional) throws MIDletStateChangeException {
+		super.onDestroy(unconditional);
+	}
+
+	protected void onPause() {
+		super.onPause();
+	}
 
 	private void openFileAppender() {
 		if (fileAppender == null) {
@@ -129,7 +138,6 @@ public class VelociteMIDlet extends AbstractMIDlet {
 				}
 			}
 		}
-
 	}
 
 

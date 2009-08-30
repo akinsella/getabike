@@ -15,8 +15,8 @@ import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNo
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.SimpleStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.ui.view.DistanceStationItemRenderer;
 import org.helyx.app.j2me.velocite.ui.view.StationListView;
+import org.helyx.app.j2me.velocite.ui.view.renderer.DistanceStationItemRenderer;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.content.provider.IContentProviderFactory;

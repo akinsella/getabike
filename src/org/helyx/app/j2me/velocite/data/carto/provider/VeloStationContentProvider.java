@@ -61,7 +61,7 @@ public class VeloStationContentProvider extends AbstractStationContentProvider {
 			try {
 				
 				cartoInputStreamProvider = stationContentAccessor.getInputStreamProvider();
-				inputStream = cartoInputStreamProvider.createInputStream(false);
+				inputStream = cartoInputStreamProvider.createInputStream(true);
 //				inputStream = new BufferedInputStream(cartoInputStreamProvider.createInputStream());
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);

@@ -76,7 +76,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 			progressDispatcher.fireEvent(EventType.ON_START);
 			try {			
 				cityInputStreamProvider = cityContentAccessor.getInputStreamProvider();
-				inputStream = cityInputStreamProvider.createInputStream(false);
+				inputStream = cityInputStreamProvider.createInputStream(true);
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
 				

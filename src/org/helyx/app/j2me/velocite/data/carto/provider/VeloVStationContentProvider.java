@@ -66,7 +66,7 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 					IContentAccessor contentAccessor = contentAccessorFactory.createContentAccessorFactory(quartier);
 					logger.debug("contentAccessor: '" + contentAccessor.getPath() + "'");
 					cartoInputStreamProvider = contentAccessor.getInputStreamProvider();
-					inputStream = cartoInputStreamProvider.createInputStream(false);
+					inputStream = cartoInputStreamProvider.createInputStream(true);
 
 					logger.debug("Parsing JSON for quartier: " + i);
 					

@@ -64,7 +64,7 @@ public class StationItemRenderer implements ICellRenderer {
 
         addToXPos = BASE_LEFT_POS;
     	addToYPos += LINE_SPACING + FontUtil.SMALL.getHeight();
-        if (station.fullAddress != null) {
+        if (station.fullAddress.length() > 0) {
 	    	if (isSelected) {
 	    		Color listFontSecondSelectedColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
 	    		g.setColor(listFontSecondSelectedColor.intValue());
@@ -79,7 +79,7 @@ public class StationItemRenderer implements ICellRenderer {
         	addToYPos += LINE_SPACING + FontUtil.SMALL.getHeight();
         }
         
-        if(station.zipCode != null || station.city != null) {
+        if(station.zipCode.length() > 0 || station.city.length() > 0) {
 	    	if (isSelected) {
 	    		Color listFontSecondSelectedColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
 	    		g.setColor(listFontSecondSelectedColor.intValue());
@@ -89,12 +89,14 @@ public class StationItemRenderer implements ICellRenderer {
 	    		g.setColor(listFontSecondColor.intValue());
 	    	}
 	        g.setFont(FontUtil.SMALL);
-	        String secondaryStationInfo = (station.zipCode != null && station.zipCode.length() > 0 ? (station.zipCode + " - ") : "") + (station.city != null && station.city.length() > 0 ? station.city : "");
+	        String secondaryStationInfo = (station.zipCode.length() > 0 ? (station.zipCode + " - ") : "") + (station.city.length() > 0 ? station.city : "");
 	    	g.drawString(secondaryStationInfo, x + addToXPos, y + addToYPos, Graphics.LEFT | Graphics.TOP);
         }
 	}
 
 	public int computeHeight(AbstractListView view, Object itemObject, int offset) {
+
+		Station station = (Station)itemObject;
     	
 //    	boolean isSelected = view.isItemSelected(offset);
 
@@ -103,11 +105,9 @@ public class StationItemRenderer implements ICellRenderer {
         
         int itemHeight = 
         	PADDING_TOP + 
-        	smallBoldFontHeight + 
-        	LINE_SPACING + 
-        	smallFontHeight + 
-        	LINE_SPACING + 
-        	smallFontHeight + 
+        	smallBoldFontHeight + LINE_SPACING + 
+        	(station.fullAddress.length() > 0 ? smallFontHeight : 0) + 
+        	(station.zipCode.length() > 0 || station.city.length() > 0 ? LINE_SPACING + smallFontHeight : 0) + 
         	PADDING_TOP;
  	
         return itemHeight;

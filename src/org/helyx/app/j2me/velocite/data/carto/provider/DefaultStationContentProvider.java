@@ -90,11 +90,10 @@ public class DefaultStationContentProvider extends AbstractStationContentProvide
 					station.open = xppAttributeProcessor.getAttrValueAsInt(OPEN) == openValue;
 					station.bonus = xppAttributeProcessor.getAttrValueAsBoolean(BONUS);
 					station.address = xppAttributeProcessor.getAttrValueAsString(ADDRESS);
-					station.fullAddress = xppAttributeProcessor.getAttrValueAsString(FULL_ADDRESS);
+					station.fullAddress = xppAttributeProcessor.getAttrValueAsString(FULL_ADDRESS).trim();
 					station.localization.lat = xppAttributeProcessor.getAttrValueAsDouble(LAT);
 					station.localization.lng = xppAttributeProcessor.getAttrValueAsDouble(LNG);
 					station.hasLocalization = LocalizationUtil.isSet(station.localization);
-					processComplementaryInfo(station);
 
 					if (stationNameNormalizer != null) {
 						stationNameNormalizer.normalizeName(station);
@@ -112,19 +111,6 @@ public class DefaultStationContentProvider extends AbstractStationContentProvide
 		catch (Throwable t) {
     		logger.warn(t);
 			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
-		}
-	}
-
-	private void processComplementaryInfo(Station station) {
-		int index = station.fullAddress.indexOf(" - 750");
-		
-		if (index >= 0) {
-			station.zipCode = station.fullAddress.substring(index + 2 + 1, index + 2 + 5 + 1);
-			station.city = station.fullAddress.substring(index + 2 + 5 + 1 + 1);
-		}
-		else if ((index = station.fullAddress.indexOf(" 750")) > 0) {
-			station.zipCode = station.fullAddress.substring(index + 1, index + 5 + 1);
-			station.city = station.fullAddress.substring(index + 5 + 1 + 1);
 		}
 	}
 

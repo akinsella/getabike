@@ -97,6 +97,7 @@ public class CityListView extends MenuListView {
 					});
 				}
 				catch (CartoManagerException e) {
+					logger.warn(e);
 					showAlertMessage("Erreur", "Impossible de charger les stations pour la ville sélectionnée.");
 					fireReturnCallback();
 				}

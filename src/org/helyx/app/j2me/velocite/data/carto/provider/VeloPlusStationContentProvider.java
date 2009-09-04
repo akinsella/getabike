@@ -6,7 +6,6 @@ import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
-import org.helyx.basics4me.io.BufferedInputStream;
 import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.localization.Point;
@@ -15,7 +14,6 @@ import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.xml.xpp.XppAttributeProcessor;
 import org.helyx.helyx4me.xml.xpp.XppUtil;
 import org.helyx.logging4me.Logger;
-
 import org.xmlpull.v1.XmlPullParser;
 
 public class VeloPlusStationContentProvider extends AbstractStationContentProvider {
@@ -85,7 +83,6 @@ public class VeloPlusStationContentProvider extends AbstractStationContentProvid
 					station.localization.lat = xppAttributeProcessor.getAttrValueAsDouble(LAT);
 					station.localization.lng = xppAttributeProcessor.getAttrValueAsDouble(LNG);
 					station.hasLocalization = LocalizationUtil.isSet(station.localization);
-					processComplementaryInfo(station);
 					
 					if (stationNameNormalizer != null) {
 						stationNameNormalizer.normalizeName(station);
@@ -103,10 +100,6 @@ public class VeloPlusStationContentProvider extends AbstractStationContentProvid
     		logger.warn(t);
 			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
 		}
-	}
-
-	private void processComplementaryInfo(Station station) {
-
 	}
 
 	public void cancel() {

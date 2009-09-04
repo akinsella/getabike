@@ -6,7 +6,6 @@ import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
-import org.helyx.basics4me.io.BufferedInputStream;
 import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.localization.Point;
@@ -15,7 +14,6 @@ import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.xml.xpp.XppAttributeProcessor;
 import org.helyx.helyx4me.xml.xpp.XppUtil;
 import org.helyx.logging4me.Logger;
-
 import org.xmlpull.v1.XmlPullParser;
 
 
@@ -87,11 +85,10 @@ public class VeloStationContentProvider extends AbstractStationContentProvider {
 					station.open = true;
 					station.bonus = false;
 					station.address = xppAttributeProcessor.getAttrValueAsString(ADDRESS);
-					station.fullAddress = xppAttributeProcessor.getAttrValueAsString(FULL_ADDRESS);
+					station.fullAddress = xppAttributeProcessor.getAttrValueAsString(FULL_ADDRESS).trim();
 					station.localization.lat = xppAttributeProcessor.getAttrValueAsDouble(LAT);
 					station.localization.lng = xppAttributeProcessor.getAttrValueAsDouble(LNG);
 					station.hasLocalization = LocalizationUtil.isSet(station.localization);
-					processComplementaryInfo(station);
 
 					if (stationNameNormalizer != null) {
 						stationNameNormalizer.normalizeName(station);
@@ -109,19 +106,6 @@ public class VeloStationContentProvider extends AbstractStationContentProvider {
 		catch (Throwable t) {
     		logger.warn(t);
 			progressDispatcher.fireEvent(EventType.ON_ERROR, t);
-		}
-	}
-
-	private void processComplementaryInfo(Station station) {
-		int index = station.fullAddress.indexOf(" - 750");
-		
-		if (index >= 0) {
-			station.zipCode = station.fullAddress.substring(index + 2 + 1, index + 2 + 5 + 1);
-			station.city = station.fullAddress.substring(index + 2 + 5 + 1 + 1);
-		}
-		else if ((index = station.fullAddress.indexOf(" 750")) > 0) {
-			station.zipCode = station.fullAddress.substring(index + 1, index + 5 + 1);
-			station.city = station.fullAddress.substring(index + 5 + 1 + 1);
 		}
 	}
 

@@ -3,14 +3,14 @@
 <cities default="PARIS">
 
 	<city key="AIX_EN_PROVENCE" name="Aix-en-Provence" type="VELIB" active="true" 
-	      serviceName="V'hello" normalizer="DEFAULT"
+	      serviceName="V'hello" normalizer="SIMPLE"
 		  webSite="http://www.vhello.fr/" 
 		  stationList="http://www.vhello.fr/service/carto/"
 		  stationDetails="http://www.vhello.fr/service/stationdetails/{1}"
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="BESANCON" name="Besançon" type="VELIB" active="true"
-	      serviceName="VéloCité" normalizer="DEFAULT"
+	      serviceName="VéloCité" normalizer="SIMPLE"
 		  webSite="http://www.velocite.besancon.fr/" 
 		  stationList="http://www.velocite.besancon.fr/service/carto/" 
 		  stationDetails="http://www.velocite.besancon.fr/service/stationdetails/{1}" 
@@ -31,7 +31,7 @@
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="LYON" name="Lyon" type="VELO_V" active="true"
-	      serviceName="Vélo V" normalizer="DEFAULT"
+	      serviceName="Vélo V" normalizer="SIMPLE"
 		  webSite="http://www.velov.grandlyon.com/" 
 		  stationList="http://www.velov.grandlyon.com/velovmap/zhp/inc/StationsParArrondissement.php?arrondissement={1}" 
 		  stationDetails="http://www.velov.grandlyon.com/velovmap/zhp/inc/DispoStationsParId.php?id={1}&amp;noCache={2}" 
@@ -53,7 +53,7 @@
 	</city>
 		  
 	<city key="MARSEILLE" name="Marseille" type="LE_VELO" active="true"
-	      serviceName="Le vélo" normalizer="DEFAULT"
+	      serviceName="Le vélo" normalizer="SIMPLE"
 		  webSite="http://www.levelo-mpm.fr" 
 		  stationList="http://www.levelo-mpm.fr/service/carto/" 
 		  stationDetails="http://www.levelo-mpm.fr/service/stationdetails/{1}" 
@@ -74,7 +74,7 @@
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="NANCY" name="Nancy" type="VELIB" active="true"
-		serviceName="VéloStan" normalizer="DEFAULT"
+		serviceName="VéloStan" normalizer="SIMPLE"
 		webSite="http://www.velostanlib.fr"
 		stationList="http://www.velostanlib.fr/service/carto/"
 		stationDetails="http://www.velostanlib.fr/service/stationdetails/{1}"
@@ -116,7 +116,7 @@
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="TOULOUSE" name="Toulouse" type="VELO" active="true"
-	      serviceName="Vélo" normalizer="DEFAULT"
+	      serviceName="Vélo" normalizer="SIMPLE"
 		  webSite="http://www.velo.toulouse.fr" 
 		  stationList="http://www.velo.toulouse.fr/service/carto/" 
 		  stationDetails="http://www.velo.toulouse.fr/service/stationdetails/{1}" 

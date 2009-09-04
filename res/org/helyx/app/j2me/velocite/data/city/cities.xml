@@ -3,35 +3,35 @@
 <cities default="PARIS">
 
 	<city key="AIX_EN_PROVENCE" name="Aix-en-Provence" type="VELIB" active="true" 
-	      serviceName="V'hello" normalizer="SIMPLE"
+	      serviceName="V'hello" normalizer="DEFAULT"
 		  webSite="http://www.vhello.fr/" 
 		  stationList="http://www.vhello.fr/service/carto/"
 		  stationDetails="http://www.vhello.fr/service/stationdetails/{1}"
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="BESANCON" name="Besançon" type="VELIB" active="true"
-	      serviceName="VéloCité" normalizer="SIMPLE"
+	      serviceName="VéloCité" normalizer="DEFAULT"
 		  webSite="http://www.velocite.besancon.fr/" 
 		  stationList="http://www.velocite.besancon.fr/service/carto/" 
 		  stationDetails="http://www.velocite.besancon.fr/service/stationdetails/{1}" 
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="BRUXELLES" name="Bruxelles" type="DEFAULT" active="false"
-	      serviceName="CycloCity" normalizer="SIMPLE"
+	      serviceName="CycloCity" normalizer="DEFAULT"
 		  webSite="http://www.cyclocity.be/" 
 		  stationList="" 
 		  stationDetails="" 
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="DIJON" name="Dijon" type="DEFAULT" active="false" 
-	      serviceName="" normalizer="SIMPLE"
+	      serviceName="" normalizer="DEFAULT"
 		  webSite="" 
 		  stationList="" 
 		  stationDetails="" 
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="LYON" name="Lyon" type="VELO_V" active="true"
-	      serviceName="Vélo V" normalizer="SIMPLE"
+	      serviceName="Vélo V" normalizer="DEFAULT"
 		  webSite="http://www.velov.grandlyon.com/" 
 		  stationList="http://www.velov.grandlyon.com/velovmap/zhp/inc/StationsParArrondissement.php?arrondissement={1}" 
 		  stationDetails="http://www.velov.grandlyon.com/velovmap/zhp/inc/DispoStationsParId.php?id={1}&amp;noCache={2}" 
@@ -53,70 +53,70 @@
 	</city>
 		  
 	<city key="MARSEILLE" name="Marseille" type="LE_VELO" active="true"
-	      serviceName="Le vélo" normalizer="SIMPLE"
+	      serviceName="Le vélo" normalizer="DEFAULT"
 		  webSite="http://www.levelo-mpm.fr" 
 		  stationList="http://www.levelo-mpm.fr/service/carto/" 
 		  stationDetails="http://www.levelo-mpm.fr/service/stationdetails/{1}" 
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="MONTPELLIER" name="Montpellier" type="DEFAULT" active="false"
-		  serviceName="Vélomagg'" normalizer="SIMPLE"
+		  serviceName="Vélomagg'" normalizer="DEFAULT"
 		  webSite="http://www.montpellier-agglo.com/tam/page.php?id_rubrique=273" 
 		  stationList="" 
 		  stationDetails="" 
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="MULHOUSE" name="Mulhouse" type="DEFAULT" active="false"
-		  serviceName="VéloCité" normalizer="SIMPLE"
+		  serviceName="VéloCité" normalizer="DEFAULT"
 		  webSite="http://www.mulhouse.fr/fr/demarche.php?PAGEID=3551" 
 		  stationList="" 
 		  stationDetails="" 
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="NANCY" name="Nancy" type="VELIB" active="true"
-		serviceName="VéloStan" normalizer="SIMPLE"
+		serviceName="VéloStan" normalizer="DEFAULT"
 		webSite="http://www.velostanlib.fr"
 		stationList="http://www.velostanlib.fr/service/carto/"
 		stationDetails="http://www.velostanlib.fr/service/stationdetails/{1}"
 		bonus="false" tpe="false" state="false" />
 		  
 	<city key="NANTES" name="Nantes" type="KML" active="false" 
-	      serviceName="Bicloo" normalizer="SIMPLE"
+	      serviceName="Bicloo" normalizer="DEFAULT"
 		  webSite="http://www.bicloo.nantesmetropole.fr" 
 		  stationList="http://maps.google.fr/maps/ms?ie=UTF8&amp;hl=fr&amp;oe=UTF8&amp;msa=0&amp;msid=106550840013014095785.00044cde56c5fcae93d24&amp;output=kml" 
 		  stationDetails="" 
 		  bonus="false" tpe="false" state="false" />
 
 	<city key="ORLEANS" name="Orléans" type="VELO_PLUS" active="true" 
-	      serviceName="Vélo+" normalizer="SIMPLE"
+	      serviceName="Vélo+" normalizer="DEFAULT"
 		  webSite="http://www.ville-orleans.fr/Deplacements/VelosPietons01.cfm" 
 		  stationList="http://www.agglo-veloplus.fr/component/data.xml" 
 		  stationDetails="http://www.agglo-veloplus.fr/getStatusBorne?idBorne={1}" 
 		  bonus="false" tpe="true" state="true" />
 		  
 	<city key="PARIS" name="Paris" type="VELIB" active="true" 
-	      serviceName="Vélib'" normalizer="SIMPLE"
+	      serviceName="Vélib'" normalizer="PARIS"
 		  webSite="http://www.velib.paris.fr" 
 		  stationList="http://www.velib.paris.fr/service/carto/" 
 		  stationDetails="http://www.velib.paris.fr/service/stationdetails/{1}" 
 		  bonus="true" tpe="false" state="false" />
 		  
 	<city key="RENNES" name="Rennes" type="DEFAULT" active="false" 
-	      serviceName="Vélo à la carte" normalizer="SIMPLE"
+	      serviceName="Vélo à la carte" normalizer="DEFAULT"
 		  webSite="http://www.rennes.fr/index.php?id=414" 
 		  stationList="" 
 		  stationDetails="" 
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="SEVILLE" name="Seville" type="SEVICI" active="true"
-		  serviceName="Sevici" normalizer="SIMPLE_2"
+		  serviceName="Sevici" normalizer="SEVILLE"
 		  webSite="http://www.sevici.es/" 
 		  stationList="http://www.sevici.es/service/carto/" 
 		  stationDetails="http://www.sevici.es/service/stationdetails/{1}" 
 		  bonus="false" tpe="false" state="false" />
 		  
 	<city key="TOULOUSE" name="Toulouse" type="VELO" active="true"
-	      serviceName="Vélo" normalizer="SIMPLE"
+	      serviceName="Vélo" normalizer="DEFAULT"
 		  webSite="http://www.velo.toulouse.fr" 
 		  stationList="http://www.velo.toulouse.fr/service/carto/" 
 		  stationDetails="http://www.velo.toulouse.fr/service/stationdetails/{1}" 

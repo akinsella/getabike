@@ -6,7 +6,6 @@ import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
-import org.helyx.basics4me.io.BufferedInputStream;
 import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.localization.Point;
@@ -15,7 +14,6 @@ import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.xml.xpp.XppAttributeProcessor;
 import org.helyx.helyx4me.xml.xpp.XppUtil;
 import org.helyx.logging4me.Logger;
-
 import org.xmlpull.v1.XmlPullParser;
 
 
@@ -66,7 +64,8 @@ public class DefaultStationContentProvider extends AbstractStationContentProvide
 			try {
 				
 				cartoInputStreamProvider = stationContentAccessor.getInputStreamProvider();
-				inputStream = new BufferedInputStream(cartoInputStreamProvider.createInputStream());
+				inputStream = cartoInputStreamProvider.createInputStream(false);
+//				inputStream = new BufferedInputStream(cartoInputStreamProvider.createInputStream());
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
 
@@ -97,8 +96,10 @@ public class DefaultStationContentProvider extends AbstractStationContentProvide
 					station.hasLocalization = LocalizationUtil.isSet(station.localization);
 					processComplementaryInfo(station);
 
-					stationNameNormalizer.normalizeName(station);
-
+					if (stationNameNormalizer != null) {
+						stationNameNormalizer.normalizeName(station);
+					}
+					
 					progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 				}
 				

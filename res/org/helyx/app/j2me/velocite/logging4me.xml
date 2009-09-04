@@ -28,7 +28,7 @@
 
 	<!-- Appenders -->
 	<appender name="console" class="org.helyx.logging4me.appender.ConsoleAppender">
-		<property name="thresholdLevel" value="INFO" />
+		<property name="thresholdLevel" value="DEBUG" />
 		<property name="layout" value="sl" />
 	</appender>
 	
@@ -42,5 +42,7 @@
  
  	<!-- Categories -->
 	<category name="org.helyx.app.j2me.velocite" level="INFO" />
+	<category name="org.helyx.helyx4me" level="INFO" />
+	<category name="org.helyx.helyx4me.content.accessor" level="DEBUG" />
 	
 </logging4me>

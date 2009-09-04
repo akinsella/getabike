@@ -1,14 +1,11 @@
 package org.helyx.app.j2me.velocite.data.carto.provider;
 
-import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.DefaultStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.helyx4me.content.provider.AbstractContentProvider;
 
 public abstract class AbstractStationContentProvider extends AbstractContentProvider {
 
-	public static final IStationInfoNormalizer DEFAULT_STATION_INFO_NORMALIZER = new DefaultStationInfoNormalizer();
-	
-	private IStationInfoNormalizer stationInfoNormalizer = DEFAULT_STATION_INFO_NORMALIZER;
+	private IStationInfoNormalizer stationInfoNormalizer;
 
 	public AbstractStationContentProvider() {
 		super();
@@ -20,9 +17,6 @@ public abstract class AbstractStationContentProvider extends AbstractContentProv
 	}
 
 	public IStationInfoNormalizer getStationInfoNormalizer() {
-		if (stationInfoNormalizer == null) {
-			return DEFAULT_STATION_INFO_NORMALIZER;
-		}
 		return stationInfoNormalizer;
 	}
 

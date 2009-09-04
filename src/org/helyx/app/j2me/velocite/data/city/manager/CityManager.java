@@ -24,7 +24,7 @@ public class CityManager {
 
 	private static final Logger logger = Logger.getLogger("CITY_MANAGER");
 	
-	private static final String CITIES_URL = "http://m.velocite.org/cities/v2/data.xml";
+	private static final String CITIES_URL = "http://www.helyx.org/velocite/v1/cities.xml";
 	
 	private CityManager() {
 		super();

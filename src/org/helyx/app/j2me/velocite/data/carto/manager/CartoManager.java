@@ -10,8 +10,8 @@ import org.helyx.app.j2me.velocite.data.carto.provider.factory.DefaultStationCon
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloPlusStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloVStationContentProviderFactory;
-import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.DefaultStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
+import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.ParisStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.SimpleStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
@@ -38,9 +38,9 @@ public class CartoManager {
 	public static final String LE_VELO = "LE_VELO";  // MARSEILLE
 	public static final String SEVICI = "SEVICI";  // SEVILLE
 	
-	private static final String DEFAULT_NORMALIZER = "DEFAULT";
-	private static final String SIMPLE_NORMALIZER = "SIMPLE";
-	private static final String SIMPLE_2_NORMALIZER = "SIMPLE_2";
+	private static final String DEFAULT_NORMALIZER = "SIMPLE";
+	private static final String SEVILLE_NORMALIZER = "SEVILLE";
+	private static final String PARIS_NORMALIZER = "PARIS";
 	
 	private CartoManager() {
 		super();
@@ -88,17 +88,21 @@ public class CartoManager {
 	}
 
 	public static IStationInfoNormalizer getStationInfoNormalizer(City city) throws CartoManagerException {
-		if (city.normalizer == null || DEFAULT_NORMALIZER.equals(city.normalizer)) {
-			return new DefaultStationInfoNormalizer();
+		String cityNormalizer = city.normalizer;
+		if (cityNormalizer == null) {
+			return null;
 		}
-		else if (SIMPLE_NORMALIZER.equals(city.normalizer)) {
+		else if (DEFAULT_NORMALIZER.equals(cityNormalizer)) {
 			return new SimpleStationInfoNormalizer("-");
 		}
-		else if (SIMPLE_2_NORMALIZER.equals(city.normalizer)) {
+		else if (SEVILLE_NORMALIZER.equals(cityNormalizer)) {
 			return new SimpleStationInfoNormalizer("_");
 		}
+		else if (PARIS_NORMALIZER.equals(cityNormalizer)) {
+			return new ParisStationInfoNormalizer();
+		}
 		else {
-			throw new CartoManagerException("No StationInfoNormalizer for city: '" + city.type + "' and normalizer: '" + city.normalizer + "'");
+			throw new CartoManagerException("No StationInfoNormalizer for city: '" + city.type + "' and normalizer: '" + cityNormalizer + "'");
 		}
 	}
 

@@ -61,7 +61,8 @@ public class VeloStationContentProvider extends AbstractStationContentProvider {
 			try {
 				
 				cartoInputStreamProvider = stationContentAccessor.getInputStreamProvider();
-				inputStream = new BufferedInputStream(cartoInputStreamProvider.createInputStream());
+				inputStream = cartoInputStreamProvider.createInputStream(false);
+//				inputStream = new BufferedInputStream(cartoInputStreamProvider.createInputStream());
 				
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
 
@@ -92,7 +93,9 @@ public class VeloStationContentProvider extends AbstractStationContentProvider {
 					station.hasLocalization = LocalizationUtil.isSet(station.localization);
 					processComplementaryInfo(station);
 
-					stationNameNormalizer.normalizeName(station);
+					if (stationNameNormalizer != null) {
+						stationNameNormalizer.normalizeName(station);
+					}
 
 					progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 				}

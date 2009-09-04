@@ -66,7 +66,7 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 					IContentAccessor contentAccessor = contentAccessorFactory.createContentAccessorFactory(quartier);
 					logger.debug("contentAccessor: '" + contentAccessor.getPath() + "'");
 					cartoInputStreamProvider = contentAccessor.getInputStreamProvider();
-					inputStream = cartoInputStreamProvider.createInputStream();
+					inputStream = cartoInputStreamProvider.createInputStream(false);
 
 					logger.debug("Parsing JSON for quartier: " + i);
 					
@@ -101,7 +101,9 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 						station.city = quartier.city;
 						station.zipCode = quartier.zipCode;
 
-						stationNameNormalizer.normalizeName(station);
+						if (stationNameNormalizer != null) {
+							stationNameNormalizer.normalizeName(station);
+						}
 
 						progressDispatcher.fireEvent(CartoConstants.ON_STATION_LOADED, station);
 					}

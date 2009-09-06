@@ -1,11 +1,15 @@
 package org.helyx.app.j2me.velocite.ui.view;
 
+import org.helyx.app.j2me.velocite.data.carto.accessor.StationPoiInfoAccessor;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationNameFilter;
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.task.StationLoadTask;
+import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
+import org.helyx.app.j2me.velocite.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.filter.IRecordFilter;
+import org.helyx.helyx4me.map.google.GoogleMapView;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.ProgressListener;
@@ -14,7 +18,6 @@ import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.view.support.LoadTaskView;
 import org.helyx.helyx4me.ui.view.support.MenuListView;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
-import org.helyx.helyx4me.ui.view.support.list.IFilterableElementProvider;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.helyx4me.ui.widget.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
@@ -26,14 +29,16 @@ public class StationListView extends AbstractListView {
 	
 	private static final Logger logger = Logger.getLogger("STATION_LIST_VIEW");
 	
-	private Menu menu;
-	
 	private boolean recordFilterEnabled = true;
 	
 	private Station referentStation;
 	
 	private boolean allowMenu = true;
 	private boolean allowNested = true;
+	
+	private String poiImgClasspath;
+	private String poiSelectedImgClasspath;
+
 
 	public StationListView(AbstractMIDlet midlet, String title) {
 		super(midlet, title);
@@ -41,11 +46,22 @@ public class StationListView extends AbstractListView {
 	}
 	
 	private void init() {
+		initMapImagesPath();
 		initActions();
 		initData();
 		initComponents();
 	}
 	
+	private void initMapImagesPath() {
+		try {
+			poiImgClasspath = getTheme().getString(AppThemeConstants.MAP_POI_IMAGE_PATH);
+			poiSelectedImgClasspath = getTheme().getString(AppThemeConstants.MAP_POI_SELECTED_IMAGE_PATH);
+		}
+		catch (Throwable t) {
+			logger.warn(t);
+		}
+	}
+
 	protected void initActions() {	
 		
 		if (allowMenu) {
@@ -72,9 +88,45 @@ public class StationListView extends AbstractListView {
 	
 	protected void showMenuView() {
 		MenuListView menuListView = new MenuListView(getMidlet(), "Actions", false);
+		
+		Menu menu = new Menu();
+		
+		menu.addMenuItem(new MenuItem("Chercher une station", new IAction() {
+			public void run(Object data) {
+				searchStation();
+			}
+		}));
+		
+		boolean mapModeEnabled = PrefManager.readPrefBoolean(UtilManager.MAP_MODE_ENABLED);
+
+		if (mapModeEnabled && elementProvider.length() > 0) {
+			menu.addMenuItem(new MenuItem("Voir le plan", new IAction() {
+				
+				public void run(Object data) {
+					showGoogleMapsView();
+				}
+			}));
+		}
 		menuListView.setMenu(menu);
 		menuListView.setPreviousDisplayable(StationListView.this);
 		showDisplayable(menuListView, new BasicTransition());
+	}
+
+
+	private void showGoogleMapsView() {
+		String googleMapsKey = PrefManager.readPrefString(UtilManager.GOOGLE_MAPS_KEY);
+		
+		Station stationSelected = getStationSelected();
+		GoogleMapView googleMapView = new GoogleMapView(getMidlet(), "Plan de la station", googleMapsKey, new StationPoiInfoAccessor(), stationSelected.localization, 15, poiImgClasspath, poiSelectedImgClasspath);
+		googleMapView.setPreviousDisplayable(StationListView.this);
+		googleMapView.setSelectedPoi(stationSelected);
+		googleMapView.setPoiItems(elementProvider);
+		googleMapView.showDisplayable(googleMapView);
+		googleMapView.updateMap();
+	}
+	
+	protected Station getStationSelected() {
+		return (Station)elementProvider.get(selectedOffset);
 	}
 	
 	protected void showItemSelected() {
@@ -86,13 +138,6 @@ public class StationListView extends AbstractListView {
 	}
 
 	protected void initComponents() {
-		menu = new Menu();
-		
-		menu.addMenuItem(new MenuItem("Chercher une station", new IAction() {
-			public void run(Object data) {
-				searchStation();
-			}
-		}));
 		
 	}
 	
@@ -130,7 +175,7 @@ public class StationListView extends AbstractListView {
 		Station station = (Station)object;
 		StationDetailsView stationDetailsView = new StationDetailsView(getMidlet(), station);
 		stationDetailsView.setAllowSearchNearStation(allowNested);
-		stationDetailsView.setRelatedStations(elementProvider instanceof IFilterableElementProvider ? ((IFilterableElementProvider)elementProvider).getUnfilteredElements() : elementProvider);
+		stationDetailsView.setRelatedStations(elementProvider);
 
 		showDisplayable(stationDetailsView, this);
 	}

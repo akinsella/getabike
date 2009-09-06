@@ -1,5 +1,6 @@
 package org.helyx.app.j2me.velocite.data.carto.manager;
 
+import org.helyx.app.j2me.velocite.data.carto.comparator.StationDistanceComparator;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationDistanceFilter;
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
@@ -172,7 +173,7 @@ public class CartoManager {
 		
 		UIStationLoaderProgressListener slpl = new UIStationLoaderProgressListener(
 				stationListView, 
-				new StationDistanceFilter(station, distanceMax));
+				new StationDistanceFilter(station, distanceMax), new StationDistanceComparator());
 		stationListView.loadListContent(slpl);
 	}
 	

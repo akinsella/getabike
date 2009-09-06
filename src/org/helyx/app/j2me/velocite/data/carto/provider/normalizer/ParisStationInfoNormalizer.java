@@ -18,7 +18,7 @@ public class ParisStationInfoNormalizer implements IStationInfoNormalizer {
 		
 		String nameToNormalize = station.name;
 	
-		int firstSplitterIndex = nameToNormalize != null ? nameToNormalize.indexOf(SPLITTER) : -1;
+		int firstSplitterIndex = nameToNormalize.indexOf(SPLITTER);
 		if (firstSplitterIndex >= 0) {
 			int stationNumberIndex = nameToNormalize.indexOf(String.valueOf(station.number));
 			
@@ -38,9 +38,9 @@ public class ParisStationInfoNormalizer implements IStationInfoNormalizer {
 			}
 		}
 
-		String separator = "-";
+		char separator = '-';
 		
-		int separatorIndex = station.address.indexOf(separator);
+		int separatorIndex = station.address.lastIndexOf(separator);
 		if (separatorIndex > 0) {
 			station.address = station.address.substring(0, separatorIndex).trim();
 		}

@@ -17,15 +17,15 @@ import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
 
-import org.helyx.logging4me.LoggerManager;
-
 public class PrefListView extends PrefBaseListView {
 
 	private static final Logger logger = Logger.getLogger("PREF_LIST_VIEW");
 	
 	private MenuItem cityMenuItem;
 	private MenuItem languageMenuItem;
-	private MenuItem debugMenuItem;
+	private MenuItem mapModeMenuItem;
+	private MenuItem httpModeMenuItem;
+	private MenuItem debugModeMenuItem;
 	private MenuItem resetMenuItem;
 
 	public PrefListView(AbstractMIDlet midlet) {
@@ -55,12 +55,23 @@ public class PrefListView extends PrefBaseListView {
 			}
 		});
 		
-		debugMenuItem = new MenuItem("Debug mode", new IAction() {
+		mapModeMenuItem = new MenuItem("Google Map", new IAction() {
+			public void run(Object data) {
+				UtilManager.changeMapMode(PrefListView.this);
+			}
+		});
+		
+		httpModeMenuItem = new MenuItem("Http optimisé", new IAction() {
+			public void run(Object data) {
+				UtilManager.changeHttpMode(PrefListView.this);
+			}
+		});
+		
+		debugModeMenuItem = new MenuItem("Debug mode", new IAction() {
 			public void run(Object data) {
 				UtilManager.changeDebugMode(PrefListView.this);
 			}
 		});
-		
 		
 		resetMenuItem = new MenuItem("Reset", new IAction() {
 			public void run(Object data) {
@@ -71,7 +82,9 @@ public class PrefListView extends PrefBaseListView {
 		
 		menu.addMenuItem(cityMenuItem);
 		menu.addMenuItem(languageMenuItem);
-		menu.addMenuItem(debugMenuItem);
+		menu.addMenuItem(mapModeMenuItem);
+		menu.addMenuItem(httpModeMenuItem);
+		menu.addMenuItem(debugModeMenuItem);
 		menu.addMenuItem(resetMenuItem);
 		
 		setMenu(menu);
@@ -88,6 +101,8 @@ public class PrefListView extends PrefBaseListView {
 			fetchCityPref();
 			fetchLanguagePref();
 			fetchDebugMode();
+			fetchHttpMode();
+			fetchMapMode();
 		}
 		super.beforeDisplayableSelection(current, next);
 	}
@@ -129,7 +144,27 @@ public class PrefListView extends PrefBaseListView {
 	}
 
 	private void fetchDebugMode() {
-		debugMenuItem.setData(PREF_VALUE, LoggerManager.getThresholdLevel() == Logger.DEBUG ? "Oui" : "Non");
+		boolean isDebugModeActive = UtilManager.isDebugModeActive();
+		if (logger.isDebugEnabled()) {
+			logger.debug("Debug mode active: " + isDebugModeActive);	
+		}
+		debugModeMenuItem.setData(PREF_VALUE, isDebugModeActive ? "Oui" : "Non");
+	}
+
+	private void fetchHttpMode() {
+		boolean isOptimizedHttpModeActive = PrefManager.readPrefBoolean(UtilManager.OPTIMIZED_HTTP_MODE_ENABLED);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Optimized Http mode active: " + isOptimizedHttpModeActive);	
+		}
+		httpModeMenuItem.setData(PREF_VALUE, isOptimizedHttpModeActive ? "Oui" : "Non");
+	}
+
+	private void fetchMapMode() {
+		boolean isMapModeActive = PrefManager.readPrefBoolean(UtilManager.MAP_MODE_ENABLED);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Map mode active: " + isMapModeActive);	
+		}
+		mapModeMenuItem.setData(PREF_VALUE, isMapModeActive ? "Activé" : "Désactivé");
 	}
 
 }

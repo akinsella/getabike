@@ -14,6 +14,10 @@ public class StationDistanceFilter implements IObjectFilter {
 	
 	private int distanceMax;
 	
+	public StationDistanceFilter(int distanceMax) {
+		this(null, distanceMax);
+	}
+	
 	public StationDistanceFilter(Station station, int distanceMax) {
 		super();
 		this.station = station;
@@ -22,16 +26,22 @@ public class StationDistanceFilter implements IObjectFilter {
 	
 	public boolean matches(Object object) {
 		Station targetStation = (Station)object;
-		double distanceInMeters = DistanceUtil.distance(
-				station.localization.lat,
-				station.localization.lng,
-				targetStation.localization.lat,
-				targetStation.localization.lng, 
-				DistanceUtil.KM) * 1000;
+		
+		if (station != null && targetStation.distance == Double.MAX_VALUE) {
+			targetStation.distance = DistanceUtil.distance(
+					station.localization.lat,
+					station.localization.lng,
+					targetStation.localization.lat,
+					targetStation.localization.lng, 
+					DistanceUtil.KM) * 1000;
+
+		}
+		
+		double distanceInMeters = targetStation.distance;
 		
 		boolean matches = distanceInMeters < distanceMax;
 		if (matches) {
-			logger.info("Distance is: '" + distanceInMeters + "' meters between " + targetStation.name + "[" + targetStation.number + "] and " + station.name + "[" + station.number + "]");
+			logger.info("Distance is: '" + distanceInMeters + "' meters for station: '" + targetStation.name + "' - [" + targetStation.number + "]");
 		}
 		return matches;
 	}

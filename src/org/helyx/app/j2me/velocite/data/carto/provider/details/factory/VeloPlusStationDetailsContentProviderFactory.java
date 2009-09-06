@@ -1,9 +1,9 @@
 package org.helyx.app.j2me.velocite.data.carto.provider.details.factory;
 
+import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.VeloPlusStationDetailsContentProvider;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.helyx4me.content.accessor.HttpContentAccessor;
 import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.content.provider.IContentProviderFactory;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryException;
@@ -28,7 +28,7 @@ public class VeloPlusStationDetailsContentProviderFactory implements IContentPro
 		String url = new StringFormat(city.stationDetails).format(String.valueOf(station.number));
 		logger.debug("URL: " + url);
 		IContentProvider stationContentProvider = new VeloPlusStationDetailsContentProvider(
-			new HttpContentAccessor(url),
+			new HttpVelociteContentAccessor(url),
 			city, 
 			station	);
 		

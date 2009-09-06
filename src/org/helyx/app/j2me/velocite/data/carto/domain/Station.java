@@ -25,6 +25,8 @@ public class Station {
 	public Point localization;
 	
 	public boolean bonus;
+	
+	public double distance = Double.MAX_VALUE;
 
 	public Station() {
 		super();

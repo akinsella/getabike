@@ -6,6 +6,7 @@ import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.task.AppStartProgressTask;
 import org.helyx.app.j2me.velocite.ui.view.MenuView;
 import org.helyx.app.j2me.velocite.ui.view.SplashScreenView;
+import org.helyx.app.j2me.velocite.util.UtilManager;
 import org.helyx.helyx4me.constant.BooleanConstants;
 import org.helyx.helyx4me.i18n.Locale;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
@@ -14,6 +15,7 @@ import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.dialog.AbstractDialogResultCallback;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogResultConstants;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
 import org.helyx.logging4me.Logger;
@@ -77,7 +79,35 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	}
 
 	private void onStartSuccess(AbstractView view) {
-		view.showDisplayable(new MenuView(VelociteMIDlet.this));
+		MenuView menuView = new MenuView(VelociteMIDlet.this);
+		view.showDisplayable(menuView);
+		checkMapModeEnabled(menuView);
+	}
+	
+	private void checkMapModeEnabled(final AbstractView view) {
+		if (PrefManager.readPref(UtilManager.MAP_MODE_ENABLED) == null) {
+			DialogUtil.showYesNoDialog(view, "Google Maps", "Activer la visualisation des stations avec Google Maps ?\n\nAttention: Un forfait data illimité est  fortement recommandé.", new AbstractDialogResultCallback() {
+
+				public void onResult(DialogView dialogView, Object data) {
+					int resultValue = dialogView.getResultCode();
+					switch (resultValue) {
+						case DialogResultConstants.YES:
+							PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, true);
+							dialogView.showDisplayable(view);
+							break;
+						case DialogResultConstants.NO:
+							PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, false);
+							dialogView.showDisplayable(view);
+							break;
+						default :
+							PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, false);
+							dialogView.showDisplayable(view);
+							break;						
+					}
+				}
+			});
+		}
+
 	}
 
 	private void onStartError(AbstractView view, String message, Throwable t) {

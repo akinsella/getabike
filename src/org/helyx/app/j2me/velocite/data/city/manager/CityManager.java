@@ -4,11 +4,11 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
 import org.helyx.app.j2me.velocite.ui.view.CityListView;
-import org.helyx.helyx4me.content.accessor.HttpContentAccessor;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;
@@ -24,7 +24,7 @@ public class CityManager {
 
 	private static final Logger logger = Logger.getLogger("CITY_MANAGER");
 	
-	private static final String CITIES_URL = "http://www.helyx.org/velocite/v1/cities.xml";
+	private static final String CITIES_URL = "http://velocite.helyx.org/v1/cities.xml";
 	
 	private CityManager() {
 		super();
@@ -32,7 +32,7 @@ public class CityManager {
 
 	public static IProgressTask createUpdateCitiesTask() {
 		
-		IContentAccessor cityContentAccessor = new HttpContentAccessor(CITIES_URL);
+		IContentAccessor cityContentAccessor = new HttpVelociteContentAccessor(CITIES_URL);
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 

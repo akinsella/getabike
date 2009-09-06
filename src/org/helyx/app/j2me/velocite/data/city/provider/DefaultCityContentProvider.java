@@ -28,6 +28,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 	private static final String CITY = "city";
 	private static final String QUARTIERS = "quartiers";
 	private static final String QUARTIER = "quartier";
+	private static final String SUPPORT = "support";
 
 	private static final String KEY = "key";
 	private static final String NAME = "name";
@@ -97,7 +98,12 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 				XppAttributeProcessor cityXppAttributeProcessor = new XppAttributeProcessor();
 				cityXppAttributeProcessor.addAll(new String[] { 
 					KEY, NAME, SERVICE_NAME, TYPE, ACTIVE, WEB_SITE, 
-					STATION_DETAILS, STATION_LIST, BONUS, TPE, STATE, NORMALIZER
+					STATION_DETAILS, STATION_LIST, NORMALIZER
+				});
+				
+				XppAttributeProcessor supportXppAttributeProcessor = new XppAttributeProcessor();
+				supportXppAttributeProcessor.addAll(new String[] { 
+					BONUS, TPE, STATE
 				});
 
 				XppAttributeProcessor quartierXppAttributeProcessor = new XppAttributeProcessor();
@@ -119,14 +125,20 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 					city.type = cityXppAttributeProcessor.getAttrValueAsString(TYPE);
 					city.active = cityXppAttributeProcessor.getAttrValueAsBoolean(ACTIVE);
 					city.webSite = cityXppAttributeProcessor.getAttrValueAsString(WEB_SITE);
-					city.bonus = cityXppAttributeProcessor.getAttrValueAsBoolean(BONUS);
-					city.tpe = cityXppAttributeProcessor.getAttrValueAsBoolean(TPE);
-					city.state = cityXppAttributeProcessor.getAttrValueAsBoolean(STATE);
 					city.stationList = cityXppAttributeProcessor.getAttrValueAsString(STATION_LIST);
 					city.stationDetails = cityXppAttributeProcessor.getAttrValueAsString(STATION_DETAILS);
 					city.normalizer = cityXppAttributeProcessor.getAttrValueAsString(NORMALIZER);
+					boolean readNextElement = XppUtil.readNextElement(xpp);
 					
-					if (XppUtil.readNextElement(xpp) && xpp.getName().equals(QUARTIERS)) {
+					if (readNextElement && xpp.getName().equals(SUPPORT)) {
+						supportXppAttributeProcessor.processNode(xpp);
+						
+						city.bonus = supportXppAttributeProcessor.getAttrValueAsBoolean(BONUS);
+						city.tpe = supportXppAttributeProcessor.getAttrValueAsBoolean(TPE);
+						city.state = supportXppAttributeProcessor.getAttrValueAsBoolean(STATE);
+					}
+					
+					if (readNextElement && xpp.getName().equals(QUARTIERS)) {
 						while (XppUtil.readNextElement(xpp) && xpp.getName().equals(QUARTIER)) {
 							Quartier quartier = new Quartier();
 							quartierXppAttributeProcessor.processNode(xpp);

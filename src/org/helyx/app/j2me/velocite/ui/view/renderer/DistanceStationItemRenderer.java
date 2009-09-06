@@ -3,13 +3,15 @@ package org.helyx.app.j2me.velocite.ui.view.renderer;
 import javax.microedition.lcdui.Graphics;
 
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
 import org.helyx.app.j2me.velocite.ui.view.StationListView;
 import org.helyx.helyx4me.math.DistanceUtil;
 import org.helyx.helyx4me.ui.geometry.Rectangle;
+import org.helyx.helyx4me.ui.graphics.Color;
+import org.helyx.helyx4me.ui.theme.ThemeConstants;
 import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
 import org.helyx.logging4me.Logger;
-
 
 public class DistanceStationItemRenderer extends StationItemRenderer {
 
@@ -25,18 +27,33 @@ public class DistanceStationItemRenderer extends StationItemRenderer {
 		StationListView stationListView = (StationListView)view;
 		Station referentStation = stationListView.getReferentStation();
 		Station station = (Station)itemObject;
+		
+		if (station.distance == Double.MAX_VALUE) {
+			station.distance = DistanceUtil.distance(referentStation.localization, station.localization, DistanceUtil.KM) * 1000;
+		}
     	
-		double distance = DistanceUtil.distance(referentStation.localization, station.localization, DistanceUtil.KM);
-		logger.info("Distance: " + new String((long)(distance * 1000) + " m"));
+		logger.info("Distance: " + new String((long)(station.distance) + " m"));
 		logger.info("itemClientArea: " + itemClientArea);
-		if (distance < Double.MAX_VALUE) {
+		if (station.distance < Double.MAX_VALUE) {
 	        g.setFont(FontUtil.SMALL);
 
 	        int x = itemClientArea.location.x;
 	        int y = itemClientArea.location.y;
 	        int width = itemClientArea.size.width;
 	        int height = itemClientArea.size.height;
-			String distanceStr = new String((long)(distance * 1000) + " m");
+			String distanceStr = new String((long)(station.distance) + " m");
+			
+			Color distanceFontColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
+			try {
+				//TODO: Add color to theme
+				distanceFontColor = view.getTheme().getColor(AppThemeConstants.STATION_LIST_DISTANCE_COLOR);
+			}
+			catch(Throwable t) {
+				logger.warn(t);
+			}
+			g.setFont(FontUtil.SMALL);
+			g.setColor(distanceFontColor.intValue());
+
 			g.drawString(distanceStr, x + width - FontUtil.SMALL.stringWidth(distanceStr) - 2, y + height - 2 - FontUtil.SMALL.getHeight(), Graphics.LEFT | Graphics.TOP);
 
 			logger.info("y + height - 2: " + (y + height - 2));

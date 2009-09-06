@@ -1,12 +1,13 @@
 package org.helyx.app.j2me.velocite.data.carto.listener;
 
 import org.helyx.app.j2me.velocite.ui.view.StationListView;
+import org.helyx.helyx4me.comparator.Comparator;
 import org.helyx.helyx4me.filter.IObjectFilter;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.list.ArrayElementProvider;
-import org.helyx.helyx4me.ui.view.support.list.FilterableElementProvider;
+import org.helyx.helyx4me.ui.view.support.list.FilterableSortableElementProvider;
 import org.helyx.helyx4me.ui.view.support.list.IElementProvider;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.logging4me.Logger;
@@ -18,29 +19,32 @@ public class UIStationLoaderProgressListener extends ProgressAdapter {
 	
 	private StationListView stationListView;
 	private IObjectFilter objectFilter;
+	private Comparator comparator;
 	
 	public UIStationLoaderProgressListener(StationListView stationListView) {
 		super(logger.getCategory().getName());
 		this.stationListView = stationListView;
 	}
 	
-	public UIStationLoaderProgressListener(StationListView stationListView, IObjectFilter objectFilter) {
+	public UIStationLoaderProgressListener(StationListView stationListView, IObjectFilter objectFilter, Comparator comparator) {
 		super(logger.getCategory().getName());
 		this.stationListView = stationListView;
 		this.objectFilter = objectFilter;
+		this.comparator = comparator;
 	}
 	
 	public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
 		switch (eventType) {
 			case EventType.ON_SUCCESS:
 				IElementProvider elementProvider = new ArrayElementProvider((Object[])eventData);
-				if (objectFilter != null) {
-					IElementProvider filteredElementProvider = new FilterableElementProvider(elementProvider, objectFilter);
-					stationListView.setItems(filteredElementProvider);
+				if (objectFilter != null || comparator != null) {
+					IElementProvider filteredSortedElementProvider = new FilterableSortableElementProvider(elementProvider, objectFilter, comparator);
+					stationListView.setItems(filteredSortedElementProvider);
 				}
 				else {
 					stationListView.setItems(elementProvider);					
 				}
+				
 				stationListView.showDisplayable(stationListView, new BasicTransition());
 				break;
 

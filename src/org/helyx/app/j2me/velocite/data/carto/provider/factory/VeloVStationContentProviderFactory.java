@@ -1,5 +1,6 @@
 package org.helyx.app.j2me.velocite.data.carto.provider.factory;
 
+import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.velocite.data.carto.provider.AbstractStationContentProvider;
@@ -7,7 +8,6 @@ import org.helyx.app.j2me.velocite.data.carto.provider.VeloVStationContentProvid
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
-import org.helyx.helyx4me.content.accessor.HttpContentAccessor;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.accessor.IContentAccessorFactory;
 import org.helyx.helyx4me.content.provider.IContentProvider;
@@ -37,7 +37,7 @@ public class VeloVStationContentProviderFactory implements IContentProviderFacto
 					Quartier quartier = (Quartier)object;
 					String url = new StringFormat(city.stationList).format(quartier.zipCode);
 					logger.info("Url: " + url);
-					return new HttpContentAccessor(url);
+					return new HttpVelociteContentAccessor(url);
 				}
 				
 			});

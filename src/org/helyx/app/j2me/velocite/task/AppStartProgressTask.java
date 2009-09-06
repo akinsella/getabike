@@ -6,12 +6,17 @@ import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.velocite.data.language.task.LanguageConfigurationTask;
+import org.helyx.app.j2me.velocite.util.UtilManager;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.AbstractProgressTask;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.helyx4me.ui.view.support.dialog.AbstractDialogResultCallback;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogResultConstants;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
 import org.helyx.logging4me.Logger;
 
 
@@ -67,7 +72,9 @@ public class AppStartProgressTask extends AbstractProgressTask {
 			LanguageManager.cleanUpSavedData();
 			onProgress("Suppression des données terminée");
 		}
+		PrefManager.writePref(UtilManager.GOOGLE_MAPS_KEY, UtilManager.DEFAULT_GOOGLE_MAPS_KEY);
 		
+
 		boolean cityDataCleanUpNeeded = PrefManager.readPrefBoolean(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
 		if (cityDataCleanUpNeeded) {
 			onProgress("Suppression des villes enregistrées ...");
@@ -95,7 +102,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		logger.info("This is not an update of an older version. New version is: '" + newVersion + "'");
 		checkCities();
 	}
-	
+
 	private void onAppUpdate(String oldVersion, String newVersion) {
 		logger.info("This is  an update of an older version: '" + oldVersion + "'");
 		logger.info("New version is: '" + newVersion + "'");
@@ -119,7 +126,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 			configureLanguages();
 		}
 	}
-	
+
 	private void configureCities() {
 		onProgress("Chargement des villes ...");
 		IProgressTask progressTask = CityManager.createUpdateCitiesTask();

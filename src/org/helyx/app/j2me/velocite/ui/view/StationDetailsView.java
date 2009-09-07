@@ -12,6 +12,7 @@ import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
+import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
@@ -44,6 +45,7 @@ public class StationDetailsView extends AbstractView {
 	
 	private Image iconImage;
 	
+	private City city;
 	private Station station;
 	private StationDetails stationDetails;
 	
@@ -54,8 +56,9 @@ public class StationDetailsView extends AbstractView {
 	private String poiImgClasspath;
 	private String poiSelectedImgClasspath;
 
-	public StationDetailsView(AbstractMIDlet midlet, Station station)  {
+	public StationDetailsView(AbstractMIDlet midlet, City city, Station station)  {
 		super(midlet);
+		this.city = city;
 		this.station = station;
 		init();
 	}
@@ -358,30 +361,52 @@ public class StationDetailsView extends AbstractView {
         height += smallFontHeight + 5;
 
         g.setColor(detailsBackgroundColor.intValue());
-        g.fillRect(5, height + 5, canvasWidth - 10, 5 + (mediumFontHeight + 1) * 4 + 5);
+        g.fillRect(5, height + 5, canvasWidth - 10, 5 + (mediumFontHeight + 1) * (4 + (city.tpe ? 1 : 0) + (city.bonus ? 1 : 0)) + 5);
         
         height += 5 + 2;
         
         g.setColor(detailsFontMessageColor.intValue());
         g.setFont(mediumFont);
-        int veloDispoWidth = mediumFont.stringWidth("Vélos disponibles: ") + 5 + mediumFont.stringWidth(String.valueOf("20"));
-        
-        int contentLeftPos = canvasWidth / 2 - veloDispoWidth / 2;
-        int contentRightPos = canvasWidth / 2 + veloDispoWidth / 2;
+        int maxKeyWidth = mediumFont.stringWidth("Vélos disponibles: ") + 5 + mediumFont.stringWidth(String.valueOf("WWW"));
         
         String total = stationDetails != null ? String.valueOf(stationDetails.total) : "ND"; 
         String available = stationDetails != null ? String.valueOf(stationDetails.available) : "ND"; 
         String free = stationDetails != null ? String.valueOf(stationDetails.free) : "ND"; 
         String hs = stationDetails != null ? String.valueOf(stationDetails.total - stationDetails.available - stationDetails.free) : "ND"; 
-        
-        g.drawString("Total vélos: ", contentLeftPos, height + 1, Graphics.TOP | Graphics.LEFT); 
-        g.drawString(total, contentRightPos - mediumFont.stringWidth(total), height + 1, Graphics.TOP | Graphics.LEFT);
-        g.drawString("Vélos disponibles: ", contentLeftPos, height + (mediumFontHeight + 1) * 1, Graphics.TOP | Graphics.LEFT); 
-        g.drawString(available, contentRightPos - mediumFont.stringWidth(available), height + (mediumFontHeight + 1) * 1, Graphics.TOP | Graphics.LEFT);
-        g.drawString("Places libres: ", contentLeftPos, height + (mediumFontHeight + 1) * 2, Graphics.TOP | Graphics.LEFT); 
-        g.drawString(free, contentRightPos - mediumFont.stringWidth(free), height + (mediumFontHeight + 1) * 2, Graphics.TOP | Graphics.LEFT);
-        g.drawString("Hors service: ", contentLeftPos, height + (mediumFontHeight + 1) * 3, Graphics.TOP | Graphics.LEFT); 
-        g.drawString(hs, contentRightPos - mediumFont.stringWidth(hs), height + (mediumFontHeight + 1) * 3, Graphics.TOP | Graphics.LEFT);
+        String tpe = stationDetails != null ? (stationDetails.tpe ? "Oui" : "Non") : "ND"; 
+        String bonus = stationDetails != null ? (station.bonus ? "Oui" : "Non") : "ND"; 
+         
+        int line = 0;
+        showDetailLine(g, line, "Total vélos: ", total, height, maxKeyWidth);
+        line++;
+        showDetailLine(g, line, "Vélos disponibles: ", available, height, maxKeyWidth);
+        line++;
+        showDetailLine(g, line, "Places libres: ", free, height, maxKeyWidth);
+        line++;
+        showDetailLine(g, line, "Hors service: ", hs, height, maxKeyWidth);
+        line++;
+        if (city.tpe) {
+        showDetailLine(g, line, "Payement Elec.: ", tpe, height, maxKeyWidth);
+        line++;        	
+        }
+        if (city.bonus) {
+        	showDetailLine(g, line, "Bonus:  ", bonus, height, maxKeyWidth);
+        }
+ 	}
+	
+	private void showDetailLine(Graphics g, int line, String key, String value, int height, int maxKeyWidth) {
+		 
+		Font mediumFont = FontUtil.MEDIUM;
+		
+		int mediumFontHeight = mediumFont.getHeight();
+	
+		int canvasWidth = viewCanvas.getWidth();
+        int contentLeftPos = canvasWidth / 2 - maxKeyWidth / 2;
+        int contentRightPos = canvasWidth / 2 + maxKeyWidth / 2;
+
+        g.drawString(key, contentLeftPos, height + (mediumFontHeight + 1) * line, Graphics.TOP | Graphics.LEFT); 
+        g.drawString(value, contentRightPos - mediumFont.stringWidth(value), height + (mediumFontHeight + 1) * line, Graphics.TOP | Graphics.LEFT);
+
 	}
 
 	public boolean isAllowSearchNearStation() {

@@ -5,6 +5,7 @@ import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationNameFilter;
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.task.StationLoadTask;
+import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
 import org.helyx.app.j2me.velocite.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
@@ -17,6 +18,7 @@ import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.view.support.LoadTaskView;
 import org.helyx.helyx4me.ui.view.support.MenuListView;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.helyx4me.ui.widget.Command;
@@ -38,10 +40,14 @@ public class StationListView extends AbstractListView {
 	
 	private String poiImgClasspath;
 	private String poiSelectedImgClasspath;
-
+	
+	private String originalTitle;
+	
+	private City city;
 
 	public StationListView(AbstractMIDlet midlet, String title) {
 		super(midlet, title);
+		this.originalTitle = title;
 		init();
 	}
 	
@@ -104,6 +110,23 @@ public class StationListView extends AbstractListView {
 				
 				public void run(Object data) {
 					showGoogleMapsView();
+				}
+			}));
+		}
+		
+		if (city != null && city.webSite != null) {
+			menu.addMenuItem(new MenuItem("Voir le site internet", new IAction() {
+				
+				public void run(Object data) {
+					if (logger.isInfoEnabled()) {
+						logger.info("Open city ('" + city.name + "') web site URL: '" + city.webSite + "'");
+					}
+					try {
+						getMidlet().platformRequest(city.webSite);
+					}
+					catch(Throwable t) {
+						DialogUtil.showAlertMessage(StationListView.this, "Erreur de connection", "Impossible d'ouvrir la page : '" + t.getMessage() + "'");
+					}
 				}
 			}));
 		}
@@ -173,7 +196,8 @@ public class StationListView extends AbstractListView {
 
 	protected void showSelectedItem(Station object) {
 		Station station = (Station)object;
-		StationDetailsView stationDetailsView = new StationDetailsView(getMidlet(), station);
+		
+		StationDetailsView stationDetailsView = new StationDetailsView(getMidlet(), city, station);
 		stationDetailsView.setAllowSearchNearStation(allowNested);
 		stationDetailsView.setRelatedStations(elementProvider);
 
@@ -225,6 +249,16 @@ public class StationListView extends AbstractListView {
 
 	public void setAllowNested(boolean allowNested) {
 		this.allowNested = allowNested;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+		if (city == null) {
+			setTitle(originalTitle);
+		}
+		else {
+			setTitle(city.name + " - " + originalTitle);
+		}
 	}
 
 }

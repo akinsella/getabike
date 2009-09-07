@@ -6,6 +6,7 @@ import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
+import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.localization.Point;
@@ -17,9 +18,9 @@ import org.helyx.logging4me.Logger;
 import org.xmlpull.v1.XmlPullParser;
 
 
-public class DefaultStationContentProvider extends AbstractStationContentProvider {
+public class VelibStationContentProvider extends AbstractStationContentProvider {
 	
-	private static final Logger logger = Logger.getLogger("DEFAULT_STATION_CONTENT_PROVIDER");
+	private static final Logger logger = Logger.getLogger("VELIB_STATION_CONTENT_PROVIDER");
 
 	private static final String MARKER = "marker";
 	
@@ -41,13 +42,12 @@ public class DefaultStationContentProvider extends AbstractStationContentProvide
 
 	private IContentAccessor stationContentAccessor;
 
-	public DefaultStationContentProvider() {
-		super();
-	}
+	private City city;
 
-	public DefaultStationContentProvider(IContentAccessor stationContentAccessor) {
+	public VelibStationContentProvider(City city, IContentAccessor stationContentAccessor) {
 		super();
 		this.stationContentAccessor = stationContentAccessor;
+		this.city = city;
 	}
 
 
@@ -87,8 +87,9 @@ public class DefaultStationContentProvider extends AbstractStationContentProvide
 
 					station.number = xppAttributeProcessor.getAttrValueAsInt(NUMBER);
 					station.name = xppAttributeProcessor.getAttrValueAsString(NAME);
-					station.open = xppAttributeProcessor.getAttrValueAsInt(OPEN) == openValue;
-					station.bonus = xppAttributeProcessor.getAttrValueAsBoolean(BONUS);
+					
+					station.open = city.state ? xppAttributeProcessor.getAttrValueAsInt(OPEN) == openValue : true;
+					station.bonus = city.bonus ? xppAttributeProcessor.getAttrValueAsBoolean(BONUS) : false;
 					station.address = xppAttributeProcessor.getAttrValueAsString(ADDRESS);
 					station.fullAddress = xppAttributeProcessor.getAttrValueAsString(FULL_ADDRESS).trim();
 					station.localization.lat = xppAttributeProcessor.getAttrValueAsDouble(LAT);

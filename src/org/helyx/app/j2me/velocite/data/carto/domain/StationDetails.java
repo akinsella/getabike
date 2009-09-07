@@ -30,7 +30,9 @@ public class StationDetails {
 		.append(", free=").append(free)
 		.append(", total=").append(total)
 		.append(", hs=").append(hs)
-		.append(", ticket=").append(ticket);
+		.append(", ticket=").append(ticket)
+		.append(", open=").append(open)
+		.append(", tpe=").append(tpe);
 
 		return sb.toString();
 	}

@@ -9,7 +9,7 @@ public class AllTests {
 		TestSuite suite = new TestSuite(
 				"Test for org.helyx.app.j2me.velocite.test");
 		//$JUnit-BEGIN$
-		suite.addTestSuite(DefaultStationContentProviderTest.class);
+		suite.addTestSuite(VelibStationContentProviderTest.class);
 		suite.addTestSuite(StationNameNormalizerTest.class);
 		suite.addTestSuite(DefaultCityContentProviderTest.class);
 		suite.addTestSuite(DefaultCityContentAccessorTest.class);

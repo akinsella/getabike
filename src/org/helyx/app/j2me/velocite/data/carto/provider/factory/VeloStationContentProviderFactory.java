@@ -26,7 +26,9 @@ public class VeloStationContentProviderFactory implements IContentProviderFactor
 	
 	public IContentProvider createContentProvider() throws ContentProviderFactoryException {
 		try {
-			AbstractStationContentProvider stationContentProvider = new VeloStationContentProvider(new HttpVelociteContentAccessor(city.stationList));
+			AbstractStationContentProvider stationContentProvider = new VeloStationContentProvider(
+					city, 
+					new HttpVelociteContentAccessor(city.stationList));
 			IStationInfoNormalizer stationInfoNormalizer = CartoManager.getStationInfoNormalizer(city);
 			stationContentProvider.setStationInfoNormalizer(stationInfoNormalizer);
 			return stationContentProvider;

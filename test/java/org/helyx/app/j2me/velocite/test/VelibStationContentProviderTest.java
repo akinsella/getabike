@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.data.carto.provider.DefaultStationContentProvider;
+import org.helyx.app.j2me.velocite.data.carto.provider.VelibStationContentProvider;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
 import org.helyx.helyx4me.content.accessor.ContentAccessorException;
@@ -18,11 +18,11 @@ import org.helyx.logging4me.Logger;
 import org.helyx.logging4me.config.BasicConfigurer;
 
 
-public class DefaultStationContentProviderTest extends TestCase {
+public class VelibStationContentProviderTest extends TestCase {
 
 	private static final Logger logger = Logger.getLogger("DEFAULT_STATION_CONTENT_PROVIDER_TEST");
 
-	public DefaultStationContentProviderTest() {
+	public VelibStationContentProviderTest() {
 		super();
 		new BasicConfigurer().configure();
 	}
@@ -36,7 +36,7 @@ public class DefaultStationContentProviderTest extends TestCase {
 		city.stationList = "/org/helyx/app/j2me/velocite/test/data/station/carto_seville.xml";
 		
 		IContentAccessor stationContentAccessor = new ClasspathContentAccessor(city.stationList);
-		IContentProvider stationContentLoader = new DefaultStationContentProvider(stationContentAccessor);
+		IContentProvider stationContentLoader = new VelibStationContentProvider(city, stationContentAccessor);
 		
 		final Vector stationList = new Vector();
 		

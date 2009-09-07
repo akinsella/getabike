@@ -136,6 +136,8 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 						city.bonus = supportXppAttributeProcessor.getAttrValueAsBoolean(BONUS);
 						city.tpe = supportXppAttributeProcessor.getAttrValueAsBoolean(TPE);
 						city.state = supportXppAttributeProcessor.getAttrValueAsBoolean(STATE);
+						
+						readNextElement = XppUtil.readNextElement(xpp);
 					}
 					
 					if (readNextElement && xpp.getName().equals(QUARTIERS)) {

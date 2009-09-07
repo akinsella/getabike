@@ -19,9 +19,9 @@ import org.helyx.logging4me.Logger;
 import org.xmlpull.v1.XmlPullParser;
 
 
-public class DefaultStationDetailsContentProvider extends AbstractContentProvider {
+public class VelibStationDetailsContentProvider extends AbstractContentProvider {
 	
-	private static final Logger logger = Logger.getLogger("DEFAULT_STATION_DETAILS_CONTENT_PROVIDER");
+	private static final Logger logger = Logger.getLogger("VELIB_STATION_DETAILS_CONTENT_PROVIDER");
 
 
 	private static final String STATION = "station";
@@ -39,7 +39,7 @@ public class DefaultStationDetailsContentProvider extends AbstractContentProvide
 	private City city;
 	private Station station;
 	
-	public DefaultStationDetailsContentProvider(IContentAccessor stationDetailsContentAccessor, City city, Station station) {
+	public VelibStationDetailsContentProvider(IContentAccessor stationDetailsContentAccessor, City city, Station station) {
 		super();
 		this.stationDetailsContentAccessor = stationDetailsContentAccessor;
 		this.city = city;

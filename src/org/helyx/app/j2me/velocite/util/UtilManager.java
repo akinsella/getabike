@@ -22,6 +22,8 @@ public class UtilManager {
 	public static final String GOOGLE_MAPS_KEY = "GOOGLE_MAPS_KEY";
 
 	public static final String DEFAULT_GOOGLE_MAPS_KEY = "ABQIAAAAm-1Nv9nWhCjQxC3a4v-lBBR9EQxSSSz8gi3qW-McXAXnYGN8YxSBOridiu5I3THzW-_0oY2DecnShA";
+
+	public static final String PRE_LOAD_MODE_ENABLED = "PRE_LOAD_MODE_ENABLED";
 	
 	private static LevelInformationHolder levelInformationHolder;
 	

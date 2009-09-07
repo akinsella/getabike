@@ -35,10 +35,6 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 	private IContentAccessorFactory contentAccessorFactory;
 	private City city;
 
-	public VeloVStationContentProvider() {
-		super();
-	}
-
 	public VeloVStationContentProvider(City city, IContentAccessorFactory contentAccessorFactory) {
 		super();
 		this.contentAccessorFactory = contentAccessorFactory;

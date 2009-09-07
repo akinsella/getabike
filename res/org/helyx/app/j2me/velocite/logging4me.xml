@@ -17,7 +17,7 @@
 
 -->
 
-<logging4me xmlns="http://logging4me.helyx.org/logging4me-1.0.0.xsd" thresholdLevel="INFO" debugMode="false">
+<logging4me xmlns="http://logging4me.helyx.org/logging4me-1.0.0.xsd" thresholdLevel="DEBUG" debugMode="false">
 
 	<!-- Layouts -->
 	<!-- layout name="pl" class="org.helyx.logging4me.layout.pattern.PatternLayout">
@@ -41,7 +41,7 @@
 	 -->
  
  	<!-- Categories -->
-	<category name="org.helyx.app.j2me.velocite" level="INFO" />
+	<category name="org.helyx.app.j2me.velocite" level="DEBUG" />
 	<category name="org.helyx.helyx4me" level="INFO" />
 	<category name="org.helyx.helyx4me.content.accessor" level="DEBUG" />
 	

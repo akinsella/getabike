@@ -6,6 +6,7 @@ import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
+import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.localization.Point;
@@ -31,13 +32,12 @@ public class VeloPlusStationContentProvider extends AbstractStationContentProvid
 
 	private IContentAccessor stationContentAccessor;
 
-	public VeloPlusStationContentProvider() {
-		super();
-	}
+	private City city;
 
-	public VeloPlusStationContentProvider(IContentAccessor stationContentAccessor) {
+	public VeloPlusStationContentProvider(City city, IContentAccessor stationContentAccessor) {
 		super();
 		this.stationContentAccessor = stationContentAccessor;
+		this.city = city;
 	}
 
 

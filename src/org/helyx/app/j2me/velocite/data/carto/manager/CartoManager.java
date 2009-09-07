@@ -4,10 +4,10 @@ import org.helyx.app.j2me.velocite.data.carto.comparator.StationDistanceComparat
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationDistanceFilter;
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
-import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.DefaultStationDetailsContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VelibStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VeloPlusStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VeloVStationDetailsContentProviderFactory;
-import org.helyx.app.j2me.velocite.data.carto.provider.factory.DefaultStationContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.factory.VelibStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloPlusStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloVStationContentProviderFactory;
@@ -54,7 +54,7 @@ public class CartoManager {
 		try {
 			IContentProviderFactory cpf = null;
 			if (VELIB.equals(city.type)) {
-				cpf = new DefaultStationContentProviderFactory(city);
+				cpf = new VelibStationContentProviderFactory(city);
 			}
 			else if (LE_VELO.equals(city.type)) {
 				cpf = new VeloStationContentProviderFactory(city);
@@ -63,7 +63,7 @@ public class CartoManager {
 				cpf = new VeloStationContentProviderFactory(city);
 			}
 			else if (SEVICI.equals(city.type)) {
-				cpf = new DefaultStationContentProviderFactory(city);
+				cpf = new VelibStationContentProviderFactory(city);
 			}
 			else if (VELO_V.equals(city.type)) {
 				cpf = new VeloVStationContentProviderFactory(city);
@@ -117,16 +117,16 @@ public class CartoManager {
 		try {
 			IContentProviderFactory cpf = null;
 			if (VELIB.equals(city.type)) {
-				cpf = new DefaultStationDetailsContentProviderFactory(city, station);
+				cpf = new VelibStationDetailsContentProviderFactory(city, station);
 			}
 			else if (LE_VELO.equals(city.type)) {
-				cpf = new DefaultStationDetailsContentProviderFactory(city, station);
+				cpf = new VelibStationDetailsContentProviderFactory(city, station);
 			}
 			else if (SEVICI.equals(city.type)) {
-				cpf = new DefaultStationDetailsContentProviderFactory(city, station);
+				cpf = new VelibStationDetailsContentProviderFactory(city, station);
 			}
 			else if (VELO.equals(city.type)) {
-				cpf = new DefaultStationDetailsContentProviderFactory(city, station);
+				cpf = new VelibStationDetailsContentProviderFactory(city, station);
 			}
 			else if (VELO_V.equals(city.type)) {
 				cpf = new VeloVStationDetailsContentProviderFactory(city, station);

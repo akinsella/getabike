@@ -27,6 +27,8 @@ public class Station {
 	public boolean bonus;
 	
 	public double distance = Double.MAX_VALUE;
+	
+	public StationDetails details;
 
 	public Station() {
 		super();
@@ -44,6 +46,10 @@ public class Station {
 		.append(", bonus").append(bonus)
 		.append(", hasLocalization=").append(hasLocalization)
 		.append(", localization=").append(localization);
+		
+		if (details != null) {
+			sb.append(", details=").append(details);
+		}
 
 		return sb.toString();
 	}

@@ -16,7 +16,7 @@
 		  webSite="http://www.velocite.besancon.fr/" 
 		  stationList="http://www.velocite.besancon.fr/service/carto/" 
 		  stationDetails="http://www.velocite.besancon.fr/service/stationdetails/{1}">	  
-		  <support bonus="false" tpe="false" state="false" />
+		  <support bonus="false" tpe="false" state="true" />
 	</city>
 		  
 	<city key="BRUXELLES" name="Bruxelles" type="DEFAULT" active="false"
@@ -24,7 +24,7 @@
 		  webSite="http://www.cyclocity.be/" 
 		  stationList="" 
 		  stationDetails="">
-		  <support bonus="false" tpe="false" state="false" />
+		  <support bonus="false" tpe="false" state="true" />
 	</city>
 		  
 	<city key="DIJON" name="Dijon" type="DEFAULT" active="false" 
@@ -32,7 +32,7 @@
 		  webSite="" 
 		  stationList="" 
 		  stationDetails="" >	  
-		  <support bonus="false" tpe="false" state="false" />
+		  <support bonus="false" tpe="false" state="true" />
 	</city>
 		  
 	<city key="LYON" name="Lyon" type="VELO_V" active="true"
@@ -40,7 +40,7 @@
 		  webSite="http://www.velov.grandlyon.com/" 
 		  stationList="http://www.velov.grandlyon.com/velovmap/zhp/inc/StationsParArrondissement.php?arrondissement={1}" 
 		  stationDetails="http://www.velov.grandlyon.com/velovmap/zhp/inc/DispoStationsParId.php?id={1}&amp;noCache={2}">	  
-		  <support bonus="false" tpe="false" state="false" />
+		  <support bonus="false" tpe="false" state="true" />
 		  <quartiers>
 		  	<quartier id="1" city="Lyon" name="1er arrondissement" zipCode="69381" />
 		  	<quartier id="2" city="Lyon" name="2ème arrondissement" zipCode="69382" />
@@ -62,7 +62,7 @@
 		  webSite="http://www.levelo-mpm.fr" 
 		  stationList="http://www.levelo-mpm.fr/service/carto/" 
 		  stationDetails="http://www.levelo-mpm.fr/service/stationdetails/{1}">	  
-		  <support bonus="false" tpe="false" state="false" />
+		  <support bonus="false" tpe="false" state="true" />
 	</city>
 	
 	<city key="MONTPELLIER" name="Montpellier" type="DEFAULT" active="false"
@@ -70,7 +70,7 @@
 		  webSite="http://www.montpellier-agglo.com/tam/page.php?id_rubrique=273" 
 		  stationList="" 
 		  stationDetails="">	  
-		  <support bonus="false" tpe="false" state="false" />
+		  <support bonus="false" tpe="false" state="true" />
 	</city>
 		  
 	<city key="MULHOUSE" name="Mulhouse" type="DEFAULT" active="false"
@@ -78,7 +78,7 @@
 		  webSite="http://www.mulhouse.fr/fr/demarche.php?PAGEID=3551" 
 		  stationList="" 
 		  stationDetails="" >  
-		  <support bonus="false" tpe="false" state="false" />
+		  <support bonus="false" tpe="false" state="true" />
 	</city>
 	
 	<city key="NANCY" name="Nancy" type="VELIB" active="true"
@@ -86,7 +86,7 @@
 		webSite="http://www.velostanlib.fr"
 		stationList="http://www.velostanlib.fr/service/carto/"
 		stationDetails="http://www.velostanlib.fr/service/stationdetails/{1}">	  
-		  <support bonus="false" tpe="false" state="false" />
+		  <support bonus="false" tpe="false" state="true" />
 	</city>
 		  
 	<city key="NANTES" name="Nantes" type="KML" active="false" 
@@ -94,7 +94,7 @@
 		  webSite="http://www.bicloo.nantesmetropole.fr" 
 		  stationList="http://maps.google.fr/maps/ms?ie=UTF8&amp;hl=fr&amp;oe=UTF8&amp;msa=0&amp;msid=106550840013014095785.00044cde56c5fcae93d24&amp;output=kml" 
 		  stationDetails="" 
-		  bonus="false" tpe="false" state="false" />
+		  bonus="false" tpe="false" state="true" />
 
 	<city key="ORLEANS" name="Orléans" type="VELO_PLUS" active="true" 
 	      serviceName="Vélo+" normalizer="DEFAULT"
@@ -109,16 +109,16 @@
 		  webSite="http://www.velib.paris.fr" 
 		  stationList="http://www.velib.paris.fr/service/carto/" 
 		  stationDetails="http://www.velib.paris.fr/service/stationdetails/{1}">	  
-		  <support bonus="true" tpe="false" state="false" />
+		  <support bonus="true" tpe="false" state="true" />
 	</city>
 		  
-	<city key="RENNES" name="Rennes" type="DEFAULT" active="false" 
-	      serviceName="Vélo à la carte" normalizer="DEFAULT"
+	<city key="RENNES" name="Rennes" type="VELIB" active="false" 
+	      serviceName="Vélo à la carte" normalizer="VELIB"
 		  webSite="http://www.rennes.fr/index.php?id=414" 
 		  stationList="" 
 		  stationDetails="" 
-		  bonus="false" tpe="false" state="false">	  
-		  <support bonus="false" tpe="false" state="false" />
+		  bonus="false" tpe="false" state="true">	  
+		  <support bonus="false" tpe="false" state="true" />
 	</city>
 		  
 	<city key="SEVILLE" name="Seville" type="SEVICI" active="true"
@@ -126,7 +126,7 @@
 		  webSite="http://www.sevici.es/" 
 		  stationList="http://www.sevici.es/service/carto/" 
 		  stationDetails="http://www.sevici.es/service/stationdetails/{1}">	  
-		  <support bonus="false" tpe="false" state="false" />
+		  <support bonus="false" tpe="false" state="true" />
 	</city>
 		  
 	<city key="TOULOUSE" name="Toulouse" type="VELO" active="true"
@@ -134,7 +134,7 @@
 		  webSite="http://www.velo.toulouse.fr" 
 		  stationList="http://www.velo.toulouse.fr/service/carto/" 
 		  stationDetails="http://www.velo.toulouse.fr/service/stationdetails/{1}">	  
-		  <support bonus="false" tpe="false" state="false" />
+		  <support bonus="false" tpe="false" state="true" />
 	</city>
 		  
 </cities>

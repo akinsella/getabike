@@ -83,6 +83,7 @@ public class VeloStationContentProvider extends AbstractStationContentProvider {
 					station.name = xppAttributeProcessor.getAttrValueAsString(NAME);
 					station.open = true;
 					station.bonus = false;
+					station.tpe = false;
 					station.address = xppAttributeProcessor.getAttrValueAsString(ADDRESS);
 					station.fullAddress = xppAttributeProcessor.getAttrValueAsString(FULL_ADDRESS).trim();
 					station.localization.lat = xppAttributeProcessor.getAttrValueAsDouble(LAT);

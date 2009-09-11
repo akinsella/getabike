@@ -34,6 +34,7 @@ public class StationSerializer extends AbstractObjectSerializer {
 			
 			dos.writeBoolean(station.open);
 			dos.writeBoolean(station.bonus);
+			dos.writeBoolean(station.tpe);
 			
 			dos.writeBoolean(station.hasLocalization);		
 			
@@ -66,6 +67,7 @@ public class StationSerializer extends AbstractObjectSerializer {
 			
 			station.open = dis.readBoolean();
 			station.bonus = dis.readBoolean();
+			station.tpe = dis.readBoolean();
 			
 			station.hasLocalization = dis.readBoolean();
 			

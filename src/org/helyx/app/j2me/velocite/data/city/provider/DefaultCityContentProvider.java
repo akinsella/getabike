@@ -6,7 +6,6 @@ import java.util.Vector;
 import org.helyx.app.j2me.velocite.data.city.CityConstants;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
-import org.helyx.basics4me.io.BufferedInputStream;
 import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.AbstractContentProvider;
@@ -16,7 +15,6 @@ import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.xml.xpp.XppAttributeProcessor;
 import org.helyx.helyx4me.xml.xpp.XppUtil;
 import org.helyx.logging4me.Logger;
-
 import org.xmlpull.v1.XmlPullParser;
 
 public class DefaultCityContentProvider extends AbstractContentProvider {
@@ -41,6 +39,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 	private static final String WEB_SITE = "webSite";
 	private static final String BONUS = "bonus";
 	private static final String TPE = "tpe";
+	private static final String LOCALIZATION = "localization";	
 	private static final String STATE = "state";
 	private static final String NORMALIZER = "normalizer";
 	
@@ -103,7 +102,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 				
 				XppAttributeProcessor supportXppAttributeProcessor = new XppAttributeProcessor();
 				supportXppAttributeProcessor.addAll(new String[] { 
-					BONUS, TPE, STATE
+					BONUS, TPE, STATE, LOCALIZATION
 				});
 
 				XppAttributeProcessor quartierXppAttributeProcessor = new XppAttributeProcessor();
@@ -136,6 +135,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 						city.bonus = supportXppAttributeProcessor.getAttrValueAsBoolean(BONUS);
 						city.tpe = supportXppAttributeProcessor.getAttrValueAsBoolean(TPE);
 						city.state = supportXppAttributeProcessor.getAttrValueAsBoolean(STATE);
+						city.localization = supportXppAttributeProcessor.getAttrValueAsBoolean(LOCALIZATION);
 						
 						readNextElement = XppUtil.readNextElement(xpp);
 					}

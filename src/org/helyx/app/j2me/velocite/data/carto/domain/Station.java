@@ -26,6 +26,8 @@ public class Station {
 	
 	public boolean bonus;
 	
+	public boolean tpe;
+	
 	public double distance = Double.MAX_VALUE;
 	
 	public StationDetails details;
@@ -43,7 +45,8 @@ public class Station {
 		.append(", zipCode=").append(zipCode)
 		.append(", city=").append(city)
 		.append(", open=").append(open)
-		.append(", bonus").append(bonus)
+		.append(", bonus=").append(bonus)
+		.append(", tpe=").append(tpe)
 		.append(", hasLocalization=").append(hasLocalization)
 		.append(", localization=").append(localization);
 		

@@ -105,7 +105,7 @@ public class StationListView extends AbstractListView {
 		
 		boolean mapModeEnabled = PrefManager.readPrefBoolean(UtilManager.MAP_MODE_ENABLED);
 
-		if (mapModeEnabled && elementProvider.length() > 0) {
+		if (mapModeEnabled && city.localization && elementProvider.length() > 0) {
 			menu.addMenuItem(new MenuItem("Voir le plan", new IAction() {
 				
 				public void run(Object data) {

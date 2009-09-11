@@ -27,8 +27,8 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 	private static final String NUM_STATION = "numStation";
 	private static final String NOM_STATION = "nomStation";
 	private static final String INFO_STATION = "infoStation";
-	private static final String LATITUDE = "lat";
-	private static final String LONGITUDE = "longitude";
+	private static final String LATITUDE = "x";
+	private static final String LONGITUDE = "y";
 	
 	private boolean cancel = false;
 
@@ -43,7 +43,7 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 	
 	public void loadData() {
 		
-		logger.debug("Loading Lyon carto info ...");
+		logger.debug("Loading carto info ...");
 
 		try {
 			progressDispatcher.fireEvent(EventType.ON_START);
@@ -87,10 +87,11 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 						station.address = jsonMarker.optString(INFO_STATION, "");
 						station.fullAddress = station.address;
 						station.bonus = false;
+						station.tpe = false;
 						station.hasLocalization = true;
 						station.localization = new Point();
 						station.localization.lat = jsonMarker.optDouble(LATITUDE, 0);
-						station.localization.lat = jsonMarker.optDouble(LONGITUDE, 0);
+						station.localization.lng = jsonMarker.optDouble(LONGITUDE, 0);
 						station.hasLocalization = LocalizationUtil.isSet(station.localization);
 
 						station.open = true;

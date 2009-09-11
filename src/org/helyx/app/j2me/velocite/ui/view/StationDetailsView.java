@@ -105,7 +105,7 @@ public class StationDetailsView extends AbstractView {
 
 				Menu menu = new Menu();
 
-				if (mapModeEnabled) {
+				if (mapModeEnabled && city.localization) {
 					menu.addMenuItem(new MenuItem("Voir le plan", new IAction() {
 						
 						public void run(Object data) {
@@ -114,7 +114,7 @@ public class StationDetailsView extends AbstractView {
 					}));
 				}
 				
-				if (allowSearchNearStation) {
+				if (allowSearchNearStation && city.localization) {
 					menu.addMenuItem(new MenuItem("Voir les stations proches", new IAction() {
 						
 						public void run(Object data) {
@@ -373,7 +373,7 @@ public class StationDetailsView extends AbstractView {
         String available = stationDetails != null ? String.valueOf(stationDetails.available) : "ND"; 
         String free = stationDetails != null ? String.valueOf(stationDetails.free) : "ND"; 
         String hs = stationDetails != null ? String.valueOf(stationDetails.total - stationDetails.available - stationDetails.free) : "ND"; 
-        String tpe = stationDetails != null ? (stationDetails.tpe ? "Oui" : "Non") : "ND"; 
+        String tpe = stationDetails != null ? ((station.tpe || stationDetails.tpe) ? "Oui" : "Non") : "ND"; 
         String bonus = stationDetails != null ? (station.bonus ? "Oui" : "Non") : "ND"; 
          
         int line = 0;

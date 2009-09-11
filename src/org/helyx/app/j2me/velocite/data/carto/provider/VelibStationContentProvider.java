@@ -90,6 +90,7 @@ public class VelibStationContentProvider extends AbstractStationContentProvider 
 					
 					station.open = city.state ? xppAttributeProcessor.getAttrValueAsInt(OPEN) == openValue : true;
 					station.bonus = city.bonus ? xppAttributeProcessor.getAttrValueAsBoolean(BONUS) : false;
+					station.tpe = false;
 					station.address = xppAttributeProcessor.getAttrValueAsString(ADDRESS);
 					station.fullAddress = xppAttributeProcessor.getAttrValueAsString(FULL_ADDRESS).trim();
 					station.localization.lat = xppAttributeProcessor.getAttrValueAsDouble(LAT);

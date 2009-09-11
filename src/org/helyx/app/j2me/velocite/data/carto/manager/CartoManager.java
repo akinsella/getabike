@@ -14,6 +14,7 @@ import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloVStationConte
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.DefaultStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.ParisStationInfoNormalizer;
+import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.SimpleCBStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.SimpleStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
@@ -44,6 +45,7 @@ public class CartoManager {
 	private static final String SIMPLE_NORMALIZER = "SIMPLE";
 	private static final String SEVILLE_NORMALIZER = "SEVILLE";
 	private static final String PARIS_NORMALIZER = "PARIS";
+	private static final String SIMPLE_CB_NORMALIZER = "SIMPLE_CB";
 	
 	private CartoManager() {
 		super();
@@ -100,6 +102,9 @@ public class CartoManager {
 		}
 		else if (SIMPLE_NORMALIZER.equals(cityNormalizer)) {
 			return new SimpleStationInfoNormalizer("-");
+		}
+		else if (SIMPLE_CB_NORMALIZER.equals(cityNormalizer)) {
+			return new SimpleCBStationInfoNormalizer("-");
 		}
 		else if (SEVILLE_NORMALIZER.equals(cityNormalizer)) {
 			return new SimpleStationInfoNormalizer("_");

@@ -30,6 +30,8 @@ public class City {
 	
 	public boolean tpe; 
 	
+	public boolean localization;
+	
 	public String normalizer;	
 	
 	public Vector quartierList = new Vector();
@@ -46,8 +48,9 @@ public class City {
 		.append(", stationDetails=").append(stationDetails)
 		.append(", bonus=").append(bonus)
 		.append(", state=").append(state)
-		.append(", normalizer=").append(normalizer)
 		.append(", tpe=").append(tpe)
+		.append(", localization=").append(localization)
+		.append(", normalizer=").append(normalizer)
 		.append(", quartiers: [");
 		
 		int quartierCount = quartierList.size();

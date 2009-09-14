@@ -42,6 +42,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 	private static final String LOCALIZATION = "localization";	
 	private static final String STATE = "state";
 	private static final String NORMALIZER = "normalizer";
+	private static final String COUNTRY = "country";
 	
 	private static final String ID = "id";
 	private static final String ZIP_CODE = "zipCode";
@@ -97,7 +98,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 				XppAttributeProcessor cityXppAttributeProcessor = new XppAttributeProcessor();
 				cityXppAttributeProcessor.addAll(new String[] { 
 					KEY, NAME, SERVICE_NAME, TYPE, ACTIVE, WEB_SITE, 
-					STATION_DETAILS, STATION_LIST, NORMALIZER
+					STATION_DETAILS, STATION_LIST, NORMALIZER, COUNTRY
 				});
 				
 				XppAttributeProcessor supportXppAttributeProcessor = new XppAttributeProcessor();
@@ -122,6 +123,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 					city.name = cityXppAttributeProcessor.getAttrValueAsString(NAME);
 					city.serviceName = cityXppAttributeProcessor.getAttrValueAsString(SERVICE_NAME);
 					city.type = cityXppAttributeProcessor.getAttrValueAsString(TYPE);
+					city.country = cityXppAttributeProcessor.getAttrValueAsString(COUNTRY);
 					city.active = cityXppAttributeProcessor.getAttrValueAsBoolean(ACTIVE);
 					city.webSite = cityXppAttributeProcessor.getAttrValueAsString(WEB_SITE);
 					city.stationList = cityXppAttributeProcessor.getAttrValueAsString(STATION_LIST);

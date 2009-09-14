@@ -8,6 +8,7 @@ import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
+import org.helyx.app.j2me.velocite.data.provider.PropertiesContentProvider;
 import org.helyx.app.j2me.velocite.ui.view.CityListView;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
@@ -24,7 +25,8 @@ public class CityManager {
 
 	private static final Logger logger = Logger.getLogger("CITY_MANAGER");
 	
-	private static final String CITIES_URL = "http://velocite.helyx.org/data/v1/cities.xml";
+	private static final String LATEST_CITIES_URL = "http://velocite.helyx.org/data/v1/cities-latest.xml";
+	private static final String DATA_PROPERTIES_URL = "http://velocite.helyx.org/data/v1/cities.properties";
 	
 	private CityManager() {
 		super();
@@ -32,8 +34,17 @@ public class CityManager {
 
 	public static IProgressTask createUpdateCitiesTask() {
 		
-		IContentAccessor cityContentAccessor = new HttpVelociteContentAccessor(CITIES_URL);
+		IContentAccessor cityContentAccessor = new HttpVelociteContentAccessor(LATEST_CITIES_URL);
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
+		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
+
+		return progressTask;
+	}
+
+	public static IProgressTask createCheckUpdateCitiesTask() {
+		
+		IContentAccessor dataCitiesContentAccessor = new HttpVelociteContentAccessor(DATA_PROPERTIES_URL);
+		IContentProvider contentProvider = new PropertiesContentProvider(dataCitiesContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 
 		return progressTask;
@@ -91,10 +102,48 @@ public class CityManager {
 		}
 	}
 
+	public static Vector findAllCountries() {
+		logger.debug("Loading all countries ...");
+		CityPersistenceService cityPersistenceService = new CityPersistenceService();
+		try {
+			Vector countryList = cityPersistenceService.findAllCountries();
+			
+			return countryList;
+		}
+		finally {
+			cityPersistenceService.dispose();
+		}
+	}
+
+	public static Vector findCitiesByCountryName(String countryName) {
+		logger.debug("Loading all cities for country: '" + countryName + "'...");
+		CityPersistenceService cityPersistenceService = new CityPersistenceService();
+		try {
+			Vector cityList = cityPersistenceService.findAllCitiesByCountryName(countryName);
+			
+			return cityList;
+		}
+		finally {
+			cityPersistenceService.dispose();
+		}
+	}
+
 	public static int countCities() {
 		CityPersistenceService cityPersistenceService = new CityPersistenceService();
 		try {
 			int count = cityPersistenceService.countCities();
+			
+			return count;
+		}
+		finally {
+			cityPersistenceService.dispose();
+		}
+	}
+
+	public static int countCitiesByCountryName(String countryName) {
+		CityPersistenceService cityPersistenceService = new CityPersistenceService();
+		try {
+			int count = cityPersistenceService.countCitiesByCountryName(countryName);
 			
 			return count;
 		}

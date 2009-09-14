@@ -24,15 +24,17 @@ public class City {
 	
 	public String stationDetails;
 	
-	public boolean bonus; 
+	public boolean bonus;
 	
 	public boolean state;
 	
-	public boolean tpe; 
+	public boolean tpe;
 	
 	public boolean localization;
 	
-	public String normalizer;	
+	public String normalizer;
+	
+	public String country;
 	
 	public Vector quartierList = new Vector();
 
@@ -49,6 +51,7 @@ public class City {
 		.append(", bonus=").append(bonus)
 		.append(", state=").append(state)
 		.append(", tpe=").append(tpe)
+		.append(", country=").append(country)
 		.append(", localization=").append(localization)
 		.append(", normalizer=").append(normalizer)
 		.append(", quartiers: [");

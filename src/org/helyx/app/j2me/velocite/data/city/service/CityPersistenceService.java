@@ -1,6 +1,7 @@
 package org.helyx.app.j2me.velocite.data.city.service;
 
 
+import java.util.Enumeration;
 import java.util.Vector;
 
 import org.helyx.app.j2me.velocite.data.city.domain.City;
@@ -42,11 +43,45 @@ public class CityPersistenceService implements ICityPersistenceService {
 		return getCityDao().findAllRecords();
 	}
 
+	public Vector findAllCitiesByCountryName(String countryName) {
+		Vector cityList = new Vector();
+		Vector tmpCityList = getCityDao().findAllRecords();
+		Enumeration cityEnum = tmpCityList.elements();
+		while(cityEnum.hasMoreElements()) {
+			City city = (City)cityEnum.nextElement();
+			if (city.country.equals(countryName)) {
+				cityList.addElement(city);
+			}
+		}
+		
+		return cityList;
+	}
+
+	public Vector findAllCountries() {
+		Vector countryList = new Vector();
+		Vector tmpCityList = getCityDao().findAllRecords();
+		Enumeration cityEnum = tmpCityList.elements();
+		while(cityEnum.hasMoreElements()) {
+			City city = (City)cityEnum.nextElement();
+			if (countryList.contains(city.country)) {
+				countryList.addElement(city.country);
+			}
+		}
+		
+		return countryList;
+	}
+
 	public City findCityByKey(String cityKey) {
+		Vector tmpCityList = getCityDao().findAllRecords();
+		Enumeration cityEnum = tmpCityList.elements();
+		while(cityEnum.hasMoreElements()) {
+			City city = (City)cityEnum.nextElement();
+			if (city.key.equals(cityKey)) {
+				return city;
+			}
+		}
+		
 		return null;
-//		City city = getCityDao().findCityByKey(cityKey);
-//
-//		return city;
 	}
 
 	public void removeAllCities() {
@@ -71,6 +106,20 @@ public class CityPersistenceService implements ICityPersistenceService {
 
 	public int countCities() {
 		return getCityDao().countRecords();
+	}
+
+	public int countCitiesByCountryName(String countryName) {
+		Vector cityList = new Vector();
+		Vector tmpCityList = getCityDao().findAllRecords();
+		Enumeration cityEnum = tmpCityList.elements();
+		while(cityEnum.hasMoreElements()) {
+			City city = (City)cityEnum.nextElement();
+			if (city.country.equals(countryName)) {
+				cityList.addElement(city);
+			}
+		}
+		
+		return cityList.size();
 	}
 
 }

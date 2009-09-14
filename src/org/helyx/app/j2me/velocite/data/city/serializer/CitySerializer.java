@@ -33,6 +33,7 @@ public class CitySerializer extends AbstractObjectSerializer {
 			dos.writeUTF(city.webSite);
 			dos.writeUTF(city.stationList);
 			dos.writeUTF(city.stationDetails);
+			dos.writeUTF(city.country);
 			dos.writeBoolean(city.bonus);
 			dos.writeBoolean(city.state);
 			dos.writeBoolean(city.tpe);
@@ -71,6 +72,7 @@ public class CitySerializer extends AbstractObjectSerializer {
 			city.webSite = dis.readUTF();
 			city.stationList = dis.readUTF();
 			city.stationDetails = dis.readUTF();
+			city.country = dis.readUTF();
 			city.bonus = dis.readBoolean();
 			city.state = dis.readBoolean();
 			city.tpe = dis.readBoolean();

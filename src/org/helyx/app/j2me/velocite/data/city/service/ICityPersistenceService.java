@@ -13,6 +13,10 @@ public interface ICityPersistenceService {
 	void saveCityArray(City[] cityArray);
 	
 	Vector findAllCities();
+	
+	Vector findAllCountries();
+	
+	Vector findAllCitiesByCountryName(String countryName);
 
 	void removeAllCities();
 
@@ -21,6 +25,8 @@ public interface ICityPersistenceService {
 	void destroyCityEnumeration(MultiRecordEnumeration cityEnumeration);
 
 	int countCities();
+
+	int countCitiesByCountryName(String countryName);
 	
 	void dispose();
 

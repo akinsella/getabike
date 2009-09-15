@@ -286,7 +286,7 @@
 				    <assembly>
 				        <inclusions>
 							<inclusion>
-								<groupId>kxml2</groupId>
+								<groupId>net.sf.kxml</groupId>
 								<artifactId>kxml2</artifactId>
 							</inclusion>
 							
@@ -446,7 +446,7 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>kxml2</groupId>
+			<groupId>net.sf.kxml</groupId>
 			<artifactId>kxml2</artifactId>
 			<version>2.3.0</version>
 		</dependency>

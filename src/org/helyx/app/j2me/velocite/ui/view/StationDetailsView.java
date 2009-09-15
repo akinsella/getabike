@@ -215,7 +215,7 @@ public class StationDetailsView extends AbstractView {
 	private void fetchStationDetails() {
 		logger.info("Fetching Station Details for Station number: '" + station.number + "'");
 		try {
-			IProgressTask progressTask = CartoManager.fetchStationDetails(CityManager.findSelectedCity(), station);
+			IProgressTask progressTask = CartoManager.fetchStationDetails(CityManager.getCurrentCity(), station);
 			progressTask.addProgressListener(new ProgressAdapter(logger.getCategory().getName()) {
 
 				public void onSuccess(String eventMessage, Object eventData) {
@@ -240,11 +240,8 @@ public class StationDetailsView extends AbstractView {
 			});
 //			TaskManager.runLoadTaskView("Recherche des infos de station", progressTask, getMidlet(), StationDetailsView.this, StationDetailsView.this);
 		}
-		catch (CartoManagerException e) {
-			e.printStackTrace();
-		}
-		catch (CityManagerException e) {
-			e.printStackTrace();
+		catch (Throwable t) {
+			logger.warn(t);
 		}
 	}
 

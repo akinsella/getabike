@@ -60,10 +60,10 @@ public class AppStartProgressTask extends AbstractProgressTask {
 			logger.info("Application data need to be reseted");
 
 			logger.info("Cleaning up cities related data");
-			CityManager.cleanUpData();
+			CityManager.clearCities();
 			
 			logger.info("Cleaning up station related data");
-			CartoManager.cleanUpData();
+			CartoManager.clearStations();
 			
 			logger.info("Cleaning up preference related data");
 			PrefManager.cleanUpSavedData();
@@ -80,7 +80,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 			onProgress("Suppression des villes enregistrées ...");
 			logger.info("City data need to be reseted");
 			logger.info("Cleaning up cities related data");
-			CityManager.cleanUpData();
+			CityManager.clearCities();
 			PrefManager.removePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
 			onProgress("Suppression des villes terminée");
 		}
@@ -111,7 +111,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		if (V_1_0_82.equals(newVersion) || V_1_0_83.equals(newVersion)) {
 			onProgress("Mise à jour des données ...");
 			logger.info("Need to Clean Up Cities to support Lyon City.");
-			CityManager.cleanUpData();
+			CityManager.clearCities();
 		}
 		
 		checkCities();

@@ -6,6 +6,7 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
+import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
@@ -40,6 +41,9 @@ public class MenuView extends AbstractView {
 		private Menu menu;
 		
 		private int selectedIndex = 0;
+
+		private StationListView stationListView;
+
 		
 		public MenuView(AbstractMIDlet midlet) {
 			super(midlet);
@@ -178,32 +182,93 @@ public class MenuView extends AbstractView {
 				logger.warn(t);
 			}
 		}
-
-		private StationListView stationListView;
 		
-		private void showStationListView() {
+		private void showStationListView(City city) {
+			if (stationListView == null) {
+				stationListView = new StationListView(getMidlet(), "Liste des stations");
+				stationListView.setPreviousDisplayable(MenuView.this);
+				stationListView.setCellRenderer(new StationItemRenderer());
+				stationListView.setCity(city);
+				stationListView.setAllowMenu(true);
+				stationListView.setAllowNested(true);
+				stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
+			}
+			else {
+				stationListView.setCity(city);
+				stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
+			}
+		}
+		
+		private void showStations() {
 			try {
-				City city = CityManager.findSelectedCity();
-
-				if (stationListView == null) {
-					stationListView = new StationListView(getMidlet(), "Liste des stations");
-					stationListView.setPreviousDisplayable(MenuView.this);
-					stationListView.setCellRenderer(new StationItemRenderer());
-					stationListView.setCity(city);
-					stationListView.setAllowMenu(true);
-					stationListView.setAllowNested(true);
-					stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
+				String currentCountry = CityManager.getCurrentCountry();
+				if (currentCountry == null) {
+					selectCountry();
+					return ;
 				}
-				else {
-					stationListView.setCity(city);
-					stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
+				
+				City currentCity = CityManager.getCurrentCity();
+				if (currentCity == null) {
+					selectCity(currentCountry);
+					return ;
 				}
-			}
-			catch (CityManagerException cme) {
-				logger.warn(cme);
-				DialogUtil.showAlertMessage(this, "Erreur", "Impossible d'obtenir la ville en cours d'utilisation.");
-			}
 
+				// Should not append!
+				if (!currentCity.country.equals(currentCountry)) {
+					CityManager.clearCurrentCountry();
+					CityManager.clearCurrentCity(true);
+					DialogUtil.showAlertMessage(this, "Erreur", "La ville sélectionnée: '" + currentCity.key + "', ne correspond pas au pays sélectionné: '" + currentCountry + "'");
+					return ;
+				}
+				
+				showStationListView(currentCity);
+			}
+			catch (CityManagerException e) {
+				showAlertMessage("Erreur", "Problème de sélection de la ville.");
+				logger.warn(e);
+			}
+		}
+		
+		private void selectCountry() throws CityManagerException {
+			CountryListView countryListView = new CountryListView(getMidlet(), true);
+			countryListView.setReturnCallback(new IReturnCallback() {
+
+				public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
+					String currentCountry = CityManager.getCurrentCountry();
+					if (currentCountry != null) {
+						showStations();
+					}
+					else {
+						showDisplayable(MenuView.this);
+					}
+				}
+				
+			});
+			showDisplayable(countryListView);
+		}
+		
+		private void selectCity(String currentCountry) throws CityManagerException {
+			CityListView cityListView = new CityListView(getMidlet(), currentCountry, true);
+			cityListView.setReturnCallback(new IReturnCallback() {
+
+				public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
+					try {
+						City currentCity = CityManager.getCurrentCity();
+						if (currentCity != null) {
+							showStations();
+						}
+						else {
+							showDisplayable(MenuView.this);
+						}
+					}
+					catch(Throwable t) {
+						logger.warn(t);
+						DialogUtil.showAlertMessage(MenuView.this, "Erreur", "Impossible d'obtenir la ville courante: '" + t.getMessage() + "'");
+					}
+				}
+				
+			});
+			showDisplayable(cityListView);
 		}
 
 		private void createMenu() {
@@ -211,41 +276,12 @@ public class MenuView extends AbstractView {
 			menu.addMenuItem(new MenuItem("Liste des stations", new IAction() {
 				
 				public void run(Object data) {
-					City selectedCity;
-					try {
-						selectedCity = CityManager.findSelectedCity();
-						if (selectedCity == null) {
-							CityListView cityListView = new CityListView(getMidlet(), true);
-							cityListView.setReturnCallback(new IReturnCallback() {
-
-								public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
-									
-									try {
-										City city = CityManager.findSelectedCity();
-										if (city != null) {
-											showStationListView();
-										}
-										else {
-											showAlertMessage("Erreur", "Aucune ville sélectionnée. Vous devez sélectionner une ville.");
-										}
-									}
-									catch (CityManagerException e) {
-										logger.warn(e);
-										showAlertMessage("Erreur", "Aucune ville sélectionnée. Vous devez sélectionner une ville.");
-									}
-								}
-								
-							});
-							showDisplayable(cityListView);
-						}
-						else {
-							showStationListView();
-						}
+					City currentCity = CityManager.getCurrentCity();
+					if (currentCity == null) {
+						CityManager.clearCurrentCountry();
+						CityManager.clearCurrentCity(true);
 					}
-					catch (CityManagerException e) {
-						showAlertMessage("Erreur", "Problème de sélection de la ville.");
-						logger.warn(e);
-					}
+					showStations();
 				}
 
 			}));

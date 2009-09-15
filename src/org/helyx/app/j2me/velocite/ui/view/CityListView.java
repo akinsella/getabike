@@ -3,7 +3,6 @@ package org.helyx.app.j2me.velocite.ui.view;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.data.app.manager.VeloCiteManager;
 import org.helyx.app.j2me.velocite.data.carto.listener.StoreStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
@@ -31,18 +30,25 @@ public class CityListView extends MenuListView {
 	
 	private boolean cancellable = false;
 	
+	private String country;
+	
 	private Vector cityList;
 
-	public CityListView(AbstractMIDlet midlet) throws CityManagerException {
-		this(midlet, true);
+	public CityListView(AbstractMIDlet midlet, String country) throws CityManagerException {
+		this(midlet, country, true);
 	}
 	
 	public CityListView(AbstractMIDlet midlet, boolean cancellable) throws CityManagerException {
+		this(midlet, null, cancellable);
+	}
+	
+	public CityListView(AbstractMIDlet midlet, String country, boolean cancellable) throws CityManagerException {
 		super(midlet, "Choix de la ville", true);
+		this.country = country;
 		this.cancellable = cancellable;
 		init();
 	}
-	
+
 	private void init() {
 		initData();
 		initComponents();
@@ -50,9 +56,15 @@ public class CityListView extends MenuListView {
 	}
 
 	protected void initData() {
-		cityList = CityManager.findAllCities();
+		if (country == null) {
+			cityList = CityManager.findAllCities();
+		}
+		else {
+			cityList = CityManager.findCitiesByCountryName(country);
+		}
 		logger.info("cityList: " + cityList);
-		selectedCity = CityManager.findSelectedCity(cityList);
+		
+		selectedCity = CityManager.getCurrentCity();
 		logger.info("selectedCity: " + cityList);
 	}
 	
@@ -74,31 +86,12 @@ public class CityListView extends MenuListView {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());
 				MenuItem menuItem = getMenu().getCheckedMenuItem();
 				
-				final City city = (City)menuItem.getData();
-				
-				try {
-					IProgressTask progressTask = CartoManager.createUpdateCityStationsTask(city);
-					progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher()));
-
-					TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CityListView.this, new ProgressTaskReturnCallback() {
-
-						public void onError(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
-							logger.info("Error: " + eventMessage + ", data: " + eventData);
-							VeloCiteManager.cleanUpCitySelectedData();
-							getReturnCallback().onReturn(currentDisplayable, eventData);
-						}
-
-						public void onSuccess(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
-							logger.info("Success: " + eventMessage + ", data: " + eventData);
-							CityManager.saveSelectedCity(city);
-							getReturnCallback().onReturn(currentDisplayable, eventData);
-						}
-						
-					});
+				if (menuItem != null) {
+					City city = (City)menuItem.getData();
+					CityManager.setCurrentCity(city);
+					loadCityStations(city);
 				}
-				catch (CartoManagerException e) {
-					logger.warn(e);
-					showAlertMessage("Erreur", "Impossible de charger les stations pour la ville sélectionnée.");
+				else {
 					fireReturnCallback();
 				}
 			}
@@ -106,6 +99,45 @@ public class CityListView extends MenuListView {
 		}));
 	}
 	
+	protected void loadCityStations(final City city) {
+		
+		try {
+			IProgressTask progressTask = CartoManager.createUpdateCityStationsTask(city);
+			progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher()));
+
+			TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CityListView.this, new ProgressTaskReturnCallback() {
+
+				public void onError(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
+					logger.info("Error: " + eventMessage + ", data: " + eventData);
+					cleanUpCurrentCityData();
+					getReturnCallback().onReturn(currentDisplayable, eventData);
+				}
+
+				public void onSuccess(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
+					logger.info("Success: " + eventMessage + ", data: " + eventData);
+					CityManager.setCurrentCity(city);
+					getReturnCallback().onReturn(currentDisplayable, eventData);
+				}
+				
+			});
+		}
+		catch (CartoManagerException e) {
+			logger.warn(e);
+			cleanUpCurrentCityData();
+			showAlertMessage("Erreur", "Impossible de charger les stations pour la ville sélectionnée.");
+			fireReturnCallback();
+		}
+	}
+	
+	private void cleanUpCurrentCityData() {
+		try {
+			CityManager.clearCurrentCity(true);
+		}
+		catch(Throwable t) {
+			logger.warn(t);
+		}
+	}
+
 	protected void initComponents() {
 		Menu menu = new Menu();
 

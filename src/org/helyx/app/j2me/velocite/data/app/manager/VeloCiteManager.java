@@ -1,6 +1,5 @@
 package org.helyx.app.j2me.velocite.data.app.manager;
 
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.logging4me.Logger;
 
@@ -11,13 +10,13 @@ public class VeloCiteManager {
 	
 	public static void cleanUpData() {
 		cleanUpCitySelectedData();
-		CityManager.cleanUpData();
+		CityManager.clearCities();
 	}
 	
 	public static void cleanUpCitySelectedData() {
 		logger.info("cleanUpCitySelectedData");
-		CityManager.removeSelectedCity();
-		CartoManager.cleanUpData();
+		CityManager.clearCurrentCountry();
+		CityManager.clearCurrentCity(true);
 	}
 	
 }

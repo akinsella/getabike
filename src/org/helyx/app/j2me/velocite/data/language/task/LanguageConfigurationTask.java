@@ -41,7 +41,7 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 					progressDispatcher.fireEvent(EventType.ON_START);
 			
 					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche de config. existante...");
-					String languageSelectedKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
+					String languageSelectedKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_CURRENT_KEY);
 					
 					if (languageSelectedKey == null) {
 						logger.info("Chargement des langues ...");
@@ -64,11 +64,11 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 						while(_enum.hasMoreElements()) {
 							Language language = (Language)_enum.nextElement();
 							if (language.key.equals(defaultLanguageKey)) {
-								PrefManager.writePref(PrefConstants.LANGUAGE_SELECTED_KEY, language.key);
+								PrefManager.writePref(PrefConstants.LANGUAGE_CURRENT_KEY, language.key);
 							}
 						}
 					}
-					Language selectedLanguage = LanguageManager.findSelectedLanguage();
+					Language selectedLanguage = LanguageManager.getCurrentLanguage();
 					midlet.setLocale(new Locale(selectedLanguage.localeCountry, selectedLanguage.localeLanguage));
 
 					progressDispatcher.fireEvent(EventType.ON_SUCCESS);

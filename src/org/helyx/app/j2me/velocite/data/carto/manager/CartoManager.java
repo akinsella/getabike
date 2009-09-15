@@ -58,14 +58,8 @@ public class CartoManager {
 			if (VELIB.equals(city.type)) {
 				cpf = new VelibStationContentProviderFactory(city);
 			}
-			else if (LE_VELO.equals(city.type)) {
-				cpf = new VeloStationContentProviderFactory(city);
-			}
 			else if (VELO.equals(city.type)) {
 				cpf = new VeloStationContentProviderFactory(city);
-			}
-			else if (SEVICI.equals(city.type)) {
-				cpf = new VelibStationContentProviderFactory(city);
 			}
 			else if (VELO_V.equals(city.type)) {
 				cpf = new VeloVStationContentProviderFactory(city);
@@ -157,7 +151,7 @@ public class CartoManager {
 		}
 	}
 
-	public static void cleanUpData() {
+	public static void clearStations() {
 		StationPersistenceService stationPersistenceService = new StationPersistenceService();
 		try {
 			stationPersistenceService.removeAllStations();

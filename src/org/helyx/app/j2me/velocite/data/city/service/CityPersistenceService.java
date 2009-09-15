@@ -63,7 +63,7 @@ public class CityPersistenceService implements ICityPersistenceService {
 		Enumeration cityEnum = tmpCityList.elements();
 		while(cityEnum.hasMoreElements()) {
 			City city = (City)cityEnum.nextElement();
-			if (countryList.contains(city.country)) {
+			if (!countryList.contains(city.country)) {
 				countryList.addElement(city.country);
 			}
 		}

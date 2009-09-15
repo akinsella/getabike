@@ -3,7 +3,6 @@ package org.helyx.app.j2me.velocite.ui.view;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
-import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManagerException;
@@ -13,6 +12,7 @@ import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.view.support.PrefBaseListView;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
@@ -21,6 +21,7 @@ public class PrefListView extends PrefBaseListView {
 
 	private static final Logger logger = Logger.getLogger("PREF_LIST_VIEW");
 	
+	private MenuItem countryMenuItem;
 	private MenuItem cityMenuItem;
 	private MenuItem languageMenuItem;
 	private MenuItem mapModeMenuItem;
@@ -38,14 +39,34 @@ public class PrefListView extends PrefBaseListView {
 		initData();
 		initComponents();
 	}
+	
+	private void selectCountry() {
+		CityManager.showCountryListView(PrefListView.this);
+	}
+	
+	private void selectCity(String currentCountry) {
+		CityManager.showCityListView(PrefListView.this, currentCountry);			
+	}
 
 	protected void initComponents() {
 		
 		Menu menu = new Menu();
 		
+		countryMenuItem = new MenuItem("Pays", new IAction() {
+			public void run(Object data) {
+				selectCountry();
+			}
+		});
+		
 		cityMenuItem = new MenuItem("Villes", new IAction() {
 			public void run(Object data) {
-				CityManager.showCityListView(PrefListView.this);
+				String currentCountry = CityManager.getCurrentCountry();
+				if (currentCountry != null) {
+					selectCity(currentCountry);		
+				}
+				else {
+					selectCountry();
+				}
 			}
 		});
 		
@@ -79,7 +100,7 @@ public class PrefListView extends PrefBaseListView {
 			}
 		});
 		
-		
+		menu.addMenuItem(countryMenuItem);
 		menu.addMenuItem(cityMenuItem);
 		menu.addMenuItem(languageMenuItem);
 		menu.addMenuItem(mapModeMenuItem);
@@ -98,6 +119,7 @@ public class PrefListView extends PrefBaseListView {
 		logger.info("Current: " + current);
 		logger.info("Next: " + next);
 		if (next == this) {
+			fetchCountryPref();
 			fetchCityPref();
 			fetchLanguagePref();
 			fetchDebugMode();
@@ -107,35 +129,35 @@ public class PrefListView extends PrefBaseListView {
 		super.beforeDisplayableSelection(current, next);
 	}
 
-	private void fetchCityPref() {
-		try {
-			String cityKey = PrefManager.readPrefString(PrefConstants.CITY_SELECTED_KEY);
-			if (cityKey != null && !cityKey.equals(cityMenuItem.getData("city.key"))) {
-				cityMenuItem.setData("city.key", cityKey);
-				City city = CityManager.findSelectedCity();
-				if (city != null) {
-					cityMenuItem.setData(PREF_VALUE, city.name);
-				}
-			}
-			else {
-				cityMenuItem.removeData("city.key");
-			}
+	private void fetchCountryPref() {
+		String country = CityManager.getCurrentCountry();
+		if (country != null) {
+			countryMenuItem.setData(PREF_VALUE, country);
 		}
-		catch (CityManagerException e) {
-			logger.debug(e);
+		else {
+			countryMenuItem.removeData(PREF_VALUE);
+		}
+	}
+
+	private void fetchCityPref() {
+		City city = CityManager.getCurrentCity();
+		if (city != null) {
+			cityMenuItem.setData(PREF_VALUE, city.name);
+		}
+		else {
+			cityMenuItem.removeData(PREF_VALUE);
 		}
 	}
 
 	private void fetchLanguagePref() {
 		try {
-			String languageKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
-			if (languageKey != null && !languageKey.equals(languageMenuItem.getData("language.key"))) {
-				languageMenuItem.setData("language.key", languageKey);
-				Language language = LanguageManager.findSelectedLanguage();
+			String languageKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_CURRENT_KEY);
+			if (languageKey != null) {
+				Language language = LanguageManager.getCurrentLanguage();
 				languageMenuItem.setData(PREF_VALUE, language.name);
 			}
 			else {
-				cityMenuItem.removeData("language.key");
+				languageMenuItem.removeData(PREF_VALUE);
 			}
 		}
 		catch (LanguageManagerException e) {

@@ -8,6 +8,7 @@ import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.provider.DefaultLanguageContentProvider;
 import org.helyx.app.j2me.velocite.data.language.service.LanguagePersistenceService;
 import org.helyx.app.j2me.velocite.ui.view.LanguageListView;
+import org.helyx.helyx4me.cache.Cache;
 import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
@@ -22,6 +23,10 @@ public class LanguageManager {
 
 	private static final Logger logger = Logger.getLogger("LANGUAGE_MANAGER");
 	
+	private static final String LANGUAGE_LIST = "language.list";
+	
+	private static Cache cache = new Cache();
+	
 	private LanguageManager() {
 		super();
 	}
@@ -35,18 +40,12 @@ public class LanguageManager {
 		return progressTask;
 	}
 
-	public static Language findSelectedLanguage() throws LanguageManagerException {
+	public static Language getCurrentLanguage() throws LanguageManagerException {
 		Vector languageList = findAllLanguages();
-		Language selectedLanguage = findSelectedLanguage(languageList);
-		
-		return selectedLanguage;
-	}
-	
-	public static Language findSelectedLanguage(Vector languageList) throws LanguageManagerException {
 		Language selectedLanguage = null;
 
-		String languageSelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_SELECTED_KEY);
-		logger.info("Selected Language key: " + languageSelectedKeyPrefValue);
+		String languageSelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_CURRENT_KEY);
+		logger.info("Current Language key: " + languageSelectedKeyPrefValue);
 		String languageDefaultKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_DEFAULT_KEY);
 		logger.info("Default Language key: " + languageSelectedKeyPrefValue);
 		
@@ -65,7 +64,7 @@ public class LanguageManager {
 				Language language = (Language)_enum.nextElement();
 				if (language.key.equals(languageDefaultKeyPrefValue)) {
 					selectedLanguage = language;
-					PrefManager.writePref(PrefConstants.LANGUAGE_SELECTED_KEY, selectedLanguage.key);
+					PrefManager.writePref(PrefConstants.LANGUAGE_CURRENT_KEY, selectedLanguage.key);
 					break;
 				}
 			}
@@ -75,16 +74,20 @@ public class LanguageManager {
 			throw new LanguageManagerException("No default/active language exception");
 		}
 
-		logger.debug("Selected language: " + selectedLanguage);
+		logger.debug("Current language: " + selectedLanguage);
 		
 		return selectedLanguage;
 	}
 
 	public static Vector findAllLanguages() {
+		Vector languageList = (Vector)cache.get(LANGUAGE_LIST);
+		if (languageList != null) {
+			return languageList;
+		}
 		LanguagePersistenceService languagePersistenceService = new LanguagePersistenceService();
 		try {
-			Vector languageList = languagePersistenceService.findAllCities();
-			
+			languageList = languagePersistenceService.findAllCities();
+			cache.set(LANGUAGE_LIST, languageList);
 			return languageList;
 		}
 		finally {
@@ -105,12 +108,13 @@ public class LanguageManager {
 	}
 
 	public static void saveSelectedLanguage(Language language) {
-		PrefManager.writePref(PrefConstants.LANGUAGE_SELECTED_KEY, language.key);
+		PrefManager.writePref(PrefConstants.LANGUAGE_CURRENT_KEY, language.key);
 	}
 	
 	public static void cleanUpSavedData() {
+		cache.remove(LANGUAGE_LIST);
 		PrefManager.removePref(PrefConstants.LANGUAGE_DEFAULT_KEY);
-		PrefManager.removePref(PrefConstants.LANGUAGE_SELECTED_KEY);
+		PrefManager.removePref(PrefConstants.LANGUAGE_CURRENT_KEY);
 		LanguagePersistenceService languagePersistenceService = new LanguagePersistenceService();
 		try {
 			languagePersistenceService.removeAllCities();

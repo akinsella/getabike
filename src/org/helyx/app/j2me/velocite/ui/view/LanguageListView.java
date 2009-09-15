@@ -20,7 +20,7 @@ public class LanguageListView extends MenuListView {
 	
 	private static final Logger logger = Logger.getLogger("LANGUAGE_LIST_VIEW");
 	
-	private Language selectedLanguage;
+	private Language currentLanguage;
 	
 	private Vector languageList;
 
@@ -64,7 +64,7 @@ public class LanguageListView extends MenuListView {
 		languageList = LanguageManager.findAllLanguages();
 		logger.info("languageList: " + languageList);
 		try {
-			selectedLanguage = LanguageManager.findSelectedLanguage(languageList);
+			currentLanguage = LanguageManager.getCurrentLanguage();
 		}
 		catch (LanguageManagerException lme) {
 			throw new RuntimeException(lme.getMessage());
@@ -81,7 +81,7 @@ public class LanguageListView extends MenuListView {
 			MenuItem languageMenuItem = new MenuItem(language.name);
 			languageMenuItem.setData(language);
 			menu.addMenuItem(languageMenuItem);
-			if (language.key.equals(selectedLanguage.key)) {
+			if (language.key.equals(currentLanguage.key)) {
 				menu.setCheckedMenuItem(languageMenuItem);
 			}
 		}

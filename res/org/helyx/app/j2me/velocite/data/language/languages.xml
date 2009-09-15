@@ -2,6 +2,6 @@
 
 <languages default="FRANCE">
 	<language key="FRANCE" country="France" name="Français" localeCountry="fr" localeLanguage="FR" />
-	<language key="SPAIN" country="España" name="Español" localeCountry="es" localeLanguage="ES" />
+<!-- 	<language key="SPAIN" country="España" name="Español" localeCountry="es" localeLanguage="ES" /> -->
 	<language key="ENGLAND" country="England" name="English" localeCountry="en" localeLanguage="EN" />
 </languages>

@@ -5,14 +5,18 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
+import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
 import org.helyx.app.j2me.velocite.data.provider.PropertiesContentProvider;
 import org.helyx.app.j2me.velocite.ui.view.CityListView;
+import org.helyx.app.j2me.velocite.ui.view.CountryListView;
+import org.helyx.helyx4me.cache.Cache;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;
+import org.helyx.helyx4me.pref.Pref;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
@@ -27,6 +31,10 @@ public class CityManager {
 	
 	private static final String LATEST_CITIES_URL = "http://velocite.helyx.org/data/v1/cities-latest.xml";
 	private static final String DATA_PROPERTIES_URL = "http://velocite.helyx.org/data/v1/cities.properties";
+
+	private static final String CITY_LIST = "city.list";
+	
+	private static Cache cache = new Cache();
 	
 	private CityManager() {
 		super();
@@ -50,18 +58,20 @@ public class CityManager {
 		return progressTask;
 	}
 
-	public static City findSelectedCity() throws CityManagerException {
+
+	public static City getCurrentCity() {
 		Vector cityList = findAllCities();
-		City selectedCity = findSelectedCity(cityList);
 		
-		return selectedCity;
-	}
-	
-	public static City findSelectedCity(Vector cityList) {
 		City selectedCity = null;
 
-		String citySelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.CITY_SELECTED_KEY);
-		logger.info("Selected City key: " + citySelectedKeyPrefValue);
+		Pref citySelectedKeyPref = PrefManager.readPref(PrefConstants.CITY_CURRENT_KEY);
+		if (citySelectedKeyPref == null) {
+			return null;
+		}
+		
+		String citySelectedKeyPrefValue = citySelectedKeyPref.value;
+		
+		logger.info("Current City key: " + citySelectedKeyPrefValue);
 		
 		Enumeration _enum = cityList.elements();
 		while(_enum.hasMoreElements()) {
@@ -71,18 +81,12 @@ public class CityManager {
 				break;
 			}
 		}
-//
-//		if (selectedCity == null && cityList.size() > 0) {
-//			City city = (City)cityList.elementAt(0);
-//			selectedCity = city;
-//			PrefManager.writePref(PrefConstants.CITY_SELECTED_KEY, selectedCity.key);
-//		}
 		
 		if (selectedCity == null) {
-			logger.debug("No Selected city");
+			logger.debug("No Current city");
 		}
 		else {
-			logger.debug("Selected city: " + selectedCity);
+			logger.debug("Current city: " + selectedCity);
 		}
 
 		
@@ -91,10 +95,15 @@ public class CityManager {
 
 	public static Vector findAllCities() {
 		logger.debug("Loading all cities ...");
+		Vector cityList = (Vector)cache.get(CITY_LIST);
+		if (cityList != null) {
+			return cityList;
+		}
+		
 		CityPersistenceService cityPersistenceService = new CityPersistenceService();
 		try {
-			Vector cityList = cityPersistenceService.findAllCities();
-			
+			cityList = cityPersistenceService.findAllCities();
+			cache.set(CITY_LIST, cityList);
 			return cityList;
 		}
 		finally {
@@ -151,15 +160,13 @@ public class CityManager {
 			cityPersistenceService.dispose();
 		}
 	}
-
-	public static void saveSelectedCity(City city) {
-		PrefManager.writePref(PrefConstants.CITY_SELECTED_KEY, city.key);
-	}
 	
-	public static void cleanUpData() {
+	public static void clearCities() {
+		cache.remove(CITY_LIST);
 		CityPersistenceService cityPersistenceService = new CityPersistenceService();
 		try {
 			cityPersistenceService.removeAllCities();
+			
 		}
 		finally {
 			cityPersistenceService.dispose();
@@ -167,13 +174,23 @@ public class CityManager {
 	}
 	
 	public static void showCityListView(AbstractDisplayable currentDisplayable) {
-		showCityListView(currentDisplayable, new BasicReturnCallback(currentDisplayable));
+		String currentCountry = CityManager.getCurrentCountry();
+		showCityListView(currentDisplayable, currentCountry, new BasicReturnCallback(currentDisplayable));
+	}
+	
+	public static void showCityListView(AbstractDisplayable currentDisplayable, String country) {
+		showCityListView(currentDisplayable, country, new BasicReturnCallback(currentDisplayable));
 	}
 	
 	public static void showCityListView(AbstractDisplayable currentDisplayable, IReturnCallback returnCallback) {
+		String currentCountry = CityManager.getCurrentCountry();
+		showCityListView(currentDisplayable, currentCountry, new BasicReturnCallback(currentDisplayable));
+	}
+	
+	public static void showCityListView(AbstractDisplayable currentDisplayable, String country, IReturnCallback returnCallback) {
 		CityListView cityListView;
 		try {
-			cityListView = new CityListView(currentDisplayable.getMidlet());
+			cityListView = new CityListView(currentDisplayable.getMidlet(), country);
 			cityListView.setReturnCallback(returnCallback);
 			currentDisplayable.showDisplayable(cityListView);
 		}
@@ -183,8 +200,46 @@ public class CityManager {
 		}
 	}
 
-	public static void removeSelectedCity() {
-		PrefManager.removePref(PrefConstants.CITY_SELECTED_KEY);
+
+	public static void clearCurrentCountry() {
+		PrefManager.removePref(PrefConstants.COUNTRY_SELECTED_KEY);
+	}
+
+	public static String getCurrentCountry() {
+		String currentCountry = PrefManager.readPrefString(PrefConstants.COUNTRY_SELECTED_KEY);
+		return currentCountry;
+	}
+
+	public static void setCurrentCountry(String country) {
+		PrefManager.writePref(PrefConstants.COUNTRY_SELECTED_KEY, country);
+	}
+
+	public static void clearCurrentCity(boolean clearCityData) {
+		PrefManager.removePref(PrefConstants.CITY_CURRENT_KEY);
+		if (clearCityData) {
+			CartoManager.clearStations();
+		}
+	}
+
+	public static void setCurrentCity(City city) {
+		PrefManager.writePref(PrefConstants.CITY_CURRENT_KEY, city.key);
+	}
+
+	public static void showCountryListView(AbstractDisplayable currentDisplayable) {
+		showCountryListView(currentDisplayable, new BasicReturnCallback(currentDisplayable));
+	}
+
+	public static void showCountryListView(AbstractDisplayable currentDisplayable, IReturnCallback returnCallback) {
+		CountryListView countryListView;
+		try {
+			countryListView = new CountryListView(currentDisplayable.getMidlet());
+			countryListView.setReturnCallback(returnCallback);
+			currentDisplayable.showDisplayable(countryListView);
+		}
+		catch (CityManagerException e) {
+			logger.warn(e);
+			currentDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
+		}
 	}
 	
 }

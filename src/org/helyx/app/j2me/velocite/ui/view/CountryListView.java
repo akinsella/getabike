@@ -3,19 +3,10 @@ package org.helyx.app.j2me.velocite.ui.view;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.data.app.manager.VeloCiteManager;
-import org.helyx.app.j2me.velocite.data.carto.listener.StoreStationLoaderProgressListener;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 import org.helyx.helyx4me.action.IAction;
-import org.helyx.helyx4me.manager.TaskManager;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
-import org.helyx.helyx4me.task.IProgressTask;
-import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
-import org.helyx.helyx4me.ui.displayable.callback.ProgressTaskReturnCallback;
 import org.helyx.helyx4me.ui.view.support.MenuListView;
 import org.helyx.helyx4me.ui.widget.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
@@ -29,6 +20,8 @@ public class CountryListView extends MenuListView {
 	private boolean cancellable = false;
 	
 	private Vector countryList;
+	
+	private String currentCountry;
 
 	public CountryListView(AbstractMIDlet midlet) throws CityManagerException {
 		this(midlet, true);
@@ -47,8 +40,10 @@ public class CountryListView extends MenuListView {
 	}
 
 	protected void initData() {
-		countryList = CityManager.findAllCities();
+		countryList = CityManager.findAllCountries();
+		currentCountry = CityManager.getCurrentCountry();
 		logger.info("countryList: " + countryList);
+		logger.info("currentCountry: " + currentCountry);
 	}
 	
 	protected void initActions() {
@@ -69,33 +64,14 @@ public class CountryListView extends MenuListView {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());
 				MenuItem menuItem = getMenu().getCheckedMenuItem();
 				
-				final City city = (City)menuItem.getData();
+				final String country = (String)menuItem.getData();
 				
-				try {
-					IProgressTask progressTask = CartoManager.createUpdateCityStationsTask(city);
-					progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher()));
-
-					TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CountryListView.this, new ProgressTaskReturnCallback() {
-
-						public void onError(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
-							logger.info("Error: " + eventMessage + ", data: " + eventData);
-							VeloCiteManager.cleanUpCitySelectedData();
-							getReturnCallback().onReturn(currentDisplayable, eventData);
-						}
-
-						public void onSuccess(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
-							logger.info("Success: " + eventMessage + ", data: " + eventData);
-							CityManager.saveSelectedCity(city);
-							getReturnCallback().onReturn(currentDisplayable, eventData);
-						}
-						
-					});
+				if (country != null && !country.equals(currentCountry)) {
+					CityManager.setCurrentCountry(country);
+					CityManager.clearCurrentCity(true);
 				}
-				catch (CartoManagerException e) {
-					logger.warn(e);
-					showAlertMessage("Erreur", "Impossible de charger les stations pour la ville sélectionnée.");
-					fireReturnCallback();
-				}
+				
+				fireReturnCallback();
 			}
 			
 		}));
@@ -106,15 +82,13 @@ public class CountryListView extends MenuListView {
 
 		Enumeration _enum = countryList.elements();
 		while(_enum.hasMoreElements()) {
-			City city = (City)_enum.nextElement();
-			if (city.active) {
-				MenuItem cityMenuItem = new MenuItem(city.name);
-				cityMenuItem.setData(city);
-				menu.addMenuItem(cityMenuItem);
-				if (selectedCountry != null && city.key.equals(selectedCountry.key)) {
-					menu.setCheckedMenuItem(cityMenuItem);
-				}
+			String country = (String)_enum.nextElement();
+			MenuItem countryMenuItem = new MenuItem(getMessage("velocite.country." + country));
+			countryMenuItem.setData(country);
+			if (currentCountry != null && country.equals(currentCountry)) {
+				menu.setCheckedMenuItem(countryMenuItem);
 			}
+			menu.addMenuItem(countryMenuItem);
 		}
 
 		setMenu(menu);

@@ -6,7 +6,6 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
@@ -276,11 +275,6 @@ public class MenuView extends AbstractView {
 			menu.addMenuItem(new MenuItem("Liste des stations", new IAction() {
 				
 				public void run(Object data) {
-					City currentCity = CityManager.getCurrentCity();
-					if (currentCity == null) {
-						CityManager.clearCurrentCountry();
-						CityManager.clearCurrentCity(true);
-					}
 					showStations();
 				}
 

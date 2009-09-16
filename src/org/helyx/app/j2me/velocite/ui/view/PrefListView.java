@@ -11,8 +11,8 @@ import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.view.support.PrefBaseListView;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
@@ -24,9 +24,7 @@ public class PrefListView extends PrefBaseListView {
 	private MenuItem countryMenuItem;
 	private MenuItem cityMenuItem;
 	private MenuItem languageMenuItem;
-	private MenuItem mapModeMenuItem;
-	private MenuItem httpModeMenuItem;
-	private MenuItem debugModeMenuItem;
+	private MenuItem optionMenuItem;
 	private MenuItem resetMenuItem;
 
 	public PrefListView(AbstractMIDlet midlet) {
@@ -41,7 +39,16 @@ public class PrefListView extends PrefBaseListView {
 	}
 	
 	private void selectCountry() {
-		CityManager.showCountryListView(PrefListView.this);
+		selectCountry(null);
+	}
+	
+	private void selectCountry(IReturnCallback returnCallback) {
+		if (returnCallback != null) {
+			CityManager.showCountryListView(PrefListView.this, returnCallback);
+		}
+		else {
+			CityManager.showCountryListView(PrefListView.this);			
+		}
 	}
 	
 	private void selectCity(String currentCountry) {
@@ -65,7 +72,15 @@ public class PrefListView extends PrefBaseListView {
 					selectCity(currentCountry);		
 				}
 				else {
-					selectCountry();
+					selectCountry(new IReturnCallback() {
+						
+						public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
+							String currentCountry = CityManager.getCurrentCountry();
+							if (currentCountry != null) {
+								selectCountry();
+							}
+						}
+					});
 				}
 			}
 		});
@@ -76,23 +91,89 @@ public class PrefListView extends PrefBaseListView {
 			}
 		});
 		
-		mapModeMenuItem = new MenuItem("Google Map", new IAction() {
+		optionMenuItem = new MenuItem("Options avancées", new IAction() {
 			public void run(Object data) {
-				UtilManager.changeMapMode(PrefListView.this);
+
+				PrefBaseListView optionMenuListView = new PrefBaseListView(getMidlet(), "Options avancées") {
+					
+					private MenuItem mapModeMenuItem;
+					private MenuItem httpModeMenuItem;
+					private MenuItem debugModeMenuItem;
+
+					protected void onInit() {
+						
+						final AbstractDisplayable displayable = this;
+						
+						mapModeMenuItem = new MenuItem("Google Maps", new IAction() {
+							public void run(Object data) {
+								UtilManager.changeMapMode(displayable);
+							}
+						});
+						
+						httpModeMenuItem = new MenuItem("Http optimisé", new IAction() {
+							public void run(Object data) {
+								UtilManager.changeHttpMode(displayable);
+							}
+						});
+						
+						debugModeMenuItem = new MenuItem("Debug mode", new IAction() {
+							public void run(Object data) {
+								UtilManager.changeDebugMode(displayable);
+							}
+						});
+						
+						Menu optionMenu = new Menu();
+						
+						optionMenu.addMenuItem(mapModeMenuItem);
+						optionMenu.addMenuItem(httpModeMenuItem);
+						optionMenu.addMenuItem(debugModeMenuItem);
+						
+						setMenu(optionMenu);
+
+					}
+					
+					public void beforeDisplayableSelection(AbstractDisplayable current, AbstractDisplayable next) {
+						logger.info("Current: " + current);
+						logger.info("Next: " + next);
+						if (next == this) {
+							fetchDebugMode();
+							fetchHttpMode();
+							fetchMapMode();
+						}
+						super.beforeDisplayableSelection(current, next);
+					}
+
+					private void fetchDebugMode() {
+						boolean isDebugModeActive = UtilManager.isDebugModeActive();
+						if (logger.isDebugEnabled()) {
+							logger.debug("Debug mode active: " + isDebugModeActive);	
+						}
+						debugModeMenuItem.setData(PREF_VALUE, isDebugModeActive ? "Oui" : "Non");
+					}
+
+					private void fetchHttpMode() {
+						boolean isOptimizedHttpModeActive = PrefManager.readPrefBoolean(UtilManager.OPTIMIZED_HTTP_MODE_ENABLED);
+						if (logger.isDebugEnabled()) {
+							logger.debug("Optimized Http mode active: " + isOptimizedHttpModeActive);	
+						}
+						httpModeMenuItem.setData(PREF_VALUE, isOptimizedHttpModeActive ? "Oui" : "Non");
+					}
+
+					private void fetchMapMode() {
+						boolean isMapModeActive = PrefManager.readPrefBoolean(UtilManager.MAP_MODE_ENABLED);
+						if (logger.isDebugEnabled()) {
+							logger.debug("Map mode active: " + isMapModeActive);	
+						}
+						mapModeMenuItem.setData(PREF_VALUE, isMapModeActive ? "Activé" : "Désactivé");
+					}
+					
+				};
+
+				optionMenuListView.setPreviousDisplayable(PrefListView.this);
+				showDisplayable(optionMenuListView);
 			}
-		});
-		
-		httpModeMenuItem = new MenuItem("Http optimisé", new IAction() {
-			public void run(Object data) {
-				UtilManager.changeHttpMode(PrefListView.this);
-			}
-		});
-		
-		debugModeMenuItem = new MenuItem("Debug mode", new IAction() {
-			public void run(Object data) {
-				UtilManager.changeDebugMode(PrefListView.this);
-			}
-		});
+		});		
+		optionMenuItem.setParentMenu(true);
 		
 		resetMenuItem = new MenuItem("Reset", new IAction() {
 			public void run(Object data) {
@@ -103,12 +184,11 @@ public class PrefListView extends PrefBaseListView {
 		menu.addMenuItem(countryMenuItem);
 		menu.addMenuItem(cityMenuItem);
 		menu.addMenuItem(languageMenuItem);
-		menu.addMenuItem(mapModeMenuItem);
-		menu.addMenuItem(httpModeMenuItem);
-		menu.addMenuItem(debugModeMenuItem);
+		menu.addMenuItem(optionMenuItem);
 		menu.addMenuItem(resetMenuItem);
 		
 		setMenu(menu);
+
 	}
 
 	protected void initData() {
@@ -122,9 +202,6 @@ public class PrefListView extends PrefBaseListView {
 			fetchCountryPref();
 			fetchCityPref();
 			fetchLanguagePref();
-			fetchDebugMode();
-			fetchHttpMode();
-			fetchMapMode();
 		}
 		super.beforeDisplayableSelection(current, next);
 	}
@@ -132,7 +209,7 @@ public class PrefListView extends PrefBaseListView {
 	private void fetchCountryPref() {
 		String country = CityManager.getCurrentCountry();
 		if (country != null) {
-			countryMenuItem.setData(PREF_VALUE, country);
+			countryMenuItem.setData(PREF_VALUE, getMessage("velocite.country." + country));
 		}
 		else {
 			countryMenuItem.removeData(PREF_VALUE);
@@ -163,30 +240,6 @@ public class PrefListView extends PrefBaseListView {
 		catch (LanguageManagerException e) {
 			logger.debug(e);
 		}
-	}
-
-	private void fetchDebugMode() {
-		boolean isDebugModeActive = UtilManager.isDebugModeActive();
-		if (logger.isDebugEnabled()) {
-			logger.debug("Debug mode active: " + isDebugModeActive);	
-		}
-		debugModeMenuItem.setData(PREF_VALUE, isDebugModeActive ? "Oui" : "Non");
-	}
-
-	private void fetchHttpMode() {
-		boolean isOptimizedHttpModeActive = PrefManager.readPrefBoolean(UtilManager.OPTIMIZED_HTTP_MODE_ENABLED);
-		if (logger.isDebugEnabled()) {
-			logger.debug("Optimized Http mode active: " + isOptimizedHttpModeActive);	
-		}
-		httpModeMenuItem.setData(PREF_VALUE, isOptimizedHttpModeActive ? "Oui" : "Non");
-	}
-
-	private void fetchMapMode() {
-		boolean isMapModeActive = PrefManager.readPrefBoolean(UtilManager.MAP_MODE_ENABLED);
-		if (logger.isDebugEnabled()) {
-			logger.debug("Map mode active: " + isMapModeActive);	
-		}
-		mapModeMenuItem.setData(PREF_VALUE, isMapModeActive ? "Activé" : "Désactivé");
 	}
 
 }

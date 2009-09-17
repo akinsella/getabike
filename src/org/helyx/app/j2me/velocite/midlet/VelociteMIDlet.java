@@ -14,10 +14,10 @@ import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.view.AbstractView;
-import org.helyx.helyx4me.ui.view.support.dialog.AbstractDialogResultCallback;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogResultConstants;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.YesNoResultCallback;
 import org.helyx.logging4me.Logger;
 import org.helyx.logging4me.LoggerManager;
 import org.helyx.logging4me.appender.FileAppender;
@@ -86,26 +86,21 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	
 	private void checkMapModeEnabled(final AbstractView view) {
 		if (PrefManager.readPref(UtilManager.MAP_MODE_ENABLED) == null) {
-			DialogUtil.showYesNoDialog(view, "Google Maps", "Activer la visualisation des stations avec Google Maps ?\n\nAttention: Un forfait data illimité est  fortement recommandé.", new AbstractDialogResultCallback() {
-
-				public void onResult(DialogView dialogView, Object data) {
-					int resultValue = dialogView.getResultCode();
-					switch (resultValue) {
-						case DialogResultConstants.YES:
-							PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, true);
-							dialogView.showDisplayable(view);
-							break;
-						case DialogResultConstants.NO:
-							PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, false);
-							dialogView.showDisplayable(view);
-							break;
-						default :
-							PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, false);
-							dialogView.showDisplayable(view);
-							break;						
+			DialogUtil.showYesNoDialog(
+				view, 
+				"Google Maps", 
+				"Activer la visualisation des stations avec Google Maps ?\n\nAttention: Un forfait data illimité est  fortement recommandé.",
+				new YesNoResultCallback() {
+					public void onYes(DialogView dialogView, Object data) {
+						PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, true);
+						dialogView.showDisplayable(view);
 					}
-				}
-			});
+	
+					public void onNo(DialogView dialogView, Object data) {
+						PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, false);
+						dialogView.showDisplayable(view);
+					}
+				});
 		}
 
 	}
@@ -117,13 +112,13 @@ public class VelociteMIDlet extends AbstractMIDlet {
 				view, 
 				"Erreur", 
 				"L'application doit être redémarée: " + errorMessage, 
-				new AbstractDialogResultCallback() {
-					public void onResult(DialogView dialogView, Object data) {
+				new OkResultCallback() {
+					public void onOk(DialogView dialogView, Object data) {
 						VelociteMIDlet.this.logger.info("Writing reset demand to prefs");
 						PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 						VelociteMIDlet.this.exit();								
 					}
-		});
+				});
 	}
 
 	protected void onDestroy(boolean unconditional) throws MIDletStateChangeException {

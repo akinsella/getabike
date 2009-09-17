@@ -13,10 +13,6 @@ import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.view.AbstractView;
-import org.helyx.helyx4me.ui.view.support.dialog.AbstractDialogResultCallback;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogResultConstants;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
 import org.helyx.logging4me.Logger;
 
 
@@ -24,8 +20,10 @@ public class AppStartProgressTask extends AbstractProgressTask {
 
 	private static final Logger logger = Logger.getLogger("APP_START_PROGRESS_TASK");
 	
-	private static final String V_1_0_83 = "1.0.83";
-	private static final String V_1_0_82 = "1.0.82";
+	private static final int STEP_START = 1;
+	private static final int STEP_CITY_DATA_OK = 3;
+	private static final int STEP_LANGUAGE_DATA_OK = 4;
+	private static final int STEP_SOFTKEY_DATA_OK = 5;
 
 	private AbstractView view;
 	
@@ -80,27 +78,35 @@ public class AppStartProgressTask extends AbstractProgressTask {
 			onProgress("Suppression des villes enregistrées ...");
 			logger.info("City data need to be reseted");
 			logger.info("Cleaning up cities related data");
+			CityManager.clearCurrentCountry();
+			CityManager.clearCurrentCity(true);
 			CityManager.clearCities();
 			PrefManager.removePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
 			onProgress("Suppression des villes terminée");
 		}
 		
-		String oldVersion = PrefManager.readPrefString(PrefConstants.MIDLET_VERSION);
+		String currentVersion = PrefManager.readPrefString(PrefConstants.MIDLET_VERSION);
 		String newVersion = view.getMidlet().getAppProperty(PrefConstants.MIDLET_VERSION);
-		if (oldVersion == null) {
+		if (currentVersion == null) {
 			onFirstRun(newVersion);
 		}
-		else if (!oldVersion.equals(newVersion)) {
-			onAppUpdate(oldVersion, newVersion);
+		else if (!currentVersion.equals(newVersion)) {
+			onAppUpdate(currentVersion, newVersion);
 		}
 		else {
-			checkCities();
+			onNormalRun(currentVersion);
 		}
 	}
 	
+	private void onNormalRun(String currentVersion) {
+		logger.info("This is a normal run. Current version is: '" + currentVersion + "'");
+		checkData(STEP_START);
+	}
+
 	private void onFirstRun(String newVersion) {
+		PrefManager.writePref(PrefConstants.MIDLET_VERSION, newVersion);
 		logger.info("This is not an update of an older version. New version is: '" + newVersion + "'");
-		checkCities();
+		checkData(STEP_START);
 	}
 
 	private void onAppUpdate(String oldVersion, String newVersion) {
@@ -108,13 +114,38 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		logger.info("New version is: '" + newVersion + "'");
 
 		logger.info("Old version is different from new Version");
-		if (V_1_0_82.equals(newVersion) || V_1_0_83.equals(newVersion)) {
-			onProgress("Mise à jour des données ...");
-			logger.info("Need to Clean Up Cities to support Lyon City.");
-			CityManager.clearCities();
-		}
 		
-		checkCities();
+		checkData(STEP_START);
+	}
+	
+	private void checkData(int step) {
+		switch(step) {
+			case STEP_START:
+				checkLanguages();
+				break;
+			case STEP_LANGUAGE_DATA_OK:
+				checkCities();
+				break;
+			case STEP_CITY_DATA_OK:
+				checkSoftKeys();
+				break;
+			case STEP_SOFTKEY_DATA_OK:
+				onSuccess();
+				break;
+			default:
+				onError("Unexpected progress step", null);
+				break;
+		}
+	}
+	
+	private void checkLanguages() {
+		int languagagesCount  = LanguageManager.countLanguages();
+		if (languagagesCount <= 0) {
+			configureLanguages();
+		}
+		else {
+			checkData(STEP_LANGUAGE_DATA_OK);
+		}
 	}
 	
 	private void checkCities() {
@@ -123,88 +154,73 @@ public class AppStartProgressTask extends AbstractProgressTask {
 			configureCities();
 		}
 		else {
-			configureLanguages();
+			checkData(STEP_CITY_DATA_OK);
 		}
+	}
+	
+	private void checkSoftKeys() {
+		configureSoftKeys();
 	}
 
 	private void configureCities() {
 		onProgress("Chargement des villes ...");
 		IProgressTask progressTask = CityManager.createUpdateCitiesTask();
 		progressTask.addProgressListener(new CityLoaderProgressListener(progressTask.getProgressDispatcher()));
-		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory().getName()) {
-
-			public void onSuccess(String eventMessage, Object eventData) {
-				configureLanguages();
-			}
-			
-			public void onError(String eventMessage, Object eventData) {
-				AppStartProgressTask.this.onError(eventMessage, eventData);
-			}
-			
-			public void onProgress(String eventMessage, Object eventData) {
-				AppStartProgressTask.this.onProgress(eventMessage, eventData);
-			}
-			
-		});
+		progressTask.addProgressListener(new StartProgressAdapter(STEP_CITY_DATA_OK));
 		progressTask.execute();
 	}
 	
 	private  void configureLanguages() {
 		onProgress("Chargement des langues ...");
 		IProgressTask progressTask = new LanguageConfigurationTask(view.getMidlet(), view.getViewCanvas());
-		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory().getName()) {
-
-			public void onSuccess(String eventMessage, Object eventData) {
-				configureSoftKeys();
-			}
-			
-			public void onError(String eventMessage, Object eventData) {
-				AppStartProgressTask.this.onError(eventMessage, eventData);
-			}
-			
-			public void onProgress(String eventMessage, Object eventData) {
-				AppStartProgressTask.this.onProgress(eventMessage, eventData);
-			}
-
-		});
+		progressTask.addProgressListener(new StartProgressAdapter(STEP_LANGUAGE_DATA_OK));
 		progressTask.execute();
 	}
 	
 	private void configureSoftKeys() {
 		onProgress("Configuration des touches ...");
 		IProgressTask progressTask = new SoftKeyConfigurationTask(view.getViewCanvas());
-		progressTask.addProgressListener(new ProgressAdapter(AppStartProgressTask.logger.getCategory().getName()) {
-
-			public void onSuccess(String eventMessage, Object eventData) {
-				AppStartProgressTask.this.onSuccess();
-			}
-			
-			public void onError(String eventMessage, Object eventData) {
-				AppStartProgressTask.this.onError(eventMessage, eventData);
-			}
-			
-			public void onProgress(String eventMessage, Object eventData) {
-				AppStartProgressTask.this.onProgress(eventMessage, eventData);
-			}
-
-		});
+		progressTask.addProgressListener(new StartProgressAdapter(STEP_SOFTKEY_DATA_OK));
 		progressTask.execute();
 	}
 	
+	private class StartProgressAdapter extends ProgressAdapter {
+		
+		private int successStep;
+		
+		public StartProgressAdapter(int succesStep) {
+			super(AppStartProgressTask.logger.getCategory().getName());
+			this.successStep = succesStep;
+		}
+
+		public void onSuccess(String eventMessage, Object eventData) {
+			checkData(successStep);
+		}
+		
+		public void onError(String eventMessage, Object eventData) {
+			AppStartProgressTask.this.onError(eventMessage, eventData);
+		}
+		
+		public void onProgress(String eventMessage, Object eventData) {
+			AppStartProgressTask.this.onProgress(eventMessage);
+		}
+		
+	}
+	
 	private void onSuccess() {
-		AppStartProgressTask.this.progressDispatcher.fireEvent(EventType.ON_SUCCESS);
+		progressDispatcher.fireEvent(EventType.ON_SUCCESS);
 	}
 		
 	private void onProgress(String eventMessage) {
-		AppStartProgressTask.this.progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage);
+		progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage);
 	}
 	
 	private void onProgress(String eventMessage, Object eventData) {
-		AppStartProgressTask.this.progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage, eventData);
+		progressDispatcher.fireEvent(EventType.ON_PROGRESS, eventMessage, eventData);
 	}
 	
 	private void onError(String eventMessage, Object eventData) {
-		AppStartProgressTask.this.progressDispatcher.fireEvent(EventType.ON_ERROR, eventMessage, eventData);
+		progressDispatcher.fireEvent(EventType.ON_ERROR, eventMessage, eventData);
 	}
 
 }

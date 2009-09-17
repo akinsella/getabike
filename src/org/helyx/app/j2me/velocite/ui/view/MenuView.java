@@ -22,10 +22,9 @@ import org.helyx.helyx4me.ui.util.ColorUtil;
 import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.util.ImageUtil;
 import org.helyx.helyx4me.ui.view.AbstractView;
-import org.helyx.helyx4me.ui.view.support.dialog.AbstractDialogResultCallback;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogResultConstants;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.YesNoResultCallback;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
@@ -321,20 +320,18 @@ public class MenuView extends AbstractView {
 			}));
 			menu.addMenuItem(new MenuItem("Quitter", new IAction() {
 				public void run(Object data) {
-					DialogUtil.showYesNoDialog(MenuView.this, "Question", "Etes-vous sûr de vouloir quitter l'application ?", new AbstractDialogResultCallback() {
-
-						public void onResult(DialogView dialogView, Object data) {
-							int resultValue = dialogView.getResultCode();
-							switch (resultValue) {
-								case DialogResultConstants.YES:
-									exit();
-									break;
-								case DialogResultConstants.NO:
-									dialogView.showDisplayable(MenuView.this);
-									break;
+					DialogUtil.showYesNoDialog(
+						MenuView.this, 
+						"Question", 
+						"Etes-vous sûr de vouloir quitter l'application ?", 
+						new YesNoResultCallback() {
+							public void onYes(DialogView dialogView, Object data) {
+								exit();
 							}
-						}
-					});
+							public void onNo(DialogView dialogView, Object data) {
+								dialogView.showDisplayable(MenuView.this);
+							}
+						});
 				}
 			}));
 		}

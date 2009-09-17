@@ -5,7 +5,6 @@ import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
-import org.helyx.app.j2me.velocite.data.language.manager.LanguageManagerException;
 import org.helyx.app.j2me.velocite.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
@@ -13,6 +12,7 @@ import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.view.support.PrefBaseListView;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
@@ -26,6 +26,8 @@ public class PrefListView extends PrefBaseListView {
 	private MenuItem languageMenuItem;
 	private MenuItem optionMenuItem;
 	private MenuItem resetMenuItem;
+	
+	private Throwable prefException;
 
 	public PrefListView(AbstractMIDlet midlet) {
 		super(midlet, "Préférences");
@@ -206,23 +208,46 @@ public class PrefListView extends PrefBaseListView {
 		super.beforeDisplayableSelection(current, next);
 	}
 
-	private void fetchCountryPref() {
-		String country = CityManager.getCurrentCountry();
-		if (country != null) {
-			countryMenuItem.setData(PREF_VALUE, getMessage("velocite.country." + country));
+	
+	public void afterDisplayableSelection(AbstractDisplayable previous, AbstractDisplayable current) {
+		super.afterDisplayableSelection(previous, current);
+		
+		if (current == this) {
+			checkExceptionOnPrefLoad();
 		}
-		else {
-			countryMenuItem.removeData(PREF_VALUE);
+	}
+
+	private void fetchCountryPref() {
+		try {
+			String country = CityManager.getCurrentCountry();
+			if (country != null) {
+				countryMenuItem.setData(PREF_VALUE, getMessage("velocite.country." + country));
+			}
+			else {
+				countryMenuItem.removeData(PREF_VALUE);
+			}
+		}
+		catch(Throwable t) {
+			logger.warn(t);
+			PrefManager.readPrefBoolean(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
+			prefException = t;
 		}
 	}
 
 	private void fetchCityPref() {
-		City city = CityManager.getCurrentCity();
-		if (city != null) {
-			cityMenuItem.setData(PREF_VALUE, city.name);
+		try {
+			City city = CityManager.getCurrentCity();
+			if (city != null) {
+				cityMenuItem.setData(PREF_VALUE, city.name);
+			}
+			else {
+				cityMenuItem.removeData(PREF_VALUE);
+			}
 		}
-		else {
-			cityMenuItem.removeData(PREF_VALUE);
+		catch(Throwable t) {
+			logger.warn(t);
+			prefException = t;
+			PrefManager.readPrefBoolean(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
 		}
 	}
 
@@ -237,8 +262,15 @@ public class PrefListView extends PrefBaseListView {
 				languageMenuItem.removeData(PREF_VALUE);
 			}
 		}
-		catch (LanguageManagerException e) {
-			logger.debug(e);
+		catch(Throwable t) {
+			logger.warn(t);
+		}
+	}
+
+	private void checkExceptionOnPrefLoad() {
+		if (prefException != null) {
+			DialogUtil.showAlertMessage(this, "Erreur", "Une erreur critique est survenue, l'application doit être redémarrée");
+
 		}
 	}
 

@@ -3,10 +3,11 @@ package org.helyx.app.j2me.velocite.util;
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
-import org.helyx.helyx4me.ui.view.support.dialog.AbstractDialogResultCallback;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogResultConstants;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkCancelResultCallback;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.YesNoResultCallback;
 import org.helyx.logging4me.Logger;
 import org.helyx.logging4me.level.LevelInformationHolder;
 import org.helyx.logging4me.level.LevelSwitcher;
@@ -31,123 +32,98 @@ public class UtilManager {
 
 	public static void changeDebugMode(final AbstractDisplayable currentDisplayable) {
 
-		DialogUtil.showYesNoDialog(currentDisplayable, "Question", (!debugModeActive ? "Activer" : "Désactiver") + " le mode Debug ?", new AbstractDialogResultCallback() {
-
-			public void onResult(DialogView dialogView, Object data) {
-				int resultValue = dialogView.getResultCode();
-				switch (resultValue) {
-					case DialogResultConstants.YES:
-						try {
-							if (!debugModeActive) {
-
-								debugModeActive = true;
-								levelInformationHolder = LevelSwitcher.getLevelInformations();
-								LevelSwitcher.switchToLevel(Logger.DEBUG);
+		DialogUtil.showYesNoDialog(currentDisplayable, "Question", 
+			(!debugModeActive ? "Activer" : "Désactiver") + " le mode Debug ?",
+			new YesNoResultCallback() {
+				public void onYes(DialogView dialogView, Object data) {
+					try {
+						if (!debugModeActive) {
+							debugModeActive = true;
+							levelInformationHolder = LevelSwitcher.getLevelInformations();
+							LevelSwitcher.switchToLevel(Logger.DEBUG);
+						}
+						else if (debugModeActive && levelInformationHolder != null) {
+							try {
+								debugModeActive = false;
+								LevelSwitcher.restoreLevel(levelInformationHolder);
 							}
-							else if (debugModeActive && levelInformationHolder != null) {
-								try {
-									debugModeActive = false;
-									LevelSwitcher.restoreLevel(levelInformationHolder);
-								}
-								finally {
-									levelInformationHolder.dispose();
-									levelInformationHolder = null;
-								}
+							finally {
+								levelInformationHolder.dispose();
+								levelInformationHolder = null;
 							}
 						}
-						catch(Throwable t) {
-							logger.warn(t);
-						}
-						
-						dialogView.showDisplayable(currentDisplayable);
-						break;
-					case DialogResultConstants.NO:
-						dialogView.showDisplayable(currentDisplayable);
-						break;
-					default: 
-						dialogView.showDisplayable(currentDisplayable);
-						break;
+					}
+					catch(Throwable t) {
+						logger.warn(t);
+					}
+					
+					dialogView.showDisplayable(currentDisplayable);
 				}
-			}
-		});
-
+				public void onNo(DialogView dialogView, Object data) {
+					dialogView.showDisplayable(currentDisplayable);
+				}
+			});
 	}
 
 	public static void changeMapMode(final AbstractDisplayable currentDisplayable) {
 		final boolean mapModeActive = PrefManager.readPrefBoolean(MAP_MODE_ENABLED);
 
-		DialogUtil.showYesNoDialog(currentDisplayable, "Question", (!mapModeActive ? "Activer" : "Désactiver") + " la visualisation des informations de station avec Google Maps ?" + (!mapModeActive ? "\n\nAttention: Un forfait data illimité est fortement recommandé." : ""), new AbstractDialogResultCallback() {
-
-			public void onResult(DialogView dialogView, Object data) {
-				int resultValue = dialogView.getResultCode();
-				switch (resultValue) {
-					case DialogResultConstants.YES:
-						PrefManager.writePrefBoolean(MAP_MODE_ENABLED, !mapModeActive);
-						
-						dialogView.showDisplayable(currentDisplayable);
-						break;
-					case DialogResultConstants.NO:
-						dialogView.showDisplayable(currentDisplayable);
-						break;
-					default :
-						dialogView.showDisplayable(currentDisplayable);
-						break;						
+		DialogUtil.showYesNoDialog(currentDisplayable,  "Question", 
+			(!mapModeActive ? "Activer" : "Désactiver") + " la visualisation des informations de station avec Google Maps ?" + (!mapModeActive ? "\n\nAttention: Un forfait data illimité est fortement recommandé." : ""), 
+			new YesNoResultCallback() {
+				public void onYes(DialogView dialogView, Object data) {
+					PrefManager.writePrefBoolean(MAP_MODE_ENABLED, !mapModeActive);
+					dialogView.showDisplayable(currentDisplayable);
 				}
-			}
-		});
+
+				public void onNo(DialogView dialogView, Object data) {
+					dialogView.showDisplayable(currentDisplayable);
+				}
+			});
+
 	}
 
 	public static void changeHttpMode(final AbstractDisplayable currentDisplayable) {
 		final boolean httpModeActive = PrefManager.readPrefBoolean(OPTIMIZED_HTTP_MODE_ENABLED);
 
-		DialogUtil.showYesNoDialog(currentDisplayable, 
-				"Question", 
+		DialogUtil.showYesNoDialog(currentDisplayable,  "Question", 
 				!httpModeActive ? 
-						"Activer le mode optimisé de chargement des données HTTP ?\nAttention: Certains téléphone peuvent rencontrer des problèmes avec ce mode!" : 
-						"Désactiver le mode optimisé HTTP ?"
-				, new AbstractDialogResultCallback() {
-
-			public void onResult(DialogView dialogView, Object data) {
-				int resultValue = dialogView.getResultCode();
-				switch (resultValue) {
-					case DialogResultConstants.YES:
+					"Activer le mode optimisé de chargement des données HTTP ?\nAttention: Certains téléphone peuvent rencontrer des problèmes avec ce mode!" : 
+					"Désactiver le mode optimisé HTTP ?"
+				, 			
+				new YesNoResultCallback() {
+					public void onYes(DialogView dialogView, Object data) {
 						PrefManager.writePrefBoolean(OPTIMIZED_HTTP_MODE_ENABLED, !httpModeActive);
 						dialogView.showDisplayable(currentDisplayable);
-						break;
-					case DialogResultConstants.NO:
+					}
+
+					public void onNo(DialogView dialogView, Object data) {
 						dialogView.showDisplayable(currentDisplayable);
-						break;
-					default :
-						dialogView.showDisplayable(currentDisplayable);
-						break;						
-				}
-			}
-		});
+					}
+				});
+
 	}
 
 	public static void reset(final AbstractDisplayable currentDisplayable) {
 		PrefManager.writePrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, true);
-		DialogUtil.showConfirmDialog(currentDisplayable, "Confirmation", "Etes-vous sur de vouloir reseter l'application ?", new AbstractDialogResultCallback() {
-
-			public void onResult(DialogView dialogView, Object data) {
-				int resultValue = dialogView.getResultCode();
-				switch (resultValue) {
-					case DialogResultConstants.OK:
-						DialogUtil.showMessageDialog(currentDisplayable, "Attention", "L'application va quitter. L'application doit être relancée.", new AbstractDialogResultCallback() {
-
-							public void onResult(DialogView dialogView, Object data) {
+		DialogUtil.showConfirmDialog(currentDisplayable, "Confirmation", 
+			"Etes-vous sur de vouloir reseter l'application ?", 
+			new OkCancelResultCallback() {
+				public void onOk(DialogView dialogView, Object data) {
+					DialogUtil.showMessageDialog(currentDisplayable, "Attention", 
+						"L'application va quitter. L'application doit être relancée.", 
+						new OkResultCallback() {
+							public void onOk(DialogView dialogView, Object data) {
 								currentDisplayable.getMidlet().exit();								
 							}
 						});
-
-						break;
-					case DialogResultConstants.CANCEL:
-						dialogView.showDisplayable(currentDisplayable);
-						break;
 				}
-			}
-			
-		});
+
+				public void onCancel(DialogView dialogView, Object data) {
+					dialogView.showDisplayable(currentDisplayable);
+				}
+			});
+
 	}
 
 	public static boolean isDebugModeActive() {

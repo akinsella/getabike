@@ -33,7 +33,6 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 	private static final String SERVICE_NAME = "serviceName";
 	private static final String TYPE = "type";
 	private static final String DEFAULT = "default";
-	private static final String ACTIVE = "active";
 	private static final String STATION_LIST = "stationList";
 	private static final String STATION_DETAILS = "stationDetails";
 	private static final String WEB_SITE = "webSite";
@@ -97,7 +96,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 				
 				XppAttributeProcessor cityXppAttributeProcessor = new XppAttributeProcessor();
 				cityXppAttributeProcessor.addAll(new String[] { 
-					KEY, NAME, SERVICE_NAME, TYPE, ACTIVE, WEB_SITE, 
+					KEY, NAME, SERVICE_NAME, TYPE, WEB_SITE, 
 					STATION_DETAILS, STATION_LIST, NORMALIZER, COUNTRY
 				});
 				
@@ -124,7 +123,6 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 					city.serviceName = cityXppAttributeProcessor.getAttrValueAsString(SERVICE_NAME);
 					city.type = cityXppAttributeProcessor.getAttrValueAsString(TYPE);
 					city.country = cityXppAttributeProcessor.getAttrValueAsString(COUNTRY);
-					city.active = cityXppAttributeProcessor.getAttrValueAsBoolean(ACTIVE);
 					city.webSite = cityXppAttributeProcessor.getAttrValueAsString(WEB_SITE);
 					city.stationList = cityXppAttributeProcessor.getAttrValueAsString(STATION_LIST);
 					city.stationDetails = cityXppAttributeProcessor.getAttrValueAsString(STATION_DETAILS);

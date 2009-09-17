@@ -16,8 +16,6 @@ public class City {
 	
 	public String type;
 	
-	public boolean active;
-	
 	public String webSite;
 
 	public String stationList;
@@ -44,7 +42,6 @@ public class City {
 		.append(", name=").append(name)
 		.append(", serviceName=").append(serviceName)
 		.append(", type=").append(type)
-		.append(", active=").append(active)
 		.append(", webSite=").append(webSite)
 		.append(", stationList=").append(stationList)
 		.append(", stationDetails=").append(stationDetails)

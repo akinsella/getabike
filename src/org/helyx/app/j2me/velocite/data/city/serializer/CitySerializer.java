@@ -26,7 +26,6 @@ public class CitySerializer extends AbstractObjectSerializer {
 			City city = (City)object;
 	
 			dos.writeUTF(city.key);
-			dos.writeBoolean(city.active);
 			dos.writeUTF(city.type);
 			dos.writeUTF(city.name);
 			dos.writeUTF(city.serviceName);
@@ -65,7 +64,6 @@ public class CitySerializer extends AbstractObjectSerializer {
 			City city = new City();
 	
 			city.key = dis.readUTF();
-			city.active = dis.readBoolean();
 			city.type = dis.readUTF();
 			city.name = dis.readUTF();
 			city.serviceName = dis.readUTF();

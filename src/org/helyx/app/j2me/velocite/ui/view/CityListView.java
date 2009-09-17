@@ -144,13 +144,11 @@ public class CityListView extends MenuListView {
 		Enumeration _enum = cityList.elements();
 		while(_enum.hasMoreElements()) {
 			City city = (City)_enum.nextElement();
-			if (city.active) {
-				MenuItem cityMenuItem = new MenuItem(city.name);
-				cityMenuItem.setData(city);
-				menu.addMenuItem(cityMenuItem);
-				if (selectedCity != null && city.key.equals(selectedCity.key)) {
-					menu.setCheckedMenuItem(cityMenuItem);
-				}
+			MenuItem cityMenuItem = new MenuItem(city.name);
+			cityMenuItem.setData(city);
+			menu.addMenuItem(cityMenuItem);
+			if (selectedCity != null && city.key.equals(selectedCity.key)) {
+				menu.setCheckedMenuItem(cityMenuItem);
 			}
 		}
 

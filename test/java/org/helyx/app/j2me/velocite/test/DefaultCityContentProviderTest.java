@@ -44,7 +44,6 @@ public class DefaultCityContentProviderTest extends TestCase {
 				assertEquals("Paris", city.name);
 				assertEquals("Vélib'", city.serviceName);
 				assertEquals("VELIB", city.type);
-				assertEquals(true, city.active);
 				assertEquals("http://www.velib.paris.fr/service/stationdetails/", city.stationDetails);
 				assertEquals("http://www.velib.paris.fr/service/carto/", city.stationList);
 			}

@@ -11,14 +11,12 @@ import org.helyx.app.j2me.velocite.data.carto.accessor.StationPoiInfoAccessor;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
-import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
 import org.helyx.app.j2me.velocite.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
-import org.helyx.helyx4me.map.google.GoogleMapView;
+import org.helyx.helyx4me.map.google.GoogleMapsView;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
@@ -85,7 +83,7 @@ public class StationDetailsView extends AbstractView {
 	private void showGoogleMapsView() {
 
 		String googleMapsKey = PrefManager.readPrefString(UtilManager.GOOGLE_MAPS_KEY);
-		GoogleMapView googleMapView = new GoogleMapView(getMidlet(), "Plan de la station", googleMapsKey, new StationPoiInfoAccessor(), station.localization, 15, poiImgClasspath, poiSelectedImgClasspath);
+		GoogleMapsView googleMapView = new GoogleMapsView(getMidlet(), "Plan de la station", googleMapsKey, new StationPoiInfoAccessor(), station.localization, 15, poiImgClasspath, poiSelectedImgClasspath);
 		googleMapView.setPreviousDisplayable(StationDetailsView.this);
 		googleMapView.setSelectedPoi(station);
 		googleMapView.setPoiItems(relatedStations);

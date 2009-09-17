@@ -10,7 +10,7 @@ import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
 import org.helyx.app.j2me.velocite.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.filter.IRecordFilter;
-import org.helyx.helyx4me.map.google.GoogleMapView;
+import org.helyx.helyx4me.map.google.GoogleMapsView;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.ProgressListener;
@@ -140,7 +140,7 @@ public class StationListView extends AbstractListView {
 		String googleMapsKey = PrefManager.readPrefString(UtilManager.GOOGLE_MAPS_KEY);
 		
 		Station stationSelected = getStationSelected();
-		GoogleMapView googleMapView = new GoogleMapView(getMidlet(), "Plan de la station", googleMapsKey, new StationPoiInfoAccessor(), stationSelected.localization, 15, poiImgClasspath, poiSelectedImgClasspath);
+		GoogleMapsView googleMapView = new GoogleMapsView(getMidlet(), "Plan de la station", googleMapsKey, new StationPoiInfoAccessor(), stationSelected.localization, 15, poiImgClasspath, poiSelectedImgClasspath);
 		googleMapView.setPreviousDisplayable(StationListView.this);
 		googleMapView.setSelectedPoi(stationSelected);
 		googleMapView.setPoiItems(elementProvider);

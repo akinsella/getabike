@@ -104,9 +104,13 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 
 	private void onFirstRun(String newVersion) {
-		PrefManager.writePref(PrefConstants.MIDLET_VERSION, newVersion);
+		updateVersion(newVersion);
 		logger.info("This is not an update of an older version. New version is: '" + newVersion + "'");
 		checkData(STEP_START);
+	}
+
+	private void updateVersion(String newVersion) {
+		PrefManager.writePref(PrefConstants.MIDLET_VERSION, newVersion);
 	}
 
 	private void onAppUpdate(String oldVersion, String newVersion) {
@@ -114,6 +118,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		logger.info("New version is: '" + newVersion + "'");
 
 		logger.info("Old version is different from new Version");
+		updateVersion(newVersion);
 		
 		checkData(STEP_START);
 	}

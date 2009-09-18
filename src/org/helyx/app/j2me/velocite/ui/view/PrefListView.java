@@ -26,6 +26,7 @@ public class PrefListView extends PrefBaseListView {
 	private MenuItem languageMenuItem;
 	private MenuItem optionMenuItem;
 	private MenuItem resetMenuItem;
+	private MenuItem versionMenuItem;
 	
 	private Throwable prefException;
 
@@ -101,6 +102,11 @@ public class PrefListView extends PrefBaseListView {
 					private MenuItem mapModeMenuItem;
 					private MenuItem httpModeMenuItem;
 					private MenuItem debugModeMenuItem;
+					private MenuItem platformMenuItem;
+					private MenuItem profilesMenuItem;
+					private MenuItem configurationMenuItem;
+					private MenuItem fcVersionMenuItem;
+					private MenuItem encodingMenuItem;
 
 					protected void onInit() {
 						
@@ -124,11 +130,22 @@ public class PrefListView extends PrefBaseListView {
 							}
 						});
 						
+						platformMenuItem = new MenuItem("Plateforme");
+						profilesMenuItem = new MenuItem("Profiles");
+						configurationMenuItem = new MenuItem("Configuration");
+						fcVersionMenuItem = new MenuItem("Support fichier");
+						encodingMenuItem = new MenuItem("Encoding");
+						
 						Menu optionMenu = new Menu();
 						
 						optionMenu.addMenuItem(mapModeMenuItem);
 						optionMenu.addMenuItem(httpModeMenuItem);
 						optionMenu.addMenuItem(debugModeMenuItem);
+						optionMenu.addMenuItem(platformMenuItem);
+						optionMenu.addMenuItem(profilesMenuItem);
+						optionMenu.addMenuItem(configurationMenuItem);
+						optionMenu.addMenuItem(fcVersionMenuItem);
+						optionMenu.addMenuItem(encodingMenuItem);
 						
 						setMenu(optionMenu);
 
@@ -141,6 +158,7 @@ public class PrefListView extends PrefBaseListView {
 							fetchDebugMode();
 							fetchHttpMode();
 							fetchMapMode();
+							fetchSystemInformations();
 						}
 						super.beforeDisplayableSelection(current, next);
 					}
@@ -151,6 +169,19 @@ public class PrefListView extends PrefBaseListView {
 							logger.debug("Debug mode active: " + isDebugModeActive);	
 						}
 						debugModeMenuItem.setData(PREF_VALUE, isDebugModeActive ? "Oui" : "Non");
+					}
+					
+					private void fetchSystemInformations() {
+						String encoding = System.getProperty("microedition.encoding");
+						encodingMenuItem.setData(PREF_VALUE, encoding != null ? encoding : "Inconnu");
+						String configuration = System.getProperty("microedition.configuration");
+						configurationMenuItem.setData(PREF_VALUE, configuration != null ? configuration : "Inconnu");
+						String platform = System.getProperty("microedition.platform");
+						platformMenuItem.setData(PREF_VALUE, platform != null ? platform : "Inconnu");
+						String profiles = System.getProperty("microedition.profiles");
+						profilesMenuItem.setData(PREF_VALUE, profiles != null ? profiles : "Inconnu");
+						String fcVersion = System.getProperty("microedition.io.file.FileConnection.version");
+						fcVersionMenuItem.setData(PREF_VALUE, fcVersion != null ? fcVersion : "Non");
 					}
 
 					private void fetchHttpMode() {
@@ -177,6 +208,8 @@ public class PrefListView extends PrefBaseListView {
 		});		
 		optionMenuItem.setParentMenu(true);
 		
+		versionMenuItem = new MenuItem("Version");
+		
 		resetMenuItem = new MenuItem("Reset", new IAction() {
 			public void run(Object data) {
 				UtilManager.reset(PrefListView.this);
@@ -187,6 +220,7 @@ public class PrefListView extends PrefBaseListView {
 		menu.addMenuItem(cityMenuItem);
 		menu.addMenuItem(languageMenuItem);
 		menu.addMenuItem(optionMenuItem);
+		menu.addMenuItem(versionMenuItem);
 		menu.addMenuItem(resetMenuItem);
 		
 		setMenu(menu);
@@ -204,6 +238,7 @@ public class PrefListView extends PrefBaseListView {
 			fetchCountryPref();
 			fetchCityPref();
 			fetchLanguagePref();
+			fetchVersion();
 		}
 		super.beforeDisplayableSelection(current, next);
 	}
@@ -260,6 +295,21 @@ public class PrefListView extends PrefBaseListView {
 			}
 			else {
 				languageMenuItem.removeData(PREF_VALUE);
+			}
+		}
+		catch(Throwable t) {
+			logger.warn(t);
+		}
+	}
+
+	private void fetchVersion() {
+		try {
+			String version = PrefManager.readPrefString(PrefConstants.MIDLET_VERSION);
+			if (version != null) {
+				versionMenuItem.setData(PREF_VALUE,version);
+			}
+			else {
+				versionMenuItem.removeData(PREF_VALUE);
 			}
 		}
 		catch(Throwable t) {

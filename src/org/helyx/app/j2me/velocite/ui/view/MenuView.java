@@ -283,11 +283,11 @@ public class MenuView extends AbstractView {
 					DialogUtil.showAlertMessage(MenuView.this, "Information", "Station favories");
 				}
 			}));
-			menu.addMenuItem(new MenuItem("Itineraire", false, new IAction() {
-				public void run(Object data) {
-					DialogUtil.showAlertMessage(MenuView.this, "Information", "Itinéraire");
-				}
-			}));
+//			menu.addMenuItem(new MenuItem("Itineraire", false, new IAction() {
+//				public void run(Object data) {
+//					DialogUtil.showAlertMessage(MenuView.this, "Information", "Itinéraire");
+//				}
+//			}));
 			menu.addMenuItem(new MenuItem("Préférences", true, new IAction() {
 				private PrefListView prefListView;
 				

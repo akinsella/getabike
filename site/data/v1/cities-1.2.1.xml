@@ -219,6 +219,7 @@
 		  <support localization="true" bonus="true" tpe="false" state="true" />
 	</city>
 
+<!-- 
 	<city key="VIENNE" name="Vienne" type="CITYBIKE" country="AUSTRIA"
 	      serviceName="CityBike" normalizer="SIMPLE"
 		  webSite="http://www.citybikewien.at/"
@@ -226,5 +227,6 @@
 		  stationDetails="http://www.citybikecard.at/Standortliste_csv.php">	  
 		  <support localization="false" bonus="false" tpe="false" state="true" />
 	</city>
- 		  
+ -->
+  		  
 </cities>

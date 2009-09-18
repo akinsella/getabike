@@ -18,33 +18,28 @@ import org.helyx.logging4me.Logger;
 
 import org.xmlpull.v1.XmlPullParser;
 
-public class VeloPlusStationDetailsContentProvider extends AbstractContentProvider {
+
+public class CityBikeStationDetailsContentProvider extends AbstractContentProvider {
 	
-	private static final Logger logger = Logger.getLogger("VELO_PLUS_STATION_DETAILS_CONTENT_PROVIDER");
+	private static final Logger logger = Logger.getLogger("CITY_BIKE_STATION_DETAILS_CONTENT_PROVIDER");
 
 
 	private static final String STATION = "station";
 	
-	private static final String STATUS = "status";
-	private static final String BIKES = "bikes";
-	private static final String ATTACHS = "attachs";
-	private static final String PAIEMENT = "paiement";
-	
-	private static final String EN_SERVICE = "En service";
-	private static final String HORS_SERVICE = "Hors service";
-	
-	private static final String SANS_TPE = "SANS_TPE";
-	private static final String AVEC_TPE = "AVEC_TPE";
+	private static final String AVAILABLE = "available";
+	private static final String FREE = "free";
+	private static final String TOTAL = "total";
+	private static final String TICKET = "ticket";
 	
 	
 	private static final String INVALID_CONTENT = "Xml content is invalid";
 	
-	private City city;
-	private Station station;
-
 	private IContentAccessor stationDetailsContentAccessor;
 
-	public VeloPlusStationDetailsContentProvider(IContentAccessor stationDetailsContentAccessor, City city, Station station) {
+	private City city;
+	private Station station;
+	
+	public CityBikeStationDetailsContentProvider(IContentAccessor stationDetailsContentAccessor, City city, Station station) {
 		super();
 		this.stationDetailsContentAccessor = stationDetailsContentAccessor;
 		this.city = city;
@@ -61,21 +56,21 @@ public class VeloPlusStationDetailsContentProvider extends AbstractContentProvid
 		InputStreamProvider stationDetailsInputStreamReaderProvider = null;
 	
 		try {
-
+				
 			StationDetails stationDetails = new StationDetails();
 			try {
 				if (logger.isInfoEnabled()) {
 					logger.info("Path to station details: '" + stationDetailsContentAccessor.getPath() + "'");
 				}
-					
+				
 				progressDispatcher.fireEvent(EventType.ON_START);
 
 				stationDetailsInputStreamReaderProvider = stationDetailsContentAccessor.getInputStreamProvider();
 				
 				inputStream = new BufferedInputStream(stationDetailsInputStreamReaderProvider.createInputStream());
-				
-				
+								
 				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
+
 				if (!XppUtil.readToNextElement(xpp, STATION)) {
 					throw new ContentProviderException(INVALID_CONTENT);
 				}
@@ -86,20 +81,19 @@ public class VeloPlusStationDetailsContentProvider extends AbstractContentProvid
 
 				while (XppUtil.readNextElement(xpp)) {
 					String elementName = xpp.getName();
-					if (elementName.equals(STATUS)) {
-						stationDetails.open = EN_SERVICE.equals(XppUtil.readNextText(xpp));
-					}
-					else if (elementName.equals(BIKES)) {
+					if (elementName.equals(AVAILABLE)) {
 						stationDetails.available = Integer.parseInt(XppUtil.readNextText(xpp));
-					}					
-					else if (elementName.equals(ATTACHS)) {
+					}
+					else if (elementName.equals(FREE)) {
 						stationDetails.free = Integer.parseInt(XppUtil.readNextText(xpp));
 					}
-					else if (elementName.equals(PAIEMENT)) {
-						stationDetails.tpe = AVEC_TPE.equals(XppUtil.readNextText(xpp));
+					else if (elementName.equals(TOTAL)) {
+						stationDetails.total = Integer.parseInt(XppUtil.readNextText(xpp));
+					}
+					else if (elementName.equals(TICKET)) {
+						stationDetails.ticket = Integer.parseInt(XppUtil.readNextText(xpp)) == 1;
 					}
 				}
-				stationDetails.total = stationDetails.available + stationDetails.free;
 				stationDetails.hs = stationDetails.total - stationDetails.free - stationDetails.available;
 				
 				if (logger.isDebugEnabled()) {

@@ -59,7 +59,9 @@ public class VelibStationDetailsContentProvider extends AbstractContentProvider 
 				
 			StationDetails stationDetails = new StationDetails();
 			try {
-				logger.info("Path to station details: '" + stationDetailsContentAccessor.getPath() + "'");
+				if (logger.isInfoEnabled()) {
+					logger.info("Path to station details: '" + stationDetailsContentAccessor.getPath() + "'");
+				}
 				
 				progressDispatcher.fireEvent(EventType.ON_START);
 

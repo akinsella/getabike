@@ -26,7 +26,9 @@ public class VelibStationDetailsContentProviderFactory implements IContentProvid
 	
 	public IContentProvider createContentProvider() throws ContentProviderFactoryException {
 		String url = new StringFormat(city.stationDetails).format(String.valueOf(station.number));
-		logger.debug("URL: " + url);
+		if (logger.isDebugEnabled()) {
+			logger.debug("URL: " + url);
+		}
 		IContentProvider stationContentProvider = new VelibStationDetailsContentProvider(
 				new HttpVelociteContentAccessor(url),
 				city, 

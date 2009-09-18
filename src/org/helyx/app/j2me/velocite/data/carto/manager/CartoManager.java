@@ -4,9 +4,11 @@ import org.helyx.app.j2me.velocite.data.carto.comparator.StationDistanceComparat
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationDistanceFilter;
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
+import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.CityBikeStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VelibStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VeloPlusStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VeloVStationDetailsContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.factory.CityBikeStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VelibStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloPlusStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloStationContentProviderFactory;
@@ -38,8 +40,7 @@ public class CartoManager {
 	public static final String VELO_PLUS = "VELO_PLUS";  // ORLEANS
 	public static final String VELO = "VELO";  // TOULOUSE
 	public static final String VELO_V = "VELO_V";  // LYON
-	public static final String LE_VELO = "LE_VELO";  // MARSEILLE
-	public static final String SEVICI = "SEVICI";  // SEVILLE
+	public static final String CITYBIKE = "CITYBIKE";  // VIENNE
 	
 	private static final String DEFAULT_NORMALIZER = "DEFAULT";
 	private static final String SIMPLE_NORMALIZER = "SIMPLE";
@@ -66,6 +67,9 @@ public class CartoManager {
 			}
 			else if (VELO_PLUS.equals(city.type)) {
 				cpf = new VeloPlusStationContentProviderFactory(city);
+			}
+			else if (CITYBIKE.equals(city.type)) {
+				cpf = new CityBikeStationContentProviderFactory(city);
 			}
 			else {
 				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");
@@ -118,12 +122,6 @@ public class CartoManager {
 			if (VELIB.equals(city.type)) {
 				cpf = new VelibStationDetailsContentProviderFactory(city, station);
 			}
-			else if (LE_VELO.equals(city.type)) {
-				cpf = new VelibStationDetailsContentProviderFactory(city, station);
-			}
-			else if (SEVICI.equals(city.type)) {
-				cpf = new VelibStationDetailsContentProviderFactory(city, station);
-			}
 			else if (VELO.equals(city.type)) {
 				cpf = new VelibStationDetailsContentProviderFactory(city, station);
 			}
@@ -132,6 +130,9 @@ public class CartoManager {
 			}
 			else if (VELO_PLUS.equals(city.type)) {
 				cpf = new VeloPlusStationDetailsContentProviderFactory(city, station);
+			}
+			else if (CITYBIKE.equals(city.type)) {
+				cpf = new CityBikeStationDetailsContentProviderFactory(city, station);
 			}
 			else {
 				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");

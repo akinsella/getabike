@@ -207,7 +207,8 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		}
 		
 		public void onProgress(String eventMessage, Object eventData) {
-			AppStartProgressTask.this.onProgress(eventMessage);
+			AppStartProgressTask.this.logger.debug(eventData);
+//			AppStartProgressTask.this.onProgress(eventMessage);
 		}
 		
 	}

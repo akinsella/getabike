@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<cities version="1.2.1" date="2009/09/14, 14:17:00">
+<cities version="1.2.1">
 
 	<!-- http://bike-sharing.blogspot.com -->
 
@@ -204,7 +204,7 @@
 	</city>
 
 	<city key="SANTANDER" name="Satander" type="VELIB" country="SPAIN" 
-	      serviceName="TusBic" normalizer="SIMPLE"
+	      serviceName="TusBic" normalizer="SANTANDER"
 		  webSite="http://www.tusbic.es/" 
 		  stationList="http://www.tusbic.es/service/carto/" 
 		  stationDetails="http://www.tusbic.es/service/stationdetails/{1}">	  
@@ -222,11 +222,11 @@
 <!-- 
 	<city key="VIENNE" name="Vienne" type="CITYBIKE" country="AUSTRIA"
 	      serviceName="CityBike" normalizer="SIMPLE"
-		  webSite="http://www.citybikewien.at/" 
+		  webSite="http://www.citybikewien.at/"
 		  stationList="http://www.citybikecard.at/Standortliste_csv.php" 
 		  stationDetails="http://www.citybikecard.at/Standortliste_csv.php">	  
 		  <support localization="false" bonus="false" tpe="false" state="true" />
 	</city>
  -->
- 		  
+  		  
 </cities>

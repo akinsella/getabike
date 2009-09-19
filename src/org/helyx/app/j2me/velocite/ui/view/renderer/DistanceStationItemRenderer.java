@@ -22,8 +22,11 @@ public class DistanceStationItemRenderer extends StationItemRenderer {
 	}
 
 	public void paintItem(AbstractListView view, Graphics g, int offset, Rectangle itemClientArea, Object itemObject) {
-
+ 
 		super.paintItem(view, g, offset, itemClientArea, itemObject);
+
+		boolean isSelected = view.isItemSelected(offset);
+
 		StationListView stationListView = (StationListView)view;
 		Station referentStation = stationListView.getReferentStation();
 		Station station = (Station)itemObject;
@@ -44,6 +47,9 @@ public class DistanceStationItemRenderer extends StationItemRenderer {
 			String distanceStr = new String((long)(station.distance) + " m");
 			
 			Color distanceFontColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
+			if (isSelected) {
+				distanceFontColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
+			}
 			try {
 				//TODO: Add color to theme
 				distanceFontColor = view.getTheme().getColor(AppThemeConstants.STATION_LIST_DISTANCE_COLOR);

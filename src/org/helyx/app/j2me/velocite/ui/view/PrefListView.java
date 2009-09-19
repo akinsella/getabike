@@ -107,34 +107,43 @@ public class PrefListView extends PrefBaseListView {
 					private MenuItem configurationMenuItem;
 					private MenuItem fcVersionMenuItem;
 					private MenuItem encodingMenuItem;
+					private MenuItem screenSizeItem;
 
 					protected void onInit() {
 						
-						final AbstractDisplayable displayable = this;
+						final AbstractDisplayable currentDisplayable = this;
 						
 						mapModeMenuItem = new MenuItem("Google Maps", new IAction() {
 							public void run(Object data) {
-								UtilManager.changeMapMode(displayable);
+								UtilManager.changeMapMode(currentDisplayable);
 							}
 						});
 						
 						httpModeMenuItem = new MenuItem("Http optimisé", new IAction() {
 							public void run(Object data) {
-								UtilManager.changeHttpMode(displayable);
+								UtilManager.changeHttpMode(currentDisplayable);
 							}
 						});
 						
 						debugModeMenuItem = new MenuItem("Debug mode", new IAction() {
 							public void run(Object data) {
-								UtilManager.changeDebugMode(displayable);
+								UtilManager.changeDebugMode(currentDisplayable);
 							}
 						});
 						
-						platformMenuItem = new MenuItem("Plateforme");
+						platformMenuItem = new MenuItem("Plateforme", new IAction() {
+							
+							public void run(Object data) {
+								DialogUtil.showAlertMessage(currentDisplayable, "Plateforme", (String)platformMenuItem.getData(PrefListView.PREF_VALUE_DETAILS));
+							}
+						});
+						
+						platformMenuItem.setParentMenu(true);
 						profilesMenuItem = new MenuItem("Profiles");
 						configurationMenuItem = new MenuItem("Configuration");
 						fcVersionMenuItem = new MenuItem("Support fichier");
 						encodingMenuItem = new MenuItem("Encoding");
+						screenSizeItem = new MenuItem("Ecran");
 						
 						Menu optionMenu = new Menu();
 						
@@ -146,6 +155,7 @@ public class PrefListView extends PrefBaseListView {
 						optionMenu.addMenuItem(configurationMenuItem);
 						optionMenu.addMenuItem(fcVersionMenuItem);
 						optionMenu.addMenuItem(encodingMenuItem);
+						optionMenu.addMenuItem(screenSizeItem);
 						
 						setMenu(optionMenu);
 
@@ -177,11 +187,12 @@ public class PrefListView extends PrefBaseListView {
 						String configuration = System.getProperty("microedition.configuration");
 						configurationMenuItem.setData(PREF_VALUE, configuration != null ? configuration : "Inconnu");
 						String platform = System.getProperty("microedition.platform");
-						platformMenuItem.setData(PREF_VALUE, platform != null ? platform : "Inconnu");
+						platformMenuItem.setData(PREF_VALUE_DETAILS, platform != null ? platform : "Inconnu");
 						String profiles = System.getProperty("microedition.profiles");
 						profilesMenuItem.setData(PREF_VALUE, profiles != null ? profiles : "Inconnu");
 						String fcVersion = System.getProperty("microedition.io.file.FileConnection.version");
 						fcVersionMenuItem.setData(PREF_VALUE, fcVersion != null ? fcVersion : "Non");
+						screenSizeItem.setData(PREF_VALUE, viewCanvas.getWidth() + "x" + viewCanvas.getHeight());
 					}
 
 					private void fetchHttpMode() {

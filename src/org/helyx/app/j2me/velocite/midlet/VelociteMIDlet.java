@@ -107,7 +107,7 @@ public class VelociteMIDlet extends AbstractMIDlet {
 
 	private void onStartError(AbstractView view, String message, Throwable t) {
 		logger.info(message);
-		String errorMessage = t.getMessage() == null ? "Erreur de chargement des villes" : t.getMessage();
+		String errorMessage = t.getMessage() == null ? "Erreur d'initialisation de l'application" : t.getMessage();
 		DialogUtil.showMessageDialog(
 				view, 
 				"Erreur", 

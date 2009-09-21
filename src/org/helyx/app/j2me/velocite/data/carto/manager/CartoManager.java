@@ -13,12 +13,11 @@ import org.helyx.app.j2me.velocite.data.carto.provider.factory.VelibStationConte
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloPlusStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloStationContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.factory.VeloVStationContentProviderFactory;
+import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.CergyStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.DefaultStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
-import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.ParisStationInfoNormalizer;
-import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.SantanderStationInfoNormalizer;
-import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.SimpleCBStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.SimpleStationInfoNormalizer;
+import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.VelibStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.ui.view.StationListView;
@@ -45,10 +44,9 @@ public class CartoManager {
 	
 	private static final String DEFAULT_NORMALIZER = "DEFAULT";
 	private static final String SIMPLE_NORMALIZER = "SIMPLE";
-	private static final String SEVILLE_NORMALIZER = "SEVILLE";
-	private static final String PARIS_NORMALIZER = "PARIS";
-	private static final String SIMPLE_CB_NORMALIZER = "SIMPLE_CB";
-	private static final String SANTANDER_NORMALIZER = "SANTANDER";
+	private static final String SIMPLE_UNDERSCORE_NORMALIZER = "SIMPLE_U";
+	private static final String VELIB_NORMALIZER = "VELIB";
+	private static final String CERGY_NORMALIZER = "CERGY";
 	
 	private CartoManager() {
 		super();
@@ -101,20 +99,17 @@ public class CartoManager {
 			return new DefaultStationInfoNormalizer();
 		}
 		else if (SIMPLE_NORMALIZER.equals(cityNormalizer)) {
-			return new SimpleStationInfoNormalizer("-");
+			return new SimpleStationInfoNormalizer();
 		}
-		else if (SIMPLE_CB_NORMALIZER.equals(cityNormalizer)) {
-			return new SimpleCBStationInfoNormalizer("-");
+		else if (SIMPLE_UNDERSCORE_NORMALIZER.equals(cityNormalizer)) {
+			return new SimpleStationInfoNormalizer('_');
 		}
-		else if (SEVILLE_NORMALIZER.equals(cityNormalizer)) {
-			return new SimpleStationInfoNormalizer("_");
+		else if (VELIB_NORMALIZER.equals(cityNormalizer)) {
+			return new VelibStationInfoNormalizer();
 		}
-		else if (PARIS_NORMALIZER.equals(cityNormalizer)) {
-			return new ParisStationInfoNormalizer();
-		}
-		else if (SANTANDER_NORMALIZER.equals(cityNormalizer)) {
-			return new SantanderStationInfoNormalizer();
-		}
+		else if (CERGY_NORMALIZER.equals(cityNormalizer)) {
+			return new CergyStationInfoNormalizer();
+			}
 		else {
 			throw new CartoManagerException("No StationInfoNormalizer for city: '" + city.type + "' and normalizer: '" + cityNormalizer + "'");
 		}
@@ -167,8 +162,9 @@ public class CartoManager {
 		}	
 	}
 
-	public static void showStationByDistance(AbstractDisplayable displayable, AbstractDisplayable previousDisplayable, final Station station, final int distanceMax, boolean recordFilterEnabled, boolean allowMenu, boolean allowNested) {
+	public static void showStationByDistance(AbstractDisplayable displayable, AbstractDisplayable previousDisplayable, final City city, final Station station, final int distanceMax, boolean recordFilterEnabled, boolean allowMenu, boolean allowNested) {
 		StationListView stationListView = new StationListView(displayable.getMidlet(), "Station Proches");
+		stationListView.setCity(city);
 		stationListView.setReferentStation(station);
 		stationListView.setAllowMenu(allowMenu);
 		stationListView.setPreviousDisplayable(previousDisplayable);

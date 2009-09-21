@@ -5,6 +5,6 @@ MIDlet-Info-URL: http://velocite.helyx.org
 MIDlet-Jar-URL: velocite.jar
 MIDlet-Name: VeloCite
 MIDlet-Vendor: Helyx.org
-MIDlet-Version: 1.2.6
+MIDlet-Version: 1.2.7
 MicroEdition-Configuration: CLDC-1.1
 MicroEdition-Profile: MIDP-2.0

@@ -107,15 +107,15 @@ public class CityListView extends MenuListView {
 
 			TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CityListView.this, new ProgressTaskReturnCallback() {
 
-				public void onError(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
-					logger.info("Error: " + eventMessage + ", data: " + eventData);
-					cleanUpCurrentCityData();
-					getReturnCallback().onReturn(currentDisplayable, eventData);
-				}
-
 				public void onSuccess(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
 					logger.info("Success: " + eventMessage + ", data: " + eventData);
 					CityManager.setCurrentCity(city);
+					getReturnCallback().onReturn(currentDisplayable, eventData);
+				}
+
+				public void onError(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
+					logger.info("Error: " + eventMessage + ", data: " + eventData);
+					cleanUpCurrentCityData();
 					getReturnCallback().onReturn(currentDisplayable, eventData);
 				}
 				

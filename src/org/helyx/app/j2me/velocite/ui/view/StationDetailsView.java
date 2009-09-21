@@ -122,28 +122,28 @@ public class StationDetailsView extends AbstractView {
 							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 250 m", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 250, false, false, false);
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 250, false, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 500 m", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 500, false, false, false);
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 500, false, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 1 km", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 1000, false, false, false);
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 1000, false, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 2 km", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, station, 2000, false, false, false);
+									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 2000, false, false, false);
 								}
 			
 							}));

@@ -34,6 +34,7 @@ public class StoreStationLoaderProgressListener extends ProgressAdapter {
 		stationPersistenceService = new StationPersistenceService();
    		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Suppression des stations");
 		stationPersistenceService.removeAllStations();
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Chargement des stations");
 	}
 
 	public void onCustomEvent(int eventType, String eventMessage, Object eventData) {

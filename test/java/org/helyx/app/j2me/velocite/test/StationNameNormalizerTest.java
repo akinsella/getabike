@@ -15,7 +15,7 @@ public class StationNameNormalizerTest extends TestCase {
 	}
 
 	public void testSimpleStationNameNormalizer1() {
-		IStationInfoNormalizer stationNmNameNormalizer = new SimpleStationInfoNormalizer("-");
+		IStationInfoNormalizer stationNmNameNormalizer = new SimpleStationInfoNormalizer();
 		Station station = new Station();
 		station.number = 12345;
 		station.name = station.number + "-" + "bla bla";
@@ -24,7 +24,7 @@ public class StationNameNormalizerTest extends TestCase {
 	}
 	
 	public void testSimpleStationNameNormalizer2() {
-		IStationInfoNormalizer stationNmNameNormalizer = new SimpleStationInfoNormalizer("-");
+		IStationInfoNormalizer stationNmNameNormalizer = new SimpleStationInfoNormalizer();
 		Station station = new Station();
 		station.number = 12345;
 		station.name = station.number + " - " + "bla bla";

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<cities version="1.2.1">
+
+	<!-- http://bike-sharing.blogspot.com -->
+
+	<city key="AMIEN" name="Amien" type="VELIB" country="FRANCE"
+	      serviceName="Vélam" normalizer="SIMPLE"
+		  webSite="http://www.velam.amiens.fr/" 
+		  stationList="http://www.velam.amiens.fr/service/carto/" 
+		  stationDetails="http://www.velam.amiens.fr/service/stationdetails/{1}">	  
+		  <support localization="true" bonus="true" tpe="false" state="true" />
+	</city>
+
+	<!-- Anger -->
+
+	<city key="AIX_EN_PROVENCE" name="Aix-en-Provence" type="VELIB" country="FRANCE" 
+	      serviceName="V'hello" normalizer="SIMPLE"
+		  webSite="http://www.vhello.fr/" 
+		  stationList="http://www.vhello.fr/service/carto/"
+		  stationDetails="http://www.vhello.fr/service/stationdetails/{1}">
+		  
+		  <support localization="true" bonus="false" tpe="false" state="false" />
+	</city>
+		  
+	<city key="BESANCON" name="Besançon" type="VELIB" country="FRANCE"
+	      serviceName="VéloCité" normalizer="SIMPLE"
+		  webSite="http://www.velocite.besancon.fr/" 
+		  stationList="http://www.velocite.besancon.fr/service/carto/" 
+		  stationDetails="http://www.velocite.besancon.fr/service/stationdetails/{1}">	  
+		  <support localization="true" bonus="false" tpe="true" state="true" />
+	</city>
+		  
+	<city key="BRUXELLES" name="Bruxelles" type="VELIB" country="BELGIUM"
+	      serviceName="Villo" normalizer="SIMPLE"
+		  webSite="http://www.villo.be/" 
+		  stationList="http://www.villo.be/service/carto/" 
+		  stationDetails="http://www.villo.be/service/stationdetails/{1}">
+		  <support localization="true" bonus="false" tpe="false" state="true" />
+	</city>
+		  
+	<city key="CERGY_PONTOISE" name="Cergy-Pontoise" type="VELIB" country="FRANCE"
+	      serviceName="VélO2" normalizer="CERGY"
+		  webSite="http://www.cyclocity.be/" 
+		  stationList="http://www.velo2.cergypontoise.fr/service/carto/" 
+		  stationDetails="http://www.velo2.cergypontoise.fr/service/stationdetails/{1}">
+		  <support localization="true" bonus="true" tpe="false" state="false" />
+	</city>
+
+<!--
+	<city key="CORDOUE" name="Cordoue" type="VELIB" active="false" country="SPAIN"
+		  serviceName="AyunCordoba" normalizer="SIMPLE"
+		  webSite="http://www.ayuncordoba.es/" 
+		  stationList="http://www.ayuncordoba.es/service/carto/" 
+		  stationDetails="http://www.ayuncordoba.es/service/stationdetails/{1}" >  
+		  <support localization="true" bonus="false" tpe="false" state="true" />
+	</city>
+-->
+
+<!--   
+	<city key="DIJON" name="Dijon" type="VELODI"  country="FRANCE"
+	      serviceName="Velodi" normalizer="DEFAULT"
+		  webSite="http://www.velodi.net/" 
+		  stationList="" 
+		  stationDetails="" >	  
+		  <support localization="true" bonus="false" tpe="false" state="true" />
+	</city>
+ -->
+ 
+	<city key="LUXEMBOURG" name="Luxembourg" type="VELIB" country="LUXEMBOURG"
+	      serviceName="Vel-oh" normalizer="SIMPLE"
+		  webSite="http://www.veloh.lu/" 
+		  stationList="http://www.veloh.lu/service/carto/" 
+		  stationDetails="http://www.veloh.lu/service/stationdetails/{1}">	  
+		  <support localization="true" bonus="true" tpe="false" state="true" />
+	</city>	
+
+	<city key="DUBLIN" name="Dublin" type="VELIB" country="IRELAND"
+	      serviceName="DublinBikes" normalizer="SIMPLE"
+		  webSite="http://www.dublinbikes.ie/" 
+		  stationList="http://www.dublinbikes.ie/service/carto/" 
+		  stationDetails="http://www.dublinbikes.ie/service/stationdetails/{1}">	  
+		  <support localization="true" bonus="true" tpe="false" state="true" />
+	</city>
+
+	<!-- Gijón-Bici -->
+		  
+	<city key="LYON" name="Lyon" type="VELO_V" country="FRANCE"
+	      serviceName="Vélo V" normalizer="SIMPLE"
+		  webSite="http://www.velov.grandlyon.com/" 
+		  stationList="http://www.velov.grandlyon.com/velovmap/zhp/inc/StationsParArrondissement.php?arrondissement={1}" 
+		  stationDetails="http://www.velov.grandlyon.com/velovmap/zhp/inc/DispoStationsParId.php?id={1}&amp;noCache={2}">	  
+		  <support localization="true" bonus="false" tpe="false" state="true" />
+		  <quartiers>
+		  	<quartier id="1" city="Lyon" name="1er arrondissement" zipCode="69381" />
+		  	<quartier id="2" city="Lyon" name="2ème arrondissement" zipCode="69382" />
+		  	<quartier id="3" city="Lyon" name="3ème arrondissement" zipCode="69383" />
+		  	<quartier id="4" city="Lyon" name="4ème arrondissement" zipCode="69384" />
+		  	<quartier id="5" city="Lyon" name="5ème arrondissement" zipCode="69385" />
+		  	<quartier id="6" city="Lyon" name="6ème arrondissement" zipCode="69386" />
+		  	<quartier id="7" city="Lyon" name="7ème arrondissement" zipCode="69387" />
+		  	<quartier id="8" city="Lyon" name="8ème arrondissement" zipCode="69388" />
+		  	<quartier id="9" city="Lyon" name="9ème arrondissement" zipCode="69389" />
+		  	<quartier id="10" city="Villeurbannes" name="Villeurbannes" zipCode="69266" />
+		  	<quartier id="11" city="Caluire" name="Caluire" zipCode="69034" />
+		  	<quartier id="12" city="Vaulx-en-Velin" name="Vaulx-en-Velin" zipCode="69256" />
+		  </quartiers>
+	</city>
+		  
+	<city key="MARSEILLE" name="Marseille" type="LE_VELO" country="FRANCE"
+	      serviceName="Le vélo" normalizer="SIMPLE"
+		  webSite="http://www.levelo-mpm.fr" 
+		  stationList="http://www.levelo-mpm.fr/service/carto/" 
+		  stationDetails="http://www.levelo-mpm.fr/service/stationdetails/{1}">	  
+		  <support localization="true" bonus="false" tpe="false" state="true" />
+	</city>
+	
+<!-- 
+	<city key="MONTPELLIER" name="Montpellier" type="VELOMAGG" country="FRANCE"
+		  serviceName="Vélomagg'" normalizer="DEFAULT"
+		  webSite="http://www.montpellier-agglo.com/tam/page.php?id_rubrique=273" 
+		  stationList="" 
+		  stationDetails="">	  
+		  <support localization="true" bonus="false" tpe="false" state="true" />
+	</city>
+ -->
+ 		  
+	<city key="MULHOUSE" name="Mulhouse" type="VELIB" country="FRANCE"
+		  serviceName="VéloCité" normalizer="SIMPLE"
+		  webSite="http://www.velocite.mulhouse.fr/" 
+		  stationList="http://www.velocite.mulhouse.fr/service/carto/" 
+		  stationDetails="http://www.velocite.mulhouse.fr/service/stationdetails/{1}" >  
+		  <support localization="true" bonus="false" tpe="false" state="true" />
+	</city>
+	
+	<city key="NANCY" name="Nancy" type="VELIB" country="FRANCE"
+		serviceName="VéloStan" normalizer="SIMPLE"
+		webSite="http://www.velostanlib.fr"
+		stationList="http://www.velostanlib.fr/service/carto/"
+		stationDetails="http://www.velostanlib.fr/service/stationdetails/{1}">	  
+		  <support localization="true" bonus="true" tpe="true" state="true" />
+	</city>
+	
+<!-- 	  
+	<city key="NANTES" name="Nantes" type="VELIB" country="FRANCE"
+	      serviceName="Bicloo" normalizer="SIMPLE"
+		  webSite="http://www.bicloo.nantesmetropole.fr" 
+		  stationList="http://www.bicloo.nantesmetropole.fr/service/carto/" 
+		  stationDetails="http://www.bicloo.nantesmetropole.fr/service/stationdetails/{1}">
+		  <support localization="true" bonus="true" tpe="false" state="true" />
+	</city>
+ -->
+ 
+	<city key="ORLEANS" name="Orléans" type="VELO_PLUS" country="FRANCE"
+	      serviceName="Vélo+" normalizer="DEFAULT"
+		  webSite="http://www.ville-orleans.fr/Deplacements/VelosPietons01.cfm" 
+		  stationList="http://www.agglo-veloplus.fr/component/data.xml" 
+		  stationDetails="http://www.agglo-veloplus.fr/getStatusBorne?idBorne={1}">	  
+		  <support localization="true" bonus="false" tpe="true" state="true" />
+	</city>
+		  
+	<city key="PARIS" name="Paris" type="VELIB" country="FRANCE" 
+	      serviceName="Vélib'" normalizer="VELIB"
+		  webSite="http://www.velib.paris.fr" 
+		  stationList="http://www.velib.paris.fr/service/carto/" 
+		  stationDetails="http://www.velib.paris.fr/service/stationdetails/{1}">	  
+		  <support localization="true" bonus="true" tpe="true" state="true" />
+	</city>
+
+	<city key="PLAINE_COMMUNE" name="Plaine-Commune" type="VELIB" country="FRANCE"
+		  serviceName="Velcom" normalizer="VELIB"
+		  webSite="http://www.velcom.fr/" 
+		  stationList="http://www.velcom.fr/service/carto/" 
+		  stationDetails="http://www.velcom.fr/service/stationdetails/{1}" >  
+		  <support localization="true" bonus="true" tpe="true" state="true" />
+	</city>
+		  
+	<!-- Rennes - https://www.levelostar.fr/ -->
+	<!-- http://www.levelostar.fr/index.php?id=43&type=500 -->
+<!--
+	<city key="RENNES" name="Rennes" type="VELO_START" country="FRANCE"
+	      serviceName="LeVéloStar" normalizer="SIMPLE"
+		  webSite="https://www.levelostar.fr/" 
+		  stationList="http://www.levelostar.fr/index.php?id=43&amp;type=500" 
+		  stationDetails="http://www.levelostar.fr/index.php?id=43&amp;type=500">	  
+		  <support localization="true" bonus="false" tpe="false" state="true" />
+	</city>
+-->
+
+	<city key="ROUEN" name="Rouen" type="VELIB" country="FRANCE"
+	      serviceName="Cyclic" normalizer="SIMPLE"
+		  webSite="http://cyclic.rouen.fr/" 
+		  stationList="http://cyclic.rouen.fr/service/carto/" 
+		  stationDetails="http://cyclic.rouen.fr/service/stationdetails/{1}">	  
+		  <support localization="true" bonus="true" tpe="false" state="true" />
+	</city>
+		  
+	<city key="SEVILLE" name="Seville" type="SEVICI" country="SPAIN"
+		  serviceName="Sevici" normalizer="SIMPLE_U"
+		  webSite="http://www.sevici.es/" 
+		  stationList="http://www.sevici.es/service/carto/" 
+		  stationDetails="http://www.sevici.es/service/stationdetails/{1}">	  
+		  <support localization="true" bonus="true" tpe="false" state="true" />
+	</city>
+
+	<city key="SANTANDER" name="Satander" type="VELIB" country="SPAIN" 
+	      serviceName="TusBic" normalizer="SIMPLE_U"
+		  webSite="http://www.tusbic.es/" 
+		  stationList="http://www.tusbic.es/service/carto/" 
+		  stationDetails="http://www.tusbic.es/service/stationdetails/{1}">	  
+		  <support localization="true" bonus="true" tpe="false" state="true" />
+	</city>
+		  
+	<city key="TOULOUSE" name="Toulouse" type="VELO" country="FRANCE"
+	      serviceName="Vélô" normalizer="SIMPLE"
+		  webSite="http://www.velo.toulouse.fr" 
+		  stationList="http://www.velo.toulouse.fr/service/carto/" 
+		  stationDetails="http://www.velo.toulouse.fr/service/stationdetails/{1}">	  
+		  <support localization="true" bonus="true" tpe="false" state="true" />
+	</city>
+
+<!-- 
+	<city key="VIENNE" name="Vienne" type="CITYBIKE" country="AUSTRIA"
+	      serviceName="CityBike" normalizer="SIMPLE"
+		  webSite="http://www.citybikewien.at/"
+		  stationList="http://www.citybikecard.at/Standortliste_csv.php" 
+		  stationDetails="http://www.citybikecard.at/Standortliste_csv.php">	  
+		  <support localization="false" bonus="false" tpe="false" state="true" />
+	</city>
+ -->
+  		  
+</cities>

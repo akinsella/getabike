@@ -3,5 +3,5 @@ AddType text/vnd.sun.j2me.app-descriptor jad
 AddType application/java-archive jar
 
 Redirect Permanent /data/cities/v1/cities-latest.xml /data/cities/v1/cities-1.2.3.xml
-Redirect Permanent /binaries/latest /binaries/1.2.6
+Redirect Permanent /binaries/latest /binaries/1.2.7
 

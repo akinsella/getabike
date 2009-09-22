@@ -65,14 +65,10 @@ public class StationItemRenderer implements ICellRenderer {
         addToXPos = BASE_LEFT_POS;
     	addToYPos += LINE_SPACING + FontUtil.SMALL.getHeight();
         if (station.fullAddress.length() > 0) {
-	    	if (isSelected) {
-	    		Color listFontSecondSelectedColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
-	    		g.setColor(listFontSecondSelectedColor.intValue());
-	    	}
-	    	else {
-	    		Color listFontSecondColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
-	    		g.setColor(listFontSecondColor.intValue());
-	    	}
+
+    		Color listFontSecondSelectedColor = view.getTheme().getColor(isSelected ? ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED : ThemeConstants.WIDGET_LIST_FONT_SECOND);
+    		g.setColor(listFontSecondSelectedColor.intValue());
+
 	        g.setFont(FontUtil.SMALL);
 	    	g.drawString(station.fullAddress, x + addToXPos, y + addToYPos, Graphics.LEFT | Graphics.TOP);
 
@@ -80,14 +76,10 @@ public class StationItemRenderer implements ICellRenderer {
         }
         
         if(station.zipCode.length() > 0 || station.city.length() > 0) {
-	    	if (isSelected) {
-	    		Color listFontSecondSelectedColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
-	    		g.setColor(listFontSecondSelectedColor.intValue());
-	    	}
-	    	else {
-	    		Color listFontSecondColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
-	    		g.setColor(listFontSecondColor.intValue());
-	    	}
+
+    		Color listFontSecondSelectedColor = view.getTheme().getColor(isSelected ? ThemeConstants.WIDGET_LIST_FONT_THIRD_SELECTED : ThemeConstants.WIDGET_LIST_FONT_THIRD);
+    		g.setColor(listFontSecondSelectedColor.intValue());
+
 	        g.setFont(FontUtil.SMALL);
 	        String secondaryStationInfo = (station.zipCode.length() > 0 ? (station.zipCode + " - ") : "") + (station.city.length() > 0 ? station.city : "");
 	    	g.drawString(secondaryStationInfo, x + addToXPos, y + addToYPos, Graphics.LEFT | Graphics.TOP);

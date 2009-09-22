@@ -1,6 +1,7 @@
 package org.helyx.app.j2me.velocite.data.carto.listener;
 
-import java.util.Vector;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.comparator.StationNameComparator;
@@ -20,14 +21,15 @@ public class StoreStationLoaderProgressListener extends ProgressAdapter {
 
 	private IStationPersistenceService stationPersistenceService;
 	
-	private Vector stationList;
+	private Hashtable stationMap;
+	
 	private Station[] stationArray;
 	private IProgressDispatcher progressDispatcher;
 
 	public StoreStationLoaderProgressListener(IProgressDispatcher progressDispatcher) {
 		super(logger.getCategory().getName());
 		this.progressDispatcher = progressDispatcher;
-		this.stationList = new Vector(4096);
+		this.stationMap = new Hashtable(4096);
 	}
 
 	public void onStart(String eventMessage, Object eventData) {
@@ -40,21 +42,30 @@ public class StoreStationLoaderProgressListener extends ProgressAdapter {
 	public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
 		if (eventType == CartoConstants.ON_STATION_LOADED) {
 			Station station = (Station)eventData;
-			stationList.addElement(station);
-			int size = stationList.size();
-			
-			if (size % 5 == 0) {
-		   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, stationList.size() + " stations chargées");
+			String stationNumber = String.valueOf(station.number);
+			if (!stationMap.containsKey(stationNumber)) {
+				stationMap.put(stationNumber, station);
+				int size = stationMap.size();
+				
+				if (size % 5 == 0) {
+			   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, stationMap.size() + " stations chargées");
+				}
 			}
 		}
 	}
 	
 	public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
    		try {
-   			progressDispatcher.fireEvent(EventType.ON_PROGRESS, stationList.size() + " stations chargées");
-	 		stationArray = new Station[stationList.size()];
-			stationList.copyInto(stationArray);
-			stationList = null;
+   			progressDispatcher.fireEvent(EventType.ON_PROGRESS, stationMap.size() + " stations chargées");
+	 		stationArray = new Station[stationMap.size()];
+	 		Enumeration stationEnum = stationMap.elements();
+	 		int offset = 0;
+			while(stationEnum.hasMoreElements()) {
+				Station station = (Station)stationEnum.nextElement();
+				stationArray[offset] = station;
+				offset++;
+			}
+			stationMap = null;
 			System.gc();
 	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Tri des données");
 			try { new FastQuickSort(new StationNameComparator()).sort(stationArray); } catch (Exception e) { logger.warn(e); }

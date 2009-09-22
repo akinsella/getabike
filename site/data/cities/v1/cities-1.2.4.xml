@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<cities version="1.2.3">
+<cities version="1.2.4">
 
 	<!-- NextBike - http://nextbike.de/m/maps.php -->
 
@@ -11,7 +11,7 @@
 		  webSite="http://www.velam.amiens.fr/" 
 		  stationList="http://www.velam.amiens.fr/service/carto/" 
 		  stationDetails="http://www.velam.amiens.fr/service/stationdetails/{1}">	  
-		  <support localization="true" bonus="true" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="true" tpe="false" state="true" />
 	</city>
 
 	<!-- Anger -->
@@ -22,7 +22,7 @@
 		  stationList="http://www.vhello.fr/service/carto/"
 		  stationDetails="http://www.vhello.fr/service/stationdetails/{1}">
 		  
-		  <support localization="true" bonus="false" tpe="false" state="false" />
+		  <support details="true" localization="true" bonus="false" tpe="false" state="false" />
 	</city>
 		  
 	<city key="BESANCON" name="Besançon" type="VELIB" country="FRANCE"
@@ -30,7 +30,7 @@
 		  webSite="http://www.velocite.besancon.fr/" 
 		  stationList="http://www.velocite.besancon.fr/service/carto/" 
 		  stationDetails="http://www.velocite.besancon.fr/service/stationdetails/{1}">	  
-		  <support localization="true" bonus="false" tpe="true" state="true" />
+		  <support details="true" localization="true" bonus="false" tpe="true" state="true" />
 	</city>
 		  
 	<city key="BRUXELLES" name="Bruxelles" type="VELIB" country="BELGIUM"
@@ -38,7 +38,7 @@
 		  webSite="http://www.villo.be/" 
 		  stationList="http://www.villo.be/service/carto/" 
 		  stationDetails="http://www.villo.be/service/stationdetails/{1}">
-		  <support localization="true" bonus="false" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="false" tpe="false" state="true" />
 	</city>
 		  
 	<city key="CERGY_PONTOISE" name="Cergy-Pontoise" type="VELIB" country="FRANCE"
@@ -46,7 +46,7 @@
 		  webSite="http://www.cyclocity.be/" 
 		  stationList="http://www.velo2.cergypontoise.fr/service/carto/" 
 		  stationDetails="http://www.velo2.cergypontoise.fr/service/stationdetails/{1}">
-		  <support localization="true" bonus="true" tpe="false" state="false" />
+		  <support details="true" localization="true" bonus="true" tpe="false" state="false" />
 	</city>
 
 <!--
@@ -55,7 +55,7 @@
 		  webSite="http://www.ayuncordoba.es/" 
 		  stationList="http://www.ayuncordoba.es/service/carto/" 
 		  stationDetails="http://www.ayuncordoba.es/service/stationdetails/{1}" >  
-		  <support localization="true" bonus="false" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="false" tpe="false" state="true" />
 	</city>
 -->
 
@@ -65,7 +65,7 @@
 		  webSite="http://www.velodi.net/" 
 		  stationList="" 
 		  stationDetails="" >	  
-		  <support localization="true" bonus="false" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="false" tpe="false" state="true" />
 	</city>
  -->
  
@@ -74,7 +74,7 @@
 		  webSite="http://www.veloh.lu/" 
 		  stationList="http://www.veloh.lu/service/carto/" 
 		  stationDetails="http://www.veloh.lu/service/stationdetails/{1}">	  
-		  <support localization="true" bonus="true" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="true" tpe="false" state="true" />
 	</city>	
 
 	<city key="DUBLIN" name="Dublin" type="VELIB" country="IRELAND"
@@ -82,7 +82,7 @@
 		  webSite="http://www.dublinbikes.ie/" 
 		  stationList="http://www.dublinbikes.ie/service/carto/" 
 		  stationDetails="http://www.dublinbikes.ie/service/stationdetails/{1}">	  
-		  <support localization="true" bonus="true" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="true" tpe="false" state="true" />
 	</city>
 
 	<!-- Gijón-Bici -->
@@ -92,7 +92,7 @@
 		  webSite="http://www.velov.grandlyon.com/" 
 		  stationList="http://www.velov.grandlyon.com/velovmap/zhp/inc/StationsParArrondissement.php?arrondissement={1}" 
 		  stationDetails="http://www.velov.grandlyon.com/velovmap/zhp/inc/DispoStationsParId.php?id={1}&amp;noCache={2}">	  
-		  <support localization="true" bonus="false" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="false" tpe="false" state="true" />
 		  <quartiers>
 		  	<quartier id="1" city="Lyon" name="1er arrondissement" zipCode="69381" />
 		  	<quartier id="2" city="Lyon" name="2ème arrondissement" zipCode="69382" />
@@ -114,7 +114,7 @@
 		  webSite="http://www.levelo-mpm.fr" 
 		  stationList="http://www.levelo-mpm.fr/service/carto/" 
 		  stationDetails="http://www.levelo-mpm.fr/service/stationdetails/{1}">	  
-		  <support localization="true" bonus="false" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="false" tpe="false" state="true" />
 	</city>
 	
 <!-- 
@@ -123,7 +123,7 @@
 		  webSite="http://www.montpellier-agglo.com/tam/page.php?id_rubrique=273" 
 		  stationList="" 
 		  stationDetails="">	  
-		  <support localization="true" bonus="false" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="false" tpe="false" state="true" />
 	</city>
  -->
  		  
@@ -132,7 +132,7 @@
 		  webSite="http://www.velocite.mulhouse.fr/" 
 		  stationList="http://www.velocite.mulhouse.fr/service/carto/" 
 		  stationDetails="http://www.velocite.mulhouse.fr/service/stationdetails/{1}" >  
-		  <support localization="true" bonus="false" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="false" tpe="false" state="true" />
 	</city>
 	
 	<city key="NANCY" name="Nancy" type="VELIB" country="FRANCE"
@@ -140,7 +140,7 @@
 		webSite="http://www.velostanlib.fr"
 		stationList="http://www.velostanlib.fr/service/carto/"
 		stationDetails="http://www.velostanlib.fr/service/stationdetails/{1}">	  
-		  <support localization="true" bonus="true" tpe="true" state="true" />
+		  <support details="true" localization="true" bonus="true" tpe="true" state="true" />
 	</city>
 	 	  
 	<city key="NANTES" name="Nantes" type="VELIB" country="FRANCE"
@@ -148,7 +148,7 @@
 		  webSite="http://www.bicloo.nantesmetropole.fr" 
 		  stationList="http://www.bicloo.nantesmetropole.fr/service/carto/" 
 		  stationDetails="http://www.bicloo.nantesmetropole.fr/service/stationdetails/{1}">
-		  <support localization="true" bonus="true" tpe="false" state="false" />
+		  <support details="true" localization="true" bonus="true" tpe="false" state="false" />
 	</city>
  
 	<city key="ORLEANS" name="Orléans" type="VELO_PLUS" country="FRANCE"
@@ -156,7 +156,7 @@
 		  webSite="http://www.ville-orleans.fr/Deplacements/VelosPietons01.cfm" 
 		  stationList="http://www.agglo-veloplus.fr/component/data.xml" 
 		  stationDetails="http://www.agglo-veloplus.fr/getStatusBorne?idBorne={1}">	  
-		  <support localization="true" bonus="false" tpe="true" state="true" />
+		  <support details="true" localization="true" bonus="false" tpe="true" state="true" />
 	</city>
 		  
 	<city key="PARIS" name="Paris" type="VELIB" country="FRANCE" 
@@ -164,7 +164,7 @@
 		  webSite="http://www.velib.paris.fr" 
 		  stationList="http://www.velib.paris.fr/service/carto/" 
 		  stationDetails="http://www.velib.paris.fr/service/stationdetails/{1}">	  
-		  <support localization="true" bonus="true" tpe="true" state="true" />
+		  <support details="true" localization="true" bonus="true" tpe="true" state="true" />
 	</city>
 
 	<city key="PLAINE_COMMUNE" name="Plaine-Commune" type="VELIB" country="FRANCE"
@@ -172,7 +172,7 @@
 		  webSite="http://www.velcom.fr/" 
 		  stationList="http://www.velcom.fr/service/carto/" 
 		  stationDetails="http://www.velcom.fr/service/stationdetails/{1}" >  
-		  <support localization="true" bonus="true" tpe="true" state="true" />
+		  <support details="true" localization="true" bonus="true" tpe="true" state="true" />
 	</city>
 		  
 	<!-- Rennes - https://www.levelostar.fr/ -->
@@ -183,7 +183,7 @@
 		  webSite="https://www.levelostar.fr/" 
 		  stationList="http://www.levelostar.fr/index.php?id=43&amp;type=500" 
 		  stationDetails="http://www.levelostar.fr/index.php?id=43&amp;type=500">	  
-		  <support localization="true" bonus="false" tpe="false" state="true" />
+		  <support details="false" localization="true" bonus="false" tpe="false" state="true" />
 	</city>
 -->
 
@@ -192,7 +192,7 @@
 		  webSite="http://cyclic.rouen.fr/" 
 		  stationList="http://cyclic.rouen.fr/service/carto/" 
 		  stationDetails="http://cyclic.rouen.fr/service/stationdetails/{1}">	  
-		  <support localization="true" bonus="true" tpe="false" state="false" />
+		  <support details="true" localization="true" bonus="true" tpe="false" state="false" />
 	</city>
 		  
 	<city key="SEVILLE" name="Seville" type="SEVICI" country="SPAIN"
@@ -200,15 +200,15 @@
 		  webSite="http://www.sevici.es/" 
 		  stationList="http://www.sevici.es/service/carto/" 
 		  stationDetails="http://www.sevici.es/service/stationdetails/{1}">	  
-		  <support localization="true" bonus="true" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="true" tpe="false" state="true" />
 	</city>
-
+	
 	<city key="SANTANDER" name="Satander" type="VELIB" country="SPAIN" 
 	      serviceName="TusBic" normalizer="SIMPLE_U"
 		  webSite="http://www.tusbic.es/" 
 		  stationList="http://www.tusbic.es/service/carto/" 
 		  stationDetails="http://www.tusbic.es/service/stationdetails/{1}">	  
-		  <support localization="true" bonus="true" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="true" tpe="false" state="true" />
 	</city>
 		  
 	<city key="TOULOUSE" name="Toulouse" type="VELO" country="FRANCE"
@@ -216,7 +216,7 @@
 		  webSite="http://www.velo.toulouse.fr" 
 		  stationList="http://www.velo.toulouse.fr/service/carto/" 
 		  stationDetails="http://www.velo.toulouse.fr/service/stationdetails/{1}">	  
-		  <support localization="true" bonus="true" tpe="false" state="true" />
+		  <support details="true" localization="true" bonus="true" tpe="false" state="true" />
 	</city>
 
 <!-- 
@@ -225,7 +225,7 @@
 		  webSite="http://www.citybikewien.at/"
 		  stationList="http://www.citybikecard.at/Standortliste_csv.php" 
 		  stationDetails="http://www.citybikecard.at/Standortliste_csv.php">	  
-		  <support localization="false" bonus="false" tpe="false" state="true" />
+		  <support details="false" localization="false" bonus="false" tpe="false" state="true" />
 	</city>
  -->
   		  

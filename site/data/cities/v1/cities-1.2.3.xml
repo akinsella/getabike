@@ -140,8 +140,7 @@
 		stationDetails="http://www.velostanlib.fr/service/stationdetails/{1}">	  
 		  <support localization="true" bonus="true" tpe="true" state="true" />
 	</city>
-	
-<!-- 	  
+	 	  
 	<city key="NANTES" name="Nantes" type="VELIB" country="FRANCE"
 	      serviceName="Bicloo" normalizer="SIMPLE"
 		  webSite="http://www.bicloo.nantesmetropole.fr" 
@@ -149,7 +148,6 @@
 		  stationDetails="http://www.bicloo.nantesmetropole.fr/service/stationdetails/{1}">
 		  <support localization="true" bonus="true" tpe="false" state="true" />
 	</city>
- -->
  
 	<city key="ORLEANS" name="Orléans" type="VELO_PLUS" country="FRANCE"
 	      serviceName="Vélo+" normalizer="DEFAULT"

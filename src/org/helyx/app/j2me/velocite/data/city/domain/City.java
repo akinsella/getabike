@@ -30,6 +30,8 @@ public class City {
 	
 	public boolean localization;
 	
+	public boolean details;
+	
 	public String normalizer;
 	
 	public String country;
@@ -46,6 +48,7 @@ public class City {
 		.append(", stationList=").append(stationList)
 		.append(", stationDetails=").append(stationDetails)
 		.append(", bonus=").append(bonus)
+		.append(", details=").append(details)
 		.append(", state=").append(state)
 		.append(", tpe=").append(tpe)
 		.append(", country=").append(country)

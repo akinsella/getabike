@@ -4,7 +4,6 @@ import org.helyx.app.j2me.velocite.data.carto.comparator.StationDistanceComparat
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationDistanceFilter;
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
-import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.CityBikeStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VelibStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VeloPlusStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.velocite.data.carto.provider.details.factory.VeloVStationDetailsContentProviderFactory;
@@ -130,9 +129,6 @@ public class CartoManager {
 			}
 			else if (VELO_PLUS.equals(city.type)) {
 				cpf = new VeloPlusStationDetailsContentProviderFactory(city, station);
-			}
-			else if (CITYBIKE.equals(city.type)) {
-				cpf = new CityBikeStationDetailsContentProviderFactory(city, station);
 			}
 			else {
 				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");

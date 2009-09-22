@@ -42,6 +42,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 	private static final String STATE = "state";
 	private static final String NORMALIZER = "normalizer";
 	private static final String COUNTRY = "country";
+	private static final String DETAILS = "details";
 	
 	private static final String ID = "id";
 	private static final String ZIP_CODE = "zipCode";
@@ -102,7 +103,7 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 				
 				XppAttributeProcessor supportXppAttributeProcessor = new XppAttributeProcessor();
 				supportXppAttributeProcessor.addAll(new String[] { 
-					BONUS, TPE, STATE, LOCALIZATION
+					BONUS, TPE, STATE, LOCALIZATION, DETAILS
 				});
 
 				XppAttributeProcessor quartierXppAttributeProcessor = new XppAttributeProcessor();
@@ -129,16 +130,19 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 					city.normalizer = cityXppAttributeProcessor.getAttrValueAsString(NORMALIZER);
 					boolean readNextElement = XppUtil.readNextElement(xpp);
 					
-					if (readNextElement && xpp.getName().equals(SUPPORT)) {
-						supportXppAttributeProcessor.processNode(xpp);
-						
-						city.bonus = supportXppAttributeProcessor.getAttrValueAsBoolean(BONUS);
-						city.tpe = supportXppAttributeProcessor.getAttrValueAsBoolean(TPE);
-						city.state = supportXppAttributeProcessor.getAttrValueAsBoolean(STATE);
-						city.localization = supportXppAttributeProcessor.getAttrValueAsBoolean(LOCALIZATION);
-						
-						readNextElement = XppUtil.readNextElement(xpp);
+					if (!readNextElement && xpp.getName().equals(SUPPORT)) {
+						throw new ContentProviderException(INVALID_CONTENT + " - SUPPORT tag not found.");
 					}
+					
+					supportXppAttributeProcessor.processNode(xpp);
+					
+					city.bonus = supportXppAttributeProcessor.getAttrValueAsBoolean(BONUS);
+					city.tpe = supportXppAttributeProcessor.getAttrValueAsBoolean(TPE);
+					city.state = supportXppAttributeProcessor.getAttrValueAsBoolean(STATE);
+					city.localization = supportXppAttributeProcessor.getAttrValueAsBoolean(LOCALIZATION);
+					city.details = supportXppAttributeProcessor.getAttrValueAsBoolean(DETAILS);
+					
+					readNextElement = XppUtil.readNextElement(xpp);
 					
 					if (readNextElement && xpp.getName().equals(QUARTIERS)) {
 						while (XppUtil.readNextElement(xpp) && xpp.getName().equals(QUARTIER)) {

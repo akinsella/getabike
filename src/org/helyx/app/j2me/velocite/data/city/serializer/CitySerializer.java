@@ -36,6 +36,7 @@ public class CitySerializer extends AbstractObjectSerializer {
 			dos.writeBoolean(city.bonus);
 			dos.writeBoolean(city.state);
 			dos.writeBoolean(city.tpe);
+			dos.writeBoolean(city.details);
 			dos.writeBoolean(city.localization);
 			dos.writeUTF(city.normalizer);
 	
@@ -74,6 +75,7 @@ public class CitySerializer extends AbstractObjectSerializer {
 			city.bonus = dis.readBoolean();
 			city.state = dis.readBoolean();
 			city.tpe = dis.readBoolean();
+			city.details = dis.readBoolean();
 			city.localization = dis.readBoolean();
 			city.normalizer = dis.readUTF();
 			

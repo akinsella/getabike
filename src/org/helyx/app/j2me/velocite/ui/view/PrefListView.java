@@ -275,7 +275,7 @@ public class PrefListView extends PrefBaseListView {
 		}
 		catch(Throwable t) {
 			logger.warn(t);
-			PrefManager.readPrefBoolean(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
+			PrefManager.writePrefBoolean(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, true);
 			prefException = t;
 		}
 	}
@@ -293,7 +293,7 @@ public class PrefListView extends PrefBaseListView {
 		catch(Throwable t) {
 			logger.warn(t);
 			prefException = t;
-			PrefManager.readPrefBoolean(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
+			PrefManager.writePrefBoolean(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, true);
 		}
 	}
 

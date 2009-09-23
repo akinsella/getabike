@@ -28,7 +28,7 @@
 
 	<!-- Appenders -->
 	<appender name="console" class="org.helyx.logging4me.appender.ConsoleAppender">
-		<property name="thresholdLevel" value="INFO" />
+		<property name="thresholdLevel" value="DEBUG" />
 		<property name="layout" value="sl" />
 	</appender>
 	

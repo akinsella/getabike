@@ -5,11 +5,12 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
+import org.helyx.app.j2me.velocite.data.app.domain.Version;
+import org.helyx.app.j2me.velocite.data.app.manager.AppManager;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
 import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
-import org.helyx.app.j2me.velocite.data.provider.PropertiesContentProvider;
 import org.helyx.app.j2me.velocite.ui.view.CityListView;
 import org.helyx.app.j2me.velocite.ui.view.CountryListView;
 import org.helyx.helyx4me.cache.Cache;
@@ -24,15 +25,12 @@ import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.logging4me.Logger;
 
-
 public class CityManager {
 
 	private static final Logger logger = Logger.getLogger("CITY_MANAGER");
 	
-	private static final String LATEST_CITIES_URL = "http://velocite.helyx.org/data/cities/v1/cities-latest.xml";
-	private static final String DATA_PROPERTIES_URL = "http://velocite.helyx.org/data/citites/v1/cities.properties";
-
 	private static final String CITY_LIST = "city.list";
+	private static final String DATA_CITY_URL = "data.city.url";
 	
 	private static Cache cache = new Cache();
 	
@@ -41,23 +39,24 @@ public class CityManager {
 	}
 
 	public static IProgressTask createUpdateCitiesTask() {
+		Version version = new Version(PrefManager.readPrefString(PrefConstants.MIDLET_VERSION));
 		
-		IContentAccessor cityContentAccessor = new HttpVelociteContentAccessor(LATEST_CITIES_URL);
+		String cityDataUrl = AppManager.getProperty(DATA_CITY_URL);
+		IContentAccessor cityContentAccessor = new HttpVelociteContentAccessor(cityDataUrl);
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 
 		return progressTask;
 	}
 
-	public static IProgressTask createCheckUpdateCitiesTask() {
-		
-		IContentAccessor dataCitiesContentAccessor = new HttpVelociteContentAccessor(DATA_PROPERTIES_URL);
-		IContentProvider contentProvider = new PropertiesContentProvider(dataCitiesContentAccessor);
-		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
-
-		return progressTask;
-	}
-
+//	public static IProgressTask createCheckUpdateCitiesTask() {
+//		ApplicationMetaData applicationMetaData = AppManager.getMetadata(true);
+//		IContentAccessor dataCitiesContentAccessor = new HttpVelociteContentAccessor(DATA_PROPERTIES_URL);
+//		IContentProvider contentProvider = new PropertiesContentProvider(dataCitiesContentAccessor);
+//		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
+//
+//		return progressTask;
+//	}
 
 	public static City getCurrentCity() {
 		Vector cityList = findAllCities();

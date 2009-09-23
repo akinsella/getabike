@@ -13,6 +13,8 @@ import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.view.support.PrefBaseListView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
@@ -330,7 +332,12 @@ public class PrefListView extends PrefBaseListView {
 
 	private void checkExceptionOnPrefLoad() {
 		if (prefException != null) {
-			DialogUtil.showAlertMessage(this, "Erreur", "Une erreur critique est survenue, l'application doit être redémarrée");
+			DialogUtil.showAlertMessage(this, "Erreur", "Une erreur critique est survenue, l'application doit être redémarrée", new OkResultCallback() {
+				
+				public void onOk(DialogView dialogView, Object data) {
+					getMidlet().exit();
+				}
+			});
 
 		}
 	}

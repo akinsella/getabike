@@ -54,9 +54,9 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 
 	private IContentAccessor cityContentAccessor;
 
-	public DefaultCityContentProvider() {
-		super();
-	}
+//	public DefaultCityContentProvider() {
+//		super();
+//	}
 
 	public DefaultCityContentProvider(IContentAccessor cityContentAccessor) {
 		super();

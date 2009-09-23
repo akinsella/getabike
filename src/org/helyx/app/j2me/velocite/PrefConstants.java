@@ -18,5 +18,7 @@ public class PrefConstants {
 	public static final String FILECONN_DIR_MEMORYCARD = "fileconn.dir.memorycard";
 
 	public static final String COUNTRY_SELECTED_KEY = "COUNTRY_SELECTED_KEY";
+
+	public static final String APPLICATION_DATA = "APPLICATION_DATA";
 	
 }

@@ -103,6 +103,7 @@ public class StationSerializer extends AbstractObjectSerializer {
 			
 			if (hasStationDetails) {
 				StationDetails stationDetails = new StationDetails();
+				stationDetails.stationNumber = station.number;
 				stationDetails.open = dis.readBoolean();
 				stationDetails.ticket = dis.readBoolean();
 				stationDetails.tpe = dis.readBoolean();

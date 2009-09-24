@@ -3,18 +3,17 @@ package org.helyx.app.j2me.velocite.data.carto.provider;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.Date;
 
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
-import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.localization.Point;
 import org.helyx.helyx4me.stream.InputStreamProvider;
 import org.helyx.helyx4me.task.EventType;
-import org.helyx.helyx4me.xml.xpp.XppAttributeProcessor;
-import org.helyx.helyx4me.xml.xpp.XppUtil;
 import org.helyx.logging4me.Logger;
 
 import au.com.bytecode.opencsv.CSVReader;
@@ -86,6 +85,15 @@ public class CityBikeStationContentProvider extends AbstractStationContentProvid
 					station.hasLocalization = false;
 					station.tpe = false;
 					station.bonus = false;
+					station.details = new StationDetails();
+					station.details.date = new Date();
+					station.details.available = 0;
+					station.details.total = Integer.parseInt(line[POS_TOTAL]);
+					station.details.free = 0;
+					station.details.hs = 0;
+					station.details.open = true;
+					station.details.stationNumber = station.number;
+					station.details.ticket = false;
 
 					if (stationNameNormalizer != null) {
 						stationNameNormalizer.normalizeName(station);

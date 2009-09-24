@@ -1,13 +1,20 @@
 package org.helyx.app.j2me.velocite.util;
 
 import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
+import org.helyx.helyx4me.map.google.GoogleMapsView;
+import org.helyx.helyx4me.map.google.POIInfoAccessor;
+import org.helyx.helyx4me.pref.Pref;
+import org.helyx.helyx4me.pref.PrefHelper;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
 import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkCancelResultCallback;
 import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
 import org.helyx.helyx4me.ui.view.support.dialog.result.callback.YesNoResultCallback;
+import org.helyx.helyx4me.ui.view.support.list.IElementProvider;
 import org.helyx.logging4me.Logger;
 import org.helyx.logging4me.level.LevelInformationHolder;
 import org.helyx.logging4me.level.LevelSwitcher;
@@ -29,6 +36,56 @@ public class UtilManager {
 	private static LevelInformationHolder levelInformationHolder;
 	
 	private static boolean debugModeActive = false;
+	
+	private static String poiImgClasspath;
+	private static String poiSelectedImgClasspath;
+
+	public static void showGoogleMapsView(final AbstractView view, final String title, final POIInfoAccessor poiInfoAccessor, final Object elementSelected, final IElementProvider elementProvider, final int zoom) {
+		try {
+			poiImgClasspath = view.getTheme().getString(AppThemeConstants.MAP_POI_IMAGE_PATH);
+			poiSelectedImgClasspath = view.getTheme().getString(AppThemeConstants.MAP_POI_SELECTED_IMAGE_PATH);
+		}
+		catch (Throwable t) {
+			logger.warn(t);
+		}
+
+		Pref showGoogleMapsPref = PrefManager.readPref(UtilManager.MAP_MODE_ENABLED);
+		if (showGoogleMapsPref == null) {
+			DialogUtil.showYesNoDialog(
+				view, 
+				"Google Maps", 
+				"Activer la visualisation des stations avec Google Maps ?\n\nAttention: Un forfait data illimité est  fortement recommandé.",
+				new YesNoResultCallback() {
+					public void onYes(DialogView dialogView, Object data) {
+						PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, true);
+						showGoogleMapsViewInternal(view, title, poiInfoAccessor, elementSelected, elementProvider, zoom);
+					}
+		
+					public void onNo(DialogView dialogView, Object data) {
+						PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, false);
+						dialogView.showDisplayable(view);
+					}
+				});
+		}
+		else {
+			if (PrefHelper.readPrefBoolean(showGoogleMapsPref)) {
+				showGoogleMapsViewInternal(view, title, poiInfoAccessor, elementSelected, elementProvider, zoom);				
+			}
+		}
+	}
+	
+	
+	public static void showGoogleMapsViewInternal(final AbstractView view, String title, POIInfoAccessor poiInfoAccessor, Object elementSelected, IElementProvider elementProvider, int zoom) {
+		String googleMapsKey = PrefManager.readPrefString(UtilManager.GOOGLE_MAPS_KEY);
+
+		GoogleMapsView googleMapView = new GoogleMapsView(view.getMidlet(), title, googleMapsKey, poiInfoAccessor, poiInfoAccessor.getLocalization(elementSelected), zoom, poiImgClasspath, poiSelectedImgClasspath);
+
+		googleMapView.setPreviousDisplayable(view);
+		googleMapView.setSelectedPoi(elementSelected);
+		googleMapView.setPoiItems(elementProvider);
+		googleMapView.showDisplayable(googleMapView);
+		googleMapView.updateMap();
+	}
 
 	public static void changeDebugMode(final AbstractDisplayable currentDisplayable) {
 

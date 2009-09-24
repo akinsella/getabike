@@ -81,28 +81,6 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	private void onStartSuccess(AbstractView view) {
 		MenuView menuView = new MenuView(VelociteMIDlet.this);
 		view.showDisplayable(menuView);
-		checkMapModeEnabled(menuView);
-	}
-	
-	private void checkMapModeEnabled(final AbstractView view) {
-		if (PrefManager.readPref(UtilManager.MAP_MODE_ENABLED) == null) {
-			DialogUtil.showYesNoDialog(
-				view, 
-				"Google Maps", 
-				"Activer la visualisation des stations avec Google Maps ?\n\nAttention: Un forfait data illimité est  fortement recommandé.",
-				new YesNoResultCallback() {
-					public void onYes(DialogView dialogView, Object data) {
-						PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, true);
-						dialogView.showDisplayable(view);
-					}
-	
-					public void onNo(DialogView dialogView, Object data) {
-						PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, false);
-						dialogView.showDisplayable(view);
-					}
-				});
-		}
-
 	}
 
 	private void onStartError(AbstractView view, String message, Throwable t) {

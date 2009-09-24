@@ -6,11 +6,10 @@ import org.helyx.app.j2me.velocite.data.carto.filter.StationNameFilter;
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.task.StationLoadTask;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
 import org.helyx.app.j2me.velocite.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.filter.IRecordFilter;
-import org.helyx.helyx4me.map.google.GoogleMapsView;
+import org.helyx.helyx4me.map.google.POIInfoAccessor;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.ProgressListener;
@@ -38,9 +37,6 @@ public class StationListView extends AbstractListView {
 	private boolean allowMenu = true;
 	private boolean allowNested = true;
 	
-	private String poiImgClasspath;
-	private String poiSelectedImgClasspath;
-	
 	private String originalTitle;
 	
 	private City city;
@@ -52,21 +48,11 @@ public class StationListView extends AbstractListView {
 	}
 	
 	private void init() {
-		initMapImagesPath();
 		initActions();
 		initData();
 		initComponents();
 	}
-	
-	private void initMapImagesPath() {
-		try {
-			poiImgClasspath = getTheme().getString(AppThemeConstants.MAP_POI_IMAGE_PATH);
-			poiSelectedImgClasspath = getTheme().getString(AppThemeConstants.MAP_POI_SELECTED_IMAGE_PATH);
-		}
-		catch (Throwable t) {
-			logger.warn(t);
-		}
-	}
+
 
 	protected void initActions() {	
 		
@@ -103,11 +89,8 @@ public class StationListView extends AbstractListView {
 			}
 		}));
 		
-		boolean mapModeEnabled = PrefManager.readPrefBoolean(UtilManager.MAP_MODE_ENABLED);
-
-		if (mapModeEnabled && city.localization && elementProvider.length() > 0) {
+		if (city.localization && elementProvider.length() > 0) {
 			menu.addMenuItem(new MenuItem("Voir le plan", new IAction() {
-				
 				public void run(Object data) {
 					showGoogleMapsView();
 				}
@@ -137,15 +120,11 @@ public class StationListView extends AbstractListView {
 
 
 	private void showGoogleMapsView() {
-		String googleMapsKey = PrefManager.readPrefString(UtilManager.GOOGLE_MAPS_KEY);
+		String title = "Plan de la station";
+		POIInfoAccessor poiInfoAccessor = new StationPoiInfoAccessor();
+		Object elementSelected = getStationSelected();
 		
-		Station stationSelected = getStationSelected();
-		GoogleMapsView googleMapView = new GoogleMapsView(getMidlet(), "Plan de la station", googleMapsKey, new StationPoiInfoAccessor(), stationSelected.localization, 15, poiImgClasspath, poiSelectedImgClasspath);
-		googleMapView.setPreviousDisplayable(StationListView.this);
-		googleMapView.setSelectedPoi(stationSelected);
-		googleMapView.setPoiItems(elementProvider);
-		googleMapView.showDisplayable(googleMapView);
-		googleMapView.updateMap();
+		UtilManager.showGoogleMapsView(this, title, poiInfoAccessor, elementSelected, elementProvider, 15);
 	}
 	
 	protected Station getStationSelected() {

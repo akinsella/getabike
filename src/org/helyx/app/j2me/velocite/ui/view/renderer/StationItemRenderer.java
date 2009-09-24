@@ -77,7 +77,7 @@ public class StationItemRenderer implements ICellRenderer {
         
         if(station.zipCode.length() > 0 || station.city.length() > 0) {
 
-    		Color listFontSecondSelectedColor = view.getTheme().getColor(isSelected ? ThemeConstants.WIDGET_LIST_FONT_THIRD_SELECTED : ThemeConstants.WIDGET_LIST_FONT_THIRD);
+    		Color listFontSecondSelectedColor = view.getTheme().getColor(isSelected ? ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED : ThemeConstants.WIDGET_LIST_FONT_SECOND);
     		g.setColor(listFontSecondSelectedColor.intValue());
 
 	        g.setFont(FontUtil.SMALL);

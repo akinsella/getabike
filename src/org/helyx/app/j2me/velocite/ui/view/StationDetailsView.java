@@ -16,9 +16,8 @@ import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
 import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
 import org.helyx.app.j2me.velocite.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
-import org.helyx.helyx4me.map.google.GoogleMapsView;
+import org.helyx.helyx4me.map.google.POIInfoAccessor;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
-import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.geometry.Rectangle;
@@ -50,9 +49,6 @@ public class StationDetailsView extends AbstractView {
 	private IElementProvider relatedStations;
 	
 	private boolean allowSearchNearStation = true;
-	
-	private String poiImgClasspath;
-	private String poiSelectedImgClasspath;
 
 	public StationDetailsView(AbstractMIDlet midlet, City city, Station station)  {
 		super(midlet);
@@ -65,45 +61,27 @@ public class StationDetailsView extends AbstractView {
 		setFullScreenMode(true);
 		setTitle("Détail de la station");
 		loadIconImage();
-		initMapImagesPath();
 		initActions();
 		fetchStationDetails();
 	}
-	
-	private void initMapImagesPath() {
-		try {
-			poiImgClasspath = getTheme().getString(AppThemeConstants.MAP_POI_IMAGE_PATH);
-			poiSelectedImgClasspath = getTheme().getString(AppThemeConstants.MAP_POI_SELECTED_IMAGE_PATH);
-		}
-		catch (Throwable t) {
-			logger.warn(t);
-		}
-	}
-
-	private void showGoogleMapsView() {
-
-		String googleMapsKey = PrefManager.readPrefString(UtilManager.GOOGLE_MAPS_KEY);
-		GoogleMapsView googleMapView = new GoogleMapsView(getMidlet(), "Plan de la station", googleMapsKey, new StationPoiInfoAccessor(), station.localization, 15, poiImgClasspath, poiSelectedImgClasspath);
-		googleMapView.setPreviousDisplayable(StationDetailsView.this);
-		googleMapView.setSelectedPoi(station);
-		googleMapView.setPoiItems(relatedStations);
-		googleMapView.showDisplayable(googleMapView);
-		googleMapView.updateMap();
-	}
 		
+	private void showGoogleMapsView() {
+		String title = "Plan de la station";
+		POIInfoAccessor poiInfoAccessor = new StationPoiInfoAccessor();
+		UtilManager.showGoogleMapsView(this, title, poiInfoAccessor, station, relatedStations, 15);
+	}
+	
 	private void initActions() {
 		
 		setThirdCommand(new Command("Menu", true, new IAction() {
 
 			public void run(Object data) {
-
-				boolean mapModeEnabled = PrefManager.readPrefBoolean(UtilManager.MAP_MODE_ENABLED);
-				
+	
 				final MenuListView menuListView = new MenuListView(getMidlet(), "Menu", false);
 
 				Menu menu = new Menu();
 
-				if (mapModeEnabled && city.localization) {
+				if (city.localization) {
 					menu.addMenuItem(new MenuItem("Voir le plan", new IAction() {
 						
 						public void run(Object data) {

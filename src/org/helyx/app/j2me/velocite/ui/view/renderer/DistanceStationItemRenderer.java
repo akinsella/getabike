@@ -46,17 +46,11 @@ public class DistanceStationItemRenderer extends StationItemRenderer {
 	        int height = itemClientArea.size.height;
 			String distanceStr = new String((long)(station.distance) + " m");
 			
-			Color distanceFontColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND);
+			Color distanceFontColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_THIRD);
 			if (isSelected) {
-				distanceFontColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED);
+				distanceFontColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_THIRD_SELECTED);
 			}
-			try {
-				//TODO: Add color to theme
-				distanceFontColor = view.getTheme().getColor(AppThemeConstants.STATION_LIST_DISTANCE_COLOR);
-			}
-			catch(Throwable t) {
-				logger.warn(t);
-			}
+
 			g.setFont(FontUtil.SMALL);
 			g.setColor(distanceFontColor.intValue());
 

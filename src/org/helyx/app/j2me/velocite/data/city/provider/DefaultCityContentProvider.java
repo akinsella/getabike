@@ -125,8 +125,8 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 					city.type = cityXppAttributeProcessor.getAttrValueAsString(TYPE);
 					city.country = cityXppAttributeProcessor.getAttrValueAsString(COUNTRY);
 					city.webSite = cityXppAttributeProcessor.getAttrValueAsString(WEB_SITE);
-					city.stationList = cityXppAttributeProcessor.getAttrValueAsString(STATION_LIST);
-					city.stationDetails = cityXppAttributeProcessor.getAttrValueAsString(STATION_DETAILS);
+					city.stationList = cityXppAttributeProcessor.getAttrValueAsString(STATION_LIST, "");
+					city.stationDetails = cityXppAttributeProcessor.getAttrValueAsString(STATION_DETAILS, "");
 					city.normalizer = cityXppAttributeProcessor.getAttrValueAsString(NORMALIZER);
 					boolean readNextElement = XppUtil.readNextElement(xpp);
 					

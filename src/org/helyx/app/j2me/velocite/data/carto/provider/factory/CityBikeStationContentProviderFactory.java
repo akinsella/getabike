@@ -4,6 +4,7 @@ import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.velocite.data.carto.provider.AbstractStationContentProvider;
+import org.helyx.app.j2me.velocite.data.carto.provider.CityBikeStationContentProvider;
 import org.helyx.app.j2me.velocite.data.carto.provider.VelibStationContentProvider;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
@@ -26,7 +27,7 @@ public class CityBikeStationContentProviderFactory implements IContentProviderFa
 	
 	public IContentProvider createContentProvider() throws ContentProviderFactoryException {
 		try {
-			AbstractStationContentProvider stationContentProvider = new VelibStationContentProvider(
+			AbstractStationContentProvider stationContentProvider = new CityBikeStationContentProvider(
 					city,
 					new HttpVelociteContentAccessor(city.stationList));
 			IStationInfoNormalizer stationInfoNormalizer = CartoManager.getStationInfoNormalizer(city);

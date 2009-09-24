@@ -24,9 +24,12 @@ public class CityBikeStationContentProvider extends AbstractStationContentProvid
 	private static final Logger logger = Logger.getLogger("CITY_BIKE_STATION_CONTENT_PROVIDER");
 	
 	private static final int POS_NUMBER = 0;
-	private static final int POS_NAME = 3;
-	private static final int POS_ADDRESS = 4;
-	private static final int POS_TOTAL = 5;	
+	private static final int POS_NAME = 2;
+	private static final int POS_ADDRESS = 3;
+	private static final int POS_TOTAL = 4;	
+	private static final int POS_ACTIVE = 5;
+	
+	private static final String ACTIVE_VALUE = "aktiv";
 	
 	private boolean cancel = false;
 
@@ -61,7 +64,7 @@ public class CityBikeStationContentProvider extends AbstractStationContentProvid
 				
 				reader = new InputStreamReader(inputStream);
 				
-				csvReader = new CSVReader(reader);
+				csvReader = new CSVReader(reader, ';');
 
 				IStationInfoNormalizer stationNameNormalizer = getStationInfoNormalizer();
 				
@@ -85,13 +88,14 @@ public class CityBikeStationContentProvider extends AbstractStationContentProvid
 					station.hasLocalization = false;
 					station.tpe = false;
 					station.bonus = false;
+					station.open = ACTIVE_VALUE.equals(line[POS_ACTIVE]);
 					station.details = new StationDetails();
 					station.details.date = new Date();
 					station.details.available = 0;
 					station.details.total = Integer.parseInt(line[POS_TOTAL]);
 					station.details.free = 0;
 					station.details.hs = 0;
-					station.details.open = true;
+					station.details.open = station.open;
 					station.details.stationNumber = station.number;
 					station.details.ticket = false;
 

@@ -62,7 +62,12 @@ public class StationDetailsView extends AbstractView {
 		setTitle("Détail de la station");
 		loadIconImage();
 		initActions();
-		fetchStationDetails();
+		if (station.details == null) {
+			fetchStationDetails();
+		}
+		else {
+			stationDetails = station.details;
+		}
 	}
 		
 	private void showGoogleMapsView() {

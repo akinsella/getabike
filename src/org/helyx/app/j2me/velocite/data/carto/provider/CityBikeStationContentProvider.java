@@ -1,13 +1,14 @@
 package org.helyx.app.j2me.velocite.data.carto.provider;
 
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.localization.Point;
 import org.helyx.helyx4me.stream.InputStreamProvider;
@@ -15,30 +16,20 @@ import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.xml.xpp.XppAttributeProcessor;
 import org.helyx.helyx4me.xml.xpp.XppUtil;
 import org.helyx.logging4me.Logger;
-import org.xmlpull.v1.XmlPullParser;
+
+import au.com.bytecode.opencsv.CSVReader;
 
 
 public class CityBikeStationContentProvider extends AbstractStationContentProvider {
 	
 	private static final Logger logger = Logger.getLogger("CITY_BIKE_STATION_CONTENT_PROVIDER");
-
-	private static final String MARKER = "marker";
 	
-	private static final String NUMBER = "number";
-	private static final String NAME = "name";
-	private static final String ADDRESS = "address";
-	private static final String FULL_ADDRESS = "fullAddress";
-	private static final String OPEN = "open";
-	private static final String BONUS = "bonus";
-	private static final String LNG = "lng";
-	private static final String LAT = "lat";
-	
-	private static final int DEFAULT_OPEN_VALUE = 1;
-	
+	private static final int POS_NUMBER = 0;
+	private static final int POS_NAME = 3;
+	private static final int POS_ADDRESS = 4;
+	private static final int POS_TOTAL = 5;	
 	
 	private boolean cancel = false;
-	
-	private int openValue = DEFAULT_OPEN_VALUE;
 
 	private IContentAccessor stationContentAccessor;
 
@@ -55,6 +46,8 @@ public class CityBikeStationContentProvider extends AbstractStationContentProvid
 		
 		logger.debug("Loading carto info ...");
 		
+		Reader reader = null;
+		CSVReader csvReader = null;
 		InputStream inputStream = null;
 		InputStreamProvider cartoInputStreamProvider = null;
 		
@@ -67,14 +60,17 @@ public class CityBikeStationContentProvider extends AbstractStationContentProvid
 				inputStream = cartoInputStreamProvider.createInputStream(true);
 //				inputStream = new BufferedInputStream(cartoInputStreamProvider.createInputStream());
 				
-				XmlPullParser xpp = XppUtil.createXpp(inputStream, EncodingConstants.UTF_8);
-
-				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
-				xppAttributeProcessor.addAll(new String[] { NUMBER, NAME, OPEN, BONUS, ADDRESS, FULL_ADDRESS, LNG, LAT });
+				reader = new InputStreamReader(inputStream);
+				
+				csvReader = new CSVReader(reader);
 
 				IStationInfoNormalizer stationNameNormalizer = getStationInfoNormalizer();
 				
-				while (XppUtil.readToNextElement(xpp, MARKER)) {
+				String[] line = null;
+				
+				csvReader.readNext();
+				
+				while ((line = csvReader.readNext()) != null) {
 					if (cancel) {
 						progressDispatcher.fireEvent(EventType.ON_CANCEL);
 						return ;
@@ -82,20 +78,14 @@ public class CityBikeStationContentProvider extends AbstractStationContentProvid
 					
 					Station station = new Station();
 					station.localization = new Point();
-					
-					xppAttributeProcessor.processNode(xpp);
 
-					station.number = xppAttributeProcessor.getAttrValueAsInt(NUMBER);
-					station.name = xppAttributeProcessor.getAttrValueAsString(NAME);
-					
-					station.open = city.state ? xppAttributeProcessor.getAttrValueAsInt(OPEN) == openValue : true;
-					station.bonus = city.bonus ? xppAttributeProcessor.getAttrValueAsBoolean(BONUS) : false;
+					station.number = Integer.parseInt(line[POS_NUMBER]);
+					station.name = line[POS_NAME];
+					station.address = line[POS_ADDRESS];
+					station.fullAddress = line[POS_ADDRESS];
+					station.hasLocalization = false;
 					station.tpe = false;
-					station.address = xppAttributeProcessor.getAttrValueAsString(ADDRESS);
-					station.fullAddress = xppAttributeProcessor.getAttrValueAsString(FULL_ADDRESS).trim();
-					station.localization.lat = xppAttributeProcessor.getAttrValueAsDouble(LAT);
-					station.localization.lng = xppAttributeProcessor.getAttrValueAsDouble(LNG);
-					station.hasLocalization = LocalizationUtil.isSet(station.localization);
+					station.bonus = false;
 
 					if (stationNameNormalizer != null) {
 						stationNameNormalizer.normalizeName(station);
@@ -106,6 +96,12 @@ public class CityBikeStationContentProvider extends AbstractStationContentProvid
 				
 			}
 			finally {
+				if (csvReader != null) {
+					try { csvReader.close(); } catch(Throwable t) { logger.warn(t); }
+				}
+				if (reader != null) {
+					try { reader.close(); } catch(Throwable t) { logger.warn(t); }
+				}
 				cartoInputStreamProvider.dispose();
 			}
 			progressDispatcher.fireEvent(EventType.ON_SUCCESS);
@@ -123,10 +119,5 @@ public class CityBikeStationContentProvider extends AbstractStationContentProvid
 	public String getDescription() {
 		return "Fetchs station informations from path: '" + stationContentAccessor.getPath() + "'";
 	}
-
-	public void setOpenValue(int openValue) {
-		this.openValue = openValue;
-	}
-
 
 }

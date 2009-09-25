@@ -15,7 +15,7 @@ public class StationSerializer extends AbstractObjectSerializer {
 	
 	private static final Logger logger = Logger.getLogger("STATION_SERIALIZER");
 	
-	private boolean serializeDetails = false;
+	private boolean serializeDetails = true;
 
 	public StationSerializer() {
 		this(true);

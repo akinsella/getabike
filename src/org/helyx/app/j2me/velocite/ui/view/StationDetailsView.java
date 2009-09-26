@@ -31,6 +31,7 @@ import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.list.IElementProvider;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.helyx4me.ui.widget.Command;
+import org.helyx.helyx4me.ui.widget.ImageSet;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
@@ -87,7 +88,7 @@ public class StationDetailsView extends AbstractView {
 				Menu menu = new Menu();
 
 				if (city.localization) {
-					menu.addMenuItem(new MenuItem("Voir le plan", new IAction() {
+					menu.addMenuItem(new MenuItem("Voir le plan", new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
 						
 						public void run(Object data) {
 							showGoogleMapsView();
@@ -96,7 +97,7 @@ public class StationDetailsView extends AbstractView {
 				}
 				
 				if (allowSearchNearStation && city.localization) {
-					menu.addMenuItem(new MenuItem("Voir les stations proches", new IAction() {
+					menu.addMenuItem(new MenuItem("Voir les stations proches", new ImageSet(getTheme().getString("IMG_NEAR")), new IAction() {
 						
 						public void run(Object data) {
 							final MenuListView nearStationMenuListView = new MenuListView(getMidlet(), "Menu", false);
@@ -140,7 +141,7 @@ public class StationDetailsView extends AbstractView {
 				}
 				
 				
-				menu.addMenuItem(new MenuItem("Ajouter aux favoris", new IAction() {
+				menu.addMenuItem(new MenuItem("Ajouter aux favoris", new ImageSet(getTheme().getString("IMG_STAR")), new IAction() {
 					
 					public void run(Object data) {
 						DialogUtil.showAlertMessage(menuListView, "Attention", "La fonction n'est pas encore implémentée.");

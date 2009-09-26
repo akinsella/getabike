@@ -21,6 +21,7 @@ import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.helyx4me.ui.widget.Command;
+import org.helyx.helyx4me.ui.widget.ImageSet;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
@@ -83,14 +84,14 @@ public class StationListView extends AbstractListView {
 		
 		Menu menu = new Menu();
 		
-		menu.addMenuItem(new MenuItem("Chercher une station", new IAction() {
+		menu.addMenuItem(new MenuItem("Chercher une station", new ImageSet(getTheme().getString("IMG_FIND")), new IAction() {
 			public void run(Object data) {
 				searchStation();
 			}
 		}));
 		
 		if (city.localization && elementProvider.length() > 0) {
-			menu.addMenuItem(new MenuItem("Voir le plan", new IAction() {
+			menu.addMenuItem(new MenuItem("Voir le plan", new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
 				public void run(Object data) {
 					showGoogleMapsView();
 				}
@@ -98,7 +99,7 @@ public class StationListView extends AbstractListView {
 		}
 		
 		if (city != null && city.webSite != null) {
-			menu.addMenuItem(new MenuItem("Voir le site internet", new IAction() {
+			menu.addMenuItem(new MenuItem("Voir le site internet", new ImageSet(getTheme().getString("IMG_WEB")), new IAction() {
 				
 				public void run(Object data) {
 					if (logger.isInfoEnabled()) {

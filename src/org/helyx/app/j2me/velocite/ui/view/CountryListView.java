@@ -9,6 +9,7 @@ import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.ui.view.support.MenuListView;
 import org.helyx.helyx4me.ui.widget.Command;
+import org.helyx.helyx4me.ui.widget.ImageSet;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
@@ -84,6 +85,10 @@ public class CountryListView extends MenuListView {
 		while(_enum.hasMoreElements()) {
 			String country = (String)_enum.nextElement();
 			MenuItem countryMenuItem = new MenuItem(getMessage("velocite.country." + country));
+			try {
+				countryMenuItem.setImageSet(new ImageSet(getTheme().getString("velocite.country." + country + ".flag")));
+			}
+			catch(Throwable t) { logger.warn(t); }
 			countryMenuItem.setData(country);
 			if (currentCountry != null && country.equals(currentCountry)) {
 				menu.setCheckedMenuItem(countryMenuItem);

@@ -11,6 +11,7 @@ import org.helyx.helyx4me.i18n.Locale;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.ui.view.support.MenuListView;
 import org.helyx.helyx4me.ui.widget.Command;
+import org.helyx.helyx4me.ui.widget.ImageSet;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
@@ -79,6 +80,7 @@ public class LanguageListView extends MenuListView {
 		while(_enum.hasMoreElements()) {
 			Language language = (Language)_enum.nextElement();
 			MenuItem languageMenuItem = new MenuItem(language.name);
+			languageMenuItem.setImageSet(new ImageSet(getTheme().getString("velocite.country." + language.key + ".flag")));
 			languageMenuItem.setData(language);
 			menu.addMenuItem(languageMenuItem);
 			if (language.key.equals(currentLanguage.key)) {

@@ -30,19 +30,6 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	}
 
 	protected void onStart() {
-//		LoggerManager.setThresholdLevel(Logger.DEBUG);
-//		
-//		ConsoleAppender consoleAppender = new ConsoleAppender();
-//		consoleAppender.setLayout(new PatternLayout("| %T | %L | %C | %D{yyyy/MM/dd, HH:mm:ss.ZZ} | "));
-//		consoleAppender.setThresholdLevel(Logger.DEBUG);
-//		
-//		LoggerManager.registerAppender(consoleAppender);
-//		
-//		LoggerManager.getRootCategory().addAppender(consoleAppender);
-//
-//		LoggerManager.addCategory("org.helyx.app.j2me.lib", Logger.INFO);
-//		LoggerManager.addCategory("org.helyx.app.j2me.velocite", Logger.DEBUG);
-
 		LoggerConfigurer loggerConfigurer = new XmlConfigurer("/org/helyx/app/j2me/velocite/logging4me.xml", true);
 		loggerConfigurer.configure();
 		

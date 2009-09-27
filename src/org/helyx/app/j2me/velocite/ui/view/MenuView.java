@@ -12,7 +12,6 @@ import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 import org.helyx.app.j2me.velocite.ui.view.renderer.StationItemRenderer;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
-import org.helyx.helyx4me.text.StringFormat;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.geometry.Rectangle;

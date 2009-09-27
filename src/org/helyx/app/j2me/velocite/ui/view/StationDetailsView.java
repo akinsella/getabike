@@ -157,7 +157,7 @@ public class StationDetailsView extends AbstractView {
 			
 		}));
 		
-		setSecondaryCommand(new Command(getMessage("command.return"), true, new IAction() {
+		setSecondaryCommand(new Command(getMessage("command.back"), true, new IAction() {
 
 			public void run(Object data) {
 				fireReturnCallback();

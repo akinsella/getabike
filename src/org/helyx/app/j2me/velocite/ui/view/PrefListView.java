@@ -33,7 +33,8 @@ public class PrefListView extends PrefBaseListView {
 	private Throwable prefException;
 
 	public PrefListView(AbstractMIDlet midlet) {
-		super(midlet, "Préférences");
+		super(midlet, "");
+		setTitle(getMessage("view.pref.title"));
 		init();
 	}
 	 
@@ -64,13 +65,13 @@ public class PrefListView extends PrefBaseListView {
 		
 		Menu menu = new Menu();
 		
-		countryMenuItem = new MenuItem("Pays", new IAction() {
+		countryMenuItem = new MenuItem(getMessage("view.pref.item.country"), new IAction() {
 			public void run(Object data) {
 				selectCountry();
 			}
 		});
 		
-		cityMenuItem = new MenuItem("Villes", new IAction() {
+		cityMenuItem = new MenuItem(getMessage("view.pref.item.cities"), new IAction() {
 			public void run(Object data) {
 				String currentCountry = CityManager.getCurrentCountry();
 				if (currentCountry != null) {
@@ -90,16 +91,16 @@ public class PrefListView extends PrefBaseListView {
 			}
 		});
 		
-		languageMenuItem = new MenuItem("Langues", new IAction() {
+		languageMenuItem = new MenuItem(getMessage("view.pref.item.languages"), new IAction() {
 			public void run(Object data) {
 				LanguageManager.showLanguageView(PrefListView.this);
 			}
 		});
 		
-		optionMenuItem = new MenuItem("Options avancées", new IAction() {
+		optionMenuItem = new MenuItem(getMessage("view.pref.item.advances.options"), new IAction() {
 			public void run(Object data) {
 
-				PrefBaseListView optionMenuListView = new PrefBaseListView(getMidlet(), "Options avancées") {
+				PrefBaseListView optionMenuListView = new PrefBaseListView(getMidlet(), getMessage("view.pref.item.advances.options")) {
 					
 					private MenuItem mapModeMenuItem;
 					private MenuItem httpModeMenuItem;
@@ -115,37 +116,37 @@ public class PrefListView extends PrefBaseListView {
 						
 						final AbstractDisplayable currentDisplayable = this;
 						
-						mapModeMenuItem = new MenuItem("Google Maps", new IAction() {
+						mapModeMenuItem = new MenuItem(getMessage("view.pref.item.google.maps"), new IAction() {
 							public void run(Object data) {
 								UtilManager.changeMapMode(currentDisplayable);
 							}
 						});
 						
-						httpModeMenuItem = new MenuItem("Http optimisé", new IAction() {
+						httpModeMenuItem = new MenuItem(getMessage("view.pref.item.http.optimized"), new IAction() {
 							public void run(Object data) {
 								UtilManager.changeHttpMode(currentDisplayable);
 							}
 						});
 						
-						debugModeMenuItem = new MenuItem("Debug mode", new IAction() {
+						debugModeMenuItem = new MenuItem(getMessage("view.pref.item.debug.mode"), new IAction() {
 							public void run(Object data) {
 								UtilManager.changeDebugMode(currentDisplayable);
 							}
 						});
 						
-						platformMenuItem = new MenuItem("Plateforme", new IAction() {
+						platformMenuItem = new MenuItem(getMessage("view.pref.item.platform"), new IAction() {
 							
 							public void run(Object data) {
-								DialogUtil.showAlertMessage(currentDisplayable, "Plateforme", (String)platformMenuItem.getData(PrefListView.PREF_VALUE_DETAILS));
+								DialogUtil.showAlertMessage(currentDisplayable, getMessage("view.pref.item.platform"), (String)platformMenuItem.getData(PrefListView.PREF_VALUE_DETAILS));
 							}
 						});
 						
 						platformMenuItem.setParentMenu(true);
-						profilesMenuItem = new MenuItem("Profiles");
-						configurationMenuItem = new MenuItem("Configuration");
-						fcVersionMenuItem = new MenuItem("Support fichier");
-						encodingMenuItem = new MenuItem("Encoding");
-						screenSizeItem = new MenuItem("Ecran");
+						profilesMenuItem = new MenuItem(getMessage("view.pref.item.profiles"));
+						configurationMenuItem = new MenuItem("view.pref.item.configuration");
+						fcVersionMenuItem = new MenuItem("view.pref.item.file.support");
+						encodingMenuItem = new MenuItem("view.pref.item.file.encoding");
+						screenSizeItem = new MenuItem("view.pref.item.file.screen");
 						
 						Menu optionMenu = new Menu();
 						
@@ -180,20 +181,20 @@ public class PrefListView extends PrefBaseListView {
 						if (logger.isDebugEnabled()) {
 							logger.debug("Debug mode active: " + isDebugModeActive);	
 						}
-						debugModeMenuItem.setData(PREF_VALUE, isDebugModeActive ? "Oui" : "Non");
+						debugModeMenuItem.setData(PREF_VALUE, isDebugModeActive ? getMessage("view.pref.value.yes") : getMessage("view.pref.value.no"));
 					}
 					
 					private void fetchSystemInformations() {
 						String encoding = System.getProperty("microedition.encoding");
-						encodingMenuItem.setData(PREF_VALUE, encoding != null ? encoding : "Inconnu");
+						encodingMenuItem.setData(PREF_VALUE, encoding != null ? encoding : getMessage("view.pref.value.unknown"));
 						String configuration = System.getProperty("microedition.configuration");
-						configurationMenuItem.setData(PREF_VALUE, configuration != null ? configuration : "Inconnu");
+						configurationMenuItem.setData(PREF_VALUE, configuration != null ? configuration : getMessage("view.pref.value.unknown"));
 						String platform = System.getProperty("microedition.platform");
-						platformMenuItem.setData(PREF_VALUE_DETAILS, platform != null ? platform : "Inconnu");
+						platformMenuItem.setData(PREF_VALUE_DETAILS, platform != null ? platform : getMessage("view.pref.value.unknown"));
 						String profiles = System.getProperty("microedition.profiles");
-						profilesMenuItem.setData(PREF_VALUE, profiles != null ? profiles : "Inconnu");
+						profilesMenuItem.setData(PREF_VALUE, profiles != null ? profiles : getMessage("view.pref.value.unknown"));
 						String fcVersion = System.getProperty("microedition.io.file.FileConnection.version");
-						fcVersionMenuItem.setData(PREF_VALUE, fcVersion != null ? fcVersion : "Non");
+						fcVersionMenuItem.setData(PREF_VALUE, fcVersion != null ? fcVersion : getMessage("view.pref.value.no"));
 						screenSizeItem.setData(PREF_VALUE, viewCanvas.getWidth() + "x" + viewCanvas.getHeight());
 					}
 
@@ -202,7 +203,7 @@ public class PrefListView extends PrefBaseListView {
 						if (logger.isDebugEnabled()) {
 							logger.debug("Optimized Http mode active: " + isOptimizedHttpModeActive);	
 						}
-						httpModeMenuItem.setData(PREF_VALUE, isOptimizedHttpModeActive ? "Oui" : "Non");
+						httpModeMenuItem.setData(PREF_VALUE, isOptimizedHttpModeActive ? getMessage("view.pref.value.yes") : getMessage("view.pref.value.no"));
 					}
 
 					private void fetchMapMode() {
@@ -210,7 +211,7 @@ public class PrefListView extends PrefBaseListView {
 						if (logger.isDebugEnabled()) {
 							logger.debug("Map mode active: " + isMapModeActive);	
 						}
-						mapModeMenuItem.setData(PREF_VALUE, isMapModeActive ? "Activé" : "Désactivé");
+						mapModeMenuItem.setData(PREF_VALUE, isMapModeActive ? getMessage("view.pref.value.activated") : getMessage("view.pref.value.deactivated"));
 					}
 					
 				};
@@ -221,9 +222,9 @@ public class PrefListView extends PrefBaseListView {
 		});		
 		optionMenuItem.setParentMenu(true);
 		
-		versionMenuItem = new MenuItem("Version");
+		versionMenuItem = new MenuItem(getMessage("view.pref.item.version"));
 		
-		resetMenuItem = new MenuItem("Reset", new IAction() {
+		resetMenuItem = new MenuItem(getMessage("view.pref.item.reset"), new IAction() {
 			public void run(Object data) {
 				UtilManager.reset(PrefListView.this);
 			}
@@ -332,7 +333,7 @@ public class PrefListView extends PrefBaseListView {
 
 	private void checkExceptionOnPrefLoad() {
 		if (prefException != null) {
-			DialogUtil.showAlertMessage(this, "Erreur", "Une erreur critique est survenue, l'application doit être redémarrée", new OkResultCallback() {
+			DialogUtil.showAlertMessage(this, getMessage("dialog.title.error"), getMessage("view.pref.check.exception.message"), new OkResultCallback() {
 				
 				public void onOk(DialogView dialogView, Object data) {
 					getMidlet().exit();

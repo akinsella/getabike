@@ -58,20 +58,20 @@ public class StationListView extends AbstractListView {
 	protected void initActions() {	
 		
 		if (allowMenu) {
-			setThirdCommand(new Command("Menu", true, new IAction() {
+			setThirdCommand(new Command(getMessage("command.menu"), true, new IAction() {
 				public void run(Object data) {
 					showMenuView();
 				}
 			}));
 		}
 
-		setPrimaryCommand(new Command("Voir", true, new IAction() {
+		setPrimaryCommand(new Command(getMessage("command.view"), true, new IAction() {
 			public void run(Object data) {
 				showItemSelected();
 			}
 		}));
 	
-		setSecondaryCommand(new Command("Retour", true, new IAction() {
+		setSecondaryCommand(new Command(getMessage("command.back"), true, new IAction() {
 			public void run(Object data) {
 				fireReturnCallback();
 			}
@@ -80,18 +80,18 @@ public class StationListView extends AbstractListView {
 	}
 	
 	protected void showMenuView() {
-		MenuListView menuListView = new MenuListView(getMidlet(), "Actions", false);
+		MenuListView menuListView = new MenuListView(getMidlet(), getMessage("view.station.list.menu.title"), false);
 		
 		Menu menu = new Menu();
 		
-		menu.addMenuItem(new MenuItem("Chercher une station", new ImageSet(getTheme().getString("IMG_FIND")), new IAction() {
+		menu.addMenuItem(new MenuItem(getMessage("view.station.list.item.station.search"), new ImageSet(getTheme().getString("IMG_FIND")), new IAction() {
 			public void run(Object data) {
 				searchStation();
 			}
 		}));
 		
 		if (city.localization && elementProvider.length() > 0) {
-			menu.addMenuItem(new MenuItem("Voir le plan", new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
+			menu.addMenuItem(new MenuItem(getMessage("view.station.list.item.view.map"), new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
 				public void run(Object data) {
 					showGoogleMapsView();
 				}
@@ -99,7 +99,7 @@ public class StationListView extends AbstractListView {
 		}
 		
 		if (city != null && city.webSite != null) {
-			menu.addMenuItem(new MenuItem("Voir le site internet", new ImageSet(getTheme().getString("IMG_WEB")), new IAction() {
+			menu.addMenuItem(new MenuItem(getMessage("view.station.list.item.view.website"), new ImageSet(getTheme().getString("IMG_WEB")), new IAction() {
 				
 				public void run(Object data) {
 					if (logger.isInfoEnabled()) {
@@ -109,7 +109,7 @@ public class StationListView extends AbstractListView {
 						getMidlet().platformRequest(city.webSite);
 					}
 					catch(Throwable t) {
-						DialogUtil.showAlertMessage(StationListView.this, "Erreur de connection", "Impossible d'ouvrir la page : '" + t.getMessage() + "'");
+						DialogUtil.showAlertMessage(StationListView.this, getMessage("dialog.title.error"), getMessage("view.station.list.item.view.website.error.message", t.getMessage()));
 					}
 				}
 			}));
@@ -121,7 +121,7 @@ public class StationListView extends AbstractListView {
 
 
 	private void showGoogleMapsView() {
-		String title = "Plan de la station";
+		String title = getMessage("view.station.list.map.title");
 		POIInfoAccessor poiInfoAccessor = new StationPoiInfoAccessor();
 		Object elementSelected = getStationSelected();
 		
@@ -196,7 +196,7 @@ public class StationListView extends AbstractListView {
 
 		final StationLoadTask stationLoadTask = new StationLoadTask(this, stationFilter);
 		stationLoadTask.addProgressListener(progressListener);
-		LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "Chargement des stations", stationLoadTask);
+		LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), getMessage("view.station.list.load.station"), stationLoadTask);
 		showDisplayable(loadTaskView, this);
 		resetPosition();
 		loadTaskView.startTask();

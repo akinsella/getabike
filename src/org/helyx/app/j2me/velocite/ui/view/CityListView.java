@@ -43,7 +43,8 @@ public class CityListView extends MenuListView {
 	}
 	
 	public CityListView(AbstractMIDlet midlet, String country, boolean cancellable) throws CityManagerException {
-		super(midlet, "Choix de la ville", true);
+		super(midlet, "", true);
+		setTitle(getMessage("view.city.title"));
 		this.country = country;
 		this.cancellable = cancellable;
 		init();
@@ -105,7 +106,7 @@ public class CityListView extends MenuListView {
 			IProgressTask progressTask = CartoManager.createUpdateCityStationsTask(city);
 			progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher()));
 
-			TaskManager.runLoadTaskView("Mise à jour des stations", progressTask, getMidlet(), CityListView.this, new ProgressTaskReturnCallback() {
+			TaskManager.runLoadTaskView(getMessage("view.city.station.update.title"), progressTask, getMidlet(), CityListView.this, new ProgressTaskReturnCallback() {
 
 				public void onSuccess(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
 					logger.info("Success: " + eventMessage + ", data: " + eventData);
@@ -124,7 +125,7 @@ public class CityListView extends MenuListView {
 		catch (CartoManagerException e) {
 			logger.warn(e);
 			cleanUpCurrentCityData();
-			showAlertMessage("Erreur", "Impossible de charger les stations pour la ville sélectionnée.");
+			showAlertMessage(getMessage("dialog.title.error"), getMessage("view.city.load.error.1"));
 			fireReturnCallback();
 		}
 	}

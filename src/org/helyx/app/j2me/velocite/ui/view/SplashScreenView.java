@@ -26,13 +26,12 @@ public class SplashScreenView extends AbstractView {
 
 	public SplashScreenView(AbstractMIDlet midlet) {
 		super(midlet);
-
 		init();
 	}
 
 	private void init() {
 		setFullScreenMode(true);
-		setTitle("VeloCite");
+		setTitle(getMessage("view.splash.title"));
 		loadLogoImage();
 	}
 	
@@ -76,8 +75,8 @@ public class SplashScreenView extends AbstractView {
         	logger.info("fallbackLogoImageStr error");
         }
              
-        g.drawString("Copyright - 2008", width / 2, y + height - 2, Graphics.HCENTER | Graphics.BOTTOM);
-        g.drawString("http://www.velocite.org", width / 2, y + height - 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.BOTTOM);
+        g.drawString(getMessage("view.splash.copyright"), width / 2, y + height - 2, Graphics.HCENTER | Graphics.BOTTOM);
+        g.drawString(getMessage("view.splash.website"), width / 2, y + height - 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.BOTTOM);
 
         int center = y + height / 2 + (logoImage != null ? logoImage.getHeight() : FontUtil.SMALL.getHeight()) / 2;
         int bottom = y + height - 2 - FontUtil.SMALL.getHeight() * 2;
@@ -86,7 +85,7 @@ public class SplashScreenView extends AbstractView {
         
         g.setColor(getTheme().getColor(ThemeConstants.WIDGET_SPLASH_FONT_LOAD).intValue());
         g.setFont(FontUtil.SMALL_BOLD);
-        g.drawString(label != null ? label : "Veuillez patienter ...", width / 2, center2, Graphics.HCENTER | Graphics.BASELINE);
+        g.drawString(label != null ? label : getMessage("view.splash.wait"), width / 2, center2, Graphics.HCENTER | Graphics.BASELINE);
 	}
 
 	public void followProgressTask(IProgressTask progressTask) {

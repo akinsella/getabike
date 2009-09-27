@@ -19,7 +19,8 @@ public class StationSearchView extends AbstractTextBox {
 	private Command cmdValidate;
 	
 	public StationSearchView(AbstractMIDlet midlet) {
-		super(midlet, "Recherche de station");
+		super(midlet, "");
+		setTitle(getMessage("view.station.search.title"));
 		init();
 	}
 
@@ -30,9 +31,9 @@ public class StationSearchView extends AbstractTextBox {
 	}
 
 	private void initCommands() {
-		cmdBack = new Command("Annuler", Command.BACK, 1);
+		cmdBack = new Command(getMessage("dialog.title.cancel"), Command.BACK, 1);
 		textBox.addCommand(cmdBack);
-		cmdValidate = new Command("Valider", Command.ITEM, 2);
+		cmdValidate = new Command(getMessage("dialog.title.validate"), Command.ITEM, 2);
 		textBox.addCommand(cmdValidate);
 	}
 

@@ -29,8 +29,9 @@ public class CountryListView extends MenuListView {
 	}
 	
 	public CountryListView(AbstractMIDlet midlet, boolean cancellable) throws CityManagerException {
-		super(midlet, "Choix du pays", true);
+		super(midlet, "", true);
 		this.cancellable = cancellable;
+		setTitle(getMessage("view.country.title"));
 		init();
 	}
 	
@@ -50,7 +51,7 @@ public class CountryListView extends MenuListView {
 	protected void initActions() {
 
 		if (cancellable) {
-			setSecondaryCommand(new Command("Retour", true, new IAction() {
+			setSecondaryCommand(new Command(getMessage("command.return"), true, new IAction() {
 	
 				public void run(Object data) {
 					fireReturnCallback();
@@ -59,7 +60,7 @@ public class CountryListView extends MenuListView {
 			}));
 		}
 		
-		setPrimaryCommand(new Command("Sélectionner", true, new IAction() {
+		setPrimaryCommand(new Command(getMessage("command.select"), true, new IAction() {
 
 			public void run(Object data) {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());

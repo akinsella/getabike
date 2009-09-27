@@ -60,7 +60,7 @@ public class StationDetailsView extends AbstractView {
 	
 	private void init() {
 		setFullScreenMode(true);
-		setTitle("Détail de la station");
+		setTitle(getMessage("view.station.detail.title"));
 		loadIconImage();
 		initActions();
 		if (station.details == null) {
@@ -72,23 +72,23 @@ public class StationDetailsView extends AbstractView {
 	}
 		
 	private void showGoogleMapsView() {
-		String title = "Plan de la station";
+		String title = getMessage("view.station.detail.map.title");
 		POIInfoAccessor poiInfoAccessor = new StationPoiInfoAccessor();
 		UtilManager.showGoogleMapsView(this, title, poiInfoAccessor, station, relatedStations, 15);
 	}
 	
 	private void initActions() {
 		
-		setThirdCommand(new Command("Menu", true, new IAction() {
+		setThirdCommand(new Command(getMessage("command.menu"), true, new IAction() {
 
 			public void run(Object data) {
 	
-				final MenuListView menuListView = new MenuListView(getMidlet(), "Menu", false);
+				final MenuListView menuListView = new MenuListView(getMidlet(), getMessage("view.station.detail.menu.title"), false);
 
 				Menu menu = new Menu();
 
 				if (city.localization) {
-					menu.addMenuItem(new MenuItem("Voir le plan", new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
+					menu.addMenuItem(new MenuItem(getMessage("view.station.detail.menu.item.map"), new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
 						
 						public void run(Object data) {
 							showGoogleMapsView();
@@ -97,34 +97,34 @@ public class StationDetailsView extends AbstractView {
 				}
 				
 				if (allowSearchNearStation && city.localization) {
-					menu.addMenuItem(new MenuItem("Voir les stations proches", new ImageSet(getTheme().getString("IMG_NEAR")), new IAction() {
+					menu.addMenuItem(new MenuItem(getMessage("view.station.detail.menu.item.near.station"), new ImageSet(getTheme().getString("IMG_NEAR")), new IAction() {
 						
 						public void run(Object data) {
-							final MenuListView nearStationMenuListView = new MenuListView(getMidlet(), "Menu", false);
+							final MenuListView nearStationMenuListView = new MenuListView(getMidlet(), getMessage("view.station.detail.item.near.station.menu.title"), false);
 
 							Menu nearStationMenu = new Menu();
-							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 250 m", new IAction() {
+							nearStationMenu.addMenuItem(new MenuItem(getMessage("view.station.detail.item.near.station.menu.250"), new IAction() {
 								
 								public void run(Object data) {
 									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 250, false, false, false);
 								}
 			
 							}));
-							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 500 m", new IAction() {
+							nearStationMenu.addMenuItem(new MenuItem(getMessage("view.station.detail.item.near.station.menu.500"), new IAction() {
 								
 								public void run(Object data) {
 									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 500, false, false, false);
 								}
 			
 							}));
-							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 1 km", new IAction() {
+							nearStationMenu.addMenuItem(new MenuItem(getMessage("view.station.detail.item.near.station.menu.1000"), new IAction() {
 								
 								public void run(Object data) {
 									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 1000, false, false, false);
 								}
 			
 							}));
-							nearStationMenu.addMenuItem(new MenuItem("Stations à moins de 2 km", new IAction() {
+							nearStationMenu.addMenuItem(new MenuItem(getMessage("view.station.detail.item.near.station.menu.2000"), new IAction() {
 								
 								public void run(Object data) {
 									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 2000, false, false, false);
@@ -141,10 +141,10 @@ public class StationDetailsView extends AbstractView {
 				}
 				
 				
-				menu.addMenuItem(new MenuItem("Ajouter aux favoris", new ImageSet(getTheme().getString("IMG_STAR")), new IAction() {
+				menu.addMenuItem(new MenuItem(getMessage("view.station.detail.menu.item.bookmark.add"), new ImageSet(getTheme().getString("IMG_STAR")), new IAction() {
 					
 					public void run(Object data) {
-						DialogUtil.showAlertMessage(menuListView, "Attention", "La fonction n'est pas encore implémentée.");
+						DialogUtil.showAlertMessage(menuListView, getMessage("dialog.title.warn"),  getMessage("view.station.detail.menu.item.bookmark.add.not.implemented"));
 					}
 
 				}));
@@ -157,7 +157,7 @@ public class StationDetailsView extends AbstractView {
 			
 		}));
 		
-		setSecondaryCommand(new Command("Retour", true, new IAction() {
+		setSecondaryCommand(new Command(getMessage("command.return"), true, new IAction() {
 
 			public void run(Object data) {
 				fireReturnCallback();
@@ -165,7 +165,7 @@ public class StationDetailsView extends AbstractView {
 			
 		}));
 		
-		setPrimaryCommand(new Command("Rafraîchir", true, new IAction() {
+		setPrimaryCommand(new Command(getMessage("command.refresh"), true, new IAction() {
 
 			public void run(Object data) {
 				fetchStationDetails();
@@ -274,7 +274,7 @@ public class StationDetailsView extends AbstractView {
 		        Color detailsErrorColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_ERROR);
 	        	g.setColor(detailsErrorColor.intValue());
 	        	g.setFont(smallBoldFont);
-		        g.drawString(" - Station fermée", width + iconImageWidth + 5 + smallFont.stringWidth(stationNumber), height + titleZoneHeight / 2 + mediumFontHeight - mediumBoldFont.getBaselinePosition() + smallFontHeight / 2, Graphics.BASELINE | Graphics.LEFT);
+		        g.drawString(" - " + getMessage("view.station.detail.station.closed"), width + iconImageWidth + 5 + smallFont.stringWidth(stationNumber), height + titleZoneHeight / 2 + mediumFontHeight - mediumBoldFont.getBaselinePosition() + smallFontHeight / 2, Graphics.BASELINE | Graphics.LEFT);
 	        }
 	        height += titleZoneHeight + 2;
 		}
@@ -294,7 +294,7 @@ public class StationDetailsView extends AbstractView {
 	        if (!station.open) {
 		        Color detailsErrorColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_ERROR);
 	        	g.setColor(detailsErrorColor.intValue());
-		        g.drawString(" - Station fermée", width + smallFont.stringWidth(stationNumber), height + mediumFontHeight + 1, Graphics.BASELINE | Graphics.LEFT);
+		        g.drawString(" - " + getMessage("view.station.detail.station.closed"), width + smallFont.stringWidth(stationNumber), height + mediumFontHeight + 1, Graphics.BASELINE | Graphics.LEFT);
 	        }
 
 	        height += mediumFontHeight + 1 + smallFontHeight + 1;
@@ -356,20 +356,20 @@ public class StationDetailsView extends AbstractView {
         String bonus = stationDetails != null ? (station.bonus ? "Oui" : "Non") : "ND"; 
          
         int line = 0;
-        showDetailLine(g, line, "Total vélos: ", total, height, maxKeyWidth);
+        showDetailLine(g, line, getMessage("view.station.detail.station.bike.total") + ": ", total, height, maxKeyWidth);
         line++;
-        showDetailLine(g, line, "Vélos disponibles: ", available, height, maxKeyWidth);
+        showDetailLine(g, line, getMessage("view.station.detail.station.bike.available") + ": ", available, height, maxKeyWidth);
         line++;
-        showDetailLine(g, line, "Places libres: ", free, height, maxKeyWidth);
+        showDetailLine(g, line, getMessage("view.station.detail.station.attach.free") + ": ", free, height, maxKeyWidth);
         line++;
-        showDetailLine(g, line, "Hors service: ", hs, height, maxKeyWidth);
+        showDetailLine(g, line, getMessage("view.station.detail.station.bike.ko") + ": ", hs, height, maxKeyWidth);
         line++;
         if (city.tpe) {
-        showDetailLine(g, line, "Payement Elec.: ", tpe, height, maxKeyWidth);
+        showDetailLine(g, line, getMessage("view.station.detail.station.tpe") + ": ", tpe, height, maxKeyWidth);
         line++;        	
         }
         if (city.bonus) {
-        	showDetailLine(g, line, "Bonus:  ", bonus, height, maxKeyWidth);
+        	showDetailLine(g, line, getMessage("view.station.detail.station.bonus") + ":  ", bonus, height, maxKeyWidth);
         }
  	}
 	

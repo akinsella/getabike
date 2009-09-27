@@ -26,7 +26,8 @@ public class LanguageListView extends MenuListView {
 	private Vector languageList;
 
 	public LanguageListView(AbstractMIDlet midlet) {
-		super(midlet, "Choix de la langue", true);
+		super(midlet, "", true);
+		setTitle(getMessage("view.language.title"));
 		init();
 	}
 	
@@ -38,7 +39,7 @@ public class LanguageListView extends MenuListView {
 	
 	protected void initActions() {
 
-		setSecondaryCommand(new Command("Annuler", true, new IAction() {
+		setSecondaryCommand(new Command(getMessage("command.cancel"), true, new IAction() {
 
 			public void run(Object data) {
 				fireReturnCallback();
@@ -46,7 +47,7 @@ public class LanguageListView extends MenuListView {
 			
 		}));
 		
-		setPrimaryCommand(new Command("Ok", true, new IAction() {
+		setPrimaryCommand(new Command(getMessage("command.ok"), true, new IAction() {
 
 			public void run(Object data) {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());

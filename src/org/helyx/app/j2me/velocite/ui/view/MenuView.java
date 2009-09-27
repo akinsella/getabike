@@ -12,6 +12,7 @@ import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 import org.helyx.app.j2me.velocite.ui.view.renderer.StationItemRenderer;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.text.StringFormat;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.geometry.Rectangle;
@@ -51,7 +52,7 @@ public class MenuView extends AbstractView {
 
 		private void init() {
 			setFullScreenMode(true);
-			setTitle("Menu");
+			setTitle(getMessage("view.menu.title"));
 			loadLogoImage();
 			
 			createMenu();
@@ -183,7 +184,7 @@ public class MenuView extends AbstractView {
 		
 		private void showStationListView(City city) {
 			if (stationListView == null) {
-				stationListView = new StationListView(getMidlet(), "Liste des stations");
+				stationListView = new StationListView(getMidlet(), getMessage("view.station.list.title"));
 				stationListView.setPreviousDisplayable(MenuView.this);
 				stationListView.setCellRenderer(new StationItemRenderer());
 				stationListView.setCity(city);
@@ -215,14 +216,14 @@ public class MenuView extends AbstractView {
 				if (!currentCity.country.equals(currentCountry)) {
 					CityManager.clearCurrentCountry();
 					CityManager.clearCurrentCity(true);
-					DialogUtil.showAlertMessage(this, "Erreur", "La ville sélectionnée: '" + currentCity.key + "', ne correspond pas au pays sélectionné: '" + currentCountry + "'");
+					DialogUtil.showAlertMessage(this, getMessage("dialog.title.error"), getMessage("view.menu.show.station.erro.1", new Object[] { currentCity.key,  currentCountry }));
 					return ;
 				}
 				
 				showStationListView(currentCity);
 			}
 			catch (CityManagerException e) {
-				showAlertMessage("Erreur", "Problème de sélection de la ville.");
+				DialogUtil.showAlertMessage(this, getMessage("dialog.title.error"), getMessage("view.menu.show.station.error.2"));
 				logger.warn(e);
 			}
 		}
@@ -261,7 +262,7 @@ public class MenuView extends AbstractView {
 					}
 					catch(Throwable t) {
 						logger.warn(t);
-						DialogUtil.showAlertMessage(MenuView.this, "Erreur", "Impossible d'obtenir la ville courante: '" + t.getMessage() + "'");
+						DialogUtil.showAlertMessage(MenuView.this, getMessage("dialog.title.error"), getMessage("view.menu.select.city.error.1", t.getMessage()));
 					}
 				}
 				
@@ -271,24 +272,24 @@ public class MenuView extends AbstractView {
 
 		private void createMenu() {
 			menu = new Menu();
-			menu.addMenuItem(new MenuItem("Liste des stations", new IAction() {
+			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.station.list"), new IAction() {
 				
 				public void run(Object data) {
 					showStations();
 				}
 
 			}));
-			menu.addMenuItem(new MenuItem("Stations favorites", false, new IAction() {
+			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.station.list.bookmark"), false, new IAction() {
 				public void run(Object data) {
-					DialogUtil.showAlertMessage(MenuView.this, "Information", "Station favories");
+					DialogUtil.showAlertMessage(MenuView.this, getMessage("dialog.title.information"), getMessage("view.menu.item.station.list.bookmark.not.implemented"));
 				}
 			}));
-//			menu.addMenuItem(new MenuItem("Itineraire", false, new IAction() {
+//			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.itinerary"), false, new IAction() {
 //				public void run(Object data) {
-//					DialogUtil.showAlertMessage(MenuView.this, "Information", "Itinéraire");
+//					DialogUtil.showAlertMessage(MenuView.this, getMessage("view.menu.item.itinerary"), getMessage("view.menu.item.itinerary.not.implemented"));
 //				}
 //			}));
-			menu.addMenuItem(new MenuItem("Préférences", true, new IAction() {
+			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.pref"), true, new IAction() {
 				private PrefListView prefListView;
 				
 				public void run(Object data) {
@@ -303,7 +304,7 @@ public class MenuView extends AbstractView {
 					return prefListView;
 				}
 			}));
-			menu.addMenuItem(new MenuItem("A propos", new IAction() {
+			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.about"), new IAction() {
 				private AboutView aboutView;
 				
 				public void run(Object data) {
@@ -318,12 +319,12 @@ public class MenuView extends AbstractView {
 					return aboutView;
 				}
 			}));
-			menu.addMenuItem(new MenuItem("Quitter", new IAction() {
+			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.exit"), new IAction() {
 				public void run(Object data) {
 					DialogUtil.showYesNoDialog(
 						MenuView.this, 
-						"Question", 
-						"Etes-vous sûr de vouloir quitter l'application ?", 
+						getMessage("dialog.title.question"), 
+						getMessage("view.menu.item.exit.message"), 
 						new YesNoResultCallback() {
 							public void onYes(DialogView dialogView, Object data) {
 								exit();

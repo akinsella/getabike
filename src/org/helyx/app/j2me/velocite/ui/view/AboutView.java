@@ -31,14 +31,14 @@ public class AboutView extends AbstractView {
 
 	private void init() {
 		setFullScreenMode(true);
-		setTitle("A propos");
+		setTitle(getMessage("view.about.title"));
 		loadLogoImage();
 		
 		initActions();
 	}
 	
 	private void initActions() {
-		setSecondaryCommand(new Command("Retour", true, new IAction() {
+		setSecondaryCommand(new Command(getMessage("command.return"), true, new IAction() {
 
 			public void run(Object data) {
 				fireReturnCallback();
@@ -88,10 +88,10 @@ public class AboutView extends AbstractView {
 
         g.setFont(FontUtil.SMALL);
 
-        g.drawString("Copyright - 2008", width / 2, y + height - 2, Graphics.HCENTER | Graphics.BOTTOM);
-        g.drawString("contact@velocite.org", width / 2, y + height - 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.BOTTOM);
-        g.drawString("http://www.velocite.org", width / 2, y + height - 2 - FontUtil.SMALL.getHeight() * 2, Graphics.HCENTER | Graphics.BOTTOM);
-        g.drawString("Alexis Kinsella", width / 2, y + height - 2 - FontUtil.SMALL.getHeight() * 3, Graphics.HCENTER | Graphics.BOTTOM);
+        g.drawString(getMessage("view.about.copyright"), width / 2, y + height - 2, Graphics.HCENTER | Graphics.BOTTOM);
+        g.drawString(getMessage("view.about.mail"), width / 2, y + height - 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.BOTTOM);
+        g.drawString(getMessage("view.about.website"), width / 2, y + height - 2 - FontUtil.SMALL.getHeight() * 2, Graphics.HCENTER | Graphics.BOTTOM);
+        g.drawString(getMessage("view.about.author"), width / 2, y + height - 2 - FontUtil.SMALL.getHeight() * 3, Graphics.HCENTER | Graphics.BOTTOM);
 	}
 
 }

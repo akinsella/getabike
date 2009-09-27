@@ -53,8 +53,8 @@ public class UtilManager {
 		if (showGoogleMapsPref == null) {
 			DialogUtil.showYesNoDialog(
 				view, 
-				"Google Maps", 
-				"Activer la visualisation des stations avec Google Maps ?\n\nAttention: Un forfait data illimité est  fortement recommandé.",
+				view.getMessage("manager.util.google.maps"), 
+				view.getMessage("manager.util.google.maps.message"),
 				new YesNoResultCallback() {
 					public void onYes(DialogView dialogView, Object data) {
 						PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, true);
@@ -89,8 +89,8 @@ public class UtilManager {
 
 	public static void changeDebugMode(final AbstractDisplayable currentDisplayable) {
 
-		DialogUtil.showYesNoDialog(currentDisplayable, "Question", 
-			(!debugModeActive ? "Activer" : "Désactiver") + " le mode Debug ?",
+		DialogUtil.showYesNoDialog(currentDisplayable, currentDisplayable.getMessage("dialog.title.question"), 
+			currentDisplayable.getMessage(!debugModeActive ? "manager.util.debug.mode.message.activate" : "manager.util.debug.mode.message.deactivate"),
 			new YesNoResultCallback() {
 				public void onYes(DialogView dialogView, Object data) {
 					try {
@@ -125,8 +125,9 @@ public class UtilManager {
 	public static void changeMapMode(final AbstractDisplayable currentDisplayable) {
 		final boolean mapModeActive = PrefManager.readPrefBoolean(MAP_MODE_ENABLED);
 
-		DialogUtil.showYesNoDialog(currentDisplayable,  "Question", 
-			(!mapModeActive ? "Activer" : "Désactiver") + " la visualisation des informations de station avec Google Maps ?" + (!mapModeActive ? "\n\nAttention: Un forfait data illimité est fortement recommandé." : ""), 
+		DialogUtil.showYesNoDialog(currentDisplayable,  currentDisplayable.getMessage("dialog.title.question"), 
+				
+			currentDisplayable.getMessage(!mapModeActive ? "manager.util.map.mode.message.activate" : "manager.util.map.mode.message.deactivate"), 
 			new YesNoResultCallback() {
 				public void onYes(DialogView dialogView, Object data) {
 					PrefManager.writePrefBoolean(MAP_MODE_ENABLED, !mapModeActive);
@@ -143,11 +144,8 @@ public class UtilManager {
 	public static void changeHttpMode(final AbstractDisplayable currentDisplayable) {
 		final boolean httpModeActive = PrefManager.readPrefBoolean(OPTIMIZED_HTTP_MODE_ENABLED);
 
-		DialogUtil.showYesNoDialog(currentDisplayable,  "Question", 
-				!httpModeActive ? 
-					"Activer le mode optimisé de chargement des données HTTP ?\nAttention: Certains téléphone peuvent rencontrer des problèmes avec ce mode!" : 
-					"Désactiver le mode optimisé HTTP ?"
-				, 			
+		DialogUtil.showYesNoDialog(currentDisplayable, currentDisplayable.getMessage("dialog.title.question"), 
+				currentDisplayable.getMessage(!httpModeActive ? "manager.util.http.mode.message.activate" : "manager.util.http.mode.message.deactivate"), 			
 				new YesNoResultCallback() {
 					public void onYes(DialogView dialogView, Object data) {
 						PrefManager.writePrefBoolean(OPTIMIZED_HTTP_MODE_ENABLED, !httpModeActive);
@@ -163,12 +161,12 @@ public class UtilManager {
 
 	public static void reset(final AbstractDisplayable currentDisplayable) {
 		PrefManager.writePrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, true);
-		DialogUtil.showConfirmDialog(currentDisplayable, "Confirmation", 
-			"Etes-vous sur de vouloir reseter l'application ?", 
+		DialogUtil.showConfirmDialog(currentDisplayable, currentDisplayable.getMessage("dialog.title.confirm"), 
+			currentDisplayable.getMessage("manager.util.reset.message.1"), 
 			new OkCancelResultCallback() {
 				public void onOk(DialogView dialogView, Object data) {
-					DialogUtil.showMessageDialog(currentDisplayable, "Attention", 
-						"L'application va quitter. L'application doit être relancée.", 
+					DialogUtil.showMessageDialog(currentDisplayable, currentDisplayable.getMessage("dialog.title.warn"), 
+						currentDisplayable.getMessage("manager.util.reset.message.2"), 
 						new OkResultCallback() {
 							public void onOk(DialogView dialogView, Object data) {
 								currentDisplayable.getMidlet().exit();								

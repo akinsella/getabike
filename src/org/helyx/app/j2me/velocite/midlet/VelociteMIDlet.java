@@ -6,7 +6,6 @@ import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.task.AppStartProgressTask;
 import org.helyx.app.j2me.velocite.ui.view.MenuView;
 import org.helyx.app.j2me.velocite.ui.view.SplashScreenView;
-import org.helyx.app.j2me.velocite.util.UtilManager;
 import org.helyx.helyx4me.constant.BooleanConstants;
 import org.helyx.helyx4me.i18n.Locale;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
@@ -17,20 +16,14 @@ import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
 import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
-import org.helyx.helyx4me.ui.view.support.dialog.result.callback.YesNoResultCallback;
 import org.helyx.logging4me.Logger;
-import org.helyx.logging4me.LoggerManager;
-import org.helyx.logging4me.appender.FileAppender;
 import org.helyx.logging4me.config.LoggerConfigurer;
 import org.helyx.logging4me.config.XmlConfigurer;
-import org.helyx.logging4me.layout.pattern.PatternLayout;
 
 
 public class VelociteMIDlet extends AbstractMIDlet {
 
 	private static final Logger logger = Logger.getLogger("VELOCITE_MIDLET");
-	
-	private FileAppender fileAppender = null;
 
 	public VelociteMIDlet() {
 		super();
@@ -84,16 +77,20 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	}
 
 	private void onStartError(AbstractView view, String message, Throwable t) {
-		logger.info(message);
+		if (logger.isInfoEnabled()) {
+			logger.info(message);
+		}
 		logger.warn(t);
-		String errorMessage = t.getMessage() == null ? "Erreur d'initialisation de l'application" : t.getMessage();
+		String errorMessage = t.getMessage() == null ? getMessage("dialog.title.error.1") : t.getMessage();
 		DialogUtil.showMessageDialog(
 				view, 
-				"Erreur", 
-				"L'application doit être redémarée: " + errorMessage, 
+				getMessage("dialog.title.error.2"), 
+				getMessage("midlet.start.error.message") + ": " + errorMessage, 
 				new OkResultCallback() {
 					public void onOk(DialogView dialogView, Object data) {
-						VelociteMIDlet.this.logger.info("Writing reset demand to prefs");
+						if (VelociteMIDlet.this.logger.isInfoEnabled()) {
+							VelociteMIDlet.this.logger.info("Writing reset demand to prefs");
+						}
 						PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 						VelociteMIDlet.this.exit();								
 					}
@@ -107,42 +104,5 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	protected void onPause() {
 		super.onPause();
 	}
-
-	private void openFileAppender() {
-		if (fileAppender == null) {
-			try {
-				fileAppender = new FileAppender("VeloCite.log");
-				fileAppender.setLayout(new PatternLayout("| %T | %L | %C | %D{yyyy/MM/dd, HH:mm:ss.ZZ} | "));
-				fileAppender.open();
-				LoggerManager.registerAppender(fileAppender);
-				LoggerManager.getRootCategory().addAppender(fileAppender);
-			}
-			catch(Throwable t) {
-				logger.warn(t);
-				fileAppender = null;
-			}
-		}
-
-	}
-	
-	private void closeFileAppender() {
-		if (fileAppender != null) {
-			try {
-				LoggerManager.unregisterAppender(fileAppender);
-			}
-			finally {
-				try {
-					fileAppender.close();
-				}
-				catch (Exception e) {
-					logger.warn(e);
-				}
-				finally {
-					fileAppender = null;
-				}
-			}
-		}
-	}
-
 
 }

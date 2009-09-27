@@ -28,7 +28,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	private AbstractView view;
 	
 	public AppStartProgressTask(AbstractView view) {
-		super("App Start Task");
+		super(view.getMessage("task.app.start.title"));
 		this.view = view;
 	}
 	
@@ -53,36 +53,48 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	private void executeStartUpTasks() {
 		boolean applicationDataCleanUpNeeded = PrefManager.readPrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED);
 		if (applicationDataCleanUpNeeded) {
-			onProgress("Suppression des données ...");
+			onProgress(view.getMessage("task.app.start.data.remove.start"));
 			
-			logger.info("Application data need to be reseted");
+			if (logger.isInfoEnabled()) {
+				logger.info("Application data need to be reseted");
+			}
 
-			logger.info("Cleaning up cities related data");
+			if (logger.isInfoEnabled()) {
+				logger.info("Cleaning up cities related data");
+			}
 			CityManager.clearCities();
 			
-			logger.info("Cleaning up station related data");
+			if (logger.isInfoEnabled()) {
+				logger.info("Cleaning up station related data");
+			}
 			CartoManager.clearStations();
 			
-			logger.info("Cleaning up preference related data");
+			if (logger.isInfoEnabled()) {
+				logger.info("Cleaning up preference related data");
+			}
 			PrefManager.cleanUpSavedData();
 			
-			logger.info("Cleaning up language related data");
+			if (logger.isInfoEnabled()) {
+				logger.info("Cleaning up language related data");
+			}
 			LanguageManager.cleanUpSavedData();
-			onProgress("Suppression des données terminée");
+			onProgress(view.getMessage("task.app.start.data.remove.end"));
 		}
 		PrefManager.writePref(UtilManager.GOOGLE_MAPS_KEY, UtilManager.DEFAULT_GOOGLE_MAPS_KEY);
 		
 
 		boolean cityDataCleanUpNeeded = PrefManager.readPrefBoolean(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
 		if (cityDataCleanUpNeeded) {
-			onProgress("Suppression des villes enregistrées ...");
-			logger.info("City data need to be reseted");
-			logger.info("Cleaning up cities related data");
+			onProgress(view.getMessage("task.app.start.data.city.remove.start"));
+			if (logger.isInfoEnabled()) {
+				logger.info("City data need to be reseted");
+				logger.info("Cleaning up cities related data");				
+			}
 			CityManager.clearCurrentCountry();
 			CityManager.clearCurrentCity(true);
 			CityManager.clearCities();
 			PrefManager.removePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
-			onProgress("Suppression des villes terminée");
+			onProgress(view.getMessage("task.app.start.data.city.remove.end"));
 		}
 		
 		String currentVersion = PrefManager.readPrefString(PrefConstants.MIDLET_VERSION);
@@ -99,13 +111,17 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 	
 	private void onNormalRun(String currentVersion) {
-		logger.info("This is a normal run. Current version is: '" + currentVersion + "'");
+		if (logger.isInfoEnabled()) {
+			logger.info("This is a normal run. Current version is: '" + currentVersion + "'");
+		}
 		checkData(STEP_START);
 	}
 
 	private void onFirstRun(String newVersion) {
 		updateVersion(newVersion);
-		logger.info("This is not an update of an older version. New version is: '" + newVersion + "'");
+		if (logger.isInfoEnabled()) {
+			logger.info("This is not an update of an older version. New version is: '" + newVersion + "'");
+		}
 		checkData(STEP_START);
 	}
 
@@ -114,10 +130,12 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 
 	private void onAppUpdate(String oldVersion, String newVersion) {
-		logger.info("This is  an update of an older version: '" + oldVersion + "'");
-		logger.info("New version is: '" + newVersion + "'");
+		if (logger.isInfoEnabled()) {
+			logger.info("This is  an update of an older version: '" + oldVersion + "'");
+			logger.info("New version is: '" + newVersion + "'");
 
-		logger.info("Old version is different from new Version");
+			logger.info("Old version is different from new Version");
+		}
 		updateVersion(newVersion);
 		
 		checkData(STEP_START);
@@ -138,7 +156,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 				onSuccess();
 				break;
 			default:
-				onError("Unexpected progress step", null);
+				onError(view.getMessage("task.app.start.error.unexpected.step"), null);
 				break;
 		}
 	}
@@ -168,7 +186,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 
 	private void configureCities() {
-		onProgress("Chargement des villes ...");
+		onProgress(view.getMessage("task.app.start.data.city.load.start"));
 		IProgressTask progressTask = CityManager.createUpdateCitiesTask();
 		progressTask.addProgressListener(new CityLoaderProgressListener(progressTask.getProgressDispatcher()));
 		progressTask.addProgressListener(new StartProgressAdapter(STEP_CITY_DATA_OK));
@@ -176,15 +194,15 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 	
 	private  void configureLanguages() {
-		onProgress("Chargement des langues ...");
+		onProgress(view.getMessage("task.app.start.data.language.load.start"));
 		IProgressTask progressTask = new LanguageConfigurationTask(view.getMidlet(), view.getViewCanvas());
 		progressTask.addProgressListener(new StartProgressAdapter(STEP_LANGUAGE_DATA_OK));
 		progressTask.execute();
 	}
 	
 	private void configureSoftKeys() {
-		onProgress("Configuration des touches ...");
-		IProgressTask progressTask = new SoftKeyConfigurationTask(view.getViewCanvas());
+		onProgress(view.getMessage("task.app.start.data.softkey.load.start"));
+		IProgressTask progressTask = new SoftKeyConfigurationTask(view);
 		progressTask.addProgressListener(new StartProgressAdapter(STEP_SOFTKEY_DATA_OK));
 		progressTask.execute();
 	}
@@ -207,7 +225,9 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		}
 		
 		public void onProgress(String eventMessage, Object eventData) {
-			AppStartProgressTask.this.logger.debug(eventData);
+			if (AppStartProgressTask.this.logger.isDebugEnabled()) {
+				AppStartProgressTask.this.logger.debug(eventData);				
+			}
 //			AppStartProgressTask.this.onProgress(eventMessage);
 		}
 		

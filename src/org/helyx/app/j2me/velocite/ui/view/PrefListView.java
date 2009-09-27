@@ -143,10 +143,10 @@ public class PrefListView extends PrefBaseListView {
 						
 						platformMenuItem.setParentMenu(true);
 						profilesMenuItem = new MenuItem(getMessage("view.pref.item.profiles"));
-						configurationMenuItem = new MenuItem("view.pref.item.configuration");
-						fcVersionMenuItem = new MenuItem("view.pref.item.file.support");
-						encodingMenuItem = new MenuItem("view.pref.item.file.encoding");
-						screenSizeItem = new MenuItem("view.pref.item.file.screen");
+						configurationMenuItem = new MenuItem(getMessage("view.pref.item.configuration"));
+						fcVersionMenuItem = new MenuItem(getMessage("view.pref.item.file.support"));
+						encodingMenuItem = new MenuItem(getMessage("view.pref.item.encoding"));
+						screenSizeItem = new MenuItem(getMessage("view.pref.item.screen"));
 						
 						Menu optionMenu = new Menu();
 						

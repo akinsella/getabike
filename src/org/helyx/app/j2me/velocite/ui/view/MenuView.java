@@ -289,32 +289,27 @@ public class MenuView extends AbstractView {
 //				}
 //			}));
 			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.pref"), true, new IAction() {
-				private PrefListView prefListView;
 				
 				public void run(Object data) {
 					showDisplayable(getPrefListView(), MenuView.this);
 				}
 				
 				private PrefListView getPrefListView() {
-					if (prefListView == null) {
-						prefListView = new PrefListView(getMidlet());
+					PrefListView prefListView = new PrefListView(getMidlet());
 						prefListView.setPreviousDisplayable(MenuView.this);
-					}
 					return prefListView;
 				}
 			}));
 			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.about"), new IAction() {
-				private AboutView aboutView;
 				
 				public void run(Object data) {
 					showDisplayable(getAboutView(), MenuView.this);
 				}
 				
 				private AboutView getAboutView() {
-					if (aboutView == null) {
-						aboutView = new AboutView(getMidlet());
-						aboutView.setPreviousDisplayable(MenuView.this);
-					}
+					AboutView aboutView = new AboutView(getMidlet());
+					aboutView.setPreviousDisplayable(MenuView.this);
+					
 					return aboutView;
 				}
 			}));

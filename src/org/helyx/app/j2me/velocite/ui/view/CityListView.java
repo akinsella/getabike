@@ -44,7 +44,7 @@ public class CityListView extends MenuListView {
 	
 	public CityListView(AbstractMIDlet midlet, String country, boolean cancellable) throws CityManagerException {
 		super(midlet, "", true);
-		setTitle(getMessage("view.city.title"));
+		setTitle("view.city.title");
 		this.country = country;
 		this.cancellable = cancellable;
 		init();
@@ -76,7 +76,7 @@ public class CityListView extends MenuListView {
 	protected void initActions() {
 
 		if (cancellable) {
-			setSecondaryCommand(new Command(getMessage("command.back"), true, new IAction() {
+			setSecondaryCommand(new Command("command.back", true, new IAction() {
 	
 				public void run(Object data) {
 					fireReturnCallback();
@@ -85,7 +85,7 @@ public class CityListView extends MenuListView {
 			}));
 		}
 		
-		setPrimaryCommand(new Command(getMessage("command.select"), true, new IAction() {
+		setPrimaryCommand(new Command("command.select", true, new IAction() {
 
 			public void run(Object data) {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());

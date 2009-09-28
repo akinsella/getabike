@@ -31,7 +31,7 @@ public class CountryListView extends MenuListView {
 	public CountryListView(AbstractMIDlet midlet, boolean cancellable) throws CityManagerException {
 		super(midlet, "", true);
 		this.cancellable = cancellable;
-		setTitle(getMessage("view.country.title"));
+		setTitle("view.country.title");
 		init();
 	}
 	
@@ -51,7 +51,7 @@ public class CountryListView extends MenuListView {
 	protected void initActions() {
 
 		if (cancellable) {
-			setSecondaryCommand(new Command(getMessage("command.back"), true, new IAction() {
+			setSecondaryCommand(new Command("command.back", true, new IAction() {
 	
 				public void run(Object data) {
 					fireReturnCallback();
@@ -60,7 +60,7 @@ public class CountryListView extends MenuListView {
 			}));
 		}
 		
-		setPrimaryCommand(new Command(getMessage("command.select"), true, new IAction() {
+		setPrimaryCommand(new Command("command.select", true, new IAction() {
 
 			public void run(Object data) {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());
@@ -85,7 +85,7 @@ public class CountryListView extends MenuListView {
 		Enumeration _enum = countryList.elements();
 		while(_enum.hasMoreElements()) {
 			String country = (String)_enum.nextElement();
-			MenuItem countryMenuItem = new MenuItem(getMessage("velocite.country." + country));
+			MenuItem countryMenuItem = new MenuItem("velocite.country." + country);
 			try {
 				countryMenuItem.setImageSet(new ImageSet(getTheme().getString("velocite.country." + country + ".flag")));
 			}

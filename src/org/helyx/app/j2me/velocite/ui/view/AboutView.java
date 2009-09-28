@@ -31,14 +31,14 @@ public class AboutView extends AbstractView {
 
 	private void init() {
 		setFullScreenMode(true);
-		setTitle(getMessage("view.about.title"));
+		setTitle("view.about.title");
 		loadLogoImage();
 		
 		initActions();
 	}
 	
 	private void initActions() {
-		setSecondaryCommand(new Command(getMessage("command.back"), true, new IAction() {
+		setSecondaryCommand(new Command("command.back", true, new IAction() {
 
 			public void run(Object data) {
 				fireReturnCallback();

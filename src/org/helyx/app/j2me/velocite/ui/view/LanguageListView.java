@@ -27,7 +27,7 @@ public class LanguageListView extends MenuListView {
 
 	public LanguageListView(AbstractMIDlet midlet) {
 		super(midlet, "", true);
-		setTitle(getMessage("view.language.title"));
+		setTitle("view.language.title");
 		init();
 	}
 	
@@ -39,7 +39,7 @@ public class LanguageListView extends MenuListView {
 	
 	protected void initActions() {
 
-		setSecondaryCommand(new Command(getMessage("command.cancel"), true, new IAction() {
+		setSecondaryCommand(new Command("command.cancel", true, new IAction() {
 
 			public void run(Object data) {
 				fireReturnCallback();
@@ -47,7 +47,7 @@ public class LanguageListView extends MenuListView {
 			
 		}));
 		
-		setPrimaryCommand(new Command(getMessage("command.ok"), true, new IAction() {
+		setPrimaryCommand(new Command("command.ok", true, new IAction() {
 
 			public void run(Object data) {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());
@@ -80,7 +80,7 @@ public class LanguageListView extends MenuListView {
 		Enumeration _enum = languageList.elements();
 		while(_enum.hasMoreElements()) {
 			Language language = (Language)_enum.nextElement();
-			MenuItem languageMenuItem = new MenuItem(language.name);
+			MenuItem languageMenuItem = new MenuItem("velocite.country." + language.key);
 			languageMenuItem.setImageSet(new ImageSet(getTheme().getString("velocite.country." + language.key + ".flag")));
 			languageMenuItem.setData(language);
 			menu.addMenuItem(languageMenuItem);

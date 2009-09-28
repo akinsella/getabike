@@ -58,20 +58,20 @@ public class StationListView extends AbstractListView {
 	protected void initActions() {	
 		
 		if (allowMenu) {
-			setThirdCommand(new Command(getMessage("command.menu"), true, new IAction() {
+			setThirdCommand(new Command("command.menu", true, new IAction() {
 				public void run(Object data) {
 					showMenuView();
 				}
 			}));
 		}
 
-		setPrimaryCommand(new Command(getMessage("command.view"), true, new IAction() {
+		setPrimaryCommand(new Command("command.view", true, new IAction() {
 			public void run(Object data) {
 				showItemSelected();
 			}
 		}));
 	
-		setSecondaryCommand(new Command(getMessage("command.back"), true, new IAction() {
+		setSecondaryCommand(new Command("command.back", true, new IAction() {
 			public void run(Object data) {
 				fireReturnCallback();
 			}
@@ -84,14 +84,14 @@ public class StationListView extends AbstractListView {
 		
 		Menu menu = new Menu();
 		
-		menu.addMenuItem(new MenuItem(getMessage("view.station.list.item.station.search"), new ImageSet(getTheme().getString("IMG_FIND")), new IAction() {
+		menu.addMenuItem(new MenuItem("view.station.list.item.station.search", new ImageSet(getTheme().getString("IMG_FIND")), new IAction() {
 			public void run(Object data) {
 				searchStation();
 			}
 		}));
 		
 		if (city.localization && elementProvider.length() > 0) {
-			menu.addMenuItem(new MenuItem(getMessage("view.station.list.item.view.map"), new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
+			menu.addMenuItem(new MenuItem("view.station.list.item.view.map", new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
 				public void run(Object data) {
 					showGoogleMapsView();
 				}
@@ -99,7 +99,7 @@ public class StationListView extends AbstractListView {
 		}
 		
 		if (city != null && city.webSite != null) {
-			menu.addMenuItem(new MenuItem(getMessage("view.station.list.item.view.website"), new ImageSet(getTheme().getString("IMG_WEB")), new IAction() {
+			menu.addMenuItem(new MenuItem("view.station.list.item.view.website", new ImageSet(getTheme().getString("IMG_WEB")), new IAction() {
 				
 				public void run(Object data) {
 					if (logger.isInfoEnabled()) {

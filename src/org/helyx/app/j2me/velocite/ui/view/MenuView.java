@@ -51,7 +51,7 @@ public class MenuView extends AbstractView {
 
 		private void init() {
 			setFullScreenMode(true);
-			setTitle(getMessage("view.menu.title"));
+			setTitle("view.menu.title");
 			loadLogoImage();
 			
 			createMenu();
@@ -271,24 +271,24 @@ public class MenuView extends AbstractView {
 
 		private void createMenu() {
 			menu = new Menu();
-			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.station.list"), new IAction() {
+			menu.addMenuItem(new MenuItem("view.menu.item.station.list", new IAction() {
 				
 				public void run(Object data) {
 					showStations();
 				}
 
 			}));
-			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.station.list.bookmark"), false, new IAction() {
+			menu.addMenuItem(new MenuItem("view.menu.item.station.list.bookmark", false, new IAction() {
 				public void run(Object data) {
 					DialogUtil.showAlertMessage(MenuView.this, getMessage("dialog.title.information"), getMessage("view.menu.item.station.list.bookmark.not.implemented"));
 				}
 			}));
-//			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.itinerary"), false, new IAction() {
+//			menu.addMenuItem(new MenuItem("view.menu.item.itinerary", false, new IAction() {
 //				public void run(Object data) {
 //					DialogUtil.showAlertMessage(MenuView.this, getMessage("view.menu.item.itinerary"), getMessage("view.menu.item.itinerary.not.implemented"));
 //				}
 //			}));
-			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.pref"), true, new IAction() {
+			menu.addMenuItem(new MenuItem("view.menu.item.pref", true, new IAction() {
 				
 				public void run(Object data) {
 					showDisplayable(getPrefListView(), MenuView.this);
@@ -300,7 +300,7 @@ public class MenuView extends AbstractView {
 					return prefListView;
 				}
 			}));
-			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.about"), new IAction() {
+			menu.addMenuItem(new MenuItem("view.menu.item.about", new IAction() {
 				
 				public void run(Object data) {
 					showDisplayable(getAboutView(), MenuView.this);
@@ -313,7 +313,7 @@ public class MenuView extends AbstractView {
 					return aboutView;
 				}
 			}));
-			menu.addMenuItem(new MenuItem(getMessage("view.menu.item.exit"), new IAction() {
+			menu.addMenuItem(new MenuItem("view.menu.item.exit", new IAction() {
 				public void run(Object data) {
 					DialogUtil.showYesNoDialog(
 						MenuView.this, 

@@ -60,7 +60,7 @@ public class StationDetailsView extends AbstractView {
 	
 	private void init() {
 		setFullScreenMode(true);
-		setTitle(getMessage("view.station.detail.title"));
+		setTitle("view.station.detail.title");
 		loadIconImage();
 		initActions();
 		if (station.details == null) {
@@ -79,7 +79,7 @@ public class StationDetailsView extends AbstractView {
 	
 	private void initActions() {
 		
-		setThirdCommand(new Command(getMessage("command.menu"), true, new IAction() {
+		setThirdCommand(new Command("command.menu", true, new IAction() {
 
 			public void run(Object data) {
 	
@@ -88,7 +88,7 @@ public class StationDetailsView extends AbstractView {
 				Menu menu = new Menu();
 
 				if (city.localization) {
-					menu.addMenuItem(new MenuItem(getMessage("view.station.detail.menu.item.map"), new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
+					menu.addMenuItem(new MenuItem("view.station.detail.menu.item.map", new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
 						
 						public void run(Object data) {
 							showGoogleMapsView();
@@ -97,34 +97,34 @@ public class StationDetailsView extends AbstractView {
 				}
 				
 				if (allowSearchNearStation && city.localization) {
-					menu.addMenuItem(new MenuItem(getMessage("view.station.detail.menu.item.near.station"), new ImageSet(getTheme().getString("IMG_NEAR")), new IAction() {
+					menu.addMenuItem(new MenuItem("view.station.detail.menu.item.near.station", new ImageSet(getTheme().getString("IMG_NEAR")), new IAction() {
 						
 						public void run(Object data) {
 							final MenuListView nearStationMenuListView = new MenuListView(getMidlet(), getMessage("view.station.detail.item.near.station.menu.title"), false);
 
 							Menu nearStationMenu = new Menu();
-							nearStationMenu.addMenuItem(new MenuItem(getMessage("view.station.detail.item.near.station.menu.250"), new IAction() {
+							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.250", new IAction() {
 								
 								public void run(Object data) {
 									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 250, false, false, false);
 								}
 			
 							}));
-							nearStationMenu.addMenuItem(new MenuItem(getMessage("view.station.detail.item.near.station.menu.500"), new IAction() {
+							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.500", new IAction() {
 								
 								public void run(Object data) {
 									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 500, false, false, false);
 								}
 			
 							}));
-							nearStationMenu.addMenuItem(new MenuItem(getMessage("view.station.detail.item.near.station.menu.1000"), new IAction() {
+							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.1000", new IAction() {
 								
 								public void run(Object data) {
 									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 1000, false, false, false);
 								}
 			
 							}));
-							nearStationMenu.addMenuItem(new MenuItem(getMessage("view.station.detail.item.near.station.menu.2000"), new IAction() {
+							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.2000", new IAction() {
 								
 								public void run(Object data) {
 									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 2000, false, false, false);
@@ -141,7 +141,7 @@ public class StationDetailsView extends AbstractView {
 				}
 				
 				
-				menu.addMenuItem(new MenuItem(getMessage("view.station.detail.menu.item.bookmark.add"), new ImageSet(getTheme().getString("IMG_STAR")), new IAction() {
+				menu.addMenuItem(new MenuItem("view.station.detail.menu.item.bookmark.add", new ImageSet(getTheme().getString("IMG_STAR")), new IAction() {
 					
 					public void run(Object data) {
 						DialogUtil.showAlertMessage(menuListView, getMessage("dialog.title.warn"),  getMessage("view.station.detail.menu.item.bookmark.add.not.implemented"));
@@ -157,7 +157,7 @@ public class StationDetailsView extends AbstractView {
 			
 		}));
 		
-		setSecondaryCommand(new Command(getMessage("command.back"), true, new IAction() {
+		setSecondaryCommand(new Command("command.back", true, new IAction() {
 
 			public void run(Object data) {
 				fireReturnCallback();
@@ -165,7 +165,7 @@ public class StationDetailsView extends AbstractView {
 			
 		}));
 		
-		setPrimaryCommand(new Command(getMessage("command.refresh"), true, new IAction() {
+		setPrimaryCommand(new Command("command.refresh", true, new IAction() {
 
 			public void run(Object data) {
 				fetchStationDetails();

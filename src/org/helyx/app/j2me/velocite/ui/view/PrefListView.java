@@ -34,7 +34,7 @@ public class PrefListView extends PrefBaseListView {
 
 	public PrefListView(AbstractMIDlet midlet) {
 		super(midlet, "");
-		setTitle(getMessage("view.pref.title"));
+		setTitle("view.pref.title");
 		init();
 	}
 	 
@@ -65,13 +65,13 @@ public class PrefListView extends PrefBaseListView {
 		
 		Menu menu = new Menu();
 		
-		countryMenuItem = new MenuItem(getMessage("view.pref.item.country"), new IAction() {
+		countryMenuItem = new MenuItem("view.pref.item.country", new IAction() {
 			public void run(Object data) {
 				selectCountry();
 			}
 		});
 		
-		cityMenuItem = new MenuItem(getMessage("view.pref.item.cities"), new IAction() {
+		cityMenuItem = new MenuItem("view.pref.item.cities", new IAction() {
 			public void run(Object data) {
 				String currentCountry = CityManager.getCurrentCountry();
 				if (currentCountry != null) {
@@ -91,13 +91,13 @@ public class PrefListView extends PrefBaseListView {
 			}
 		});
 		
-		languageMenuItem = new MenuItem(getMessage("view.pref.item.languages"), new IAction() {
+		languageMenuItem = new MenuItem("view.pref.item.languages", new IAction() {
 			public void run(Object data) {
 				LanguageManager.showLanguageView(PrefListView.this);
 			}
 		});
 		
-		optionMenuItem = new MenuItem(getMessage("view.pref.item.advances.options"), new IAction() {
+		optionMenuItem = new MenuItem("view.pref.item.advances.options", new IAction() {
 			public void run(Object data) {
 
 				PrefBaseListView optionMenuListView = new PrefBaseListView(getMidlet(), getMessage("view.pref.item.advances.options")) {
@@ -116,25 +116,25 @@ public class PrefListView extends PrefBaseListView {
 						
 						final AbstractDisplayable currentDisplayable = this;
 						
-						mapModeMenuItem = new MenuItem(getMessage("view.pref.item.google.maps"), new IAction() {
+						mapModeMenuItem = new MenuItem("view.pref.item.google.maps", new IAction() {
 							public void run(Object data) {
 								UtilManager.changeMapMode(currentDisplayable);
 							}
 						});
 						
-						httpModeMenuItem = new MenuItem(getMessage("view.pref.item.http.optimized"), new IAction() {
+						httpModeMenuItem = new MenuItem("view.pref.item.http.optimized", new IAction() {
 							public void run(Object data) {
 								UtilManager.changeHttpMode(currentDisplayable);
 							}
 						});
 						
-						debugModeMenuItem = new MenuItem(getMessage("view.pref.item.debug.mode"), new IAction() {
+						debugModeMenuItem = new MenuItem("view.pref.item.debug.mode", new IAction() {
 							public void run(Object data) {
 								UtilManager.changeDebugMode(currentDisplayable);
 							}
 						});
 						
-						platformMenuItem = new MenuItem(getMessage("view.pref.item.platform"), new IAction() {
+						platformMenuItem = new MenuItem("view.pref.item.platform", new IAction() {
 							
 							public void run(Object data) {
 								DialogUtil.showAlertMessage(currentDisplayable, getMessage("view.pref.item.platform"), (String)platformMenuItem.getData(PrefListView.PREF_VALUE_DETAILS));
@@ -142,11 +142,11 @@ public class PrefListView extends PrefBaseListView {
 						});
 						
 						platformMenuItem.setParentMenu(true);
-						profilesMenuItem = new MenuItem(getMessage("view.pref.item.profiles"));
-						configurationMenuItem = new MenuItem(getMessage("view.pref.item.configuration"));
-						fcVersionMenuItem = new MenuItem(getMessage("view.pref.item.file.support"));
-						encodingMenuItem = new MenuItem(getMessage("view.pref.item.encoding"));
-						screenSizeItem = new MenuItem(getMessage("view.pref.item.screen"));
+						profilesMenuItem = new MenuItem("view.pref.item.profiles");
+						configurationMenuItem = new MenuItem("view.pref.item.configuration");
+						fcVersionMenuItem = new MenuItem("view.pref.item.file.support");
+						encodingMenuItem = new MenuItem("view.pref.item.encoding");
+						screenSizeItem = new MenuItem("view.pref.item.screen");
 						
 						Menu optionMenu = new Menu();
 						
@@ -222,9 +222,9 @@ public class PrefListView extends PrefBaseListView {
 		});		
 		optionMenuItem.setParentMenu(true);
 		
-		versionMenuItem = new MenuItem(getMessage("view.pref.item.version"));
+		versionMenuItem = new MenuItem("view.pref.item.version");
 		
-		resetMenuItem = new MenuItem(getMessage("view.pref.item.reset"), new IAction() {
+		resetMenuItem = new MenuItem("view.pref.item.reset", new IAction() {
 			public void run(Object data) {
 				UtilManager.reset(PrefListView.this);
 			}
@@ -246,8 +246,10 @@ public class PrefListView extends PrefBaseListView {
 	}
 
 	public void beforeDisplayableSelection(AbstractDisplayable current, AbstractDisplayable next) {
-		logger.info("Current: " + current);
-		logger.info("Next: " + next);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Current: " + current);
+			logger.debug("Next: " + next);
+		}
 		if (next == this) {
 			fetchCountryPref();
 			fetchCityPref();
@@ -305,7 +307,7 @@ public class PrefListView extends PrefBaseListView {
 			String languageKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_CURRENT_KEY);
 			if (languageKey != null) {
 				Language language = LanguageManager.getCurrentLanguage();
-				languageMenuItem.setData(PREF_VALUE, language.name);
+				languageMenuItem.setData(PREF_VALUE, getMessage("velocite.country." + language.key));
 			}
 			else {
 				languageMenuItem.removeData(PREF_VALUE);

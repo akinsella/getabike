@@ -109,7 +109,7 @@ public class StationListView extends AbstractListView {
 						getMidlet().platformRequest(city.webSite);
 					}
 					catch(Throwable t) {
-						DialogUtil.showAlertMessage(StationListView.this, getMessage("dialog.title.error"), getMessage("view.station.list.item.view.website.error.message", t.getMessage()));
+						DialogUtil.showAlertMessage(StationListView.this, "dialog.title.error", getMessage("view.station.list.item.view.website.error.message", t.getMessage()));
 					}
 				}
 			}));

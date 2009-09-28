@@ -206,7 +206,7 @@ public class CityManager {
 		}
 		catch (CityManagerException cme) {
 			logger.warn(cme);
-			DialogUtil.showAlertMessage(currentDisplayable, currentDisplayable.getMessage("dialog.title.error"), currentDisplayable.getMessage("manage.city.error", cme.getMessage()));
+			DialogUtil.showAlertMessage(currentDisplayable, "dialog.title.error", currentDisplayable.getMessage("manage.city.error", cme.getMessage()));
 		}
 	}
 
@@ -248,7 +248,7 @@ public class CityManager {
 		}
 		catch (CityManagerException cme) {
 			logger.warn(cme);
-			DialogUtil.showAlertMessage(currentDisplayable, currentDisplayable.getMessage("dialog.title.error"), currentDisplayable.getMessage("manage.city.error", cme.getMessage()));
+			DialogUtil.showAlertMessage(currentDisplayable, "dialog.title.error", currentDisplayable.getMessage("manage.city.error", cme.getMessage()));
 		}
 	}
 	

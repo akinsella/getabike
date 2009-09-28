@@ -215,14 +215,14 @@ public class MenuView extends AbstractView {
 				if (!currentCity.country.equals(currentCountry)) {
 					CityManager.clearCurrentCountry();
 					CityManager.clearCurrentCity(true);
-					DialogUtil.showAlertMessage(this, getMessage("dialog.title.error"), getMessage("view.menu.show.station.erro.1", new Object[] { currentCity.key,  currentCountry }));
+					DialogUtil.showAlertMessage(this, "dialog.title.error", getMessage("view.menu.show.station.erro.1", new Object[] { currentCity.key,  currentCountry }));
 					return ;
 				}
 				
 				showStationListView(currentCity);
 			}
 			catch (CityManagerException e) {
-				DialogUtil.showAlertMessage(this, getMessage("dialog.title.error"), getMessage("view.menu.show.station.error.2"));
+				DialogUtil.showAlertMessage(this, "dialog.title.error", getMessage("view.menu.show.station.error.2"));
 				logger.warn(e);
 			}
 		}
@@ -261,7 +261,7 @@ public class MenuView extends AbstractView {
 					}
 					catch(Throwable t) {
 						logger.warn(t);
-						DialogUtil.showAlertMessage(MenuView.this, getMessage("dialog.title.error"), getMessage("view.menu.select.city.error.1", t.getMessage()));
+						DialogUtil.showAlertMessage(MenuView.this, "dialog.title.error", getMessage("view.menu.select.city.error.1", t.getMessage()));
 					}
 				}
 				
@@ -280,7 +280,7 @@ public class MenuView extends AbstractView {
 			}));
 			menu.addMenuItem(new MenuItem("view.menu.item.station.list.bookmark", false, new IAction() {
 				public void run(Object data) {
-					DialogUtil.showAlertMessage(MenuView.this, getMessage("dialog.title.information"), getMessage("view.menu.item.station.list.bookmark.not.implemented"));
+					DialogUtil.showAlertMessage(MenuView.this, "dialog.title.information", getMessage("view.menu.item.station.list.bookmark.not.implemented"));
 				}
 			}));
 //			menu.addMenuItem(new MenuItem("view.menu.item.itinerary", false, new IAction() {
@@ -317,7 +317,7 @@ public class MenuView extends AbstractView {
 				public void run(Object data) {
 					DialogUtil.showYesNoDialog(
 						MenuView.this, 
-						getMessage("dialog.title.question"), 
+						"dialog.title.question", 
 						getMessage("view.menu.item.exit.message"), 
 						new YesNoResultCallback() {
 							public void onYes(DialogView dialogView, Object data) {

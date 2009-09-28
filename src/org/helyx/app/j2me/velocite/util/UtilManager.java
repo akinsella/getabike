@@ -53,7 +53,7 @@ public class UtilManager {
 		if (showGoogleMapsPref == null) {
 			DialogUtil.showYesNoDialog(
 				view, 
-				view.getMessage("manager.util.google.maps"), 
+				"manager.util.google.maps", 
 				view.getMessage("manager.util.google.maps.message"),
 				new YesNoResultCallback() {
 					public void onYes(DialogView dialogView, Object data) {
@@ -89,7 +89,7 @@ public class UtilManager {
 
 	public static void changeDebugMode(final AbstractDisplayable currentDisplayable) {
 
-		DialogUtil.showYesNoDialog(currentDisplayable, currentDisplayable.getMessage("dialog.title.question"), 
+		DialogUtil.showYesNoDialog(currentDisplayable, "dialog.title.question", 
 			currentDisplayable.getMessage(!debugModeActive ? "manager.util.debug.mode.message.activate" : "manager.util.debug.mode.message.deactivate"),
 			new YesNoResultCallback() {
 				public void onYes(DialogView dialogView, Object data) {
@@ -125,7 +125,7 @@ public class UtilManager {
 	public static void changeMapMode(final AbstractDisplayable currentDisplayable) {
 		final boolean mapModeActive = PrefManager.readPrefBoolean(MAP_MODE_ENABLED);
 
-		DialogUtil.showYesNoDialog(currentDisplayable,  currentDisplayable.getMessage("dialog.title.question"), 
+		DialogUtil.showYesNoDialog(currentDisplayable,  "dialog.title.question", 
 				
 			currentDisplayable.getMessage(!mapModeActive ? "manager.util.map.mode.message.activate" : "manager.util.map.mode.message.deactivate"), 
 			new YesNoResultCallback() {
@@ -144,7 +144,7 @@ public class UtilManager {
 	public static void changeHttpMode(final AbstractDisplayable currentDisplayable) {
 		final boolean httpModeActive = PrefManager.readPrefBoolean(OPTIMIZED_HTTP_MODE_ENABLED);
 
-		DialogUtil.showYesNoDialog(currentDisplayable, currentDisplayable.getMessage("dialog.title.question"), 
+		DialogUtil.showYesNoDialog(currentDisplayable, "dialog.title.question", 
 				currentDisplayable.getMessage(!httpModeActive ? "manager.util.http.mode.message.activate" : "manager.util.http.mode.message.deactivate"), 			
 				new YesNoResultCallback() {
 					public void onYes(DialogView dialogView, Object data) {
@@ -161,11 +161,11 @@ public class UtilManager {
 
 	public static void reset(final AbstractDisplayable currentDisplayable) {
 		PrefManager.writePrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED, true);
-		DialogUtil.showConfirmDialog(currentDisplayable, currentDisplayable.getMessage("dialog.title.confirm"), 
+		DialogUtil.showConfirmDialog(currentDisplayable, "dialog.title.confirm", 
 			currentDisplayable.getMessage("manager.util.reset.message.1"), 
 			new OkCancelResultCallback() {
 				public void onOk(DialogView dialogView, Object data) {
-					DialogUtil.showMessageDialog(currentDisplayable, currentDisplayable.getMessage("dialog.title.warn"), 
+					DialogUtil.showMessageDialog(currentDisplayable, "dialog.title.warn", 
 						currentDisplayable.getMessage("manager.util.reset.message.2"), 
 						new OkResultCallback() {
 							public void onOk(DialogView dialogView, Object data) {

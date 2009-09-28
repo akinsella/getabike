@@ -68,10 +68,10 @@ public class VelociteMIDlet extends AbstractMIDlet {
 			logger.info(message);
 		}
 		logger.warn(t);
-		String errorMessage = t.getMessage() == null ? getMessage("dialog.title.error.1") : t.getMessage();
+		String errorMessage = t.getMessage() == null ? getMessage("dialog.error.unexpected") : t.getMessage();
 		DialogUtil.showMessageDialog(
 				view, 
-				getMessage("dialog.title.error.2"), 
+				"dialog.title.error", 
 				getMessage("midlet.start.error.message") + ": " + errorMessage, 
 				new OkResultCallback() {
 					public void onOk(DialogView dialogView, Object data) {

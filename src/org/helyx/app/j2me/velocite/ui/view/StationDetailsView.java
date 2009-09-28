@@ -144,7 +144,7 @@ public class StationDetailsView extends AbstractView {
 				menu.addMenuItem(new MenuItem("view.station.detail.menu.item.bookmark.add", new ImageSet(getTheme().getString("IMG_STAR")), new IAction() {
 					
 					public void run(Object data) {
-						DialogUtil.showAlertMessage(menuListView, getMessage("dialog.title.warn"),  getMessage("view.station.detail.menu.item.bookmark.add.not.implemented"));
+						DialogUtil.showAlertMessage(menuListView, "dialog.title.warn",  getMessage("view.station.detail.menu.item.bookmark.add.not.implemented"));
 					}
 
 				}));

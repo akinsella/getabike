@@ -140,7 +140,7 @@ public class LanguageManager {
 		}
 		catch (RuntimeException re) {
 			logger.warn(re);
-			DialogUtil.showAlertMessage(currentDisplayable, currentDisplayable.getMessage("dialog.title.error"), currentDisplayable.getMessage("manage.language.error", re.getMessage()));
+			DialogUtil.showAlertMessage(currentDisplayable, "dialog.title.error", currentDisplayable.getMessage("manage.language.error", re.getMessage()));
 		}
 	}
 	

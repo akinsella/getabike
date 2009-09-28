@@ -137,7 +137,7 @@ public class PrefListView extends PrefBaseListView {
 						platformMenuItem = new MenuItem("view.pref.item.platform", new IAction() {
 							
 							public void run(Object data) {
-								DialogUtil.showAlertMessage(currentDisplayable, getMessage("view.pref.item.platform"), (String)platformMenuItem.getData(PrefListView.PREF_VALUE_DETAILS));
+								DialogUtil.showAlertMessage(currentDisplayable, "view.pref.item.platform", (String)platformMenuItem.getData(PrefListView.PREF_VALUE_DETAILS));
 							}
 						});
 						
@@ -335,7 +335,7 @@ public class PrefListView extends PrefBaseListView {
 
 	private void checkExceptionOnPrefLoad() {
 		if (prefException != null) {
-			DialogUtil.showAlertMessage(this, getMessage("dialog.title.error"), getMessage("view.pref.check.exception.message"), new OkResultCallback() {
+			DialogUtil.showAlertMessage(this, "dialog.title.error", getMessage("view.pref.check.exception.message"), new OkResultCallback() {
 				
 				public void onOk(DialogView dialogView, Object data) {
 					getMidlet().exit();

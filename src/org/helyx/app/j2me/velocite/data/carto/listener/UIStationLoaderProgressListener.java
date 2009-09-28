@@ -53,12 +53,12 @@ public class UIStationLoaderProgressListener extends ProgressAdapter {
 			case EventType.ON_ERROR:
 				Throwable throwable = (Throwable)eventData;
 				getLogger().warn(throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
-				DialogUtil.showAlertMessage(stationListView, stationListView.getMessage("dialog.title.error"), stationListView.getMessage("dialog.error.unexpected") + ": " + throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
+				DialogUtil.showAlertMessage(stationListView, "dialog.title.error", stationListView.getMessage("dialog.error.unexpected") + ": " + throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
 				stationListView.showDisplayable(stationListView, new BasicTransition());
 				break;
 				
 			default:
-				DialogUtil.showAlertMessage(stationListView, stationListView.getMessage("dialog.title.error"), stationListView.getMessage("dialog.result.unexpected"));
+				DialogUtil.showAlertMessage(stationListView, "dialog.title.error", stationListView.getMessage("dialog.result.unexpected"));
 				stationListView.showDisplayable(stationListView, new BasicTransition());
 				break;
 		}

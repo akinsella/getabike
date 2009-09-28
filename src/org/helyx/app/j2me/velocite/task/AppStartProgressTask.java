@@ -188,14 +188,14 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	private void configureCities() {
 		onProgress(view.getMessage("task.app.start.data.city.load.start"));
 		IProgressTask progressTask = CityManager.createUpdateCitiesTask();
-		progressTask.addProgressListener(new CityLoaderProgressListener(progressTask.getProgressDispatcher()));
+		progressTask.addProgressListener(new CityLoaderProgressListener(progressTask.getProgressDispatcher(), view));
 		progressTask.addProgressListener(new StartProgressAdapter(STEP_CITY_DATA_OK));
 		progressTask.execute();
 	}
 	
 	private  void configureLanguages() {
 		onProgress(view.getMessage("task.app.start.data.language.load.start"));
-		IProgressTask progressTask = new LanguageConfigurationTask(view.getMidlet(), view.getViewCanvas());
+		IProgressTask progressTask = new LanguageConfigurationTask(view);
 		progressTask.addProgressListener(new StartProgressAdapter(STEP_LANGUAGE_DATA_OK));
 		progressTask.execute();
 	}

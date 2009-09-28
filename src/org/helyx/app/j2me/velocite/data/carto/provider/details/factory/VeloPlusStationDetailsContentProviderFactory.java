@@ -27,7 +27,7 @@ public class VeloPlusStationDetailsContentProviderFactory implements IContentPro
 	public IContentProvider createContentProvider() throws ContentProviderFactoryException {
 		String url = new StringFormat(city.stationDetails).format(String.valueOf(station.number));
 		if (logger.isDebugEnabled()) {
-			logger.debug("URL: " + url);
+			logger.debug("Station details URL: " + url);
 		}
 		IContentProvider stationContentProvider = new VeloPlusStationDetailsContentProvider(
 			new HttpVelociteContentAccessor(url),

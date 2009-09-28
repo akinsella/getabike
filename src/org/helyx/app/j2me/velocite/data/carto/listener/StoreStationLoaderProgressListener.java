@@ -12,6 +12,7 @@ import org.helyx.helyx4me.sort.FastQuickSort;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.IProgressDispatcher;
 import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.logging4me.Logger;
 
 
@@ -25,18 +26,20 @@ public class StoreStationLoaderProgressListener extends ProgressAdapter {
 	
 	private Station[] stationArray;
 	private IProgressDispatcher progressDispatcher;
+	private AbstractView view;
 
-	public StoreStationLoaderProgressListener(IProgressDispatcher progressDispatcher) {
+	public StoreStationLoaderProgressListener(IProgressDispatcher progressDispatcher, AbstractView view) {
 		super(logger.getCategory().getName());
 		this.progressDispatcher = progressDispatcher;
 		this.stationMap = new Hashtable(4096);
+		this.view = view;
 	}
 
 	public void onStart(String eventMessage, Object eventData) {
 		stationPersistenceService = new StationPersistenceService();
-   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Suppression des stations");
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.carto.data.remove"));
 		stationPersistenceService.removeAllStations();
-   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Chargement des stations");
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.carto.data.load"));
 	}
 
 	public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
@@ -48,7 +51,7 @@ public class StoreStationLoaderProgressListener extends ProgressAdapter {
 				int size = stationMap.size();
 				
 				if (size % 5 == 0) {
-			   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, stationMap.size() + " stations chargées");
+			   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, stationMap.size() + " " + view.getMessage("progress.listener.loader.carto.data.loaded"));
 				}
 			}
 		}
@@ -56,7 +59,7 @@ public class StoreStationLoaderProgressListener extends ProgressAdapter {
 	
 	public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
    		try {
-   			progressDispatcher.fireEvent(EventType.ON_PROGRESS, stationMap.size() + " stations chargées");
+   			progressDispatcher.fireEvent(EventType.ON_PROGRESS, stationMap.size() + " " + view.getMessage("progress.listener.loader.carto.data.loaded"));
 	 		stationArray = new Station[stationMap.size()];
 	 		Enumeration stationEnum = stationMap.elements();
 	 		int offset = 0;
@@ -67,11 +70,11 @@ public class StoreStationLoaderProgressListener extends ProgressAdapter {
 			}
 			stationMap = null;
 			System.gc();
-	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Tri des données");
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.carto.data.sort"));
 			try { new FastQuickSort(new StationNameComparator()).sort(stationArray); } catch (Exception e) { logger.warn(e); }
-	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Sauvegarde des stations");
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.carto.data.save"));
 			stationPersistenceService.saveStationArray(stationArray);
-	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Chargement terminé");
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.carto.data.end"));
 			stationArray = null;
 			System.gc();
    		}

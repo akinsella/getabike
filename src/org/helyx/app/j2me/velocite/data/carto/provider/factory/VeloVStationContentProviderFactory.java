@@ -36,7 +36,9 @@ public class VeloVStationContentProviderFactory implements IContentProviderFacto
 					
 					Quartier quartier = (Quartier)object;
 					String url = new StringFormat(city.stationList).format(quartier.zipCode);
-					logger.info("Url: " + url);
+					if (logger.isDebugEnabled()) {
+						logger.debug("Quartier URL: " + url);
+					}
 					return new HttpVelociteContentAccessor(url);
 				}
 				

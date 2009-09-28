@@ -159,7 +159,7 @@ public class CartoManager {
 	}
 
 	public static void showStationByDistance(AbstractDisplayable displayable, AbstractDisplayable previousDisplayable, final City city, final Station station, final int distanceMax, boolean recordFilterEnabled, boolean allowMenu, boolean allowNested) {
-		StationListView stationListView = new StationListView(displayable.getMidlet(), "Station Proches");
+		StationListView stationListView = new StationListView(displayable.getMidlet(), displayable.getMessage("manager.carto.view.station.list.title"));
 		stationListView.setCity(city);
 		stationListView.setReferentStation(station);
 		stationListView.setAllowMenu(allowMenu);

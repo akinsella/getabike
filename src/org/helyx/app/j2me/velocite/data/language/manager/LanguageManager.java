@@ -16,6 +16,7 @@ import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.logging4me.Logger;
 
 
@@ -45,9 +46,13 @@ public class LanguageManager {
 		Language selectedLanguage = null;
 
 		String languageSelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_CURRENT_KEY);
-		logger.info("Current Language key: " + languageSelectedKeyPrefValue);
+		if (logger.isInfoEnabled()) {
+			logger.info("Current Language key: " + languageSelectedKeyPrefValue);
+		}
 		String languageDefaultKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_DEFAULT_KEY);
-		logger.info("Default Language key: " + languageSelectedKeyPrefValue);
+		if (logger.isInfoEnabled()) {
+			logger.info("Default Language key: " + languageSelectedKeyPrefValue);
+		}
 		
 		Enumeration _enum = languageList.elements();
 		while(_enum.hasMoreElements()) {
@@ -74,7 +79,9 @@ public class LanguageManager {
 			throw new LanguageManagerException("No default/active language exception");
 		}
 
-		logger.debug("Current language: " + selectedLanguage);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Current language: " + selectedLanguage);
+		}
 		
 		return selectedLanguage;
 	}
@@ -131,9 +138,9 @@ public class LanguageManager {
 			languageListView.setPreviousDisplayable(currentDisplayable);
 			currentDisplayable.showDisplayable(languageListView);
 		}
-		catch (RuntimeException e) {
-			logger.warn(e);
-			currentDisplayable.showAlertMessage("Problème de configuration", "Le fichier des langues n'est pas valide: " + e.getMessage());
+		catch (RuntimeException re) {
+			logger.warn(re);
+			DialogUtil.showAlertMessage(currentDisplayable, currentDisplayable.getMessage("dialog.title.error"), currentDisplayable.getMessage("manage.language.error", re.getMessage()));
 		}
 	}
 	

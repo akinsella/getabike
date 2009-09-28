@@ -14,7 +14,9 @@ public class VeloCiteManager {
 	}
 	
 	public static void cleanUpCitySelectedData() {
-		logger.info("cleanUpCitySelectedData");
+		if (logger.isInfoEnabled()) {
+			logger.info("cleanUpCitySelectedData");
+		}
 		CityManager.clearCurrentCountry();
 		CityManager.clearCurrentCity(true);
 	}

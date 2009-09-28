@@ -32,7 +32,7 @@ public class VeloVStationDetailsContentProviderFactory implements IContentProvid
 				String.valueOf((long)(new Random().nextDouble() * 100000 + 1))
 			});
 		if (logger.isDebugEnabled()) {
-			logger.debug("URL: " + url);
+			logger.debug("Station details URL: " + url);
 		}
 		IContentProvider stationContentProvider = new VelibStationDetailsContentProvider(
 			new HttpVelociteContentAccessor(url), city, station

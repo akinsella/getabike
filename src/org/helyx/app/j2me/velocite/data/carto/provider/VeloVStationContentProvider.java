@@ -42,8 +42,9 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 	}
 	
 	public void loadData() {
-		
-		logger.debug("Loading carto info ...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Loading carto info ...");
+		}
 
 		try {
 			progressDispatcher.fireEvent(EventType.ON_START);
@@ -60,14 +61,19 @@ public class VeloVStationContentProvider extends AbstractStationContentProvider 
 
 				try {
 					IContentAccessor contentAccessor = contentAccessorFactory.createContentAccessorFactory(quartier);
-					logger.debug("contentAccessor: '" + contentAccessor.getPath() + "'");
+					if (logger.isDebugEnabled()) {
+						logger.debug("contentAccessor: '" + contentAccessor.getPath() + "'");
+					}
 					cartoInputStreamProvider = contentAccessor.getInputStreamProvider();
 					inputStream = cartoInputStreamProvider.createInputStream(true);
 
-					logger.debug("Parsing JSON for quartier: " + i);
-					
+					if (logger.isDebugEnabled()) {
+						logger.debug("Parsing JSON for quartier: " + i);
+					}
 					String jsonStreamContent = StreamUtil.readStream(inputStream, false);
-					logger.info("JSON content: " + jsonStreamContent);
+					if (logger.isDebugEnabled()) {
+						logger.debug("JSON content: " + jsonStreamContent);
+					}
 					JSONObject jsonContent = new JSONObject(jsonStreamContent);
 					JSONArray markerArray = jsonContent.getJSONArray("markers");
 					int markerCount = markerArray.length();

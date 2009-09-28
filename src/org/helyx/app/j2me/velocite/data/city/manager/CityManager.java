@@ -23,6 +23,7 @@ import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.logging4me.Logger;
 
 public class CityManager {
@@ -39,8 +40,6 @@ public class CityManager {
 	}
 
 	public static IProgressTask createUpdateCitiesTask() {
-		Version version = new Version(PrefManager.readPrefString(PrefConstants.MIDLET_VERSION));
-		
 		String cityDataUrl = AppManager.getProperty(DATA_CITY_URL);
 		IContentAccessor cityContentAccessor = new HttpVelociteContentAccessor(cityDataUrl);
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
@@ -70,7 +69,9 @@ public class CityManager {
 		
 		String citySelectedKeyPrefValue = citySelectedKeyPref.value;
 		
-		logger.info("Current City key: " + citySelectedKeyPrefValue);
+		if (logger.isInfoEnabled()) {
+			logger.info("Current City key: " + citySelectedKeyPrefValue);
+		}
 		
 		Enumeration _enum = cityList.elements();
 		while(_enum.hasMoreElements()) {
@@ -82,10 +83,14 @@ public class CityManager {
 		}
 		
 		if (selectedCity == null) {
-			logger.debug("No Current city");
+			if (logger.isDebugEnabled()) {
+				logger.debug("No Current city");
+			}
 		}
 		else {
-			logger.debug("Current city: " + selectedCity);
+			if (logger.isDebugEnabled()) {
+				logger.debug("Current city: " + selectedCity);
+			}
 		}
 
 		
@@ -93,7 +98,9 @@ public class CityManager {
 	}
 
 	public static Vector findAllCities() {
-		logger.debug("Loading all cities ...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Loading all cities ...");
+		}
 		Vector cityList = (Vector)cache.get(CITY_LIST);
 		if (cityList != null) {
 			return cityList;
@@ -111,7 +118,9 @@ public class CityManager {
 	}
 
 	public static Vector findAllCountries() {
-		logger.debug("Loading all countries ...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Loading all countries ...");
+		}
 		CityPersistenceService cityPersistenceService = new CityPersistenceService();
 		try {
 			Vector countryList = cityPersistenceService.findAllCountries();
@@ -124,7 +133,9 @@ public class CityManager {
 	}
 
 	public static Vector findCitiesByCountryName(String countryName) {
-		logger.debug("Loading all cities for country: '" + countryName + "'...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Loading all cities for country: '" + countryName + "'...");
+		}
 		CityPersistenceService cityPersistenceService = new CityPersistenceService();
 		try {
 			Vector cityList = cityPersistenceService.findAllCitiesByCountryName(countryName);
@@ -193,9 +204,9 @@ public class CityManager {
 			cityListView.setReturnCallback(returnCallback);
 			currentDisplayable.showDisplayable(cityListView);
 		}
-		catch (CityManagerException e) {
-			logger.warn(e);
-			currentDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
+		catch (CityManagerException cme) {
+			logger.warn(cme);
+			DialogUtil.showAlertMessage(currentDisplayable, currentDisplayable.getMessage("dialog.title.error"), currentDisplayable.getMessage("manage.city.error", cme.getMessage()));
 		}
 	}
 
@@ -235,9 +246,9 @@ public class CityManager {
 			countryListView.setReturnCallback(returnCallback);
 			currentDisplayable.showDisplayable(countryListView);
 		}
-		catch (CityManagerException e) {
-			logger.warn(e);
-			currentDisplayable.showAlertMessage("Problème de configuration", "Le fichier des villes n'est pas valide: " + e.getMessage());
+		catch (CityManagerException cme) {
+			logger.warn(cme);
+			DialogUtil.showAlertMessage(currentDisplayable, currentDisplayable.getMessage("dialog.title.error"), currentDisplayable.getMessage("manage.city.error", cme.getMessage()));
 		}
 	}
 	

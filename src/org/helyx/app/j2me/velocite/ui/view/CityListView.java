@@ -15,6 +15,7 @@ import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.ProgressTaskReturnCallback;
+import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.MenuListView;
 import org.helyx.helyx4me.ui.widget.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
@@ -104,7 +105,7 @@ public class CityListView extends MenuListView {
 		
 		try {
 			IProgressTask progressTask = CartoManager.createUpdateCityStationsTask(city);
-			progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher()));
+			progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher(), CityListView.this));
 
 			TaskManager.runLoadTaskView(getMessage("view.city.station.update.title"), progressTask, getMidlet(), CityListView.this, new ProgressTaskReturnCallback() {
 

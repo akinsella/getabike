@@ -66,7 +66,9 @@ public class DefaultCityContentProvider extends AbstractContentProvider {
 
 	public void loadData() {
 		
-		logger.debug("Loading cities informations ...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Loading cities informations ...");
+		}
 		
 		InputStream inputStream = null;
 		InputStreamProvider cityInputStreamProvider = null;

@@ -51,8 +51,9 @@ public class DefaultLanguageContentProvider extends AbstractContentProvider {
 
 
 	public void loadData() {
-		
-		logger.debug("Loading languages informations ...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Loading languages informations ...");
+		}
 		
 		InputStream inputStream = null;
 		InputStreamProvider languageInputStreamProvider = null;
@@ -78,7 +79,9 @@ public class DefaultLanguageContentProvider extends AbstractContentProvider {
 				}
 				else {
 					String defaultLanguageKey = xppAttributeProcessor0.getAttrValueAsString(DEFAULT);
-					logger.debug("Default language key: '" + defaultLanguageKey + "'");
+					if (logger.isDebugEnabled()) {
+						logger.debug("Default language key: '" + defaultLanguageKey + "'");
+					}
 					PrefManager.writePref(PrefConstants.LANGUAGE_DEFAULT_KEY, defaultLanguageKey);					
 				}
 				

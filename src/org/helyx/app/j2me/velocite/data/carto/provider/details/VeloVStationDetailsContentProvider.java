@@ -65,8 +65,8 @@ public class VeloVStationDetailsContentProvider extends AbstractContentProvider 
 			StationDetails stationDetails = new StationDetails();
 
 			try {
-				if (logger.isInfoEnabled()) { 
-					logger.info("Path to station details: '" + stationDetailsContentAccessor.getPath() + "'");
+				if (logger.isDebugEnabled()) { 
+					logger.debug("Path to station details: '" + stationDetailsContentAccessor.getPath() + "'");
 				}
 				
 				progressDispatcher.fireEvent(EventType.ON_START);

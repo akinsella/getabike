@@ -11,6 +11,7 @@ import org.helyx.helyx4me.sort.FastQuickSort;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.IProgressDispatcher;
 import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.logging4me.Logger;
 
 
@@ -23,19 +24,21 @@ public class CityLoaderProgressListener extends ProgressAdapter {
 	private Vector cityList;
 	private City[] cityArray;
 	private IProgressDispatcher progressDispatcher;
+	private AbstractView view;
 
-	public CityLoaderProgressListener(IProgressDispatcher progressDispatcher) {
+	public CityLoaderProgressListener(IProgressDispatcher progressDispatcher, AbstractView view) {
 		super(logger.getCategory().getName());
 		this.progressDispatcher = progressDispatcher;
+		this.view = view;
 	}
 
 	public void onStart(String eventMessage, Object eventData) {
 		this.cityPersistenceService = new CityPersistenceService();
 		this.cityList = new Vector();
 
-   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Suppression des villes ...");
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.city.data.remove"));
 		cityPersistenceService.removeAllCities();
-   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Chargement des villes ...");
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.city.data.load"));
 	}
 	
 	public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
@@ -52,37 +55,45 @@ public class CityLoaderProgressListener extends ProgressAdapter {
 		int size = cityList.size();
 		
 		if (size % 5 == 0) {
-	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, cityList.size() + " villes chargées");
+	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, cityList.size() + " " + view.getMessage("progress.listener.loader.city.data.loaded"));
 		}
 	}
 
 	private void onCitiesLoaded() {
 		int cityListSize = cityList.size();
-   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, cityListSize + " villes chargées");
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, cityListSize + " " + view.getMessage("progress.listener.loader.city.data.loaded"));
 		cityArray = new City[cityListSize];
 		cityList.copyInto(cityArray);
 
 		System.gc();
-   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Tri des données");
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.city.data.sort"));
 		new FastQuickSort(new CityNameComparator()).sort(cityArray);
-   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Sauvegarde des villes");
-		logger.debug("About to save cities");
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.city.data.save"));
+		if (logger.isDebugEnabled()) {
+			logger.debug("About to save cities");
+		}
 		
 		cityPersistenceService.saveCityArray(cityArray);
 
-   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Chargement terminé");
-		logger.debug("Cities saved");
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.city.data.end"));
+		if (logger.isDebugEnabled()) {
+			logger.debug("Cities saved");
+		}
 		cityArray = null;
 		System.gc();
 	}
 
 	public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
-		logger.debug("Disposing cityPersistenceService");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Disposing cityPersistenceService");
+		}
 		cityPersistenceService.dispose();
 	}
 
 	public void onError(String eventMessage, Object eventData) {
-		logger.info("Message: " + eventMessage + ", data: " + eventData);
+		if (logger.isInfoEnabled()) {
+			logger.info("Message: " + eventMessage + ", data: " + eventData);
+		}
 	}
 
 }

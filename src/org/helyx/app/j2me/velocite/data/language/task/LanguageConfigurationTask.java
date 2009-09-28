@@ -3,20 +3,18 @@ package org.helyx.app.j2me.velocite.data.language.task;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.microedition.lcdui.Canvas;
-
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.language.domain.Language;
 import org.helyx.app.j2me.velocite.data.language.listener.LanguageLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
 import org.helyx.helyx4me.concurrent.Future;
 import org.helyx.helyx4me.i18n.Locale;
-import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.AbstractProgressTask;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.logging4me.Logger;
 
 
@@ -24,13 +22,11 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 	
 	private static final Logger logger = Logger.getLogger("LANGUAGE_CONFIGURATION_TASK");
 	
-	private Canvas canvas;
-	private AbstractMIDlet midlet;
+	private AbstractView view;
 	
-	public LanguageConfigurationTask(AbstractMIDlet midlet, Canvas canvas) {
-		super("Détection des touches");
-		this.midlet = midlet;
-		this.canvas = canvas;
+	public LanguageConfigurationTask(AbstractView view) {
+		super(view.getMessage("task.language.title"));
+		this.view = view;
 	}
 	
 	public Runnable getRunnable() {
@@ -40,13 +36,15 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 				try {
 					progressDispatcher.fireEvent(EventType.ON_START);
 			
-					progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Recherche de config. existante...");
+					progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("task.language.search.message"));
 					String languageSelectedKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_CURRENT_KEY);
 					
 					if (languageSelectedKey == null) {
-						logger.info("Chargement des langues ...");
+						if (logger.isInfoEnabled()) {
+							logger.info(view.getMessage("task.language.load.message"));
+						}
 						IProgressTask progressTask = LanguageManager.refreshDataWithDefaults();
-						progressTask.addProgressListener(new LanguageLoaderProgressListener(progressTask.getProgressDispatcher()));
+						progressTask.addProgressListener(new LanguageLoaderProgressListener(progressTask.getProgressDispatcher(), view));
 						progressTask.addProgressListener(new ProgressAdapter(logger.getCategory().getName()) {
 
 							public void onProgress(String eventMessage, Object eventData) {
@@ -69,7 +67,7 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 						}
 					}
 					Language selectedLanguage = LanguageManager.getCurrentLanguage();
-					midlet.setLocale(new Locale(selectedLanguage.localeCountry, selectedLanguage.localeLanguage));
+					view.getMidlet().setLocale(new Locale(selectedLanguage.localeCountry, selectedLanguage.localeLanguage));
 
 					progressDispatcher.fireEvent(EventType.ON_SUCCESS);
 				}

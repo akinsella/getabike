@@ -39,7 +39,7 @@ public class StationLoadTask extends AbstractProgressTask {
 					try {
 						progressDispatcher.fireEvent(EventType.ON_START);
 						
-						progressDispatcher.fireEvent(EventType.ON_PROGRESS, "Lecture des données");
+						progressDispatcher.fireEvent(EventType.ON_PROGRESS, stationListView.getMessage("task.station.load.data.read"));
 			
 						stationPersistenceService = new StationPersistenceService();
 				
@@ -53,16 +53,18 @@ public class StationLoadTask extends AbstractProgressTask {
 							Station station = (Station)stationEnumeration.nextElement();
 							count++;
 							if (count % 5 == 0) {
-								progressDispatcher.fireEvent(EventType.ON_PROGRESS, count + " stations chargées");
+								progressDispatcher.fireEvent(EventType.ON_PROGRESS, count + " " + stationListView.getMessage("task.station.load.data.loaded"));
 							}
 			
 							stationList.addElement(station);
 						}
 			
 						
-						progressDispatcher.fireEvent(EventType.ON_PROGRESS, count + " stations chargées");
+						progressDispatcher.fireEvent(EventType.ON_PROGRESS, count + " " + stationListView.getMessage("task.station.load.data.loaded"));
 				
-						logger.info("Copying Station Array ...");
+						if (logger.isInfoEnabled()) {
+							logger.info("Copying Station Array ...");
+						}
 						stationArray = new Station[stationList.size()];
 						stationList.copyInto(stationArray);
 						stationList = null;

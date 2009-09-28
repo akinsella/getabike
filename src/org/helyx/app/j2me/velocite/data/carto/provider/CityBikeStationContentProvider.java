@@ -46,7 +46,9 @@ public class CityBikeStationContentProvider extends AbstractStationContentProvid
 
 	public void loadData() {
 		
-		logger.debug("Loading carto info ...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Loading carto info ...");
+		}
 		
 		Reader reader = null;
 		CSVReader csvReader = null;

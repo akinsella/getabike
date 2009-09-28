@@ -12,6 +12,8 @@ import org.helyx.helyx4me.ui.view.support.list.IElementProvider;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.logging4me.Logger;
 
+import com.sun.perseus.parser.ViewBoxParser;
+
 
 public class UIStationLoaderProgressListener extends ProgressAdapter {
 
@@ -51,12 +53,12 @@ public class UIStationLoaderProgressListener extends ProgressAdapter {
 			case EventType.ON_ERROR:
 				Throwable throwable = (Throwable)eventData;
 				getLogger().warn(throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
-				DialogUtil.showAlertMessage(stationListView, "Erreur", throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
+				DialogUtil.showAlertMessage(stationListView, stationListView.getMessage("dialog.title.error"), stationListView.getMessage("dialog.error.unexpected") + ": " + throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
 				stationListView.showDisplayable(stationListView, new BasicTransition());
 				break;
 				
 			default:
-				DialogUtil.showAlertMessage(stationListView, "Erreur", "Unsupported result");
+				DialogUtil.showAlertMessage(stationListView, stationListView.getMessage("dialog.title.error"), stationListView.getMessage("dialog.result.unexpected"));
 				stationListView.showDisplayable(stationListView, new BasicTransition());
 				break;
 		}

@@ -89,11 +89,15 @@ public class CityPersistenceService implements ICityPersistenceService {
 	}
 
 	public void saveCityArray(City[] cityArray) {
-		logger.debug("Saving cities ...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Saving cities ...");
+		}
 
 		getCityDao().saveRecordArray(cityArray);
 
-		logger.debug("Cities saved ...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Cities saved ...");
+		}
 	}
 
 	public MultiRecordEnumeration createCityEnumeration(IRecordFilter recordFilter) {

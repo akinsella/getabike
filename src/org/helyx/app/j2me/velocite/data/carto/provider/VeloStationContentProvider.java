@@ -47,7 +47,9 @@ public class VeloStationContentProvider extends AbstractStationContentProvider {
 
 	public void loadData() {
 		
-		logger.debug("Loading carto info ...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Loading carto info ...");
+		}
 		
 		InputStream inputStream = null;
 		InputStreamProvider cartoInputStreamProvider = null;

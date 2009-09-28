@@ -28,8 +28,9 @@ public class PropertiesContentProvider extends AbstractContentProvider {
 
 
 	public void loadData() {
-		
-		logger.debug("Loading properties ...");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Loading properties ...");
+		}
 		
 		InputStreamProvider propertiesInputStreamProvider = null;
 		

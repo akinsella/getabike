@@ -64,10 +64,14 @@ public class CityListView extends MenuListView {
 		else {
 			cityList = CityManager.findCitiesByCountryName(country);
 		}
-		logger.info("cityList: " + cityList);
+		if (logger.isDebugEnabled()) {
+			logger.debug("cityList: " + cityList);
+		}
 		
 		selectedCity = CityManager.getCurrentCity();
-		logger.info("selectedCity: " + cityList);
+		if (logger.isDebugEnabled()) {
+			logger.debug("selectedCity: " + cityList);
+		}
 	}
 	
 	protected void initActions() {
@@ -110,13 +114,17 @@ public class CityListView extends MenuListView {
 			TaskManager.runLoadTaskView(getMessage("view.city.station.update.title"), progressTask, getMidlet(), CityListView.this, new ProgressTaskReturnCallback() {
 
 				public void onSuccess(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
-					logger.info("Success: " + eventMessage + ", data: " + eventData);
+					if (logger.isDebugEnabled()) {
+						logger.debug("Success: " + eventMessage + ", data: " + eventData);
+					}
 					CityManager.setCurrentCity(city);
 					getReturnCallback().onReturn(currentDisplayable, eventData);
 				}
 
 				public void onError(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
-					logger.info("Error: " + eventMessage + ", data: " + eventData);
+					if (logger.isInfoEnabled()) {
+						logger.info("Error: " + eventMessage + ", data: " + eventData);
+					}
 					cleanUpCurrentCityData();
 					getReturnCallback().onReturn(currentDisplayable, eventData);
 				}

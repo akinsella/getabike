@@ -38,7 +38,7 @@ public class AboutView extends AbstractView {
 	}
 	
 	private void initActions() {
-		setSecondaryCommand(new Command("command.back", true, new IAction() {
+		setSecondaryCommand(new Command("command.back", true, getMidlet().getI18NTextRenderer(), new IAction() {
 
 			public void run(Object data) {
 				fireReturnCallback();

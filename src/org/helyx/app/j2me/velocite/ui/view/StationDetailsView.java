@@ -79,7 +79,7 @@ public class StationDetailsView extends AbstractView {
 	
 	private void initActions() {
 		
-		setThirdCommand(new Command("command.menu", true, new IAction() {
+		setThirdCommand(new Command("command.menu", true, getMidlet().getI18NTextRenderer(), new IAction() {
 
 			public void run(Object data) {
 	
@@ -157,7 +157,7 @@ public class StationDetailsView extends AbstractView {
 			
 		}));
 		
-		setSecondaryCommand(new Command("command.back", true, new IAction() {
+		setSecondaryCommand(new Command("command.back", true, getMidlet().getI18NTextRenderer(), new IAction() {
 
 			public void run(Object data) {
 				fireReturnCallback();
@@ -165,7 +165,7 @@ public class StationDetailsView extends AbstractView {
 			
 		}));
 		
-		setPrimaryCommand(new Command("command.refresh", true, new IAction() {
+		setPrimaryCommand(new Command("command.refresh", true, getMidlet().getI18NTextRenderer(), new IAction() {
 
 			public void run(Object data) {
 				fetchStationDetails();

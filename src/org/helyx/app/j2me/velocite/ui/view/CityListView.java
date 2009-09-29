@@ -12,6 +12,7 @@ import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.manager.TaskManager;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.renderer.text.DefaultTextRenderer;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.ProgressTaskReturnCallback;
@@ -76,7 +77,7 @@ public class CityListView extends MenuListView {
 	protected void initActions() {
 
 		if (cancellable) {
-			setSecondaryCommand(new Command("command.back", true, new IAction() {
+			setSecondaryCommand(new Command("command.back", true, DefaultTextRenderer.getInstance(), new IAction() {
 	
 				public void run(Object data) {
 					fireReturnCallback();
@@ -85,7 +86,7 @@ public class CityListView extends MenuListView {
 			}));
 		}
 		
-		setPrimaryCommand(new Command("command.select", true, new IAction() {
+		setPrimaryCommand(new Command("command.select", true, getMidlet().getI18NTextRenderer(), new IAction() {
 
 			public void run(Object data) {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());

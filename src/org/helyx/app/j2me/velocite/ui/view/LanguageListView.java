@@ -39,7 +39,7 @@ public class LanguageListView extends MenuListView {
 	
 	protected void initActions() {
 
-		setSecondaryCommand(new Command("command.cancel", true, new IAction() {
+		setSecondaryCommand(new Command("command.cancel", true, getMidlet().getI18NTextRenderer(), new IAction() {
 
 			public void run(Object data) {
 				fireReturnCallback();
@@ -47,7 +47,7 @@ public class LanguageListView extends MenuListView {
 			
 		}));
 		
-		setPrimaryCommand(new Command("command.ok", true, new IAction() {
+		setPrimaryCommand(new Command("command.ok", true, getMidlet().getI18NTextRenderer(), new IAction() {
 
 			public void run(Object data) {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());

@@ -51,7 +51,7 @@ public class CountryListView extends MenuListView {
 	protected void initActions() {
 
 		if (cancellable) {
-			setSecondaryCommand(new Command("command.back", true, new IAction() {
+			setSecondaryCommand(new Command("command.back", true, getMidlet().getI18NTextRenderer(), new IAction() {
 	
 				public void run(Object data) {
 					fireReturnCallback();
@@ -60,7 +60,7 @@ public class CountryListView extends MenuListView {
 			}));
 		}
 		
-		setPrimaryCommand(new Command("command.select", true, new IAction() {
+		setPrimaryCommand(new Command("command.select", true, getMidlet().getI18NTextRenderer(), new IAction() {
 
 			public void run(Object data) {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());

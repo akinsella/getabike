@@ -58,20 +58,20 @@ public class StationListView extends AbstractListView {
 	protected void initActions() {	
 		
 		if (allowMenu) {
-			setThirdCommand(new Command("command.menu", true, new IAction() {
+			setThirdCommand(new Command("command.menu", true, getMidlet().getI18NTextRenderer(), new IAction() {
 				public void run(Object data) {
 					showMenuView();
 				}
 			}));
 		}
 
-		setPrimaryCommand(new Command("command.view", true, new IAction() {
+		setPrimaryCommand(new Command("command.view", true, getMidlet().getI18NTextRenderer(), new IAction() {
 			public void run(Object data) {
 				showItemSelected();
 			}
 		}));
 	
-		setSecondaryCommand(new Command("command.back", true, new IAction() {
+		setSecondaryCommand(new Command("command.back", true, getMidlet().getI18NTextRenderer(), new IAction() {
 			public void run(Object data) {
 				fireReturnCallback();
 			}

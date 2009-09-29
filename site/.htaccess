@@ -2,5 +2,5 @@ AddType text/vnd.wap.wml wml
 AddType text/vnd.sun.j2me.app-descriptor jad 
 AddType application/java-archive jar
 
-Redirect Permanent /binaries/latest /binaries/1.2.9
+Redirect Permanent /binaries/latest /binaries/1.3.0
 

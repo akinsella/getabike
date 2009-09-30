@@ -82,7 +82,7 @@ public class StationDetailsView extends AbstractView {
 
 			public void run(Object data) {
 	
-				final MenuListView menuListView = new MenuListView(getMidlet(), getMessage("view.station.detail.menu.title"), false);
+				final MenuListView menuListView = new MenuListView(getMidlet(), "view.station.detail.menu.title", false);
 
 				Menu menu = new Menu();
 
@@ -99,7 +99,7 @@ public class StationDetailsView extends AbstractView {
 					menu.addMenuItem(new MenuItem("view.station.detail.menu.item.near.station", new ImageSet(getTheme().getString("IMG_NEAR")), new IAction() {
 						
 						public void run(Object data) {
-							final MenuListView nearStationMenuListView = new MenuListView(getMidlet(), getMessage("view.station.detail.item.near.station.menu.title"), false);
+							final MenuListView nearStationMenuListView = new MenuListView(getMidlet(), "view.station.detail.item.near.station.menu.title", false);
 
 							Menu nearStationMenu = new Menu();
 							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.250", new IAction() {

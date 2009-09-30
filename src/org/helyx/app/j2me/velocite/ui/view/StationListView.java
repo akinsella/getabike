@@ -5,7 +5,9 @@ import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationNameFilter;
 import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
 import org.helyx.app.j2me.velocite.data.carto.task.StationLoadTask;
+import org.helyx.app.j2me.velocite.data.city.accessor.ICityAcessor;
 import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.velocite.ui.view.renderer.StationTitleRenderer;
 import org.helyx.app.j2me.velocite.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.filter.IRecordFilter;
@@ -27,7 +29,7 @@ import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
 
 
-public class StationListView extends AbstractListView {
+public class StationListView extends AbstractListView implements ICityAcessor {
 	
 	private static final Logger logger = Logger.getLogger("STATION_LIST_VIEW");
 	
@@ -38,17 +40,17 @@ public class StationListView extends AbstractListView {
 	private boolean allowMenu = true;
 	private boolean allowNested = true;
 	
-	private String originalTitle;
-	
 	private City city;
 
 	public StationListView(AbstractMIDlet midlet, String title) {
 		super(midlet, title);
-		this.originalTitle = title;
+		setTitle(title);
 		init();
 	}
 	
 	private void init() {
+		
+		setTitleRenderer(new StationTitleRenderer(getMidlet(), this));
 		initActions();
 		initData();
 		initComponents();
@@ -232,12 +234,10 @@ public class StationListView extends AbstractListView {
 
 	public void setCity(City city) {
 		this.city = city;
-		if (city == null) {
-			setTitle(originalTitle);
-		}
-		else {
-			setTitle(city.name + " - " + originalTitle);
-		}
+	}
+
+	public City getCity() {
+		return city;
 	}
 
 }

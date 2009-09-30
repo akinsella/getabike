@@ -52,7 +52,7 @@ public class CityListView extends MenuListView {
 	}
 
 	private void init() {
-		setItemTextRenderer(DefaultTextRenderer.getInstance());
+		setItemTextRenderer(new DefaultTextRenderer());
 		initData();
 		initComponents();
 		initActions();

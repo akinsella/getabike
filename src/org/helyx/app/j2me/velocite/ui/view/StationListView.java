@@ -197,7 +197,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 
 		final StationLoadTask stationLoadTask = new StationLoadTask(this, stationFilter);
 		stationLoadTask.addProgressListener(progressListener);
-		LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), getMessage("view.station.list.load.station"), stationLoadTask);
+		LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "view.station.list.load.station", stationLoadTask);
 		showDisplayable(loadTaskView, this);
 		resetPosition();
 		loadTaskView.startTask();

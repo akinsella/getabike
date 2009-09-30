@@ -223,7 +223,6 @@ public class StationDetailsView extends AbstractView {
 				}
 				
 			});
-//			TaskManager.runLoadTaskView("Recherche des infos de station", progressTask, getMidlet(), StationDetailsView.this, StationDetailsView.this);
 		}
 		catch (Throwable t) {
 			logger.warn(t);

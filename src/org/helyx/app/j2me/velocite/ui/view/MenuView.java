@@ -182,7 +182,7 @@ public class MenuView extends AbstractView {
 		
 		private void showStationListView(City city) {
 			if (stationListView == null) {
-				stationListView = new StationListView(getMidlet(), getMessage("view.station.list.title"));
+				stationListView = new StationListView(getMidlet(), "view.station.list.title");
 				stationListView.setPreviousDisplayable(MenuView.this);
 				stationListView.setCellRenderer(new StationItemRenderer());
 				stationListView.setCity(city);

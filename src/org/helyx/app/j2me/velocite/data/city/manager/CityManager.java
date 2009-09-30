@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
-import org.helyx.app.j2me.velocite.data.app.domain.Version;
 import org.helyx.app.j2me.velocite.data.app.manager.AppManager;
 import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.velocite.data.city.domain.City;

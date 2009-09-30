@@ -52,6 +52,7 @@ public class CityListView extends MenuListView {
 	}
 
 	private void init() {
+		setItemTextRenderer(DefaultTextRenderer.getInstance());
 		initData();
 		initComponents();
 		initActions();
@@ -77,7 +78,7 @@ public class CityListView extends MenuListView {
 	protected void initActions() {
 
 		if (cancellable) {
-			setSecondaryCommand(new Command("command.back", true, DefaultTextRenderer.getInstance(), new IAction() {
+			setSecondaryCommand(new Command("command.back", true, getMidlet().getI18NTextRenderer(), new IAction() {
 	
 				public void run(Object data) {
 					fireReturnCallback();
@@ -111,7 +112,7 @@ public class CityListView extends MenuListView {
 			IProgressTask progressTask = CartoManager.createUpdateCityStationsTask(city);
 			progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher(), CityListView.this));
 
-			TaskManager.runLoadTaskView(getMessage("view.city.station.update.title"), progressTask, getMidlet(), CityListView.this, new ProgressTaskReturnCallback() {
+			TaskManager.runLoadTaskView("view.city.station.update.title", progressTask, getMidlet(), CityListView.this, new ProgressTaskReturnCallback() {
 
 				public void onSuccess(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
 					if (logger.isDebugEnabled()) {

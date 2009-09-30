@@ -97,10 +97,10 @@ public class PrefListView extends PrefBaseListView {
 			}
 		});
 		
-		optionMenuItem = new MenuItem("view.pref.item.advances.options", new IAction() {
+		optionMenuItem = new MenuItem("view.pref.item.advanced.options", new IAction() {
 			public void run(Object data) {
 
-				PrefBaseListView optionMenuListView = new PrefBaseListView(getMidlet(), getMessage("view.pref.item.advances.options")) {
+				PrefBaseListView optionMenuListView = new PrefBaseListView(getMidlet(), "view.pref.item.advanced.options") {
 					
 					private MenuItem mapModeMenuItem;
 					private MenuItem httpModeMenuItem;

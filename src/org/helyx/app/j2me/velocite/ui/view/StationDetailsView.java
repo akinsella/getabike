@@ -72,9 +72,8 @@ public class StationDetailsView extends AbstractView {
 	}
 		
 	private void showGoogleMapsView() {
-		String title = getMessage("view.station.detail.map.title");
 		POIInfoAccessor poiInfoAccessor = new StationPoiInfoAccessor();
-		UtilManager.showGoogleMapsView(this, title, poiInfoAccessor, station, relatedStations, 15);
+		UtilManager.showGoogleMapsView(this, "view.station.detail.map.title", poiInfoAccessor, station, relatedStations, 15);
 	}
 	
 	private void initActions() {
@@ -188,14 +187,18 @@ public class StationDetailsView extends AbstractView {
 
 	protected void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
-		logger.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		if (logger.isDebugEnabled()) {
+			logger.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);
+		}
 	    if (gameAction == GameCanvas.LEFT) {
 	    	fireReturnCallback();
 		}
 	}
 
 	private void fetchStationDetails() {
-		logger.info("Fetching Station Details for Station number: '" + station.number + "'");
+		if (logger.isDebugEnabled()) {
+			logger.debug("Fetching Station Details for Station number: '" + station.number + "'");
+		}
 		try {
 			IProgressTask progressTask = CartoManager.fetchStationDetails(CityManager.getCurrentCity(), station);
 			progressTask.addProgressListener(new ProgressAdapter(logger.getCategory().getName()) {

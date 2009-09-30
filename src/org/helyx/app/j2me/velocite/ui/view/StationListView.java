@@ -80,7 +80,7 @@ public class StationListView extends AbstractListView {
 	}
 	
 	protected void showMenuView() {
-		MenuListView menuListView = new MenuListView(getMidlet(), getMessage("view.station.list.menu.title"), false);
+		MenuListView menuListView = new MenuListView(getMidlet(), "view.station.list.menu.title", false);
 		
 		Menu menu = new Menu();
 		
@@ -121,11 +121,10 @@ public class StationListView extends AbstractListView {
 
 
 	private void showGoogleMapsView() {
-		String title = getMessage("view.station.list.map.title");
 		POIInfoAccessor poiInfoAccessor = new StationPoiInfoAccessor();
 		Object elementSelected = getStationSelected();
 		
-		UtilManager.showGoogleMapsView(this, title, poiInfoAccessor, elementSelected, elementProvider, 15);
+		UtilManager.showGoogleMapsView(this, "view.station.list.map.title", poiInfoAccessor, elementSelected, elementProvider, 15);
 	}
 	
 	protected Station getStationSelected() {

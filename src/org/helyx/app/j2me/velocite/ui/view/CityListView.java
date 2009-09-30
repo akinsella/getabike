@@ -65,6 +65,7 @@ public class CityListView extends MenuListView {
 		else {
 			cityList = CityManager.findCitiesByCountryName(country);
 		}
+		
 		if (logger.isDebugEnabled()) {
 			logger.debug("cityList: " + cityList);
 		}

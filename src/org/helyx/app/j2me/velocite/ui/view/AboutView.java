@@ -61,7 +61,7 @@ public class AboutView extends AbstractView {
 		}
 	}
 
-	protected void onKeyPressed(int keyCode) {
+	public void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
 	    if (gameAction == GameCanvas.LEFT) {
 	    	fireReturnCallback();

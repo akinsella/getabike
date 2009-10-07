@@ -110,7 +110,7 @@ public class MenuView extends AbstractView {
 	        }
 		}
 
-		protected void onKeyPressed(int keyCode) {
+		public void onKeyPressed(int keyCode) {
 			int gameAction = viewCanvas.getGameAction(keyCode);
 		    if (gameAction == GameCanvas.DOWN) {
 		    	scrollDown();
@@ -133,7 +133,7 @@ public class MenuView extends AbstractView {
 			}
 		}
 
-		protected void onKeyRepeated(int keyCode) {
+		public void onKeyRepeated(int keyCode) {
 			int gameAction = viewCanvas.getGameAction(keyCode);
 		    if (gameAction == GameCanvas.DOWN) {
 		    	scrollDown();

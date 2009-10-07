@@ -185,7 +185,7 @@ public class StationDetailsView extends AbstractView {
 		
 	}
 
-	protected void onKeyPressed(int keyCode) {
+	public void onKeyPressed(int keyCode) {
 		int gameAction = viewCanvas.getGameAction(keyCode);
 		if (logger.isDebugEnabled()) {
 			logger.debug("[onKeyPressed] gameAction: " + gameAction + ", keyCode: " + keyCode);

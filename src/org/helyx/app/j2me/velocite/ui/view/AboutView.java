@@ -12,7 +12,7 @@ import org.helyx.helyx4me.ui.theme.ThemeConstants;
 import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.util.ImageUtil;
 import org.helyx.helyx4me.ui.view.AbstractView;
-import org.helyx.helyx4me.ui.widget.Command;
+import org.helyx.helyx4me.ui.widget.command.Command;
 import org.helyx.logging4me.Logger;
 
 

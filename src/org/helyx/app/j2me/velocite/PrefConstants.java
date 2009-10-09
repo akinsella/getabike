@@ -21,4 +21,6 @@ public class PrefConstants {
 
 	public static final String APPLICATION_DATA = "APPLICATION_DATA";
 	
+	public static final String PREF_STATION_NAME_FILTER = "search.stationName";
+	
 }

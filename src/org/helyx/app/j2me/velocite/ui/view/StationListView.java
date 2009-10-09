@@ -1,5 +1,6 @@
 package org.helyx.app.j2me.velocite.ui.view;
 
+import org.helyx.app.j2me.velocite.PrefConstants;
 import org.helyx.app.j2me.velocite.data.carto.accessor.StationPoiInfoAccessor;
 import org.helyx.app.j2me.velocite.data.carto.domain.Station;
 import org.helyx.app.j2me.velocite.data.carto.filter.StationNameFilter;
@@ -55,7 +56,6 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		initData();
 		initComponents();
 	}
-
 
 	protected void initActions() {	
 		
@@ -166,7 +166,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	}
 	
 	protected String getStationNameFilter() {
-		String stationNameFilter = PrefManager.readPrefString(StationSearchView.PREF_STATION_NAME_FILTER);
+		String stationNameFilter = PrefManager.readPrefString(PrefConstants.PREF_STATION_NAME_FILTER);
 		logger.info("Station name filter: '" + stationNameFilter + "'");
 		return stationNameFilter;
 	}

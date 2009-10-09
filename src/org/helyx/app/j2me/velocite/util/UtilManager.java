@@ -71,6 +71,9 @@ public class UtilManager {
 			if (PrefHelper.readPrefBoolean(showGoogleMapsPref)) {
 				showGoogleMapsViewInternal(view, title, poiInfoAccessor, elementSelected, elementProvider, zoom);				
 			}
+			else {
+				DialogUtil.showAlertMessage(view, "dialog.title.information", view.getMessage("manager.util.google.maps.message.2"));				
+			}
 		}
 	}
 	

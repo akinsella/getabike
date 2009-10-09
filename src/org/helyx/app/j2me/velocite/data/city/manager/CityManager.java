@@ -227,11 +227,13 @@ public class CityManager {
 		PrefManager.removePref(PrefConstants.CITY_CURRENT_KEY);
 		if (clearCityData) {
 			CartoManager.clearStations();
+			PrefManager.removePref(PrefConstants.PREF_STATION_NAME_FILTER);
 		}
 	}
 
 	public static void setCurrentCity(City city) {
 		PrefManager.writePref(PrefConstants.CITY_CURRENT_KEY, city.key);
+		PrefManager.removePref(PrefConstants.PREF_STATION_NAME_FILTER);
 	}
 
 	public static void showCountryListView(AbstractDisplayable currentDisplayable) {

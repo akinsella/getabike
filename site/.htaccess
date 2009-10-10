@@ -3,4 +3,6 @@ AddType text/vnd.sun.j2me.app-descriptor jad
 AddType application/java-archive jar
 
 Redirect Permanent /binaries/latest /binaries/1.3.1
+Redirect Permanent /velocite.jad /binaries/latest/velocite.jad
+Redirect Permanent /velocite.jar /binaries/latest/velocite.jar
 

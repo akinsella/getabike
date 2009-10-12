@@ -1,11 +1,11 @@
-package org.helyx.app.j2me.velocite.midlet;
+package org.helyx.app.j2me.getabike.midlet;
 
 import javax.microedition.midlet.MIDletStateChangeException;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
-import org.helyx.app.j2me.velocite.task.AppStartProgressTask;
-import org.helyx.app.j2me.velocite.ui.view.MenuView;
-import org.helyx.app.j2me.velocite.ui.view.SplashScreenView;
+import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.task.AppStartProgressTask;
+import org.helyx.app.j2me.getabike.ui.view.MenuView;
+import org.helyx.app.j2me.getabike.ui.view.SplashScreenView;
 import org.helyx.helyx4me.constant.BooleanConstants;
 import org.helyx.helyx4me.i18n.Locale;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
@@ -21,20 +21,20 @@ import org.helyx.logging4me.config.LoggerConfigurer;
 import org.helyx.logging4me.config.XmlConfigurer;
 
 
-public class VelociteMIDlet extends AbstractMIDlet {
+public class GetABikeMIDlet extends AbstractMIDlet {
 
-	private static final Logger logger = Logger.getLogger("VELOCITE_MIDLET");
+	private static final Logger logger = Logger.getLogger("GETABIKE_MIDLET");
 
-	public VelociteMIDlet() {
+	public GetABikeMIDlet() {
 		super();
 	}
 
 	protected void onStart() {
-		LoggerConfigurer loggerConfigurer = new XmlConfigurer("/org/helyx/app/j2me/velocite/logging4me.xml", true);
+		LoggerConfigurer loggerConfigurer = new XmlConfigurer("/org/helyx/app/j2me/getabike/logging4me.xml", true);
 		loggerConfigurer.configure();
 		
-		setThemeConfiguration("default", "org.helyx.app.j2me.velocite.theme");
-		setI18nConfiguration("messages", "org.helyx.app.j2me.velocite.i18n");
+		setThemeConfiguration("default", "org.helyx.app.j2me.getabike.theme");
+		setI18nConfiguration("messages", "org.helyx.app.j2me.getabike.i18n");
 		setLocale(Locale.FRANCE);
 		
 		final SplashScreenView splashScreenView = new SplashScreenView(this);
@@ -42,7 +42,7 @@ public class VelociteMIDlet extends AbstractMIDlet {
 		
 		IProgressTask appStartProgressTask = new AppStartProgressTask(splashScreenView);
 		
-		appStartProgressTask.addProgressListener(new ProgressAdapter(VelociteMIDlet.logger.getCategory().getName()) {
+		appStartProgressTask.addProgressListener(new ProgressAdapter(GetABikeMIDlet.logger.getCategory().getName()) {
 
 			public void onSuccess(String eventMessage, Object eventData) {
 				onStartSuccess(splashScreenView);
@@ -59,7 +59,7 @@ public class VelociteMIDlet extends AbstractMIDlet {
 	}
 
 	private void onStartSuccess(AbstractView view) {
-		MenuView menuView = new MenuView(VelociteMIDlet.this);
+		MenuView menuView = new MenuView(GetABikeMIDlet.this);
 		view.showDisplayable(menuView);
 	}
 
@@ -75,11 +75,11 @@ public class VelociteMIDlet extends AbstractMIDlet {
 				getMessage("midlet.start.error.message") + ": " + errorMessage, 
 				new OkResultCallback() {
 					public void onOk(DialogView dialogView, Object data) {
-						if (VelociteMIDlet.this.logger.isInfoEnabled()) {
-							VelociteMIDlet.this.logger.info("Writing reset demand to prefs");
+						if (GetABikeMIDlet.this.logger.isInfoEnabled()) {
+							GetABikeMIDlet.this.logger.info("Writing reset demand to prefs");
 						}
 						PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
-						VelociteMIDlet.this.exit();								
+						GetABikeMIDlet.this.exit();								
 					}
 				});
 	}

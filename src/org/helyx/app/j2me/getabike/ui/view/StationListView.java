@@ -1,15 +1,15 @@
-package org.helyx.app.j2me.velocite.ui.view;
+package org.helyx.app.j2me.getabike.ui.view;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
-import org.helyx.app.j2me.velocite.data.carto.accessor.StationPoiInfoAccessor;
-import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.data.carto.filter.StationNameFilter;
-import org.helyx.app.j2me.velocite.data.carto.listener.UIStationLoaderProgressListener;
-import org.helyx.app.j2me.velocite.data.carto.task.StationLoadTask;
-import org.helyx.app.j2me.velocite.data.city.accessor.ICityAcessor;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.ui.view.renderer.StationTitleRenderer;
-import org.helyx.app.j2me.velocite.util.UtilManager;
+import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.data.carto.accessor.StationPoiInfoAccessor;
+import org.helyx.app.j2me.getabike.data.carto.domain.Station;
+import org.helyx.app.j2me.getabike.data.carto.filter.StationNameFilter;
+import org.helyx.app.j2me.getabike.data.carto.listener.UIStationLoaderProgressListener;
+import org.helyx.app.j2me.getabike.data.carto.task.StationLoadTask;
+import org.helyx.app.j2me.getabike.data.city.accessor.ICityAcessor;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.ui.view.renderer.StationTitleRenderer;
+import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.filter.IRecordFilter;
 import org.helyx.helyx4me.map.google.POIInfoAccessor;

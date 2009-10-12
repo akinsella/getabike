@@ -1,11 +1,11 @@
-package org.helyx.app.j2me.velocite.data.carto.provider.details;
+package org.helyx.app.j2me.getabike.data.carto.provider.details;
 
 import java.io.InputStream;
 import java.util.Date;
 
-import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.carto.domain.Station;
+import org.helyx.app.j2me.getabike.data.carto.domain.StationDetails;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.basics4me.io.BufferedInputStream;
 import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;

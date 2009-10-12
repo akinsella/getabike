@@ -1,12 +1,12 @@
-package org.helyx.app.j2me.velocite.data.app.manager;
+package org.helyx.app.j2me.getabike.data.app.manager;
 
-import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
+import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
 import org.helyx.logging4me.Logger;
 
 
-public class VeloCiteManager {
+public class GetABikeManager {
 	
-	private static final Logger logger = Logger.getLogger("VELOCITE_MANAGER");
+	private static final Logger logger = Logger.getLogger("GETABIKE_MANAGER");
 	
 	public static void cleanUpData() {
 		cleanUpCitySelectedData();

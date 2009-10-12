@@ -2,7 +2,7 @@ package org.helyx.app.j2me.lib.midlet;
 
 import javax.microedition.midlet.MIDletStateChangeException;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.helyx4me.constant.BooleanConstants;
 import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
@@ -51,7 +51,7 @@ public class XmlMIDlet extends AbstractMIDlet {
 
 			logPlatformInfos();
 			
-			ClasspathContentAccessor cca = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/view/xml/welcomeView.xml");
+			ClasspathContentAccessor cca = new ClasspathContentAccessor("/org/helyx/app/j2me/getabike/view/xml/welcomeView.xml");
 			InputStreamProvider isp = cca.getInputStreamProvider();
 			
 			try {

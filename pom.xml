@@ -6,23 +6,23 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.velocite</groupId>
-	<artifactId>velocite</artifactId>
+	<groupId>org.helyx.app.j2me</groupId>
+	<artifactId>getabike</artifactId>
 	<version>1.1.4-SNAPSHOT</version>
 
-	<name>VeloCite</name>
+	<name>Get A Bike</name>
 
 	<packaging>jar</packaging>
 
-	<description>Velocite J2ME Project</description>
-	<url>http://www.velocite.org</url>
+	<description>Get A Bike J2ME Project</description>
+	<url>http://www.helyx.org/getabike</url>
  
 	<licenses>
 		<license>
 			<name>Helyx.org Binary License</name>
-			<url>http://www.velocite.org/legal/LICENSE_BINARY.txt</url>
+			<url>http://www.helyx.org/getabike/legal/LICENSE_BINARY.txt</url>
 			<distribution>manual</distribution>
-			<comments>VeloCite Project License</comments>
+			<comments>Get A Bike Project License</comments>
 		</license>
 	</licenses>
 
@@ -50,8 +50,8 @@
 			<url>ftp://ftp.helyx.org/maven/public/repository/snapshot</url>
 		</snapshotRepository>
 		<site>
-			<id>helyx.org-site-velocite</id>
-			<url>ftp://ftp.helyx.org/site/velocite</url>
+			<id>helyx.org-site-getabike</id>
+			<url>ftp://ftp.helyx.org/site/mobile/velocite</url>
 		</site>
 	</distributionManagement>
 
@@ -90,9 +90,9 @@
 	<properties>
 		<wtk.home>${env.WTK_HOME}</wtk.home>
 		<j2me.midlet.vendor>${project.organization.name}</j2me.midlet.vendor>
-		<j2me.midlet.icon>/org/helyx/app/j2me/velocite/image/vcIcon.png</j2me.midlet.icon>
-		<j2me.midlet.name>VeloCite</j2me.midlet.name>
-		<j2me.midlet.class>org.helyx.app.j2me.velocite.midlet.VelociteMIDlet</j2me.midlet.class>
+		<j2me.midlet.icon>/org/helyx/app/j2me/getabike/image/app/icon.png</j2me.midlet.icon>
+		<j2me.midlet.name>Get A Bike</j2me.midlet.name>
+		<j2me.midlet.class>org.helyx.app.j2me.getabike.midlet.GetABikeMIDlet</j2me.midlet.class>
 		<j2me.midlet.version>1.2.1</j2me.midlet.version>
 		<j2me.midlet.configuration>CLDC-1.1</j2me.midlet.configuration>
 		<j2me.midlet.profile>MIDP-2.0</j2me.midlet.profile>
@@ -267,7 +267,7 @@
 						<MicroEdition-Profile>${j2me.midlet.profile}</MicroEdition-Profile>
 						<MicroEdition-Configuration>${j2me.midlet.configuration}</MicroEdition-Configuration>
 						<MIDlet-Vendor>${project.organization.name}</MIDlet-Vendor>
-						<MIDlet-Info-URL>http://m.velocite.org</MIDlet-Info-URL>
+						<MIDlet-Info-URL>http://m.helyx.org/getabike</MIDlet-Info-URL>
 						<Created-By>${j2me.midlet.author}</Created-By>
 						<!-- <MIDlet-Permissions>javax.microedition.io.Connector.http</MIDlet-Permissions> -->
 					</jadAttributes>
@@ -310,9 +310,9 @@
 				    </assembly>
 					<midlets>
 						<MIDlet>
-							<name>VeloCite</name>
+							<name>Get A Bike</name>
 							<icon>${j2me.midlet.icon}</icon>
-							<class>org.helyx.app.j2me.velocite.midlet.VelociteMIDlet</class>
+							<class>org.helyx.app.j2me.getabike.midlet.GetABikeMIDlet</class>
 						</MIDlet>
 					</midlets>
 				</configuration>

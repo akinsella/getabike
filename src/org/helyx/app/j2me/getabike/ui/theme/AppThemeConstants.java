@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.ui.theme;
+package org.helyx.app.j2me.getabike.ui.theme;
 
 public class AppThemeConstants {
 

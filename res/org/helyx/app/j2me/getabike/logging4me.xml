@@ -24,7 +24,7 @@
 	 -->
  
  	<!-- Categories -->
-	<category name="org.helyx.app.j2me.velocite" level="INFO" />
+	<category name="org.helyx.app.j2me.getabike" level="INFO" />
 	<category name="org.helyx.helyx4me" level="INFO" />
 	<category name="org.helyx.helyx4me.content.accessor" level="INFO" />
 	

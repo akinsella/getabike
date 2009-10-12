@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.data.city.domain;
+package org.helyx.app.j2me.getabike.data.city.domain;
 
 import java.util.Vector;
 

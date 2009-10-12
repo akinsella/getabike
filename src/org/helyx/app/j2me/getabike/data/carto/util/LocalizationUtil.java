@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.data.carto.util;
+package org.helyx.app.j2me.getabike.data.carto.util;
 
 import org.helyx.helyx4me.localization.Point;
 import org.helyx.logging4me.Logger;

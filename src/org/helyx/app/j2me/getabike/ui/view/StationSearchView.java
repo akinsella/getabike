@@ -1,9 +1,9 @@
-package org.helyx.app.j2me.velocite.ui.view;
+package org.helyx.app.j2me.getabike.ui.view;
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.ui.displayable.support.AbstractTextBox;

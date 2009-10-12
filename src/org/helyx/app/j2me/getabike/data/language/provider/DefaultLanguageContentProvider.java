@@ -1,11 +1,11 @@
-package org.helyx.app.j2me.velocite.data.language.provider;
+package org.helyx.app.j2me.getabike.data.language.provider;
 
 import java.io.InputStream;
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
-import org.helyx.app.j2me.velocite.data.language.LanguageConstants;
-import org.helyx.app.j2me.velocite.data.language.domain.Language;
+import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.data.language.LanguageConstants;
+import org.helyx.app.j2me.getabike.data.language.domain.Language;
 import org.helyx.basics4me.io.BufferedInputStream;
 import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;

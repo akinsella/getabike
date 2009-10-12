@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<application uid="VELOCITE" default="http://velocite.helyx.org/data/config/config-1.0.0.properties">
-	<version min="1.0.0" url="http://velocite.helyx.org/data/config/config-1.0.0.properties" />
+<application uid="GETABIKE" default="http://m.helyx.org/velocite/data/config/config-1.0.0.properties">
+	<version min="1.0.0" url="http://m.helyx.org/velocite/data/config/config-1.0.0.properties" />
 </application>

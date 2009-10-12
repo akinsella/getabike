@@ -1,11 +1,11 @@
-package org.helyx.app.j2me.velocite.ui.view;
+package org.helyx.app.j2me.getabike.ui.view;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.data.language.domain.Language;
-import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
-import org.helyx.app.j2me.velocite.data.language.manager.LanguageManagerException;
+import org.helyx.app.j2me.getabike.data.language.domain.Language;
+import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
+import org.helyx.app.j2me.getabike.data.language.manager.LanguageManagerException;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.i18n.Locale;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
@@ -80,8 +80,8 @@ public class LanguageListView extends MenuListView {
 		Enumeration _enum = languageList.elements();
 		while(_enum.hasMoreElements()) {
 			Language language = (Language)_enum.nextElement();
-			MenuItem languageMenuItem = new MenuItem("velocite.country." + language.key);
-			languageMenuItem.setImageSet(new ImageSet(getTheme().getString("velocite.country." + language.key + ".flag")));
+			MenuItem languageMenuItem = new MenuItem("getabike.country." + language.key);
+			languageMenuItem.setImageSet(new ImageSet(getTheme().getString("getabike.country." + language.key + ".flag")));
 			languageMenuItem.setData(language);
 			menu.addMenuItem(languageMenuItem);
 			if (language.key.equals(currentLanguage.key)) {

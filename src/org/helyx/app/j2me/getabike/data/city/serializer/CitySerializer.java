@@ -1,9 +1,9 @@
-package org.helyx.app.j2me.velocite.data.city.serializer;
+package org.helyx.app.j2me.getabike.data.city.serializer;
 
 import java.io.IOException;
 
-import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.domain.Quartier;
 import org.helyx.helyx4me.serializer.AbstractObjectSerializer;
 import org.helyx.helyx4me.serializer.SerializerException;
 import org.helyx.logging4me.Logger;

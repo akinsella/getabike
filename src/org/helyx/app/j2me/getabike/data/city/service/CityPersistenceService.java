@@ -1,11 +1,11 @@
-package org.helyx.app.j2me.velocite.data.city.service;
+package org.helyx.app.j2me.getabike.data.city.service;
 
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.data.city.serializer.CitySerializer;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.serializer.CitySerializer;
 import org.helyx.helyx4me.filter.IRecordFilter;
 import org.helyx.helyx4me.rms.IMultiRecordDao;
 import org.helyx.helyx4me.rms.MultiRecordDao;

@@ -1,12 +1,12 @@
-package org.helyx.app.j2me.velocite.data.app.provider;
+package org.helyx.app.j2me.getabike.data.app.provider;
 
 import java.io.InputStream;
 
-import org.helyx.app.j2me.velocite.data.app.domain.ConfigurationMetadata;
-import org.helyx.app.j2me.velocite.data.app.domain.Version;
-import org.helyx.app.j2me.velocite.data.app.domain.VersionRange;
-import org.helyx.app.j2me.velocite.data.city.CityConstants;
-import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
+import org.helyx.app.j2me.getabike.data.app.domain.ConfigurationMetadata;
+import org.helyx.app.j2me.getabike.data.app.domain.Version;
+import org.helyx.app.j2me.getabike.data.app.domain.VersionRange;
+import org.helyx.app.j2me.getabike.data.city.CityConstants;
+import org.helyx.app.j2me.getabike.data.city.domain.Quartier;
 import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.AbstractContentProvider;

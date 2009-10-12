@@ -1,6 +1,6 @@
-package org.helyx.app.j2me.velocite.data.city.comparator;
+package org.helyx.app.j2me.getabike.data.city.comparator;
 
-import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.helyx4me.comparator.Comparator;
 import org.helyx.logging4me.Logger;
 

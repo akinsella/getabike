@@ -1,6 +1,6 @@
-package org.helyx.app.j2me.velocite.data.carto.provider.normalizer;
+package org.helyx.app.j2me.getabike.data.carto.provider.normalizer;
 
-import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 
 public class DefaultStationInfoNormalizer implements IStationInfoNormalizer {
 

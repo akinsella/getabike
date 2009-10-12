@@ -1,8 +1,8 @@
-package org.helyx.app.j2me.velocite.data.language.service;
+package org.helyx.app.j2me.getabike.data.language.service;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.data.language.domain.Language;
+import org.helyx.app.j2me.getabike.data.language.domain.Language;
 import org.helyx.helyx4me.filter.IRecordFilter;
 import org.helyx.helyx4me.rms.MultiRecordEnumeration;
 

@@ -1,11 +1,11 @@
-package org.helyx.app.j2me.velocite.data.carto.task;
+package org.helyx.app.j2me.getabike.data.carto.task;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.data.carto.service.IStationPersistenceService;
-import org.helyx.app.j2me.velocite.data.carto.service.StationPersistenceService;
-import org.helyx.app.j2me.velocite.ui.view.StationListView;
+import org.helyx.app.j2me.getabike.data.carto.domain.Station;
+import org.helyx.app.j2me.getabike.data.carto.service.IStationPersistenceService;
+import org.helyx.app.j2me.getabike.data.carto.service.StationPersistenceService;
+import org.helyx.app.j2me.getabike.ui.view.StationListView;
 import org.helyx.helyx4me.filter.IRecordFilter;
 import org.helyx.helyx4me.rms.MultiRecordEnumeration;
 import org.helyx.helyx4me.task.AbstractProgressTask;

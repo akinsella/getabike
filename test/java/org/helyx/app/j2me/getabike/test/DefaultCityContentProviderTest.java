@@ -1,12 +1,12 @@
-package org.helyx.app.j2me.velocite.test;
+package org.helyx.app.j2me.getabike.test;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
 import junit.framework.TestCase;
 
-import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.provider.DefaultCityContentProvider;
 import org.helyx.helyx4me.concurrent.Future;
 import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
 import org.helyx.helyx4me.content.accessor.ContentAccessorException;
@@ -29,7 +29,7 @@ public class DefaultCityContentProviderTest extends TestCase {
 
 	public void testCityContentLoaderParis() throws ContentProviderException, ContentAccessorException {
 		
-		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/data/city/cities.xml");
+		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/getabike/data/city/cities.xml");
 		IContentProvider cityContentProvider = new DefaultCityContentProvider(cityContentAccessor);
 	
 		Vector cityList = (Vector)Future.get(new ContentProviderProgressTaskAdapter(cityContentProvider));
@@ -54,7 +54,7 @@ public class DefaultCityContentProviderTest extends TestCase {
 	
 	public void testCityContentLoader() throws ContentProviderException, ContentAccessorException {
 		
-		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/data/city/cities.xml");
+		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/getabike/data/city/cities.xml");
 		IContentProvider cityContentProvider = new DefaultCityContentProvider(cityContentAccessor);
 				
 		Vector cityList = (Vector)Future.get(new ContentProviderProgressTaskAdapter(cityContentProvider));

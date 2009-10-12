@@ -1,11 +1,11 @@
-package org.helyx.app.j2me.velocite.data.carto.provider.details.factory;
+package org.helyx.app.j2me.getabike.data.carto.provider.details.factory;
 
 import java.util.Random;
 
-import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
-import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.data.carto.provider.details.VelibStationDetailsContentProvider;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.getabike.content.accessor.HttpGetABikeContentAccessor;
+import org.helyx.app.j2me.getabike.data.carto.domain.Station;
+import org.helyx.app.j2me.getabike.data.carto.provider.details.VelibStationDetailsContentProvider;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.content.provider.IContentProviderFactory;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryException;
@@ -35,7 +35,7 @@ public class VeloVStationDetailsContentProviderFactory implements IContentProvid
 			logger.debug("Station details URL: " + url);
 		}
 		IContentProvider stationContentProvider = new VelibStationDetailsContentProvider(
-			new HttpVelociteContentAccessor(url), city, station
+			new HttpGetABikeContentAccessor(url), city, station
 		);
 		
 		return stationContentProvider;

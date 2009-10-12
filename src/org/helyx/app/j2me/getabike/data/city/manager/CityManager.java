@@ -1,17 +1,17 @@
-package org.helyx.app.j2me.velocite.data.city.manager;
+package org.helyx.app.j2me.getabike.data.city.manager;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
-import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
-import org.helyx.app.j2me.velocite.data.app.manager.AppManager;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.data.city.provider.DefaultCityContentProvider;
-import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
-import org.helyx.app.j2me.velocite.ui.view.CityListView;
-import org.helyx.app.j2me.velocite.ui.view.CountryListView;
+import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.content.accessor.HttpGetABikeContentAccessor;
+import org.helyx.app.j2me.getabike.data.app.manager.AppManager;
+import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.provider.DefaultCityContentProvider;
+import org.helyx.app.j2me.getabike.data.city.service.CityPersistenceService;
+import org.helyx.app.j2me.getabike.ui.view.CityListView;
+import org.helyx.app.j2me.getabike.ui.view.CountryListView;
 import org.helyx.helyx4me.cache.Cache;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
@@ -40,7 +40,7 @@ public class CityManager {
 
 	public static IProgressTask createUpdateCitiesTask() {
 		String cityDataUrl = AppManager.getProperty(DATA_CITY_URL);
-		IContentAccessor cityContentAccessor = new HttpVelociteContentAccessor(cityDataUrl);
+		IContentAccessor cityContentAccessor = new HttpGetABikeContentAccessor(cityDataUrl);
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 
@@ -49,7 +49,7 @@ public class CityManager {
 
 //	public static IProgressTask createCheckUpdateCitiesTask() {
 //		ApplicationMetaData applicationMetaData = AppManager.getMetadata(true);
-//		IContentAccessor dataCitiesContentAccessor = new HttpVelociteContentAccessor(DATA_PROPERTIES_URL);
+//		IContentAccessor dataCitiesContentAccessor = new HttpGetABikeContentAccessor(DATA_PROPERTIES_URL);
 //		IContentProvider contentProvider = new PropertiesContentProvider(dataCitiesContentAccessor);
 //		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 //

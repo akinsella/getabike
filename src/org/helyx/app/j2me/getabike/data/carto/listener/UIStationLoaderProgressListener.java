@@ -1,6 +1,6 @@
-package org.helyx.app.j2me.velocite.data.carto.listener;
+package org.helyx.app.j2me.getabike.data.carto.listener;
 
-import org.helyx.app.j2me.velocite.ui.view.StationListView;
+import org.helyx.app.j2me.getabike.ui.view.StationListView;
 import org.helyx.helyx4me.comparator.Comparator;
 import org.helyx.helyx4me.filter.IObjectFilter;
 import org.helyx.helyx4me.task.EventType;

@@ -1,6 +1,6 @@
-package org.helyx.app.j2me.velocite.data.city.accessor;
+package org.helyx.app.j2me.getabike.data.city.accessor;
 
-import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
 
 public interface ICityAcessor {
 

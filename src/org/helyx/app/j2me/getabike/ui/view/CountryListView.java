@@ -1,10 +1,10 @@
-package org.helyx.app.j2me.velocite.ui.view;
+package org.helyx.app.j2me.getabike.ui.view;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
-import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
+import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
+import org.helyx.app.j2me.getabike.data.city.manager.CityManagerException;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.ui.view.support.MenuListView;
@@ -85,9 +85,9 @@ public class CountryListView extends MenuListView {
 		Enumeration _enum = countryList.elements();
 		while(_enum.hasMoreElements()) {
 			String country = (String)_enum.nextElement();
-			MenuItem countryMenuItem = new MenuItem("velocite.country." + country);
+			MenuItem countryMenuItem = new MenuItem("getabike.country." + country);
 			try {
-				countryMenuItem.setImageSet(new ImageSet(getTheme().getString("velocite.country." + country + ".flag")));
+				countryMenuItem.setImageSet(new ImageSet(getTheme().getString("getabike.country." + country + ".flag")));
 			}
 			catch(Throwable t) { logger.warn(t); }
 			countryMenuItem.setData(country);

@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.data.language.manager;
+package org.helyx.app.j2me.getabike.data.language.manager;
 
 import org.helyx.helyx4me.exception.NestedException;
 

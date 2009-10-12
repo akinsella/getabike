@@ -1,10 +1,10 @@
-package org.helyx.app.j2me.velocite.data.carto.serializer;
+package org.helyx.app.j2me.getabike.data.carto.serializer;
 
 import java.io.IOException;
 import java.util.Date;
 
-import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.data.carto.domain.StationDetails;
+import org.helyx.app.j2me.getabike.data.carto.domain.Station;
+import org.helyx.app.j2me.getabike.data.carto.domain.StationDetails;
 import org.helyx.helyx4me.localization.Point;
 import org.helyx.helyx4me.serializer.AbstractObjectSerializer;
 import org.helyx.helyx4me.serializer.SerializerException;

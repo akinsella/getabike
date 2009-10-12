@@ -1,8 +1,8 @@
-package org.helyx.app.j2me.velocite.data.carto.service;
+package org.helyx.app.j2me.getabike.data.carto.service;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.helyx4me.filter.IRecordFilter;
 import org.helyx.helyx4me.rms.MultiRecordEnumeration;
 

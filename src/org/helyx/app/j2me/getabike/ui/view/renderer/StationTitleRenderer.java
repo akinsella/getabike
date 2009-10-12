@@ -1,7 +1,7 @@
-package org.helyx.app.j2me.velocite.ui.view.renderer;
+package org.helyx.app.j2me.getabike.ui.view.renderer;
 
-import org.helyx.app.j2me.velocite.data.city.accessor.ICityAcessor;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.accessor.ICityAcessor;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.renderer.text.I18NTextRenderer;
 

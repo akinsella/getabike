@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.test;
+package org.helyx.app.j2me.getabike.test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +24,7 @@ public class DefaultCityContentAccessorTest extends TestCase {
  
 	public void testDefaultCityContentAccessor() throws ContentAccessorException, IOException {
 
-		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/data/city/cities.xml");
+		IContentAccessor cityContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/getabike/data/city/cities.xml");
 		InputStreamProvider inputStreamProvider = cityContentAccessor.getInputStreamProvider();
 		
 		assertNotNull(inputStreamProvider);

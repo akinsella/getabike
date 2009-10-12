@@ -1,10 +1,10 @@
-package org.helyx.app.j2me.velocite.ui.view.renderer;
+package org.helyx.app.j2me.getabike.ui.view.renderer;
 
 import javax.microedition.lcdui.Graphics;
 
-import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
-import org.helyx.app.j2me.velocite.ui.view.StationListView;
+import org.helyx.app.j2me.getabike.data.carto.domain.Station;
+import org.helyx.app.j2me.getabike.ui.theme.AppThemeConstants;
+import org.helyx.app.j2me.getabike.ui.view.StationListView;
 import org.helyx.helyx4me.math.DistanceUtil;
 import org.helyx.helyx4me.ui.geometry.Rectangle;
 import org.helyx.helyx4me.ui.graphics.Color;

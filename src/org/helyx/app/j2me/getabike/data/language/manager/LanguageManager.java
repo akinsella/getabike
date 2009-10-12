@@ -1,13 +1,13 @@
-package org.helyx.app.j2me.velocite.data.language.manager;
+package org.helyx.app.j2me.getabike.data.language.manager;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
-import org.helyx.app.j2me.velocite.data.language.domain.Language;
-import org.helyx.app.j2me.velocite.data.language.provider.DefaultLanguageContentProvider;
-import org.helyx.app.j2me.velocite.data.language.service.LanguagePersistenceService;
-import org.helyx.app.j2me.velocite.ui.view.LanguageListView;
+import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.data.language.domain.Language;
+import org.helyx.app.j2me.getabike.data.language.provider.DefaultLanguageContentProvider;
+import org.helyx.app.j2me.getabike.data.language.service.LanguagePersistenceService;
+import org.helyx.app.j2me.getabike.ui.view.LanguageListView;
 import org.helyx.helyx4me.cache.Cache;
 import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
@@ -34,7 +34,7 @@ public class LanguageManager {
 
 	public static IProgressTask refreshDataWithDefaults() {
 		
-		IContentAccessor languageContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/velocite/data/language/languages.xml");
+		IContentAccessor languageContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/getabike/data/language/languages.xml");
 		IContentProvider contentProvider = new DefaultLanguageContentProvider(languageContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 

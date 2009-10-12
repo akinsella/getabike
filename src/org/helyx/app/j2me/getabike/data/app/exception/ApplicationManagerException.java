@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.data.app.exception;
+package org.helyx.app.j2me.getabike.data.app.exception;
 
 import org.helyx.helyx4me.exception.NestedRuntimeException;
 

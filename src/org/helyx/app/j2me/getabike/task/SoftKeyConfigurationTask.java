@@ -1,6 +1,6 @@
-package org.helyx.app.j2me.velocite.task;
+package org.helyx.app.j2me.getabike.task;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
+import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.AbstractProgressTask;
 import org.helyx.helyx4me.task.EventType;

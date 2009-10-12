@@ -1,14 +1,14 @@
-package org.helyx.app.j2me.velocite.ui.view;
+package org.helyx.app.j2me.getabike.ui.view;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.data.carto.listener.StoreStationLoaderProgressListener;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
-import org.helyx.app.j2me.velocite.data.city.manager.CityManagerException;
+import org.helyx.app.j2me.getabike.data.carto.listener.StoreStationLoaderProgressListener;
+import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
+import org.helyx.app.j2me.getabike.data.carto.manager.CartoManagerException;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
+import org.helyx.app.j2me.getabike.data.city.manager.CityManagerException;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.manager.TaskManager;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;

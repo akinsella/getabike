@@ -1,6 +1,6 @@
-package org.helyx.app.j2me.velocite.data.carto.comparator;
+package org.helyx.app.j2me.getabike.data.carto.comparator;
 
-import org.helyx.app.j2me.velocite.data.carto.domain.Station;
+import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.helyx4me.comparator.Comparator;
 
 

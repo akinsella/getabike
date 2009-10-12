@@ -1,11 +1,11 @@
-package org.helyx.app.j2me.velocite.ui.view;
+package org.helyx.app.j2me.getabike.ui.view;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
-import org.helyx.app.j2me.velocite.data.language.domain.Language;
-import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
-import org.helyx.app.j2me.velocite.util.UtilManager;
+import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
+import org.helyx.app.j2me.getabike.data.language.domain.Language;
+import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
+import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
@@ -272,7 +272,7 @@ public class PrefListView extends PrefBaseListView {
 		try {
 			String country = CityManager.getCurrentCountry();
 			if (country != null) {
-				countryMenuItem.setData(PREF_VALUE, getMessage("velocite.country." + country));
+				countryMenuItem.setData(PREF_VALUE, getMessage("getabike.country." + country));
 			}
 			else {
 				countryMenuItem.removeData(PREF_VALUE);
@@ -307,7 +307,7 @@ public class PrefListView extends PrefBaseListView {
 			String languageKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_CURRENT_KEY);
 			if (languageKey != null) {
 				Language language = LanguageManager.getCurrentLanguage();
-				languageMenuItem.setData(PREF_VALUE, getMessage("velocite.country." + language.key));
+				languageMenuItem.setData(PREF_VALUE, getMessage("getabike.country." + language.key));
 			}
 			else {
 				languageMenuItem.removeData(PREF_VALUE);

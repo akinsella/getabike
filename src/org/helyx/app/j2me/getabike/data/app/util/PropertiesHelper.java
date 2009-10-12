@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.data.app.util;
+package org.helyx.app.j2me.getabike.data.app.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

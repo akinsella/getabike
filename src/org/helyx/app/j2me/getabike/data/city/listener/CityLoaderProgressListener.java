@@ -1,12 +1,12 @@
-package org.helyx.app.j2me.velocite.data.city.listener;
+package org.helyx.app.j2me.getabike.data.city.listener;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.data.city.CityConstants;
-import org.helyx.app.j2me.velocite.data.city.comparator.CityNameComparator;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.data.city.service.CityPersistenceService;
-import org.helyx.app.j2me.velocite.data.city.service.ICityPersistenceService;
+import org.helyx.app.j2me.getabike.data.city.CityConstants;
+import org.helyx.app.j2me.getabike.data.city.comparator.CityNameComparator;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.service.CityPersistenceService;
+import org.helyx.app.j2me.getabike.data.city.service.ICityPersistenceService;
 import org.helyx.helyx4me.sort.FastQuickSort;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.IProgressDispatcher;

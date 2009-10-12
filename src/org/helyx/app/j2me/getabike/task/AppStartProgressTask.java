@@ -1,12 +1,12 @@
-package org.helyx.app.j2me.velocite.task;
+package org.helyx.app.j2me.getabike.task;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
-import org.helyx.app.j2me.velocite.data.city.listener.CityLoaderProgressListener;
-import org.helyx.app.j2me.velocite.data.city.manager.CityManager;
-import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
-import org.helyx.app.j2me.velocite.data.language.task.LanguageConfigurationTask;
-import org.helyx.app.j2me.velocite.util.UtilManager;
+import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
+import org.helyx.app.j2me.getabike.data.city.listener.CityLoaderProgressListener;
+import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
+import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
+import org.helyx.app.j2me.getabike.data.language.task.LanguageConfigurationTask;
+import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.AbstractProgressTask;
 import org.helyx.helyx4me.task.EventType;

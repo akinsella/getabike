@@ -1,13 +1,13 @@
-package org.helyx.app.j2me.velocite.data.carto.provider;
+package org.helyx.app.j2me.getabike.data.carto.provider;
 
 import java.io.InputStream;
 
-import org.helyx.app.j2me.velocite.data.carto.CartoConstants;
-import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
-import org.helyx.app.j2me.velocite.data.carto.util.LocalizationUtil;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
+import org.helyx.app.j2me.getabike.data.carto.CartoConstants;
+import org.helyx.app.j2me.getabike.data.carto.domain.Station;
+import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.IStationInfoNormalizer;
+import org.helyx.app.j2me.getabike.data.carto.util.LocalizationUtil;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.domain.Quartier;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.accessor.IContentAccessorFactory;
 import org.helyx.helyx4me.localization.Point;

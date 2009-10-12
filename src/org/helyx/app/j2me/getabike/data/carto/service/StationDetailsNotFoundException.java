@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.data.carto.service;
+package org.helyx.app.j2me.getabike.data.carto.service;
 
 import org.helyx.helyx4me.exception.NestedException;
 

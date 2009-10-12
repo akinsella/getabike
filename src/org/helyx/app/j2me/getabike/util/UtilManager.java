@@ -1,7 +1,7 @@
-package org.helyx.app.j2me.velocite.util;
+package org.helyx.app.j2me.getabike.util;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
-import org.helyx.app.j2me.velocite.ui.theme.AppThemeConstants;
+import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.ui.theme.AppThemeConstants;
 import org.helyx.helyx4me.map.google.GoogleMapsView;
 import org.helyx.helyx4me.map.google.POIInfoAccessor;
 import org.helyx.helyx4me.pref.Pref;

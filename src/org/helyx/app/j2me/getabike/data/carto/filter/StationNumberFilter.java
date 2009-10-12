@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.data.carto.filter;
+package org.helyx.app.j2me.getabike.data.carto.filter;
 
 import java.io.DataInputStream;
 import java.io.IOException;

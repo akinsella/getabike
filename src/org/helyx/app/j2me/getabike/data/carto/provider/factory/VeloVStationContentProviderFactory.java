@@ -1,13 +1,13 @@
-package org.helyx.app.j2me.velocite.data.carto.provider.factory;
+package org.helyx.app.j2me.getabike.data.carto.provider.factory;
 
-import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManager;
-import org.helyx.app.j2me.velocite.data.carto.manager.CartoManagerException;
-import org.helyx.app.j2me.velocite.data.carto.provider.AbstractStationContentProvider;
-import org.helyx.app.j2me.velocite.data.carto.provider.VeloVStationContentProvider;
-import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
-import org.helyx.app.j2me.velocite.data.city.domain.City;
-import org.helyx.app.j2me.velocite.data.city.domain.Quartier;
+import org.helyx.app.j2me.getabike.content.accessor.HttpGetABikeContentAccessor;
+import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
+import org.helyx.app.j2me.getabike.data.carto.manager.CartoManagerException;
+import org.helyx.app.j2me.getabike.data.carto.provider.AbstractStationContentProvider;
+import org.helyx.app.j2me.getabike.data.carto.provider.VeloVStationContentProvider;
+import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.IStationInfoNormalizer;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.domain.Quartier;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.accessor.IContentAccessorFactory;
 import org.helyx.helyx4me.content.provider.IContentProvider;
@@ -39,7 +39,7 @@ public class VeloVStationContentProviderFactory implements IContentProviderFacto
 					if (logger.isDebugEnabled()) {
 						logger.debug("Quartier URL: " + url);
 					}
-					return new HttpVelociteContentAccessor(url);
+					return new HttpGetABikeContentAccessor(url);
 				}
 				
 			});

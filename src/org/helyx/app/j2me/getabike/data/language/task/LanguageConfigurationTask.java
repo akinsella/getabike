@@ -1,12 +1,12 @@
-package org.helyx.app.j2me.velocite.data.language.task;
+package org.helyx.app.j2me.getabike.data.language.task;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
-import org.helyx.app.j2me.velocite.data.language.domain.Language;
-import org.helyx.app.j2me.velocite.data.language.listener.LanguageLoaderProgressListener;
-import org.helyx.app.j2me.velocite.data.language.manager.LanguageManager;
+import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.data.language.domain.Language;
+import org.helyx.app.j2me.getabike.data.language.listener.LanguageLoaderProgressListener;
+import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
 import org.helyx.helyx4me.concurrent.Future;
 import org.helyx.helyx4me.i18n.Locale;
 import org.helyx.helyx4me.pref.PrefManager;

@@ -1,10 +1,10 @@
-package org.helyx.app.j2me.velocite.test;
+package org.helyx.app.j2me.getabike.test;
 
 import junit.framework.TestCase;
 
-import org.helyx.app.j2me.velocite.data.carto.domain.Station;
-import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.IStationInfoNormalizer;
-import org.helyx.app.j2me.velocite.data.carto.provider.normalizer.SimpleStationInfoNormalizer;
+import org.helyx.app.j2me.getabike.data.carto.domain.Station;
+import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.IStationInfoNormalizer;
+import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.SimpleStationInfoNormalizer;
 import org.helyx.logging4me.config.BasicConfigurer;
 
 public class StationNameNormalizerTest extends TestCase {

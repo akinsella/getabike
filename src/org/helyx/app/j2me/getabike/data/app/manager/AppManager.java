@@ -1,18 +1,18 @@
-package org.helyx.app.j2me.velocite.data.app.manager;
+package org.helyx.app.j2me.getabike.data.app.manager;
 
 import java.util.Enumeration;
 
-import org.helyx.app.j2me.velocite.PrefConstants;
-import org.helyx.app.j2me.velocite.content.accessor.HttpVelociteContentAccessor;
-import org.helyx.app.j2me.velocite.data.app.domain.ConfigurationMetadata;
-import org.helyx.app.j2me.velocite.data.app.domain.Version;
-import org.helyx.app.j2me.velocite.data.app.domain.VersionComparator;
-import org.helyx.app.j2me.velocite.data.app.domain.VersionRange;
-import org.helyx.app.j2me.velocite.data.app.exception.ApplicationManagerException;
-import org.helyx.app.j2me.velocite.data.app.exception.VersionException;
-import org.helyx.app.j2me.velocite.data.app.provider.ApplicationDataContentProvider;
-import org.helyx.app.j2me.velocite.data.app.util.PropertiesHelper;
-import org.helyx.app.j2me.velocite.data.provider.PropertiesContentProvider;
+import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.content.accessor.HttpGetABikeContentAccessor;
+import org.helyx.app.j2me.getabike.data.app.domain.ConfigurationMetadata;
+import org.helyx.app.j2me.getabike.data.app.domain.Version;
+import org.helyx.app.j2me.getabike.data.app.domain.VersionComparator;
+import org.helyx.app.j2me.getabike.data.app.domain.VersionRange;
+import org.helyx.app.j2me.getabike.data.app.exception.ApplicationManagerException;
+import org.helyx.app.j2me.getabike.data.app.exception.VersionException;
+import org.helyx.app.j2me.getabike.data.app.provider.ApplicationDataContentProvider;
+import org.helyx.app.j2me.getabike.data.app.util.PropertiesHelper;
+import org.helyx.app.j2me.getabike.data.provider.PropertiesContentProvider;
 import org.helyx.basics4me.util.Properties;
 import org.helyx.helyx4me.concurrent.Future;
 import org.helyx.helyx4me.content.accessor.HttpContentAccessor;
@@ -27,8 +27,8 @@ public class AppManager {
 	
 	private static final Logger logger = Logger.getLogger("APP_MANAGER");
 	
-	private static final String APPLICATION_UID = "VELOCITE";
-	private static final String APPLICATION_DATA_URL = "http://velocite.helyx.org/data/config.xml";
+	private static final String APPLICATION_UID = "GETABIKE";
+	private static final String APPLICATION_DATA_URL = "http://m.helyx.org/getabike/data/config.xml";
 	
 	private static Properties applicationProperties;
 	
@@ -67,7 +67,7 @@ public class AppManager {
 	
 	private static void updateConfigurationMetaData() {
 		try {
-			IContentAccessor dataCitiesContentAccessor = new HttpVelociteContentAccessor(APPLICATION_DATA_URL);
+			IContentAccessor dataCitiesContentAccessor = new HttpGetABikeContentAccessor(APPLICATION_DATA_URL);
 			IContentProvider contentProvider = new ApplicationDataContentProvider(dataCitiesContentAccessor);
 			IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);
 			

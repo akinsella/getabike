@@ -2,12 +2,12 @@ package org.helyx.app.j2me.lib.midlet;
 
 import junit.framework.TestCase;
 
-import org.helyx.app.j2me.velocite.test.DefaultCityContentAccessorTest;
-import org.helyx.app.j2me.velocite.test.DefaultCityContentProviderTest;
-import org.helyx.app.j2me.velocite.test.VelibStationContentProviderTest;
-import org.helyx.app.j2me.velocite.test.LocalCityContentAccessorTest;
+import org.helyx.app.j2me.getabike.test.DefaultCityContentAccessorTest;
+import org.helyx.app.j2me.getabike.test.DefaultCityContentProviderTest;
+import org.helyx.app.j2me.getabike.test.VelibStationContentProviderTest;
+import org.helyx.app.j2me.getabike.test.LocalCityContentAccessorTest;
 
-public class VeloCiteTestMIDLet extends cldcunit.runner.TestRunner {
+public class GetABikeTestMIDLet extends cldcunit.runner.TestRunner {
 
         protected void startApp() {
             start(new TestCase[] {

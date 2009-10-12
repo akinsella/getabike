@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite;
+package org.helyx.app.j2me.getabike;
 
 public class PrefConstants {
 	

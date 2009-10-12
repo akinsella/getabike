@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.velocite.data.app.domain;
+package org.helyx.app.j2me.getabike.data.app.domain;
 
 import java.util.Hashtable;
 

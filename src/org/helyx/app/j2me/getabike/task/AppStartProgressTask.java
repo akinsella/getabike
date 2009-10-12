@@ -217,7 +217,13 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		}
 
 		public void onSuccess(String eventMessage, Object eventData) {
-			checkData(successStep);
+			try {
+				checkData(successStep);
+			}
+			catch(Throwable t) {
+				AppStartProgressTask.this.logger.warn(t);
+				AppStartProgressTask.this.onError(t.getMessage(), t);
+			}
 		}
 		
 		public void onError(String eventMessage, Object eventData) {

@@ -72,7 +72,7 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 		DialogUtil.showMessageDialog(
 				view, 
 				"dialog.title.error", 
-				getMessage("midlet.start.error.message") + ": " + errorMessage, 
+				getMessage("midlet.start.error.message.1") + ": " + errorMessage, 
 				new OkResultCallback() {
 					public void onOk(DialogView dialogView, Object data) {
 						if (GetABikeMIDlet.this.logger.isInfoEnabled()) {

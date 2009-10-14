@@ -70,7 +70,7 @@ public class StationSearchView extends PrefBaseListView {
 				AbstractView currentView = StationSearchView.this;
 				Vector zipCodeList = getZipCodeList();
 				if (zipCodeList.isEmpty()) {
-					DialogUtil.showAlertMessage(StationSearchView.this, "dialog.title.information", "view.station.search.no.zip.code");
+					DialogUtil.showAlertMessage(StationSearchView.this, "dialog.title.information", getMessage("view.station.search.no.zip.code"));
 				}
 				else {
 					StationSearchZipCodeFilterView stationZipCodeSearchView = new StationSearchZipCodeFilterView(currentView.getMidlet(), zipCodeList);

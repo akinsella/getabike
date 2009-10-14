@@ -10,6 +10,7 @@ import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManagerException;
 import org.helyx.app.j2me.getabike.ui.view.renderer.StationItemRenderer;
+import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;

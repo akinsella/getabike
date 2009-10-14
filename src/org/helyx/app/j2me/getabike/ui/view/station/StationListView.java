@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.getabike.ui.view;
+package org.helyx.app.j2me.getabike.ui.view.station;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.app.j2me.getabike.data.carto.accessor.StationPoiInfoAccessor;
@@ -9,6 +9,7 @@ import org.helyx.app.j2me.getabike.data.carto.task.StationLoadTask;
 import org.helyx.app.j2me.getabike.data.city.accessor.ICityAcessor;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.ui.view.renderer.StationTitleRenderer;
+import org.helyx.app.j2me.getabike.ui.view.station.search.StationSearchView;
 import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.filter.IRecordFilter;
@@ -22,6 +23,7 @@ import org.helyx.helyx4me.ui.view.support.LoadTaskView;
 import org.helyx.helyx4me.ui.view.support.MenuListView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
+import org.helyx.helyx4me.ui.view.support.list.IFilterableSortableElementProvider;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.helyx4me.ui.widget.ImageSet;
 import org.helyx.helyx4me.ui.widget.command.Command;
@@ -88,7 +90,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		
 		menu.addMenuItem(new MenuItem("view.station.list.item.station.search", new ImageSet(getTheme().getString("IMG_FIND")), new IAction() {
 			public void run(Object data) {
-				searchStation();
+				configureStationSearchFilters();
 			}
 		}));
 		
@@ -145,9 +147,19 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		
 	}
 	
-	protected void searchStation() {
+	public Station[] getAllStations() {
+		return (Station[]) 
+		( 
+			(elementProvider instanceof IFilterableSortableElementProvider) ? 
+				((IFilterableSortableElementProvider)elementProvider).getRawElementProvider().getElements() : 
+				elementProvider.getElements() 
+		);
+	}
+	
+	protected void configureStationSearchFilters() {
 		final String currentStationNameFilter = getStationNameFilter();
-		StationSearchView stationSearchView = new StationSearchView(getMidlet());
+		
+		StationSearchView stationSearchView = new StationSearchView(getMidlet(), this);
 		stationSearchView.setReturnCallback(new IReturnCallback() {
 
 			public void onReturn(AbstractDisplayable currentDisplayable, Object data) {

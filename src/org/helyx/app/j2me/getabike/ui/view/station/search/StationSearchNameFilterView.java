@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.getabike.ui.view;
+package org.helyx.app.j2me.getabike.ui.view.station.search;
 
 import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
@@ -10,16 +10,16 @@ import org.helyx.helyx4me.ui.displayable.support.AbstractTextBox;
 import org.helyx.logging4me.Logger;
 
 
-public class StationSearchView extends AbstractTextBox {
+public class StationSearchNameFilterView extends AbstractTextBox {
 	
 	private static final Logger logger = Logger.getLogger("STATION_SEARCH_VIEW");
 	
 	private Command cmdBack;
 	private Command cmdValidate;
 	
-	public StationSearchView(AbstractMIDlet midlet) {
+	public StationSearchNameFilterView(AbstractMIDlet midlet) {
 		super(midlet, "");
-		setTitle(getMidlet().getI18NTextRenderer().renderText("view.station.search.title"));
+		setTitle(getMidlet().getI18NTextRenderer().renderText("view.station.search.filter.name.title"));
 		init();
 	}
 

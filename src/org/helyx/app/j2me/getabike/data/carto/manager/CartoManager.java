@@ -1,5 +1,6 @@
 package org.helyx.app.j2me.getabike.data.carto.manager;
 
+import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.app.j2me.getabike.data.carto.comparator.StationDistanceComparator;
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.filter.StationDistanceFilter;
@@ -19,13 +20,14 @@ import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.SimpleStationI
 import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.VelibStationInfoNormalizer;
 import org.helyx.app.j2me.getabike.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
-import org.helyx.app.j2me.getabike.ui.view.StationListView;
 import org.helyx.app.j2me.getabike.ui.view.renderer.DistanceStationItemRenderer;
+import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.content.provider.IContentProviderFactory;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryException;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryNotFoundExcepton;
+import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.logging4me.Logger;

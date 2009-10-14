@@ -227,13 +227,19 @@ public class CityManager {
 		PrefManager.removePref(PrefConstants.CITY_CURRENT_KEY);
 		if (clearCityData) {
 			CartoManager.clearStations();
-			PrefManager.removePref(PrefConstants.PREF_STATION_NAME_FILTER);
+			clearStationSearch();
 		}
+	}
+
+	public static void clearStationSearch() {
+		PrefManager.removePref(PrefConstants.PREF_STATION_NAME_FILTER);
+		PrefManager.removePref(PrefConstants.PREF_STATION_ZIPCODE_FILTER);
+		PrefManager.removePref(PrefConstants.PREF_STATION_CITY_FILTER);		
 	}
 
 	public static void setCurrentCity(City city) {
 		PrefManager.writePref(PrefConstants.CITY_CURRENT_KEY, city.key);
-		PrefManager.removePref(PrefConstants.PREF_STATION_NAME_FILTER);
+		clearStationSearch();
 	}
 
 	public static void showCountryListView(AbstractDisplayable currentDisplayable) {

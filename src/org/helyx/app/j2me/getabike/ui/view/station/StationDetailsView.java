@@ -1,4 +1,4 @@
-package org.helyx.app.j2me.getabike.ui.view;
+package org.helyx.app.j2me.getabike.ui.view.station;
 
 import java.io.IOException;
 

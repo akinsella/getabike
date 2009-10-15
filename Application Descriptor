@@ -2,7 +2,7 @@ MIDlet-1: Get A Bike,,org.helyx.app.j2me.getabike.midlet.GetABikeMIDlet
 MIDlet-Jar-URL: getabike.jar
 MIDlet-Icon: /org/helyx/app/j2me/getabike/image/app/Icon.png
 MicroEdition-Configuration: CLDC-1.1
-MIDlet-Version: 1.3.2
+MIDlet-Version: 1.3.3
 MIDlet-Info-URL: http://m.helyx.org/getabike
 MIDlet-Name: Get A Bike
 MIDlet-Description: Get A Bike

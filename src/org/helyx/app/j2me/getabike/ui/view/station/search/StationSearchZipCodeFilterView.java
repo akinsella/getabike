@@ -17,7 +17,7 @@ public class StationSearchZipCodeFilterView extends MenuListView {
 	private String[] zipCodes;
 	
 	public StationSearchZipCodeFilterView(AbstractMIDlet midlet, String[] zipCodes) {
-		super(midlet, "view.station.search.filter.zipcode.tilte", true);
+		super(midlet, "view.station.search.filter.zipcode.title", true);
 		FastQuickSort fastQuickSort = new FastQuickSort(new StringComparator());
 		fastQuickSort.sort(zipCodes);
 		this.zipCodes = zipCodes;

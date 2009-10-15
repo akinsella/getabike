@@ -185,6 +185,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	protected void filterAndSort() {
 		Filter filter = filterBuilder != null ? filterBuilder.buildFilter() : null;
 		
+		resetPosition();
 		filteredSortedElementProvider.setFilter(filter);
 		filteredSortedElementProvider.filterAndSort();
 	}

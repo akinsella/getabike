@@ -12,6 +12,7 @@ import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.PrefBaseListView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.widget.ImageSet;
 import org.helyx.helyx4me.ui.widget.command.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
@@ -29,7 +30,7 @@ public class StationSearchView extends PrefBaseListView {
 
 	public StationSearchView(AbstractMIDlet midlet, StationListView stationListView) {
 		super(midlet, "");
-		setTitle("view.pref.title");
+		setTitle("view.station.search.title");
 		this.stationListView = stationListView;
 		init();
 	}
@@ -99,7 +100,7 @@ public class StationSearchView extends PrefBaseListView {
 		
 		Menu menu = new Menu();
 		
-		nameFilterMenuItem = new MenuItem("view.station.search.item.name", new IAction() {
+		nameFilterMenuItem = new MenuItem("view.station.search.item.name", new ImageSet(getTheme().getString("IMG_FILTER")), new IAction() {
 			public void run(Object data) {
 				AbstractView currentView = StationSearchView.this;
 				StationSearchNameFilterView stationNameSearchView = new StationSearchNameFilterView(currentView.getMidlet());
@@ -107,7 +108,7 @@ public class StationSearchView extends PrefBaseListView {
 			}
 		});
 		
-		zipCodeFilterMenuItem = new MenuItem("view.station.search.item.zipcode", new IAction() {
+		zipCodeFilterMenuItem = new MenuItem("view.station.search.item.zipcode", new ImageSet(getTheme().getString("IMG_FILTER")), new IAction() {
 			public void run(Object data) {
 				AbstractView currentView = StationSearchView.this;
 				String[] zipCodes = getZipCodes();
@@ -121,7 +122,7 @@ public class StationSearchView extends PrefBaseListView {
 			}
 		});
 		
-		cityFilterMenuItem = new MenuItem("view.station.search.item.city", new IAction() {
+		cityFilterMenuItem = new MenuItem("view.station.search.item.city", new ImageSet(getTheme().getString("IMG_FILTER")), new IAction() {
 			public void run(Object data) {
 				AbstractView currentView = StationSearchView.this;
 				String[] cityName = getCityNames();

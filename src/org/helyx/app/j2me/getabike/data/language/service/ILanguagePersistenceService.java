@@ -3,7 +3,7 @@ package org.helyx.app.j2me.getabike.data.language.service;
 import java.util.Vector;
 
 import org.helyx.app.j2me.getabike.data.language.domain.Language;
-import org.helyx.helyx4me.filter.IRecordFilter;
+import org.helyx.helyx4me.filter.record.RecordFilter;
 import org.helyx.helyx4me.rms.MultiRecordEnumeration;
 
 public interface ILanguagePersistenceService {
@@ -16,7 +16,7 @@ public interface ILanguagePersistenceService {
 
 	void removeAllCities();
 
-	MultiRecordEnumeration createLanguageEnumeration(IRecordFilter recordFilter);
+	MultiRecordEnumeration createLanguageEnumeration(RecordFilter recordFilter);
 	
 	void destroyLanguageEnumeration(MultiRecordEnumeration languageEnumeration);
 

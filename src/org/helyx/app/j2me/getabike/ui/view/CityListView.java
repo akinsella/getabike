@@ -87,6 +87,9 @@ public class CityListView extends MenuListView {
 				
 			}));
 		}
+		else {
+			setSecondaryCommand(null);
+		}
 		
 		setPrimaryCommand(new Command("command.select", true, getMidlet().getI18NTextRenderer(), new IAction() {
 

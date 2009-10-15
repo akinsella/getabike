@@ -5,7 +5,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
-import org.helyx.app.j2me.getabike.data.carto.listener.UIStationLoaderProgressListener;
+import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManagerException;
@@ -182,19 +182,7 @@ public class MenuView extends AbstractView {
 		}
 		
 		private void showStationListView(City city) {
-			if (stationListView == null) {
-				stationListView = new StationListView(getMidlet(), "view.station.list.title");
-				stationListView.setPreviousDisplayable(MenuView.this);
-				stationListView.setCellRenderer(new StationItemRenderer());
-				stationListView.setCity(city);
-				stationListView.setAllowMenu(true);
-				stationListView.setAllowNested(true);
-				stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
-			}
-			else {
-				stationListView.setCity(city);
-				stationListView.loadListContent(new UIStationLoaderProgressListener(stationListView));						
-			}
+			CartoManager.showStationListView(this, city);
 		}
 		
 		private void showStations() {

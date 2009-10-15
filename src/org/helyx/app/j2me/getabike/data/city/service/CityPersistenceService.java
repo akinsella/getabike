@@ -6,7 +6,7 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.serializer.CitySerializer;
-import org.helyx.helyx4me.filter.IRecordFilter;
+import org.helyx.helyx4me.filter.record.RecordFilter;
 import org.helyx.helyx4me.rms.IMultiRecordDao;
 import org.helyx.helyx4me.rms.MultiRecordDao;
 import org.helyx.helyx4me.rms.MultiRecordEnumeration;
@@ -100,7 +100,7 @@ public class CityPersistenceService implements ICityPersistenceService {
 		}
 	}
 
-	public MultiRecordEnumeration createCityEnumeration(IRecordFilter recordFilter) {
+	public MultiRecordEnumeration createCityEnumeration(RecordFilter recordFilter) {
 		return getCityDao().createRecordEnumeration(recordFilter);
 	}
 

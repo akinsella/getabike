@@ -3,13 +3,13 @@ package org.helyx.app.j2me.getabike.data.carto.filter;
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.helyx4me.filter.Filter;
 
-public class StationNameFilter implements Filter {
+public class StationCityFilter implements Filter {
 
-	private String stationName;
+	private String city;
 
-	public StationNameFilter(String stationName) {
+	public StationCityFilter(String zipCode) {
 		super();
-		this.stationName = stationName;
+		this.city = zipCode;
 	}
 
 	public boolean matches(Object object) {
@@ -19,19 +19,23 @@ public class StationNameFilter implements Filter {
 			return false;
 		}
 		
-		if (stationName == null) {
+		if (city == null) {
 			return true;
 		}
 		
-		if (station.name == null) {
+		if (station.city == null) {
 			return false;
 		}
 		
-		return station.name.toUpperCase().indexOf(stationName) > -1;
+		return station.city.toUpperCase().indexOf(city) > -1;
+	}
+
+	public String getCity() {
+		return city;
 	}
 	
-	public void setStationName(String stationName) {
-		this.stationName = stationName;
+	public void setCity(String stationName) {
+		this.city = stationName;
 	}
 
 }

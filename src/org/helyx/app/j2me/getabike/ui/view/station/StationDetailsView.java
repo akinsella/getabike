@@ -105,28 +105,28 @@ public class StationDetailsView extends AbstractView {
 							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.250", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 250, false, false, false);
+									CartoManager.showStationByDistance(nearStationMenuListView, city, station, 250, false, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.500", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 500, false, false, false);
+									CartoManager.showStationByDistance(nearStationMenuListView, city, station, 500, false, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.1000", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 1000, false, false, false);
+									CartoManager.showStationByDistance(nearStationMenuListView, city, station, 1000, false, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.2000", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(menuListView, nearStationMenuListView, city, station, 2000, false, false, false);
+									CartoManager.showStationByDistance(nearStationMenuListView, city, station, 2000, false, false, false);
 								}
 			
 							}));

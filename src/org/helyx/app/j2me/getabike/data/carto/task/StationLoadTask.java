@@ -6,7 +6,7 @@ import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.service.IStationPersistenceService;
 import org.helyx.app.j2me.getabike.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
-import org.helyx.helyx4me.filter.IRecordFilter;
+import org.helyx.helyx4me.filter.record.RecordFilter;
 import org.helyx.helyx4me.rms.MultiRecordEnumeration;
 import org.helyx.helyx4me.task.AbstractProgressTask;
 import org.helyx.helyx4me.task.EventType;
@@ -18,13 +18,12 @@ public class StationLoadTask extends AbstractProgressTask {
 	
 	private static final Logger logger = Logger.getLogger("STATION_LOAD_TASK");
 
-	private IRecordFilter recordFilter;
+	private RecordFilter recordFilter;
 	private StationListView stationListView;
 		
-	public StationLoadTask(StationListView stationListView, IRecordFilter recordFilter) {
+	public StationLoadTask(StationListView stationListView) {
 		super(logger.getCategory().getName());
 		this.stationListView = stationListView;
-		this.recordFilter = recordFilter;
 	}
 
 	public Runnable getRunnable() {
@@ -45,7 +44,7 @@ public class StationLoadTask extends AbstractProgressTask {
 				
 						Vector stationList = new Vector(4096);
 						
-						stationEnumeration = stationPersistenceService.createStationEnumeration(recordFilter);
+						stationEnumeration = stationPersistenceService.createStationEnumeration(null);
 			
 						int count = 0;
 						while (stationEnumeration.hasMoreElements()) {

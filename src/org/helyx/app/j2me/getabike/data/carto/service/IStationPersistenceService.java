@@ -3,7 +3,7 @@ package org.helyx.app.j2me.getabike.data.carto.service;
 import java.util.Vector;
 
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
-import org.helyx.helyx4me.filter.IRecordFilter;
+import org.helyx.helyx4me.filter.record.RecordFilter;
 import org.helyx.helyx4me.rms.MultiRecordEnumeration;
 
 public interface IStationPersistenceService {
@@ -16,7 +16,7 @@ public interface IStationPersistenceService {
 
 	void removeAllStations();
 
-	MultiRecordEnumeration createStationEnumeration(IRecordFilter recordFilter);
+	MultiRecordEnumeration createStationEnumeration(RecordFilter recordFilter);
 	
 	void destroyStationEnumeration(MultiRecordEnumeration stationEnumeration);
 

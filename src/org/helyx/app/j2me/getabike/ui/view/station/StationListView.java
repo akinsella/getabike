@@ -1,10 +1,8 @@
 package org.helyx.app.j2me.getabike.ui.view.station;
 
-import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.app.j2me.getabike.data.carto.accessor.StationPoiInfoAccessor;
+import org.helyx.app.j2me.getabike.data.carto.comparator.StationNameComparator;
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
-import org.helyx.app.j2me.getabike.data.carto.filter.StationNameFilter;
-import org.helyx.app.j2me.getabike.data.carto.listener.UIStationLoaderProgressListener;
 import org.helyx.app.j2me.getabike.data.carto.task.StationLoadTask;
 import org.helyx.app.j2me.getabike.data.city.accessor.ICityAcessor;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
@@ -12,17 +10,23 @@ import org.helyx.app.j2me.getabike.ui.view.renderer.StationTitleRenderer;
 import org.helyx.app.j2me.getabike.ui.view.station.search.StationSearchView;
 import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
-import org.helyx.helyx4me.filter.IRecordFilter;
+import org.helyx.helyx4me.comparator.Comparator;
+import org.helyx.helyx4me.filter.Filter;
+import org.helyx.helyx4me.filter.FilterBuilder;
 import org.helyx.helyx4me.map.google.POIInfoAccessor;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
-import org.helyx.helyx4me.pref.PrefManager;
-import org.helyx.helyx4me.task.ProgressListener;
+import org.helyx.helyx4me.task.EventType;
+import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.view.support.LoadTaskView;
 import org.helyx.helyx4me.ui.view.support.MenuListView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
+import org.helyx.helyx4me.ui.view.support.list.ArrayElementProvider;
+import org.helyx.helyx4me.ui.view.support.list.DynamicFilterableSortableElementProvider;
+import org.helyx.helyx4me.ui.view.support.list.IDynamicFilterableSortableElementProvider;
+import org.helyx.helyx4me.ui.view.support.list.IElementProvider;
 import org.helyx.helyx4me.ui.view.support.list.IFilterableSortableElementProvider;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.helyx4me.ui.widget.ImageSet;
@@ -36,12 +40,17 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	
 	private static final Logger logger = Logger.getLogger("STATION_LIST_VIEW");
 	
-	private boolean recordFilterEnabled = true;
+	private ArrayElementProvider elementProvider;
+	private IDynamicFilterableSortableElementProvider filteredSortedElementProvider;
 	
 	private Station referentStation;
 	
 	private boolean allowMenu = true;
 	private boolean allowNested = true;
+	
+	private FilterBuilder filterBuilder;
+	
+	
 	
 	private City city;
 
@@ -52,7 +61,6 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	}
 	
 	private void init() {
-		
 		setTitleRenderer(new StationTitleRenderer(getMidlet(), this));
 		initActions();
 		initData();
@@ -140,7 +148,10 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	}
 
 	protected void initData() {
-		// Nothing to do
+		elementProvider = new ArrayElementProvider(new Station[0]);
+		filteredSortedElementProvider = new DynamicFilterableSortableElementProvider(elementProvider);
+		filteredSortedElementProvider.setComparator(new StationNameComparator());
+		setItems((IElementProvider)filteredSortedElementProvider);
 	}
 
 	protected void initComponents() {
@@ -157,32 +168,27 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	}
 	
 	protected void configureStationSearchFilters() {
-		final String currentStationNameFilter = getStationNameFilter();
-		
 		StationSearchView stationSearchView = new StationSearchView(getMidlet(), this);
 		stationSearchView.setReturnCallback(new IReturnCallback() {
 
 			public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
-				String newStationNameFilter = getStationNameFilter();
-				if ( (currentStationNameFilter == null  && newStationNameFilter != null ) ||
-					 (currentStationNameFilter != null && !currentStationNameFilter.equals(newStationNameFilter)) ) {
-					loadListContent(new UIStationLoaderProgressListener(StationListView.this));
-				}
-				else {
-					currentDisplayable.showDisplayable(StationListView.this);
-				}
+
+				filterAndSort();
+				
+				showDisplayable(StationListView.this);
 			}
 			
 		});
 		showDisplayable(stationSearchView);
 	}
 	
-	protected String getStationNameFilter() {
-		String stationNameFilter = PrefManager.readPrefString(PrefConstants.PREF_STATION_NAME_FILTER);
-		logger.info("Station name filter: '" + stationNameFilter + "'");
-		return stationNameFilter;
+	protected void filterAndSort() {
+		Filter filter = filterBuilder != null ? filterBuilder.buildFilter() : null;
+		
+		filteredSortedElementProvider.setFilter(filter);
+		filteredSortedElementProvider.filterAndSort();
 	}
-	
+
 	protected void onShowItemSelected(Object object) {
 		showSelectedItem((Station)object);
 	}
@@ -197,27 +203,42 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		showDisplayable(stationDetailsView, this);
 	}
 
-	public void loadListContent(ProgressListener progressListener) {
-		
-		IRecordFilter stationFilter = null;
-		if (recordFilterEnabled) {
-			String stationNameFilter = getStationNameFilter();
-			if (stationNameFilter != null && stationNameFilter.length() > 0) {
-				stationFilter = new StationNameFilter(stationNameFilter);
-			}
-		}
+	public void loadListContent() {
+		StationLoadTask stationLoadTask = new StationLoadTask(this);
+		stationLoadTask.addProgressListener(new ProgressAdapter("UI_PROGRESS_TAKS_LISTENER") {
+			
+			public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
+				StationListView stationListView = StationListView.this;
+				switch (eventType) {
+					case EventType.ON_SUCCESS:
+						setStations((Station[])eventData);
+						
+						filterAndSort();
+						
+						stationListView.showDisplayable(stationListView, new BasicTransition());
 
-		final StationLoadTask stationLoadTask = new StationLoadTask(this, stationFilter);
-		stationLoadTask.addProgressListener(progressListener);
+						break;
+
+					case EventType.ON_ERROR:
+						Throwable throwable = (Throwable)eventData;
+						getLogger().warn(throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
+						DialogUtil.showAlertMessage(stationListView, "dialog.title.error", stationListView.getMessage("dialog.error.unexpected") + ": " + throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
+						stationListView.showDisplayable(stationListView, new BasicTransition());
+						break;
+						
+					default:
+						DialogUtil.showAlertMessage(stationListView, "dialog.title.error", stationListView.getMessage("dialog.result.unexpected"));
+						stationListView.showDisplayable(stationListView, new BasicTransition());
+						break;
+				}
+			}
+		});
+		
 		LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "view.station.list.load.station", stationLoadTask);
 		showDisplayable(loadTaskView, this);
 		resetPosition();
-		loadTaskView.startTask();
 		logger.info("Load List Content...");
-	}
-
-	public void setRecordFilterEnabled(boolean recordFilterEnabled) {
-		this.recordFilterEnabled = recordFilterEnabled;
+		loadTaskView.startTask();
 	}
 
 	public Station getReferentStation() {
@@ -252,4 +273,17 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		return city;
 	}
 
+	public void setComparator(Comparator comparator) {
+		filteredSortedElementProvider.setComparator(comparator);
+	}
+
+	public void setStations(Station[] stations) {
+		elementProvider.setElements(stations);
+		filterAndSort();
+	}
+
+	public void setFilterBuilder(FilterBuilder filterBuilder) {
+		this.filterBuilder = filterBuilder;
+	}
+	
 }

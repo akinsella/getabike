@@ -12,6 +12,7 @@ import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.PrefBaseListView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.widget.command.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
@@ -35,11 +36,32 @@ public class StationSearchView extends PrefBaseListView {
 	 
 	private void init() {
 		initActions();
+		initCommands();
 		initData();
 		initComponents();
 	}
+	
+	private void initCommands() {
+		
+		setSecondaryCommand(new Command("command.ok", true, getMidlet().getI18NTextRenderer(), new IAction() {
 
-	private Vector getZipCodeList() {
+			public void run(Object data) {
+				fireReturnCallback();
+			}
+			
+		}));
+		
+		setSecondaryCommand(new Command("command.back", true, getMidlet().getI18NTextRenderer(), new IAction() {
+
+			public void run(Object data) {
+				fireReturnCallback();
+			}
+			
+		}));
+
+	}
+
+	private String[] getZipCodes() {
 		Station[] stations = stationListView.getAllStations();
 		Vector zipCodeList = new Vector();
 		int stationCount = stations.length;
@@ -50,7 +72,27 @@ public class StationSearchView extends PrefBaseListView {
 			}
 		}
 		
-		return zipCodeList;
+		String[] zipCodes = new String[zipCodeList.size()];
+		zipCodeList.copyInto(zipCodes);
+
+		return zipCodes;
+	}
+
+	private String[] getCityNames() {
+		Station[] stations = stationListView.getAllStations();
+		Vector cityNameList = new Vector();
+		int stationCount = stations.length;
+		for (int i = 0 ; i < stationCount ; i++) {
+			Station station = stations[i];
+			if (station.city != null && station.city.length() > 0 && !cityNameList.contains(station.city)) {
+				cityNameList.addElement(station.city);
+			}
+		}
+		
+		String[] cityNames = new String[cityNameList.size()];
+		cityNameList.copyInto(cityNames);
+
+		return cityNames;
 	}
 
 	protected void initComponents() {
@@ -68,12 +110,12 @@ public class StationSearchView extends PrefBaseListView {
 		zipCodeFilterMenuItem = new MenuItem("view.station.search.item.zipcode", new IAction() {
 			public void run(Object data) {
 				AbstractView currentView = StationSearchView.this;
-				Vector zipCodeList = getZipCodeList();
-				if (zipCodeList.isEmpty()) {
+				String[] zipCodes = getZipCodes();
+				if (zipCodes.length <= 1) {
 					DialogUtil.showAlertMessage(StationSearchView.this, "dialog.title.information", getMessage("view.station.search.no.zip.code"));
 				}
 				else {
-					StationSearchZipCodeFilterView stationZipCodeSearchView = new StationSearchZipCodeFilterView(currentView.getMidlet(), zipCodeList);
+					StationSearchZipCodeFilterView stationZipCodeSearchView = new StationSearchZipCodeFilterView(currentView.getMidlet(), zipCodes);
 					currentView.showDisplayable(stationZipCodeSearchView, currentView);
 				}
 			}
@@ -82,7 +124,14 @@ public class StationSearchView extends PrefBaseListView {
 		cityFilterMenuItem = new MenuItem("view.station.search.item.city", new IAction() {
 			public void run(Object data) {
 				AbstractView currentView = StationSearchView.this;
-				DialogUtil.showAlertMessage(currentView, "dialog.title.alert", getMessage("view.station.search.not.yet.implemented"));
+				String[] cityName = getCityNames();
+				if (cityName.length <= 1) {
+					DialogUtil.showAlertMessage(StationSearchView.this, "dialog.title.information", getMessage("view.station.search.no.city"));
+				}
+				else {
+					StationSearchCityFilterView stationSearchCityFilterView = new StationSearchCityFilterView(currentView.getMidlet(), cityName);
+					currentView.showDisplayable(stationSearchCityFilterView, currentView);
+				}
 			}
 		});
 		

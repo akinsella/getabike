@@ -12,15 +12,15 @@ import org.helyx.helyx4me.ui.widget.command.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 
-public class StationSearchZipCodeFilterView extends MenuListView {
+public class StationSearchCityFilterView extends MenuListView {
 
-	private String[] zipCodes;
+	private String[] cityNames;
 	
-	public StationSearchZipCodeFilterView(AbstractMIDlet midlet, String[] zipCodes) {
-		super(midlet, "view.station.search.filter.zipcode.tilte", true);
+	public StationSearchCityFilterView(AbstractMIDlet midlet, String[] cityNames) {
+		super(midlet, "view.station.search.filter.city.tilte", true);
 		FastQuickSort fastQuickSort = new FastQuickSort(new StringComparator());
-		fastQuickSort.sort(zipCodes);
-		this.zipCodes = zipCodes;
+		fastQuickSort.sort(cityNames);
+		this.cityNames = cityNames;
 		init();
 	}
 	
@@ -33,14 +33,14 @@ public class StationSearchZipCodeFilterView extends MenuListView {
 	
 	protected void initComponents() {
 		Menu menu = new Menu();
-		int zipCodesCount = zipCodes.length;
-		String currentZipCodeFilter = PrefManager.readPrefString(PrefConstants.PREF_STATION_ZIPCODE_FILTER);
+		int zipCodesCount = cityNames.length;
+		String currentZipCodeFilter = PrefManager.readPrefString(PrefConstants.PREF_STATION_CITY_FILTER);
 		for (int i = 0 ; i < zipCodesCount ; i++) {
-			String zipCode = zipCodes[i];
-			MenuItem menuItem = new MenuItem(zipCode);
-			menuItem.setData(zipCode);
+			String cityName = cityNames[i];
+			MenuItem menuItem = new MenuItem(cityName);
+			menuItem.setData(cityName);
 			menu.addMenuItem(menuItem);
-			if (zipCode.equals(currentZipCodeFilter)) {
+			if (cityName.equals(currentZipCodeFilter)) {
 				menu.setCheckedMenuItem(menuItem);
 			}
 		}
@@ -57,8 +57,8 @@ public class StationSearchZipCodeFilterView extends MenuListView {
 				MenuItem menuItem = getMenu().getCheckedMenuItem();
 				
 				if (menuItem != null) {
-					String zipCode = (String)menuItem.getData();
-					PrefManager.writePref(PrefConstants.PREF_STATION_ZIPCODE_FILTER, zipCode);
+					String cityName = (String)menuItem.getData();
+					PrefManager.writePref(PrefConstants.PREF_STATION_CITY_FILTER, cityName);
 				}
 				
 				fireReturnCallback();
@@ -77,7 +77,7 @@ public class StationSearchZipCodeFilterView extends MenuListView {
 		setThirdCommand(new Command("command.clear", true, getMidlet().getI18NTextRenderer(), new IAction() {
 			
 			public void run(Object data) {
-				PrefManager.removePref(PrefConstants.PREF_STATION_ZIPCODE_FILTER);
+				PrefManager.removePref(PrefConstants.PREF_STATION_CITY_FILTER);
 				fireReturnCallback();
 			}
 			

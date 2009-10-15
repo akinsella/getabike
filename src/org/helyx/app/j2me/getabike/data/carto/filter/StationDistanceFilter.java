@@ -1,12 +1,12 @@
 package org.helyx.app.j2me.getabike.data.carto.filter;
 
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
-import org.helyx.helyx4me.filter.IObjectFilter;
+import org.helyx.helyx4me.filter.Filter;
 import org.helyx.helyx4me.math.DistanceUtil;
 import org.helyx.logging4me.Logger;
 
 
-public class StationDistanceFilter implements IObjectFilter {
+public class StationDistanceFilter implements Filter {
 	
 	private Logger logger = Logger.getLogger("STATION_DISTANCE_FILTER");
 	

@@ -180,7 +180,7 @@ public class CartoManager {
 		stationListView.loadListContent();
 	}
 
-	public static void showStationListView(AbstractDisplayable previousDisplayable, final City city) {
+	public static StationListView createStationListView(AbstractDisplayable previousDisplayable, final City city) {
 		StationListView stationListView = new StationListView(previousDisplayable.getMidlet(), "view.station.list.title");
 		stationListView.setPreviousDisplayable(previousDisplayable);
 		stationListView.setCellRenderer(new StationItemRenderer());
@@ -210,7 +210,8 @@ public class CartoManager {
 				return chainedFilter;
 			}
 		});
-		stationListView.loadListContent();
+		
+		return stationListView;
 	}
 	
 }

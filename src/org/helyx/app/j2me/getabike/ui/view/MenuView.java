@@ -182,7 +182,14 @@ public class MenuView extends AbstractView {
 		}
 		
 		private void showStationListView(City city) {
-			CartoManager.showStationListView(this, city);
+			if (stationListView == null) {
+				stationListView = CartoManager.createStationListView(this, city);
+				stationListView.loadListContent();
+			}
+			else {
+				stationListView.setCity(city);
+				showDisplayable(stationListView, this);
+			}
 		}
 		
 		private void showStations() {

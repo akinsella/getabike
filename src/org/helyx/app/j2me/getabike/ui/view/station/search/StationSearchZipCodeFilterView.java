@@ -7,6 +7,7 @@ import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.renderer.text.DefaultTextRenderer;
 import org.helyx.helyx4me.sort.FastQuickSort;
 import org.helyx.helyx4me.sort.StringComparator;
+import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.MenuListView;
 import org.helyx.helyx4me.ui.widget.command.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
@@ -59,6 +60,7 @@ public class StationSearchZipCodeFilterView extends MenuListView {
 				if (menuItem != null) {
 					String zipCode = (String)menuItem.getData();
 					PrefManager.writePref(PrefConstants.PREF_STATION_ZIPCODE_FILTER, zipCode);
+					PrefManager.removePref(PrefConstants.PREF_STATION_CITY_FILTER);
 				}
 				
 				fireReturnCallback();

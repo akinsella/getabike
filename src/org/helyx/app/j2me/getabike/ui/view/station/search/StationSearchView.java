@@ -104,7 +104,7 @@ public class StationSearchView extends PrefBaseListView {
 			public void run(Object data) {
 				AbstractView currentView = StationSearchView.this;
 				StationSearchNameFilterView stationNameSearchView = new StationSearchNameFilterView(currentView.getMidlet());
-				currentView.showDisplayable(stationNameSearchView, currentView);
+				currentView.showDisplayable(stationNameSearchView, stationListView);
 			}
 		});
 		
@@ -117,7 +117,7 @@ public class StationSearchView extends PrefBaseListView {
 				}
 				else {
 					StationSearchZipCodeFilterView stationZipCodeSearchView = new StationSearchZipCodeFilterView(currentView.getMidlet(), zipCodes);
-					currentView.showDisplayable(stationZipCodeSearchView, currentView);
+					currentView.showDisplayable(stationZipCodeSearchView, stationListView);
 				}
 			}
 		});
@@ -131,7 +131,7 @@ public class StationSearchView extends PrefBaseListView {
 				}
 				else {
 					StationSearchCityFilterView stationSearchCityFilterView = new StationSearchCityFilterView(currentView.getMidlet(), cityName);
-					currentView.showDisplayable(stationSearchCityFilterView, currentView);
+					currentView.showDisplayable(stationSearchCityFilterView, stationListView);
 				}
 			}
 		});

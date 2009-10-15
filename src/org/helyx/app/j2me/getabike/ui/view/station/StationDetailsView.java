@@ -177,7 +177,7 @@ public class StationDetailsView extends AbstractView {
 
 	private void loadIconImage() {
 		try {
-			iconImage = ImageUtil.createImageFromClassPath(getTheme().getString(AppThemeConstants.WIDGET_STATION_DETAILS_IMAGE));
+			iconImage = ImageUtil.createImageFromClassPath(getTheme().getString("IMG_STATION"));
 		}
 		catch (IOException e) {
 			logger.warn(e);

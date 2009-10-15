@@ -59,6 +59,7 @@ public class StationSearchCityFilterView extends MenuListView {
 				if (menuItem != null) {
 					String cityName = (String)menuItem.getData();
 					PrefManager.writePref(PrefConstants.PREF_STATION_CITY_FILTER, cityName);
+					PrefManager.removePref(PrefConstants.PREF_STATION_ZIPCODE_FILTER);
 				}
 				
 				fireReturnCallback();

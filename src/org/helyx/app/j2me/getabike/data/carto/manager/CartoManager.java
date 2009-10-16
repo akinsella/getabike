@@ -19,6 +19,7 @@ import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.SimpleStationI
 import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.VelibStationInfoNormalizer;
 import org.helyx.app.j2me.getabike.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.ui.view.renderer.DistanceStationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.renderer.StationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
@@ -171,7 +172,6 @@ public class CartoManager {
 		StationListView stationListView = new StationListView(previousDisplayable.getMidlet(), title);
 
 		stationListView.setPreviousDisplayable(previousDisplayable);
-		stationListView.setCellRenderer(new StationItemRenderer());
 		stationListView.setCity(city);
 		
 		return stationListView;
@@ -179,6 +179,7 @@ public class CartoManager {
 
 	public static StationListView createStationListView(AbstractDisplayable previousDisplayable, final City city) {
 		StationListView stationListView = createBaseStationListView(previousDisplayable, "view.station.list.title", city);
+		stationListView.setCellRenderer(new StationItemRenderer());
 
 		stationListView.setFilterBuilder(new DefaultStationFilterBuilder());
 		
@@ -188,6 +189,7 @@ public class CartoManager {
 	public static StationListView createStationListViewByDistance(AbstractDisplayable previousDisplayable, City city, IElementProvider stationsProvider, Station referentStation, int distanceMax, boolean allowMenu, boolean allowNested) {
 		StationListView stationListView = createBaseStationListView(previousDisplayable, "manager.carto.view.station.list.title", city);
 
+		stationListView.setCellRenderer(new DistanceStationItemRenderer());
 		stationListView.setAllowMenu(allowMenu);
 		stationListView.setAllowNested(allowNested);
 		stationListView.setStationsProvider(stationsProvider);

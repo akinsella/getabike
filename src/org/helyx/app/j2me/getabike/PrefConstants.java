@@ -2,6 +2,8 @@ package org.helyx.app.j2me.getabike;
 
 public class PrefConstants {
 	
+	public static final String APP_UUID = "APP_UUID";
+	
 	public static final String CITY_CURRENT_KEY = "CITY_CURRENT_KEY";
 	
 	public static final String LANGUAGE_DEFAULT_KEY = "LANGUAGE_DEFAULT_KEY";

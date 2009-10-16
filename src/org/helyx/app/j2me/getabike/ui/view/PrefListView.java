@@ -108,6 +108,7 @@ public class PrefListView extends PrefBaseListView {
 					private MenuItem platformMenuItem;
 					private MenuItem profilesMenuItem;
 					private MenuItem configurationMenuItem;
+					private MenuItem appUuidMenuItem;
 					private MenuItem fcVersionMenuItem;
 					private MenuItem encodingMenuItem;
 					private MenuItem screenSizeItem;
@@ -133,6 +134,13 @@ public class PrefListView extends PrefBaseListView {
 								UtilManager.changeDebugMode(currentDisplayable);
 							}
 						});
+
+						appUuidMenuItem = new MenuItem("view.pref.item.app.uuid", new IAction() {
+							public void run(Object data) {
+								DialogUtil.showAlertMessage(currentDisplayable, "view.pref.item.app.uuid", (String)appUuidMenuItem.getData(PrefListView.PREF_VALUE_DETAILS));
+							}
+						});
+						appUuidMenuItem.setParentMenu(true);
 						
 						platformMenuItem = new MenuItem("view.pref.item.platform", new IAction() {
 							
@@ -144,6 +152,7 @@ public class PrefListView extends PrefBaseListView {
 						platformMenuItem.setParentMenu(true);
 						profilesMenuItem = new MenuItem("view.pref.item.profiles");
 						configurationMenuItem = new MenuItem("view.pref.item.configuration");
+					
 						fcVersionMenuItem = new MenuItem("view.pref.item.file.support");
 						encodingMenuItem = new MenuItem("view.pref.item.encoding");
 						screenSizeItem = new MenuItem("view.pref.item.screen");
@@ -153,6 +162,7 @@ public class PrefListView extends PrefBaseListView {
 						optionMenu.addMenuItem(mapModeMenuItem);
 						optionMenu.addMenuItem(httpModeMenuItem);
 						optionMenu.addMenuItem(debugModeMenuItem);
+						optionMenu.addMenuItem(appUuidMenuItem);
 						optionMenu.addMenuItem(platformMenuItem);
 						optionMenu.addMenuItem(profilesMenuItem);
 						optionMenu.addMenuItem(configurationMenuItem);
@@ -172,8 +182,17 @@ public class PrefListView extends PrefBaseListView {
 							fetchHttpMode();
 							fetchMapMode();
 							fetchSystemInformations();
+							fetchAppUuid();
 						}
 						super.beforeDisplayableSelection(current, next);
+					}
+
+					private void fetchAppUuid() {
+						String appUuid = PrefManager.readPrefString(PrefConstants.APP_UUID);
+						if (logger.isDebugEnabled()) {
+							logger.debug("App UUID: " + appUuid);	
+						}
+						appUuidMenuItem.setData(PREF_VALUE_DETAILS, appUuid);
 					}
 
 					private void fetchDebugMode() {

@@ -13,6 +13,7 @@ import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.helyx4me.uuid.UUID;
 import org.helyx.logging4me.Logger;
 
 
@@ -26,6 +27,8 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	private static final int STEP_SOFTKEY_DATA_OK = 5;
 
 	private AbstractView view;
+	
+	private String appUuidStr;
 	
 	public AppStartProgressTask(AbstractView view) {
 		super(view.getMessage("task.app.start.title"));
@@ -47,10 +50,43 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		
 		};
 	}
-
-	
 	
 	private void executeStartUpTasks() {
+
+		readAppUuidValue();
+		
+		checkApplicationDataCleanUpNeeded();
+		
+		checkCityDataCleanUpNeeded();
+
+		checkAppRun();
+		
+	}
+	
+	private void checkAppRun() {
+		String currentVersion = PrefManager.readPrefString(PrefConstants.MIDLET_VERSION);
+		String newVersion = view.getMidlet().getAppProperty(PrefConstants.MIDLET_VERSION);
+		if (currentVersion == null) {
+			onFirstRun(newVersion);
+		}
+		else if (!currentVersion.equals(newVersion)) {
+			onAppUpdate(currentVersion, newVersion);
+		}
+		else {
+			onNormalRun(currentVersion);
+		}
+	}
+
+	private void readAppUuidValue() {
+		appUuidStr = PrefManager.readPrefString(PrefConstants.APP_UUID);
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("Actual App UUID: '" + appUuidStr + "'");
+		}
+	}
+
+	private void checkApplicationDataCleanUpNeeded() {
+		
 		boolean applicationDataCleanUpNeeded = PrefManager.readPrefBoolean(PrefConstants.APPLICATION_DATA_CLEAN_UP_NEEDED);
 		if (applicationDataCleanUpNeeded) {
 			onProgress(view.getMessage("task.app.start.data.remove.start"));
@@ -70,19 +106,21 @@ public class AppStartProgressTask extends AbstractProgressTask {
 			CartoManager.clearStations();
 			
 			if (logger.isInfoEnabled()) {
-				logger.info("Cleaning up preference related data");
-			}
-			PrefManager.cleanUpSavedData();
-			
-			if (logger.isInfoEnabled()) {
 				logger.info("Cleaning up language related data");
 			}
 			LanguageManager.cleanUpSavedData();
+			
+			if (logger.isInfoEnabled()) {
+				logger.info("Cleaning up preference related data");
+			}
+			PrefManager.cleanUpSavedData();
+			initPrefValues();
+			
 			onProgress(view.getMessage("task.app.start.data.remove.end"));
 		}
-		PrefManager.writePref(UtilManager.GOOGLE_MAPS_KEY, UtilManager.DEFAULT_GOOGLE_MAPS_KEY);
-		
+	}
 
+	private void checkCityDataCleanUpNeeded() {
 		boolean cityDataCleanUpNeeded = PrefManager.readPrefBoolean(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
 		if (cityDataCleanUpNeeded) {
 			onProgress(view.getMessage("task.app.start.data.city.remove.start"));
@@ -96,20 +134,30 @@ public class AppStartProgressTask extends AbstractProgressTask {
 			PrefManager.removePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED);
 			onProgress(view.getMessage("task.app.start.data.city.remove.end"));
 		}
-		
-		String currentVersion = PrefManager.readPrefString(PrefConstants.MIDLET_VERSION);
-		String newVersion = view.getMidlet().getAppProperty(PrefConstants.MIDLET_VERSION);
-		if (currentVersion == null) {
-			onFirstRun(newVersion);
-		}
-		else if (!currentVersion.equals(newVersion)) {
-			onAppUpdate(currentVersion, newVersion);
-		}
-		else {
-			onNormalRun(currentVersion);
-		}
+	}
+
+	private void initPrefValues() {
+		initGoogleMapsKeyValue();
+		initAppUuidValue();
 	}
 	
+	private void initGoogleMapsKeyValue() {
+		PrefManager.writePref(UtilManager.GOOGLE_MAPS_KEY, UtilManager.DEFAULT_GOOGLE_MAPS_KEY);
+	}
+	
+	private void initAppUuidValue() {
+		if (appUuidStr == null || appUuidStr.trim().length() == 0) {
+			UUID appUuid = new UUID();
+			appUuidStr = appUuid.toString();
+
+			PrefManager.writePref(PrefConstants.APP_UUID, appUuidStr);
+		}
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("App UUID: '" + appUuidStr + "'");
+		}
+	}
+
 	private void onNormalRun(String currentVersion) {
 		if (logger.isInfoEnabled()) {
 			logger.info("This is a normal run. Current version is: '" + currentVersion + "'");
@@ -118,6 +166,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 
 	private void onFirstRun(String newVersion) {
+		initPrefValues();
 		updateVersion(newVersion);
 		if (logger.isInfoEnabled()) {
 			logger.info("This is not an update of an older version. New version is: '" + newVersion + "'");

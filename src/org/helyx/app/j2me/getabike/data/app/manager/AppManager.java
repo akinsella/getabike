@@ -13,6 +13,7 @@ import org.helyx.app.j2me.getabike.data.app.exception.VersionException;
 import org.helyx.app.j2me.getabike.data.app.provider.ApplicationDataContentProvider;
 import org.helyx.app.j2me.getabike.data.app.util.PropertiesHelper;
 import org.helyx.app.j2me.getabike.data.provider.PropertiesContentProvider;
+import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.basics4me.util.Properties;
 import org.helyx.helyx4me.concurrent.Future;
 import org.helyx.helyx4me.content.accessor.HttpContentAccessor;
@@ -77,7 +78,7 @@ public class AppManager {
 			Version appVersion = new Version(appVersionStr);
 			
 			String propertiesUrl = getPropertiesUrl(configurationMetaData, appVersion);
-			
+			propertiesUrl = UtilManager.completeUrlWithAppUuid(propertiesUrl);
 			IContentAccessor httpContentAccessor = new HttpContentAccessor(propertiesUrl, true);
 			IContentProvider propertiesContentProvider = new PropertiesContentProvider(httpContentAccessor);
 			IProgressTask propertiesContentProviderProgressTask = new ContentProviderProgressTaskAdapter(propertiesContentProvider);

@@ -89,11 +89,6 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 
 	}
 
-	public void beforeDisplayableSelection(AbstractDisplayable current, AbstractDisplayable next) {
-		super.beforeDisplayableSelection(current, next);
-		filterAndSort();
-	}
-
 	protected void showMenuView() {
 		MenuListView menuListView = new MenuListView(getMidlet(), "view.station.list.menu.title", false);
 		
@@ -168,6 +163,15 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	
 	protected void configureStationSearchFilters() {
 		StationSearchView stationSearchView = new StationSearchView(getMidlet(), this);
+		stationSearchView.setReturnCallback(new IReturnCallback() {
+
+			public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
+				filterAndSort();
+				
+				showDisplayable(StationListView.this);
+			}
+			
+		});
 		showDisplayable(stationSearchView);
 	}
 	

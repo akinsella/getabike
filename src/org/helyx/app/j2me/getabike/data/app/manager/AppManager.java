@@ -29,7 +29,7 @@ public class AppManager {
 	private static final Logger logger = Logger.getLogger("APP_MANAGER");
 	
 	private static final String APPLICATION_UID = "GETABIKE";
-	private static final String APPLICATION_DATA_URL = "http://m.helyx.org/getabike/data/config.xml";
+	private static final String APPLICATION_DATA_URL = "http://m.helyx.org/getabike/data/config.xml?uuid=${app.uuid}";
 	
 	private static Properties applicationProperties;
 	
@@ -78,7 +78,6 @@ public class AppManager {
 			Version appVersion = new Version(appVersionStr);
 			
 			String propertiesUrl = getPropertiesUrl(configurationMetaData, appVersion);
-			propertiesUrl = UtilManager.completeUrlWithAppUuid(propertiesUrl);
 			IContentAccessor httpContentAccessor = new HttpContentAccessor(propertiesUrl, true);
 			IContentProvider propertiesContentProvider = new PropertiesContentProvider(httpContentAccessor);
 			IProgressTask propertiesContentProviderProgressTask = new ContentProviderProgressTaskAdapter(propertiesContentProvider);

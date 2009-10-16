@@ -8,7 +8,6 @@ import org.helyx.helyx4me.model.list.IElementProvider;
 import org.helyx.helyx4me.pref.Pref;
 import org.helyx.helyx4me.pref.PrefHelper;
 import org.helyx.helyx4me.pref.PrefManager;
-import org.helyx.helyx4me.text.TextUtil;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
@@ -40,13 +39,6 @@ public class UtilManager {
 	
 	private static String poiImgClasspath;
 	private static String poiSelectedImgClasspath;
-
-	public static String completeUrlWithAppUuid(String url) {
-		String appUuid = PrefManager.readPrefString(PrefConstants.APP_UUID);
-		String newUrl = TextUtil.replaceAll(url, "${APP_UUID}", appUuid);
-		
-		return newUrl;
-	}
 	
 	public static void showGoogleMapsView(final AbstractView view, final String title, final POIInfoAccessor poiInfoAccessor, final Object elementSelected, final IElementProvider elementProvider, final int zoom) {
 		try {

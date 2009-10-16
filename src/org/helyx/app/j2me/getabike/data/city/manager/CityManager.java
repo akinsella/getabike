@@ -41,7 +41,6 @@ public class CityManager {
 
 	public static IProgressTask createUpdateCitiesTask() {
 		String cityDataUrl = AppManager.getProperty(DATA_CITY_URL);
-		cityDataUrl = UtilManager.completeUrlWithAppUuid(cityDataUrl);
 		IContentAccessor cityContentAccessor = new HttpGetABikeContentAccessor(cityDataUrl);
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
 		IProgressTask progressTask = new ContentProviderProgressTaskAdapter(contentProvider);

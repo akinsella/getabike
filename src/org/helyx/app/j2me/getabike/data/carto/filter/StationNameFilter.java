@@ -9,18 +9,18 @@ public class StationNameFilter implements Filter {
 
 	public StationNameFilter(String stationName) {
 		super();
-		this.stationName = stationName;
+		setStationName(stationName);
 	}
 
 	public boolean matches(Object object) {
 		Station station = (Station)object;
 		
-		if (station == null) {
-			return false;
-		}
-		
 		if (stationName == null) {
 			return true;
+		}
+		
+		if (station == null) {
+			return false;
 		}
 		
 		if (station.name == null) {
@@ -31,6 +31,9 @@ public class StationNameFilter implements Filter {
 	}
 	
 	public void setStationName(String stationName) {
+		if (stationName != null) {
+			stationName = stationName.toUpperCase();
+		}
 		this.stationName = stationName;
 	}
 

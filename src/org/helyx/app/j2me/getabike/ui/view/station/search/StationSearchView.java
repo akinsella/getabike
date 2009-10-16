@@ -37,20 +37,12 @@ public class StationSearchView extends PrefBaseListView {
 	 
 	private void init() {
 		initActions();
-		initCommands();
 		initData();
 		initComponents();
+		initCommands();
 	}
 	
 	private void initCommands() {
-		
-		setSecondaryCommand(new Command("command.ok", true, getMidlet().getI18NTextRenderer(), new IAction() {
-
-			public void run(Object data) {
-				fireReturnCallback();
-			}
-			
-		}));
 		
 		setSecondaryCommand(new Command("command.back", true, getMidlet().getI18NTextRenderer(), new IAction() {
 

@@ -50,8 +50,6 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	
 	private FilterBuilder filterBuilder;
 	
-	
-	
 	private City city;
 
 	public StationListView(AbstractMIDlet midlet, String title) {
@@ -90,7 +88,12 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		}));
 
 	}
-	
+
+	public void beforeDisplayableSelection(AbstractDisplayable current, AbstractDisplayable next) {
+		super.beforeDisplayableSelection(current, next);
+		filterAndSort();
+	}
+
 	protected void showMenuView() {
 		MenuListView menuListView = new MenuListView(getMidlet(), "view.station.list.menu.title", false);
 		
@@ -134,9 +137,9 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 
 	private void showGoogleMapsView() {
 		POIInfoAccessor poiInfoAccessor = new StationPoiInfoAccessor();
-		Object elementSelected = getStationSelected();
+		Object stationSelected = getStationSelected();
 		
-		UtilManager.showGoogleMapsView(this, "view.station.list.map.title", poiInfoAccessor, elementSelected, getElementProvider(), 15);
+		UtilManager.showGoogleMapsView(this, "view.station.list.map.title", poiInfoAccessor, stationSelected, getElementProvider(), 15);
 	}
 	
 	protected Station getStationSelected() {
@@ -149,8 +152,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 
 	protected void initData() {
 		IElementProvider arrayStationsProvider = new ArrayElementProvider(new Station[0]);
-		refStationProvider = new RefElementProvider();
-		refStationProvider.setElementProvider(arrayStationsProvider);
+		refStationProvider = new RefElementProvider(arrayStationsProvider);
 		filteredSortedElementProvider = new DynamicFilterableSortableElementProvider(refStationProvider);
 		filteredSortedElementProvider.setComparator(new StationNameComparator());
 		setItems((IElementProvider)filteredSortedElementProvider);
@@ -161,21 +163,11 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	}
 	
 	public Station[] getAllStations() {
-		return (Station[])filteredSortedElementProvider.getRawElementProvider().getElements();
+		return (Station[])refStationProvider.getElementProvider().getElements();
 	}
 	
 	protected void configureStationSearchFilters() {
 		StationSearchView stationSearchView = new StationSearchView(getMidlet(), this);
-		stationSearchView.setReturnCallback(new IReturnCallback() {
-
-			public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
-
-				filterAndSort();
-				
-				showDisplayable(StationListView.this);
-			}
-			
-		});
 		showDisplayable(stationSearchView);
 	}
 	
@@ -196,7 +188,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		
 		StationDetailsView stationDetailsView = new StationDetailsView(getMidlet(), city, station);
 		stationDetailsView.setAllowSearchNearStation(allowNested);
-		stationDetailsView.setRelatedStations(refStationProvider);
+		stationDetailsView.setRelatedStations(refStationProvider.getElementProvider());
 
 		showDisplayable(stationDetailsView, this);
 	}
@@ -210,8 +202,6 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 				switch (eventType) {
 					case EventType.ON_SUCCESS:
 						setStationsProvider(new ArrayElementProvider((Station[])eventData));
-						
-						filterAndSort();
 						
 						stationListView.showDisplayable(stationListView, new BasicTransition());
 

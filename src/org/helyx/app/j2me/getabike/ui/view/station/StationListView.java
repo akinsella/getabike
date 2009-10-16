@@ -102,7 +102,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 			}
 		}));
 		
-		if (city.localization && elementProvider.length() > 0) {
+		if (city.localization && getElementProvider().length() > 0) {
 			menu.addMenuItem(new MenuItem("view.station.list.item.view.map", new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
 				public void run(Object data) {
 					showGoogleMapsView();
@@ -136,15 +136,15 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		POIInfoAccessor poiInfoAccessor = new StationPoiInfoAccessor();
 		Object elementSelected = getStationSelected();
 		
-		UtilManager.showGoogleMapsView(this, "view.station.list.map.title", poiInfoAccessor, elementSelected, elementProvider, 15);
+		UtilManager.showGoogleMapsView(this, "view.station.list.map.title", poiInfoAccessor, elementSelected, getElementProvider(), 15);
 	}
 	
 	protected Station getStationSelected() {
-		return (Station)elementProvider.get(selectedOffset);
+		return (Station)getElementProvider().get(selectedOffset);
 	}
 	
 	protected void showItemSelected() {
-		onShowItemSelected(elementProvider.get(selectedOffset));
+		onShowItemSelected(getElementProvider().get(selectedOffset));
 	}
 
 	protected void initData() {
@@ -159,12 +159,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	}
 	
 	public Station[] getAllStations() {
-		return (Station[]) 
-		( 
-			(elementProvider instanceof IFilterableSortableElementProvider) ? 
-				((IFilterableSortableElementProvider)elementProvider).getRawElementProvider().getElements() : 
-				elementProvider.getElements() 
-		);
+		return (Station[])filteredSortedElementProvider.getRawElementProvider().getElements();
 	}
 	
 	protected void configureStationSearchFilters() {

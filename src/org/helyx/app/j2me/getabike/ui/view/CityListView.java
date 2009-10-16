@@ -16,7 +16,7 @@ import org.helyx.helyx4me.renderer.text.DefaultTextRenderer;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.ProgressTaskReturnCallback;
-import org.helyx.helyx4me.ui.view.support.MenuListView;
+import org.helyx.helyx4me.ui.view.support.menu.MenuListView;
 import org.helyx.helyx4me.ui.widget.command.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;

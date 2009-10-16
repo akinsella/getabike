@@ -13,11 +13,11 @@ import org.helyx.app.j2me.getabike.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
-import org.helyx.app.j2me.getabike.ui.theme.AppThemeConstants;
 import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.map.google.POIInfoAccessor;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.model.list.IElementProvider;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.geometry.Rectangle;
@@ -26,9 +26,8 @@ import org.helyx.helyx4me.ui.theme.ThemeConstants;
 import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.util.ImageUtil;
 import org.helyx.helyx4me.ui.view.AbstractView;
-import org.helyx.helyx4me.ui.view.support.MenuListView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
-import org.helyx.helyx4me.ui.view.support.list.IElementProvider;
+import org.helyx.helyx4me.ui.view.support.menu.MenuListView;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.helyx4me.ui.widget.ImageSet;
 import org.helyx.helyx4me.ui.widget.command.Command;
@@ -105,28 +104,28 @@ public class StationDetailsView extends AbstractView {
 							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.250", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(nearStationMenuListView, city, station, 250, false, false, false);
+									CartoManager.showStationByDistance(nearStationMenuListView, city, relatedStations, station, 250, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.500", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(nearStationMenuListView, city, station, 500, false, false, false);
+									CartoManager.showStationByDistance(nearStationMenuListView, city, relatedStations, station, 500, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.1000", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(nearStationMenuListView, city, station, 1000, false, false, false);
+									CartoManager.showStationByDistance(nearStationMenuListView, city, relatedStations, station, 1000, false, false);
 								}
 			
 							}));
 							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.2000", new IAction() {
 								
 								public void run(Object data) {
-									CartoManager.showStationByDistance(nearStationMenuListView, city, station, 2000, false, false, false);
+									CartoManager.showStationByDistance(nearStationMenuListView, city, relatedStations, station, 2000, false, false);
 								}
 			
 							}));

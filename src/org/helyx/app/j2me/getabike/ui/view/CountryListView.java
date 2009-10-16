@@ -7,7 +7,7 @@ import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManagerException;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
-import org.helyx.helyx4me.ui.view.support.MenuListView;
+import org.helyx.helyx4me.ui.view.support.menu.MenuListView;
 import org.helyx.helyx4me.ui.widget.ImageSet;
 import org.helyx.helyx4me.ui.widget.command.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;

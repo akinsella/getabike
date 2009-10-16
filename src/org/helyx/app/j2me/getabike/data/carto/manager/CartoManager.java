@@ -1,12 +1,9 @@
 package org.helyx.app.j2me.getabike.data.carto.manager;
 
-import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.app.j2me.getabike.data.carto.comparator.StationDistanceComparator;
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
-import org.helyx.app.j2me.getabike.data.carto.filter.StationCityFilter;
+import org.helyx.app.j2me.getabike.data.carto.filter.DefaultStationFilterBuilder;
 import org.helyx.app.j2me.getabike.data.carto.filter.StationDistanceFilter;
-import org.helyx.app.j2me.getabike.data.carto.filter.StationNameFilter;
-import org.helyx.app.j2me.getabike.data.carto.filter.StationZipCodeFilter;
 import org.helyx.app.j2me.getabike.data.carto.provider.details.factory.VelibStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.details.factory.VeloPlusStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.details.factory.VeloVStationDetailsContentProviderFactory;
@@ -22,7 +19,6 @@ import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.SimpleStationI
 import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.VelibStationInfoNormalizer;
 import org.helyx.app.j2me.getabike.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
-import org.helyx.app.j2me.getabike.ui.view.renderer.DistanceStationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.renderer.StationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
@@ -30,11 +26,8 @@ import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.content.provider.IContentProviderFactory;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryException;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryNotFoundExcepton;
-import org.helyx.helyx4me.filter.ChainedFilter;
-import org.helyx.helyx4me.filter.Filter;
-import org.helyx.helyx4me.filter.FilterBuilder;
 import org.helyx.helyx4me.filter.FilterHelper;
-import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.model.list.IElementProvider;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.logging4me.Logger;
@@ -167,49 +160,41 @@ public class CartoManager {
 		}	
 	}
 
-	public static void showStationByDistance(AbstractDisplayable previousDisplayable, final City city, final Station station, final int distanceMax, boolean filteringEnabled, boolean allowMenu, boolean allowNested) {
-		StationListView stationListView = new StationListView(previousDisplayable.getMidlet(), "manager.carto.view.station.list.title");
-		stationListView.setCity(city);
-		stationListView.setReferentStation(station);
-		stationListView.setAllowMenu(allowMenu);
-		stationListView.setPreviousDisplayable(previousDisplayable);
-		stationListView.setCellRenderer(new DistanceStationItemRenderer());
-		stationListView.setAllowNested(allowNested);
-		stationListView.setFilterBuilder(FilterHelper.createFilterBuilder(new StationDistanceFilter(station, distanceMax)));
-		stationListView.setComparator(new StationDistanceComparator());
-		stationListView.loadListContent();
-	}
 
-	public static StationListView createStationListView(AbstractDisplayable previousDisplayable, final City city) {
-		StationListView stationListView = new StationListView(previousDisplayable.getMidlet(), "view.station.list.title");
+	public static void showStationByDistance(AbstractDisplayable previousDisplayable, final City city, IElementProvider stationsProvider, Station referentStation, int distanceMax, boolean allowMenu, boolean allowNested) {
+		StationListView stationListView = createStationListViewByDistance(previousDisplayable, city, stationsProvider, referentStation, distanceMax, allowMenu, allowNested);
+		
+		previousDisplayable.showDisplayable(stationListView);
+	}
+	
+	protected static StationListView createBaseStationListView(AbstractDisplayable previousDisplayable, String title, final City city) {
+		StationListView stationListView = new StationListView(previousDisplayable.getMidlet(), title);
+
 		stationListView.setPreviousDisplayable(previousDisplayable);
 		stationListView.setCellRenderer(new StationItemRenderer());
 		stationListView.setCity(city);
-		stationListView.setAllowMenu(true);
-		stationListView.setAllowNested(true);
-		stationListView.setFilterBuilder(new FilterBuilder() {
-			
-			public Filter buildFilter() {
-				ChainedFilter chainedFilter = new ChainedFilter();
-				
-				String stationNameFilter = PrefManager.readPrefString(PrefConstants.PREF_STATION_NAME_FILTER);
-				if (stationNameFilter != null && stationNameFilter.length() > 0) {
-					chainedFilter.addFilter(new StationNameFilter(stationNameFilter));
-				}
+		
+		return stationListView;
+	}
 
-				String zipCodeFilter = PrefManager.readPrefString(PrefConstants.PREF_STATION_ZIPCODE_FILTER);
-				if (zipCodeFilter != null && zipCodeFilter.length() > 0) {
-					chainedFilter.addFilter(new StationZipCodeFilter(zipCodeFilter));
-				}
+	public static StationListView createStationListView(AbstractDisplayable previousDisplayable, final City city) {
+		StationListView stationListView = createBaseStationListView(previousDisplayable, "view.station.list.title", city);
 
-				String cityFilter = PrefManager.readPrefString(PrefConstants.PREF_STATION_CITY_FILTER);
-				if (cityFilter != null && cityFilter.length() > 0) {
-					chainedFilter.addFilter(new StationCityFilter(cityFilter));
-				}
+		stationListView.setFilterBuilder(new DefaultStationFilterBuilder());
+		
+		return stationListView;
+	}
 
-				return chainedFilter;
-			}
-		});
+	public static StationListView createStationListViewByDistance(AbstractDisplayable previousDisplayable, City city, IElementProvider stationsProvider, Station referentStation, int distanceMax, boolean allowMenu, boolean allowNested) {
+		StationListView stationListView = createBaseStationListView(previousDisplayable, "manager.carto.view.station.list.title", city);
+
+		stationListView.setAllowMenu(allowMenu);
+		stationListView.setAllowNested(allowNested);
+		stationListView.setStationsProvider(stationsProvider);
+		stationListView.setReferentStation(referentStation);
+		stationListView.setFilterBuilder(FilterHelper.createFilterBuilder(new StationDistanceFilter(referentStation, distanceMax)));
+		stationListView.setComparator(new StationDistanceComparator());
+		stationListView.filterAndSort();
 		
 		return stationListView;
 	}

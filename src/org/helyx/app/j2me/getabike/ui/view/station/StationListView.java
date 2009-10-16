@@ -15,19 +15,19 @@ import org.helyx.helyx4me.filter.Filter;
 import org.helyx.helyx4me.filter.FilterBuilder;
 import org.helyx.helyx4me.map.google.POIInfoAccessor;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.model.list.IDynamicFilterableSortableElementProvider;
+import org.helyx.helyx4me.model.list.IElementProvider;
+import org.helyx.helyx4me.model.list.impl.ArrayElementProvider;
+import org.helyx.helyx4me.model.list.impl.DynamicFilterableSortableElementProvider;
+import org.helyx.helyx4me.model.list.impl.RefElementProvider;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
-import org.helyx.helyx4me.ui.view.support.LoadTaskView;
-import org.helyx.helyx4me.ui.view.support.MenuListView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
-import org.helyx.helyx4me.ui.view.support.list.ArrayElementProvider;
-import org.helyx.helyx4me.ui.view.support.list.DynamicFilterableSortableElementProvider;
-import org.helyx.helyx4me.ui.view.support.list.IDynamicFilterableSortableElementProvider;
-import org.helyx.helyx4me.ui.view.support.list.IElementProvider;
-import org.helyx.helyx4me.ui.view.support.list.IFilterableSortableElementProvider;
+import org.helyx.helyx4me.ui.view.support.menu.MenuListView;
+import org.helyx.helyx4me.ui.view.support.task.LoadTaskView;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.helyx4me.ui.widget.ImageSet;
 import org.helyx.helyx4me.ui.widget.command.Command;
@@ -40,7 +40,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	
 	private static final Logger logger = Logger.getLogger("STATION_LIST_VIEW");
 	
-	private ArrayElementProvider elementProvider;
+	private RefElementProvider refStationProvider;
 	private IDynamicFilterableSortableElementProvider filteredSortedElementProvider;
 	
 	private Station referentStation;
@@ -148,8 +148,10 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	}
 
 	protected void initData() {
-		elementProvider = new ArrayElementProvider(new Station[0]);
-		filteredSortedElementProvider = new DynamicFilterableSortableElementProvider(elementProvider);
+		IElementProvider arrayStationsProvider = new ArrayElementProvider(new Station[0]);
+		refStationProvider = new RefElementProvider();
+		refStationProvider.setElementProvider(arrayStationsProvider);
+		filteredSortedElementProvider = new DynamicFilterableSortableElementProvider(refStationProvider);
 		filteredSortedElementProvider.setComparator(new StationNameComparator());
 		setItems((IElementProvider)filteredSortedElementProvider);
 	}
@@ -177,7 +179,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		showDisplayable(stationSearchView);
 	}
 	
-	protected void filterAndSort() {
+	public void filterAndSort() {
 		Filter filter = filterBuilder != null ? filterBuilder.buildFilter() : null;
 		
 		resetPosition();
@@ -194,7 +196,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		
 		StationDetailsView stationDetailsView = new StationDetailsView(getMidlet(), city, station);
 		stationDetailsView.setAllowSearchNearStation(allowNested);
-		stationDetailsView.setRelatedStations(elementProvider);
+		stationDetailsView.setRelatedStations(refStationProvider);
 
 		showDisplayable(stationDetailsView, this);
 	}
@@ -207,7 +209,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 				StationListView stationListView = StationListView.this;
 				switch (eventType) {
 					case EventType.ON_SUCCESS:
-						setStations((Station[])eventData);
+						setStationsProvider(new ArrayElementProvider((Station[])eventData));
 						
 						filterAndSort();
 						
@@ -273,8 +275,8 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		filteredSortedElementProvider.setComparator(comparator);
 	}
 
-	public void setStations(Station[] stations) {
-		elementProvider.setElements(stations);
+	public void setStationsProvider(IElementProvider stationsProvider) {
+		refStationProvider.setElementProvider(stationsProvider);
 		filterAndSort();
 	}
 

@@ -188,7 +188,7 @@ public class PrefListView extends PrefBaseListView {
 					}
 
 					private void fetchAppUuid() {
-						String appUuid = PrefManager.readPrefString(PrefConstants.APP_UUID);
+						String appUuid = PrefManager.readPrefString(PrefConstants.APP_UUID, "---");
 						if (logger.isDebugEnabled()) {
 							logger.debug("App UUID: " + appUuid);	
 						}

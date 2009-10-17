@@ -27,17 +27,17 @@ public class HttpGetABikeContentAccessor extends HttpContentAccessor {
 
 		String appUuid = PrefManager.readPrefString(PrefConstants.APP_UUID);
 		if (appUuid != null && appUuid.trim().length() > 0) {
-			newUrl = TextUtil.replaceAll(url, "${app.uuid}", appUuid);
+			newUrl = TextUtil.replaceAll(newUrl, "${app.uuid}", appUuid);
 		}
 
 		String appVersion = PrefManager.readPrefString(PrefConstants.APP_VERSION);
 		if (appVersion != null && appVersion.trim().length() > 0) {
-			newUrl = TextUtil.replaceAll(url, "${app.version}", appVersion);
+			newUrl = TextUtil.replaceAll(newUrl, "${app.version}", appVersion);
 		}
 
-		String appName = PrefManager.readPrefString(PrefConstants.APP_KEY);
-		if (appName != null && appName.trim().length() > 0) {
-			newUrl = TextUtil.replaceAll(url, "${app.name}", appName);
+		String appKey = PrefManager.readPrefString(PrefConstants.APP_KEY);
+		if (appKey != null && appKey.trim().length() > 0) {
+			newUrl = TextUtil.replaceAll(newUrl, "${app.key}", appKey);
 		}
 		
 		return newUrl;

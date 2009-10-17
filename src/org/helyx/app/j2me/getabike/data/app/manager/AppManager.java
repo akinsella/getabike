@@ -73,7 +73,7 @@ public class AppManager {
 			
 			ConfigurationMetadata configurationMetaData = (ConfigurationMetadata)Future.get(progressTask);
 			
-			String appVersionStr = PrefManager.readPrefString(PrefConstants.MIDLET_VERSION);
+			String appVersionStr = PrefManager.readPrefString(PrefConstants.APP_VERSION);
 			Version appVersion = new Version(appVersionStr);
 			
 			String propertiesUrl = getPropertiesUrl(configurationMetaData, appVersion);

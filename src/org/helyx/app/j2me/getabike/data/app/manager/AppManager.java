@@ -77,7 +77,7 @@ public class AppManager {
 			Version appVersion = new Version(appVersionStr);
 			
 			String propertiesUrl = getPropertiesUrl(configurationMetaData, appVersion);
-			IContentAccessor httpContentAccessor = new HttpContentAccessor(propertiesUrl, true);
+			IContentAccessor httpContentAccessor = new HttpGetABikeContentAccessor(propertiesUrl, true);
 			IContentProvider propertiesContentProvider = new PropertiesContentProvider(httpContentAccessor);
 			IProgressTask propertiesContentProviderProgressTask = new ContentProviderProgressTaskAdapter(propertiesContentProvider);
 			

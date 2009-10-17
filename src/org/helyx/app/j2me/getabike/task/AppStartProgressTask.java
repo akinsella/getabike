@@ -154,9 +154,9 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		if (appUuidStr == null || appUuidStr.trim().length() == 0) {
 			UUID appUuid = new UUID();
 			appUuidStr = appUuid.toString();
-
-			PrefManager.writePref(PrefConstants.APP_UUID, appUuidStr);
 		}
+		
+		PrefManager.writePref(PrefConstants.APP_UUID, appUuidStr);
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("App UUID: '" + appUuidStr + "'");

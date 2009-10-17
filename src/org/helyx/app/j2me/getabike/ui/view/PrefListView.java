@@ -339,7 +339,7 @@ public class PrefListView extends PrefBaseListView {
 
 	private void fetchVersion() {
 		try {
-			String version = PrefManager.readPrefString(PrefConstants.MIDLET_VERSION);
+			String version = PrefManager.readPrefString(PrefConstants.APP_VERSION);
 			if (version != null) {
 				versionMenuItem.setData(PREF_VALUE,version);
 			}

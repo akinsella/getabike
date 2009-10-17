@@ -64,7 +64,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 	
 	private void checkAppRun() {
-		String currentVersion = PrefManager.readPrefString(PrefConstants.MIDLET_VERSION);
+		String currentVersion = PrefManager.readPrefString(PrefConstants.APP_VERSION);
 		String newVersion = view.getMidlet().getAppProperty(PrefConstants.MIDLET_VERSION);
 		if (currentVersion == null) {
 			onFirstRun(newVersion);
@@ -139,6 +139,11 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	private void initPrefValues() {
 		initGoogleMapsKeyValue();
 		initAppUuidValue();
+		initAppKey();
+	}
+
+	private void initAppKey() {
+		PrefManager.writePref(PrefConstants.APP_KEY, view.getMidlet().getAppKey());
 	}
 	
 	private void initGoogleMapsKeyValue() {
@@ -175,7 +180,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 
 	private void updateVersion(String newVersion) {
-		PrefManager.writePref(PrefConstants.MIDLET_VERSION, newVersion);
+		PrefManager.writePref(PrefConstants.APP_VERSION, newVersion);
 	}
 
 	private void onAppUpdate(String oldVersion, String newVersion) {

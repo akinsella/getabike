@@ -25,8 +25,14 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 
 	private static final Logger logger = Logger.getLogger("GETABIKE_MIDLET");
 
+	public static final String APP_KEY = "GET_A_BIKE";
+
 	public GetABikeMIDlet() {
 		super();
+	}
+	
+	public String getAppKey() {
+		return APP_KEY;
 	}
 
 	protected void onStart() {

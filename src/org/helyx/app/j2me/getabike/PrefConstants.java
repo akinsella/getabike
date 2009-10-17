@@ -3,6 +3,8 @@ package org.helyx.app.j2me.getabike;
 public class PrefConstants {
 	
 	public static final String APP_UUID = "APP_UUID";
+	public static final String APP_KEY = "APP_NAME";
+	public static final String APP_VERSION = "APP_VERSION";
 	
 	public static final String CITY_CURRENT_KEY = "CITY_CURRENT_KEY";
 	

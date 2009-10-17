@@ -13,7 +13,6 @@ import org.helyx.app.j2me.getabike.data.app.exception.VersionException;
 import org.helyx.app.j2me.getabike.data.app.provider.ApplicationDataContentProvider;
 import org.helyx.app.j2me.getabike.data.app.util.PropertiesHelper;
 import org.helyx.app.j2me.getabike.data.provider.PropertiesContentProvider;
-import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.basics4me.util.Properties;
 import org.helyx.helyx4me.concurrent.Future;
 import org.helyx.helyx4me.content.accessor.HttpContentAccessor;
@@ -29,7 +28,7 @@ public class AppManager {
 	private static final Logger logger = Logger.getLogger("APP_MANAGER");
 	
 	private static final String APPLICATION_UID = "GETABIKE";
-	private static final String APPLICATION_DATA_URL = "http://m.helyx.org/getabike/data/config.xml?uuid=${app.uuid}";
+	private static final String APPLICATION_DATA_URL = "http://m.helyx.org/getabike/data/config.xml?name=${app.name}&amp;version=${app.version}&amp;uuid=${app.uuid}";
 	
 	private static Properties applicationProperties;
 	

@@ -82,4 +82,8 @@ public class XmlMIDlet extends AbstractMIDlet {
 		logger.info("Platform memory card: '" + memoryCard + "'");
 	}
 
+	public String getAppKey() {
+		return "XML_APP_KEY";
+	}
+
 }

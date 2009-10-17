@@ -23,8 +23,22 @@ public class HttpGetABikeContentAccessor extends HttpContentAccessor {
 	}
 	
 	public static String completeUrlWithAppUuid(String url) {
+		String newUrl = url;
+
 		String appUuid = PrefManager.readPrefString(PrefConstants.APP_UUID);
-		String newUrl = TextUtil.replaceAll(url, "${app.uuid}", appUuid);
+		if (appUuid != null && appUuid.trim().length() > 0) {
+			newUrl = TextUtil.replaceAll(url, "${app.uuid}", appUuid);
+		}
+
+		String appVersion = PrefManager.readPrefString(PrefConstants.APP_VERSION);
+		if (appVersion != null && appVersion.trim().length() > 0) {
+			newUrl = TextUtil.replaceAll(url, "${app.version}", appVersion);
+		}
+
+		String appName = PrefManager.readPrefString(PrefConstants.APP_KEY);
+		if (appName != null && appName.trim().length() > 0) {
+			newUrl = TextUtil.replaceAll(url, "${app.name}", appName);
+		}
 		
 		return newUrl;
 	}

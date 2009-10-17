@@ -28,7 +28,7 @@ public class AppManager {
 	private static final Logger logger = Logger.getLogger("APP_MANAGER");
 	
 	private static final String APPLICATION_UID = "GETABIKE";
-	private static final String APPLICATION_DATA_URL = "http://m.helyx.org/getabike/data/config.xml?name=${app.key}&amp;version=${app.version}&amp;uuid=${app.uuid}";
+	private static final String APPLICATION_DATA_URL = "http://m.helyx.org/getabike/data/config.xml?key=${app.key}&amp;version=${app.version}&amp;uuid=${app.uuid}";
 	
 	private static Properties applicationProperties;
 	

@@ -181,7 +181,7 @@ public class MenuView extends AbstractView {
 		}
 		
 		private void showStationListView(City city) {
-			if (stationListView == null) {
+			if (stationListView == null || !stationListView.getCity().key.equals(city.key)) {
 				stationListView = CartoManager.createStationListView(this, city);
 				stationListView.loadListContent();
 			}

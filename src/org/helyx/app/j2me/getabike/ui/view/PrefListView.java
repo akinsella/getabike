@@ -83,7 +83,7 @@ public class PrefListView extends PrefBaseListView {
 						public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
 							String currentCountry = CityManager.getCurrentCountry();
 							if (currentCountry != null) {
-								selectCountry();
+								selectCity(currentCountry);
 							}
 						}
 					});

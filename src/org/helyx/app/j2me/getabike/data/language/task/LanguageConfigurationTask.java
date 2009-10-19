@@ -43,7 +43,7 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 						if (logger.isInfoEnabled()) {
 							logger.info(view.getMessage("task.language.load.message"));
 						}
-						IProgressTask progressTask = LanguageManager.refreshDataWithDefaults();
+						IProgressTask progressTask = LanguageManager.createUpdateLanguagesTask();
 						progressTask.addProgressListener(new LanguageLoaderProgressListener(progressTask.getProgressDispatcher(), view));
 						progressTask.addProgressListener(new ProgressAdapter(logger.getCategory().getName()) {
 
@@ -57,18 +57,15 @@ public class LanguageConfigurationTask extends AbstractProgressTask {
 							
 						});
 						Vector languageList = (Vector)Future.get(progressTask);
-						String defaultLanguageKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_DEFAULT_KEY);
-						Enumeration _enum = languageList.elements();
-						while(_enum.hasMoreElements()) {
-							Language language = (Language)_enum.nextElement();
-							if (language.key.equals(defaultLanguageKey)) {
-								PrefManager.writePref(PrefConstants.LANGUAGE_CURRENT_KEY, language.key);
-							}
+						if (languageList.size() > 0) {
+							Language language = (Language)languageList.elementAt(0);
+							PrefManager.writePref(PrefConstants.LANGUAGE_CURRENT_KEY, language.key);
 						}
 					}
 					Language selectedLanguage = LanguageManager.getCurrentLanguage();
 					view.getMidlet().setLocale(new Locale(selectedLanguage.localeCountry, selectedLanguage.localeLanguage));
-
+					view.getMidlet().loadCurrentLocale();
+					
 					progressDispatcher.fireEvent(EventType.ON_SUCCESS);
 				}
 				catch(Throwable t) {

@@ -32,7 +32,7 @@ public class LanguageManager {
 		super();
 	}
 
-	public static IProgressTask refreshDataWithDefaults() {
+	public static IProgressTask createUpdateLanguagesTask() {
 		
 		IContentAccessor languageContentAccessor = new ClasspathContentAccessor("/org/helyx/app/j2me/getabike/data/language/languages.xml");
 		IContentProvider contentProvider = new DefaultLanguageContentProvider(languageContentAccessor);
@@ -49,10 +49,6 @@ public class LanguageManager {
 		if (logger.isInfoEnabled()) {
 			logger.info("Current Language key: " + languageSelectedKeyPrefValue);
 		}
-		String languageDefaultKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_DEFAULT_KEY);
-		if (logger.isInfoEnabled()) {
-			logger.info("Default Language key: " + languageSelectedKeyPrefValue);
-		}
 		
 		Enumeration _enum = languageList.elements();
 		while(_enum.hasMoreElements()) {
@@ -63,16 +59,9 @@ public class LanguageManager {
 			}
 		}
 
-		if (selectedLanguage == null) {
-			_enum = languageList.elements();
-			while(_enum.hasMoreElements()) {
-				Language language = (Language)_enum.nextElement();
-				if (language.key.equals(languageDefaultKeyPrefValue)) {
-					selectedLanguage = language;
-					PrefManager.writePref(PrefConstants.LANGUAGE_CURRENT_KEY, selectedLanguage.key);
-					break;
-				}
-			}
+		if (selectedLanguage == null && languageList.size() > 0) {
+			selectedLanguage = (Language)languageList.elementAt(0);
+			PrefManager.writePref(PrefConstants.LANGUAGE_CURRENT_KEY, selectedLanguage.key);
 		}
 		
 		if (selectedLanguage == null) {
@@ -85,6 +74,18 @@ public class LanguageManager {
 		
 		return selectedLanguage;
 	}
+	
+	public static void saveLanguages(Vector languageList) {
+		cache.set(LANGUAGE_LIST, languageList);
+		LanguagePersistenceService languagePersistenceService = new LanguagePersistenceService();
+
+		try {
+			languagePersistenceService.saveLanguages(languageList);
+		}
+		finally {
+			languagePersistenceService.dispose();
+		}
+	}
 
 	public static Vector findAllLanguages() {
 		Vector languageList = (Vector)cache.get(LANGUAGE_LIST);
@@ -93,7 +94,7 @@ public class LanguageManager {
 		}
 		LanguagePersistenceService languagePersistenceService = new LanguagePersistenceService();
 		try {
-			languageList = languagePersistenceService.findAllCities();
+			languageList = languagePersistenceService.findAllLanguages();
 			cache.set(LANGUAGE_LIST, languageList);
 			return languageList;
 		}
@@ -105,7 +106,7 @@ public class LanguageManager {
 	public static int countLanguages() {
 		LanguagePersistenceService languagePersistenceService = new LanguagePersistenceService();
 		try {
-			int count = languagePersistenceService.countCities();
+			int count = languagePersistenceService.countLanguages();
 			
 			return count;
 		}
@@ -120,11 +121,10 @@ public class LanguageManager {
 	
 	public static void cleanUpSavedData() {
 		cache.remove(LANGUAGE_LIST);
-		PrefManager.removePref(PrefConstants.LANGUAGE_DEFAULT_KEY);
 		PrefManager.removePref(PrefConstants.LANGUAGE_CURRENT_KEY);
 		LanguagePersistenceService languagePersistenceService = new LanguagePersistenceService();
 		try {
-			languagePersistenceService.removeAllCities();
+			languagePersistenceService.removeAllLanguages();
 		}
 		finally {
 			languagePersistenceService.dispose();

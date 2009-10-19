@@ -5,6 +5,7 @@ import java.util.Vector;
 import org.helyx.app.j2me.getabike.data.language.LanguageConstants;
 import org.helyx.app.j2me.getabike.data.language.comparator.LanguageNameComparator;
 import org.helyx.app.j2me.getabike.data.language.domain.Language;
+import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.getabike.data.language.service.ILanguagePersistenceService;
 import org.helyx.app.j2me.getabike.data.language.service.LanguagePersistenceService;
 import org.helyx.helyx4me.sort.FastQuickSort;
@@ -38,7 +39,7 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 
 //		progressDispatcher.fireEvent(ProgressEventType.ON_START);
    		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.language.data.remove"));
-		languagePersistenceService.removeAllCities();
+		languagePersistenceService.removeAllLanguages();
 	}
 	
 	public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
@@ -54,33 +55,21 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 	}
 
 	public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
-		try {
-			int languageListSize = languageList.size();
-	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, languageListSize + " " + view.getMessage("progress.listener.loader.language.data.loaded"));
-			languageArray = new Language[languageListSize];
-			languageList.copyInto(languageArray);
+		int languageListSize = languageList.size();
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, languageListSize + " " + view.getMessage("progress.listener.loader.language.data.loaded"));
 
-//			languageList = null;
-			System.gc();
-	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.language.data.sort"));
-			try { new FastQuickSort(new LanguageNameComparator()).sort(languageArray); } catch (Exception e) { logger.warn(e); }
-	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.language.data.save"));
-//			logger.debug("About to save cities");
-			languagePersistenceService.saveLanguageArray(languageArray);
-	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.language.end"));
-//			logger.debug("Cities saved");
-			languageArray = null;
-			System.gc();
-	
-			// Notify end of progress 
-//			progressDispatcher.fireEvent(eventType, eventMessage, eventData);
-		}
-		finally {
-			if (logger.isDebugEnabled()) {
-				logger.debug("Disposing languagePersistenceService");				
-			}
-			languagePersistenceService.dispose();
-		}
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.language.data.sort"));
+		try { new FastQuickSort(new LanguageNameComparator()).sort(languageArray); } catch (Exception e) { logger.warn(e); }
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.language.data.save"));
+//		logger.debug("About to save cities");
+		LanguageManager.saveLanguages(languageList);
+   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.language.end"));
+//		logger.debug("Cities saved");
+		languageArray = null;
+		System.gc();
+
+		// Notify end of progress 
+//		progressDispatcher.fireEvent(eventType, eventMessage, eventData);
 	}
 
 }

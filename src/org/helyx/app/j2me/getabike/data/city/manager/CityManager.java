@@ -12,7 +12,6 @@ import org.helyx.app.j2me.getabike.data.city.provider.DefaultCityContentProvider
 import org.helyx.app.j2me.getabike.data.city.service.CityPersistenceService;
 import org.helyx.app.j2me.getabike.ui.view.CityListView;
 import org.helyx.app.j2me.getabike.ui.view.CountryListView;
-import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.cache.Cache;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;

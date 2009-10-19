@@ -38,7 +38,7 @@ public class LanguagePersistenceService implements ILanguagePersistenceService {
 		return languageDao;
 	}
 
-	public Vector findAllCities() {
+	public Vector findAllLanguages() {
 		return getLanguageDao().findAllRecords();
 	}
 
@@ -49,11 +49,16 @@ public class LanguagePersistenceService implements ILanguagePersistenceService {
 //		return language;
 	}
 
-	public void removeAllCities() {
+	public void removeAllLanguages() {
 		getLanguageDao().removeAllRecords();
 	}
 
-	public void saveLanguageArray(Language[] languageArray) {
+	public void saveLanguages(Vector languageList) {
+		
+		int languageListSize = languageList.size();
+		Language[] languageArray = new Language[languageListSize];
+		languageList.copyInto(languageArray);
+
 		getLanguageDao().saveRecordArray(languageArray);
 	}
 
@@ -65,7 +70,7 @@ public class LanguagePersistenceService implements ILanguagePersistenceService {
 		getLanguageDao().destroyRecordEnumeration(languageEnumeration);
 	}
 
-	public int countCities() {
+	public int countLanguages() {
 		return getLanguageDao().countRecords();
 	}
 

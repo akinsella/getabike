@@ -8,7 +8,6 @@ public class PrefConstants {
 	
 	public static final String CITY_CURRENT_KEY = "CITY_CURRENT_KEY";
 	
-	public static final String LANGUAGE_DEFAULT_KEY = "LANGUAGE_DEFAULT_KEY";
 	public static final String LANGUAGE_CURRENT_KEY = "LANGUAGE_CURRENT_KEY";
 
 	public static final String SOFT_KEY_LEFT = "SOFT_KEY_LEFT";

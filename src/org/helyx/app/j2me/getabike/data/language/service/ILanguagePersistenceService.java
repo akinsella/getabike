@@ -10,17 +10,17 @@ public interface ILanguagePersistenceService {
 
 	Language findLanguageByKey(String languageKey);
 	
-	void saveLanguageArray(Language[] languageArray);
+	void saveLanguages(Vector languageList);
 	
-	Vector findAllCities();
+	Vector findAllLanguages();
 
-	void removeAllCities();
+	void removeAllLanguages();
 
 	MultiRecordEnumeration createLanguageEnumeration(RecordFilter recordFilter);
 	
 	void destroyLanguageEnumeration(MultiRecordEnumeration languageEnumeration);
 
-	int countCities();
+	int countLanguages();
 	
 	void dispose();
 

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<logging4me xmlns="http://logging4me.helyx.org/logging4me-1.0.0.xsd" thresholdLevel="INFO" debugMode="false">
+<logging4me xmlns="http://logging4me.helyx.org/logging4me-1.0.0.xsd" thresholdLevel="DEBUG" debugMode="false">
 
 	<!-- Layouts -->
-	<!-- layout name="pl" class="org.helyx.logging4me.layout.pattern.PatternLayout">
+	<layout name="pl" class="org.helyx.logging4me.layout.pattern.PatternLayout">
 		<property name="pattern" value="|%T|%L|%C|%D{yyyy/MM/dd, HH:mm:ss.ZZ}| " />
-	</layout -->
+	</layout>
 	
 	<layout name="sl" class="org.helyx.logging4me.layout.SimpleLayout" />
-
+	 
 	<!-- Appenders -->
 	<appender name="console" class="org.helyx.logging4me.appender.ConsoleAppender">
-		<property name="thresholdLevel" value="INFO" />
+		<property name="thresholdLevel" value="DEBUG" />
 		<property name="layout" value="sl" />
 	</appender>
 	
@@ -24,8 +24,10 @@
 	 -->
  
  	<!-- Categories -->
+ 	<!-- 
 	<category name="org.helyx.app.j2me.getabike" level="INFO" />
 	<category name="org.helyx.helyx4me" level="INFO" />
 	<category name="org.helyx.helyx4me.content.accessor" level="INFO" />
-	
+	 -->
+
 </logging4me>

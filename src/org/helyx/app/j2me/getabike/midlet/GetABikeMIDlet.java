@@ -3,6 +3,9 @@ package org.helyx.app.j2me.getabike.midlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.data.language.domain.Language;
+import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
+import org.helyx.app.j2me.getabike.data.language.manager.LanguageManagerException;
 import org.helyx.app.j2me.getabike.task.AppStartProgressTask;
 import org.helyx.app.j2me.getabike.ui.view.MenuView;
 import org.helyx.app.j2me.getabike.ui.view.SplashScreenView;
@@ -39,9 +42,15 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 		LoggerConfigurer loggerConfigurer = new XmlConfigurer("/org/helyx/app/j2me/getabike/logging4me.xml", true);
 		loggerConfigurer.configure();
 		
-		setThemeConfiguration("default", "org.helyx.app.j2me.getabike.theme");
-		setI18nConfiguration("messages", "org.helyx.app.j2me.getabike.i18n");
-		setLocale(Locale.FRANCE);
+		setDefaultLocale(Locale.FRANCE);
+		
+		loadConfiguredLocale();
+		
+		setThemeConfiguration("org.helyx.app.j2me.getabike.theme", "default");
+		loadThemeResourceBundle();
+		
+		setI18nConfiguration("org.helyx.app.j2me.getabike.i18n", "messages");		
+		loadI18nResourceBundle();
 		
 		final SplashScreenView splashScreenView = new SplashScreenView(this);
 		splashScreenView.show();
@@ -62,6 +71,20 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 		});
 		
 		splashScreenView.followProgressTask(appStartProgressTask);
+	}
+
+	private void loadConfiguredLocale() {
+		try {
+			Language currentLanguage = LanguageManager.getCurrentLanguage();
+			if (currentLanguage != null) {
+				setLocale(new Locale(currentLanguage.localeCountry, currentLanguage.localeLanguage));
+			}
+		}
+		catch (LanguageManagerException e) {
+			if (logger.isDebugEnabled()) {
+				logger.debug(e);
+			}
+		}
 	}
 
 	private void onStartSuccess(AbstractView view) {

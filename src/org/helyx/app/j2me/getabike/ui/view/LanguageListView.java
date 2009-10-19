@@ -56,6 +56,7 @@ public class LanguageListView extends MenuListView {
 				Language language = (Language)menuItem.getData();
 				LanguageManager.saveSelectedLanguage(language);
 				getMidlet().setLocale(new Locale(language.localeCountry, language.localeLanguage));
+				getMidlet().loadCurrentLocale();
 				fireReturnCallback();
 			}
 			

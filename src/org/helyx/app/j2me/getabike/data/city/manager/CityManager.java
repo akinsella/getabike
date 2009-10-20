@@ -232,7 +232,7 @@ public class CityManager {
 
 	public static void selectCity(final AbstractView currentView, final IReturnCallback returnCallback, boolean forceLoadCityListView) {
 		final City currentCity = CityManager.getCurrentCity();
-		if (currentCity != null || forceLoadCityListView) {
+		if (currentCity != null && !forceLoadCityListView) {
 			returnCallback.onReturn(currentView, currentCity);	
 			return ;
 		}

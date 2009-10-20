@@ -33,8 +33,7 @@ public class PrefListView extends PrefBaseListView {
 	private Throwable prefException;
 
 	public PrefListView(AbstractMIDlet midlet) {
-		super(midlet, "");
-		setTitle("view.pref.title");
+		super(midlet, "view.pref.title");
 		init();
 	}
 	 

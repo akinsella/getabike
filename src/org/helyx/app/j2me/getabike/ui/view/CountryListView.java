@@ -4,7 +4,6 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
-import org.helyx.app.j2me.getabike.data.city.manager.CityManagerException;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.ui.view.support.menu.MenuListView;
@@ -24,11 +23,11 @@ public class CountryListView extends MenuListView {
 	
 	private String currentCountry;
 
-	public CountryListView(AbstractMIDlet midlet) throws CityManagerException {
+	public CountryListView(AbstractMIDlet midlet) {
 		this(midlet, true);
 	}
 	
-	public CountryListView(AbstractMIDlet midlet, boolean cancellable) throws CityManagerException {
+	public CountryListView(AbstractMIDlet midlet, boolean cancellable) {
 		super(midlet, "", true);
 		this.cancellable = cancellable;
 		setTitle("view.country.title");

@@ -3,7 +3,6 @@ package org.helyx.app.j2me.getabike.data.language.provider;
 import java.io.InputStream;
 import java.util.Vector;
 
-import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.app.j2me.getabike.data.language.LanguageConstants;
 import org.helyx.app.j2me.getabike.data.language.domain.Language;
 import org.helyx.basics4me.io.BufferedInputStream;
@@ -11,13 +10,11 @@ import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.AbstractContentProvider;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderException;
-import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.stream.InputStreamProvider;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.xml.xpp.XppAttributeProcessor;
 import org.helyx.helyx4me.xml.xpp.XppUtil;
 import org.helyx.logging4me.Logger;
-
 import org.xmlpull.v1.XmlPullParser;
 
 public class DefaultLanguageContentProvider extends AbstractContentProvider {

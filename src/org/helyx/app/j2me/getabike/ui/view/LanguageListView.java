@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.getabike.data.language.domain.Language;
 import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
-import org.helyx.app.j2me.getabike.data.language.manager.LanguageManagerException;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.i18n.Locale;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
@@ -66,12 +65,13 @@ public class LanguageListView extends MenuListView {
 	protected void initData() {
 		languageList = LanguageManager.findAllLanguages();
 		logger.info("languageList: " + languageList);
-		try {
-			currentLanguage = LanguageManager.getCurrentLanguage();
+		
+		currentLanguage = LanguageManager.getCurrentLanguage();
+		
+		if (currentLanguage == null) {
+			throw new RuntimeException("No current language configured");
 		}
-		catch (LanguageManagerException lme) {
-			throw new RuntimeException(lme.getMessage());
-		}
+		
 		logger.info("selectedLanguage: " + languageList);
 	}
 	

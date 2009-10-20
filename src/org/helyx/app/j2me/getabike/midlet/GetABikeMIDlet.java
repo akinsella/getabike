@@ -3,9 +3,7 @@ package org.helyx.app.j2me.getabike.midlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
-import org.helyx.app.j2me.getabike.data.language.domain.Language;
 import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
-import org.helyx.app.j2me.getabike.data.language.manager.LanguageManagerException;
 import org.helyx.app.j2me.getabike.task.AppStartProgressTask;
 import org.helyx.app.j2me.getabike.ui.view.MenuView;
 import org.helyx.app.j2me.getabike.ui.view.SplashScreenView;
@@ -75,14 +73,11 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 
 	private void loadConfiguredLocale() {
 		try {
-			Language currentLanguage = LanguageManager.getCurrentLanguage();
-			if (currentLanguage != null) {
-				setLocale(new Locale(currentLanguage.localeCountry, currentLanguage.localeLanguage));
-			}
+			LanguageManager.configureLocaleWithCurentLanguage(this);
 		}
-		catch (LanguageManagerException e) {
+		catch(Throwable t) {
 			if (logger.isDebugEnabled()) {
-				logger.debug(e);
+				logger.debug(t);				
 			}
 		}
 	}

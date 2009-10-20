@@ -20,9 +20,8 @@ import org.helyx.helyx4me.pref.Pref;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
-import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.logging4me.Logger;
 
 public class CityManager {
@@ -181,34 +180,6 @@ public class CityManager {
 			cityPersistenceService.dispose();
 		}
 	}
-	
-	public static void showCityListView(AbstractDisplayable currentDisplayable) {
-		String currentCountry = CityManager.getCurrentCountry();
-		showCityListView(currentDisplayable, currentCountry, new BasicReturnCallback(currentDisplayable));
-	}
-	
-	public static void showCityListView(AbstractDisplayable currentDisplayable, String country) {
-		showCityListView(currentDisplayable, country, new BasicReturnCallback(currentDisplayable));
-	}
-	
-	public static void showCityListView(AbstractDisplayable currentDisplayable, IReturnCallback returnCallback) {
-		String currentCountry = CityManager.getCurrentCountry();
-		showCityListView(currentDisplayable, currentCountry, new BasicReturnCallback(currentDisplayable));
-	}
-	
-	public static void showCityListView(AbstractDisplayable currentDisplayable, String country, IReturnCallback returnCallback) {
-		CityListView cityListView;
-		try {
-			cityListView = new CityListView(currentDisplayable.getMidlet(), country);
-			cityListView.setReturnCallback(returnCallback);
-			currentDisplayable.showDisplayable(cityListView);
-		}
-		catch (CityManagerException cme) {
-			logger.warn(cme);
-			DialogUtil.showAlertMessage(currentDisplayable, "dialog.title.error", currentDisplayable.getMessage("manage.city.error", cme.getMessage()));
-		}
-	}
-
 
 	public static void clearCurrentCountry() {
 		PrefManager.removePref(PrefConstants.COUNTRY_SELECTED_KEY);
@@ -241,22 +212,72 @@ public class CityManager {
 		PrefManager.writePref(PrefConstants.CITY_CURRENT_KEY, city.key);
 		clearStationSearch();
 	}
-
-	public static void showCountryListView(AbstractDisplayable currentDisplayable) {
-		showCountryListView(currentDisplayable, new BasicReturnCallback(currentDisplayable));
-	}
-
-	public static void showCountryListView(AbstractDisplayable currentDisplayable, IReturnCallback returnCallback) {
-		CountryListView countryListView;
-		try {
-			countryListView = new CountryListView(currentDisplayable.getMidlet());
-			countryListView.setReturnCallback(returnCallback);
-			currentDisplayable.showDisplayable(countryListView);
-		}
-		catch (CityManagerException cme) {
-			logger.warn(cme);
-			DialogUtil.showAlertMessage(currentDisplayable, "dialog.title.error", currentDisplayable.getMessage("manage.city.error", cme.getMessage()));
-		}
-	}
 	
+	public static void selectCountry(final AbstractView currentView, final IReturnCallback returnCallback) {
+		final CountryListView countryListView = new CountryListView(currentView.getMidlet(), true);
+		countryListView.setReturnCallback(new IReturnCallback() {
+
+			public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
+				String currentCountry = CityManager.getCurrentCountry();
+				returnCallback.onReturn(countryListView, currentCountry != null ? currentCountry : null);
+			}
+			
+		});
+		currentView.showDisplayable(countryListView);
+	}
+
+	public static void selectCity(AbstractView currentView, IReturnCallback returnCallback) {
+		selectCity(currentView, returnCallback, false);
+	}
+
+	public static void selectCity(final AbstractView currentView, final IReturnCallback returnCallback, boolean forceLoadCityListView) {
+		final City currentCity = CityManager.getCurrentCity();
+		if (currentCity != null || forceLoadCityListView) {
+			returnCallback.onReturn(currentView, currentCity);	
+			return ;
+		}
+		
+		final String currentCountry = CityManager.getCurrentCountry();
+		
+		if (currentCountry == null) {
+			CityManager.selectCountry(currentView, new IReturnCallback() {
+				public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
+					String currentCountry = (String)data;
+					if (currentCountry != null) {
+						selectCity(currentView, returnCallback);
+					}
+					else {
+						returnCallback.onReturn(currentView, null);
+					}
+				}
+			});
+			return ;
+		}
+			
+		final CityListView cityListView = new CityListView(currentView.getMidlet(), currentCountry, true);
+		cityListView.setReturnCallback(new IReturnCallback() {
+			public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
+				try {
+					City currentCity = CityManager.getCurrentCity();
+					
+					// Should not append!
+					if (currentCity != null && !currentCity.country.equals(currentCountry)) {
+						CityManager.clearCurrentCountry();
+						CityManager.clearCurrentCity(true);
+						returnCallback.onReturn(cityListView, null);
+					}
+					else {
+						returnCallback.onReturn(cityListView, currentCity);
+					}
+				}
+				catch(Throwable t) {
+					logger.warn(t);
+					returnCallback.onReturn(currentView, null);
+				}
+			}
+		});
+		
+		currentView.showDisplayable(cityListView);
+	}
+
 }

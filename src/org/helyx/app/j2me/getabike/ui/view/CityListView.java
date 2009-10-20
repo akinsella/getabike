@@ -8,7 +8,6 @@ import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
-import org.helyx.app.j2me.getabike.data.city.manager.CityManagerException;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.manager.TaskManager;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
@@ -35,15 +34,15 @@ public class CityListView extends MenuListView {
 	
 	private Vector cityList;
 
-	public CityListView(AbstractMIDlet midlet, String country) throws CityManagerException {
+	public CityListView(AbstractMIDlet midlet, String country) {
 		this(midlet, country, true);
 	}
 	
-	public CityListView(AbstractMIDlet midlet, boolean cancellable) throws CityManagerException {
+	public CityListView(AbstractMIDlet midlet, boolean cancellable) {
 		this(midlet, null, cancellable);
 	}
 	
-	public CityListView(AbstractMIDlet midlet, String country, boolean cancellable) throws CityManagerException {
+	public CityListView(AbstractMIDlet midlet, String country, boolean cancellable) {
 		super(midlet, "", true);
 		setTitle("view.city.title");
 		this.country = country;

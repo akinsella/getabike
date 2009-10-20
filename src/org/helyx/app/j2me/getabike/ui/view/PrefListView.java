@@ -10,7 +10,7 @@ import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
-import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
+import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
 import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
@@ -43,23 +43,6 @@ public class PrefListView extends PrefBaseListView {
 		initData();
 		initComponents();
 	}
-	
-	private void selectCountry() {
-		selectCountry(null);
-	}
-	
-	private void selectCountry(IReturnCallback returnCallback) {
-		if (returnCallback != null) {
-			CityManager.showCountryListView(PrefListView.this, returnCallback);
-		}
-		else {
-			CityManager.showCountryListView(PrefListView.this);			
-		}
-	}
-	
-	private void selectCity(String currentCountry) {
-		CityManager.showCityListView(PrefListView.this, currentCountry);			
-	}
 
 	protected void initComponents() {
 		
@@ -67,27 +50,13 @@ public class PrefListView extends PrefBaseListView {
 		
 		countryMenuItem = new MenuItem("view.pref.item.country", new IAction() {
 			public void run(Object data) {
-				selectCountry();
+				CityManager.selectCountry(PrefListView.this, new BasicReturnCallback(PrefListView.this));
 			}
 		});
 		
 		cityMenuItem = new MenuItem("view.pref.item.cities", new IAction() {
 			public void run(Object data) {
-				String currentCountry = CityManager.getCurrentCountry();
-				if (currentCountry != null) {
-					selectCity(currentCountry);		
-				}
-				else {
-					selectCountry(new IReturnCallback() {
-						
-						public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
-							String currentCountry = CityManager.getCurrentCountry();
-							if (currentCountry != null) {
-								selectCity(currentCountry);
-							}
-						}
-					});
-				}
+				CityManager.selectCity(PrefListView.this, new BasicReturnCallback(PrefListView.this), true);
 			}
 		});
 		

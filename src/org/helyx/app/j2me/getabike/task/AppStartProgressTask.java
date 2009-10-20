@@ -4,8 +4,8 @@ import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.city.listener.CityLoaderProgressListener;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
+import org.helyx.app.j2me.getabike.data.language.listener.LanguageLoaderProgressListener;
 import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
-import org.helyx.app.j2me.getabike.data.language.task.LanguageConfigurationTask;
 import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.AbstractProgressTask;
@@ -216,7 +216,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 	
 	private void checkLanguages() {
-		int languagagesCount  = LanguageManager.countLanguages();
+		int languagagesCount = LanguageManager.countLanguages();
 		if (languagagesCount <= 0) {
 			configureLanguages();
 		}
@@ -249,7 +249,13 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	
 	private  void configureLanguages() {
 		onProgress(view.getMessage("task.app.start.data.language.load.start"));
-		IProgressTask progressTask = new LanguageConfigurationTask(view);
+		IProgressTask progressTask = LanguageManager.createUpdateLanguagesTask();
+		progressTask.addProgressListener(new LanguageLoaderProgressListener(progressTask.getProgressDispatcher(), view));
+		progressTask.addProgressListener(new ProgressAdapter("LOCALE_CONFIGURER") {
+			public void onSuccess(String eventMessage, Object eventData) {
+				LanguageManager.configureLocaleWithCurentLanguage(view.getMidlet());
+			}
+		});
 		progressTask.addProgressListener(new StartProgressAdapter(STEP_LANGUAGE_DATA_OK));
 		progressTask.execute();
 	}

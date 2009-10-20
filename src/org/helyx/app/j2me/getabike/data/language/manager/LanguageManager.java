@@ -13,12 +13,13 @@ import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;
+import org.helyx.helyx4me.i18n.Locale;
+import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.logging4me.Logger;
-
 
 public class LanguageManager {
 
@@ -41,19 +42,20 @@ public class LanguageManager {
 		return progressTask;
 	}
 
-	public static Language getCurrentLanguage() throws LanguageManagerException {
+	public static Language getCurrentLanguage() {
 		Vector languageList = findAllLanguages();
 		Language selectedLanguage = null;
 
-		String languageSelectedKeyPrefValue = PrefManager.readPrefString(PrefConstants.LANGUAGE_CURRENT_KEY);
+		String currentLanguageKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_CURRENT_KEY);
+
 		if (logger.isInfoEnabled()) {
-			logger.info("Current Language key: " + languageSelectedKeyPrefValue);
+			logger.info("Current Language key: " + currentLanguageKey);
 		}
 		
 		Enumeration _enum = languageList.elements();
 		while(_enum.hasMoreElements()) {
 			Language language = (Language)_enum.nextElement();
-			if (language.key.equals(languageSelectedKeyPrefValue)) {
+			if (language.key.equals(currentLanguageKey)) {
 				selectedLanguage = language;
 				break;
 			}
@@ -65,7 +67,9 @@ public class LanguageManager {
 		}
 		
 		if (selectedLanguage == null) {
-			throw new LanguageManagerException("No default/active language exception");
+			if (logger.isDebugEnabled()) {
+				logger.debug("No Current language");
+			}
 		}
 
 		if (logger.isDebugEnabled()) {
@@ -140,8 +144,14 @@ public class LanguageManager {
 		}
 		catch (RuntimeException re) {
 			logger.warn(re);
-			DialogUtil.showAlertMessage(currentDisplayable, "dialog.title.error", currentDisplayable.getMessage("manage.language.error", re.getMessage()));
+			DialogUtil.showAlertMessage(currentDisplayable, "dialog.title.error", currentDisplayable.getMessage("manager.language.error", re.getMessage()));
 		}
+	}
+
+	public static void configureLocaleWithCurentLanguage(AbstractMIDlet midlet) {
+		Language selectedLanguage = LanguageManager.getCurrentLanguage();
+		midlet.setLocale(new Locale(selectedLanguage.localeCountry, selectedLanguage.localeLanguage));
+		midlet.loadCurrentLocale();
 	}
 	
 }

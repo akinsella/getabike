@@ -8,7 +8,6 @@ import javax.microedition.lcdui.game.GameCanvas;
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
-import org.helyx.app.j2me.getabike.data.city.manager.CityManagerException;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
@@ -192,75 +191,29 @@ public class MenuView extends AbstractView {
 		}
 		
 		private void showStations() {
-			try {
-				String currentCountry = CityManager.getCurrentCountry();
-				if (currentCountry == null) {
-					selectCountry();
-					return ;
-				}
-				
-				City currentCity = CityManager.getCurrentCity();
-				if (currentCity == null) {
-					selectCity(currentCountry);
-					return ;
-				}
-
-				// Should not append!
-				if (!currentCity.country.equals(currentCountry)) {
-					CityManager.clearCurrentCountry();
-					CityManager.clearCurrentCity(true);
-					DialogUtil.showAlertMessage(this, "dialog.title.error", getMessage("view.menu.show.station.erro.1", new Object[] { currentCity.key,  currentCountry }));
-					return ;
-				}
-				
+			City currentCity = CityManager.getCurrentCity();
+			if (currentCity == null) {
+				CityManager.selectCity(this, new IReturnCallback() {
+					public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
+						try {
+							City currentCity = (City)data;
+							if (currentCity != null) {
+								showStationListView(currentCity);
+							}
+							else {
+								showDisplayable(MenuView.this);
+							}
+						}
+						catch(Throwable t) {
+							logger.warn(t);
+							DialogUtil.showAlertMessage(MenuView.this, "dialog.title.error", getMessage("view.menu.show.station.error.1"));
+						}
+					}
+				});
+			}
+			else {
 				showStationListView(currentCity);
 			}
-			catch (CityManagerException e) {
-				DialogUtil.showAlertMessage(this, "dialog.title.error", getMessage("view.menu.show.station.error.2"));
-				logger.warn(e);
-			}
-		}
-		
-		private void selectCountry() throws CityManagerException {
-			CountryListView countryListView = new CountryListView(getMidlet(), true);
-			countryListView.setReturnCallback(new IReturnCallback() {
-
-				public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
-					String currentCountry = CityManager.getCurrentCountry();
-					if (currentCountry != null) {
-						showStations();
-					}
-					else {
-						showDisplayable(MenuView.this);
-					}
-				}
-				
-			});
-			showDisplayable(countryListView);
-		}
-		
-		private void selectCity(String currentCountry) throws CityManagerException {
-			CityListView cityListView = new CityListView(getMidlet(), currentCountry, true);
-			cityListView.setReturnCallback(new IReturnCallback() {
-
-				public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
-					try {
-						City currentCity = CityManager.getCurrentCity();
-						if (currentCity != null) {
-							showStations();
-						}
-						else {
-							showDisplayable(MenuView.this);
-						}
-					}
-					catch(Throwable t) {
-						logger.warn(t);
-						DialogUtil.showAlertMessage(MenuView.this, "dialog.title.error", getMessage("view.menu.select.city.error.1", t.getMessage()));
-					}
-				}
-				
-			});
-			showDisplayable(cityListView);
 		}
 
 		private void createMenu() {

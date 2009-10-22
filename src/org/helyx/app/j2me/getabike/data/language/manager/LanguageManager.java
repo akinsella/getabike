@@ -52,15 +52,17 @@ public class LanguageManager {
 			logger.info("Current Language key: " + currentLanguageKey);
 		}
 		
-		Enumeration _enum = languageList.elements();
-		while(_enum.hasMoreElements()) {
-			Language language = (Language)_enum.nextElement();
-			if (language.key.equals(currentLanguageKey)) {
-				selectedLanguage = language;
-				break;
+		if (currentLanguageKey != null) {
+			Enumeration _enum = languageList.elements();
+			while(_enum.hasMoreElements()) {
+				Language language = (Language)_enum.nextElement();
+				if (language.key.equals(currentLanguageKey)) {
+					selectedLanguage = language;
+					break;
+				}
 			}
 		}
-
+		
 		if (selectedLanguage == null && languageList.size() > 0) {
 			selectedLanguage = (Language)languageList.elementAt(0);
 			PrefManager.writePref(PrefConstants.LANGUAGE_CURRENT_KEY, selectedLanguage.key);
@@ -119,13 +121,21 @@ public class LanguageManager {
 		}
 	}
 
-	public static void saveSelectedLanguage(Language language) {
-		PrefManager.writePref(PrefConstants.LANGUAGE_CURRENT_KEY, language.key);
+	public static void clearCurrentLanguage() {
+		PrefManager.removePref(PrefConstants.LANGUAGE_CURRENT_KEY);
+	}
+
+	public static void setCurrentLanguage(Language language) {
+		setCurrentLanguage(language.key);
+	}
+
+	public static void setCurrentLanguage(String languageKey) {
+		PrefManager.writePref(PrefConstants.LANGUAGE_CURRENT_KEY, languageKey);
 	}
 	
 	public static void cleanUpSavedData() {
 		cache.remove(LANGUAGE_LIST);
-		PrefManager.removePref(PrefConstants.LANGUAGE_CURRENT_KEY);
+		clearCurrentLanguage();
 		LanguagePersistenceService languagePersistenceService = new LanguagePersistenceService();
 		try {
 			languagePersistenceService.removeAllLanguages();

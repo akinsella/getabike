@@ -3,7 +3,6 @@ package org.helyx.app.j2me.getabike.ui.view.renderer;
 import javax.microedition.lcdui.Graphics;
 
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
-import org.helyx.app.j2me.getabike.ui.theme.AppThemeConstants;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
 import org.helyx.helyx4me.math.DistanceUtil;
 import org.helyx.helyx4me.ui.geometry.Rectangle;

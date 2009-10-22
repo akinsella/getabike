@@ -5,7 +5,6 @@ import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.getabike.data.carto.provider.AbstractStationContentProvider;
 import org.helyx.app.j2me.getabike.data.carto.provider.CityBikeStationContentProvider;
-import org.helyx.app.j2me.getabike.data.carto.provider.VelibStationContentProvider;
 import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.helyx4me.content.provider.IContentProvider;

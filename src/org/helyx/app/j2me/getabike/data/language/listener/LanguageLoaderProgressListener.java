@@ -2,15 +2,13 @@ package org.helyx.app.j2me.getabike.data.language.listener;
 
 import java.util.Vector;
 
-import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.app.j2me.getabike.data.language.LanguageConstants;
 import org.helyx.app.j2me.getabike.data.language.comparator.LanguageNameComparator;
 import org.helyx.app.j2me.getabike.data.language.domain.Language;
 import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.getabike.data.language.service.ILanguagePersistenceService;
 import org.helyx.app.j2me.getabike.data.language.service.LanguagePersistenceService;
-import org.helyx.helyx4me.pref.PrefManager;
-import org.helyx.helyx4me.sort.FastQuickSort;
+import org.helyx.helyx4me.sort.FastQuickSortVector;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.IProgressDispatcher;
 import org.helyx.helyx4me.task.ProgressAdapter;
@@ -45,7 +43,20 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
 	}
 	
 	public void onCustomEvent(int eventType, String eventMessage, Object eventData) {
-		if (eventType == LanguageConstants.ON_LANGUAGE_LOADED) {
+		if (eventType == LanguageConstants.ON_DEFAULT_LANGUAGE) {
+			String defaultLanguageKey = (String)eventMessage;
+			
+			if (defaultLanguageKey == null) {
+				LanguageManager.clearCurrentLanguage();
+			}
+			else {
+				if (logger.isDebugEnabled()) {
+					logger.debug("Default language key: '" + defaultLanguageKey + "'");
+				}
+				LanguageManager.setCurrentLanguage(defaultLanguageKey);
+			}
+		}
+		else if (eventType == LanguageConstants.ON_LANGUAGE_LOADED) {
 			Language language = (Language)eventData;
 			languageList.addElement(language);
 			int size = languageList.size();
@@ -61,7 +72,7 @@ public class LanguageLoaderProgressListener extends ProgressAdapter {
    		progressDispatcher.fireEvent(EventType.ON_PROGRESS, languageListSize + " " + view.getMessage("progress.listener.loader.language.data.loaded"));
 
    		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.language.data.sort"));
-		try { new FastQuickSort(new LanguageNameComparator()).sort(languageArray); } catch (Exception e) { logger.warn(e); }
+		try { new FastQuickSortVector(new LanguageNameComparator()).sort(languageList); } catch (Exception e) { logger.warn(e); }
    		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.language.data.save"));
 //		logger.debug("About to save cities");
 		LanguageManager.saveLanguages(languageList);

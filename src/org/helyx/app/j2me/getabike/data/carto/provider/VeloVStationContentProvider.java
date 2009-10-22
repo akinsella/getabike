@@ -15,7 +15,6 @@ import org.helyx.helyx4me.stream.InputStreamProvider;
 import org.helyx.helyx4me.stream.StreamUtil;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.logging4me.Logger;
-
 import org.json.me.JSONArray;
 import org.json.me.JSONObject;
 

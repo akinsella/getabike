@@ -28,6 +28,7 @@ public class DefaultLanguageContentProvider extends AbstractContentProvider {
 	private static final String KEY = "key";
 	private static final String NAME = "name";
 	private static final String COUNTRY = "country";
+	private static final String DEFAULT = "default";
 	private static final String LOCALE_COUNTRY = "localeCountry";
 	private static final String LOCALE_LANGUAGE = "localeLanguage";
 	private static final String INVALID_CONTENT = "Xml content is invalid";
@@ -65,6 +66,14 @@ public class DefaultLanguageContentProvider extends AbstractContentProvider {
 				if (!XppUtil.readToNextElement(xpp, LANGUAGES)) {
 					throw new ContentProviderException(INVALID_CONTENT);
 				}
+	
+				XppAttributeProcessor xppAttributeProcessor0 = new XppAttributeProcessor();
+				xppAttributeProcessor0.addAll(new String[] { DEFAULT });
+				xppAttributeProcessor0.processNode(xpp);
+
+				
+				String defaultLanguageKey = xppAttributeProcessor0.getAttrValueAsString(DEFAULT);
+				progressDispatcher.fireEvent(LanguageConstants.ON_DEFAULT_LANGUAGE, defaultLanguageKey);
 				
 				XppAttributeProcessor xppAttributeProcessor = new XppAttributeProcessor();
 				xppAttributeProcessor.addAll(new String[] { 

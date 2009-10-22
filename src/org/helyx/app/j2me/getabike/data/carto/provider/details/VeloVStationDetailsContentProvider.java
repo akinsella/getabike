@@ -15,7 +15,6 @@ import org.helyx.helyx4me.stream.InputStreamProvider;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.xml.xpp.XppUtil;
 import org.helyx.logging4me.Logger;
-
 import org.xmlpull.v1.XmlPullParser;
 
 

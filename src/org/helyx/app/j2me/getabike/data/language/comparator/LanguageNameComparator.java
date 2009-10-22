@@ -11,6 +11,7 @@ public class LanguageNameComparator implements Comparator {
 	private static final Logger logger = Logger.getLogger("LANGUAGE_NAME_COMPARATOR");
 	
 	public int compare(Object object1, Object object2) {
+		logger.warn("lang1: " + object1 + ", lang2: " + object2);
 		if (object1 == null && object2 == null) {
 			return 0;
 		}

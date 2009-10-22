@@ -15,7 +15,6 @@ import org.helyx.app.j2me.getabike.data.app.util.PropertiesHelper;
 import org.helyx.app.j2me.getabike.data.provider.PropertiesContentProvider;
 import org.helyx.basics4me.util.Properties;
 import org.helyx.helyx4me.concurrent.Future;
-import org.helyx.helyx4me.content.accessor.HttpContentAccessor;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;

@@ -56,7 +56,7 @@ public class MenuView extends AbstractView {
 		}
 
 		protected void paint(Graphics g) {
-			Rectangle clientArea = computeClientArea(g);
+			Rectangle clientArea = computeClientArea();
 	         
 			int x = clientArea.location.x;
 			int y = clientArea.location.y;

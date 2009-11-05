@@ -23,11 +23,6 @@ public class XmlMIDlet extends AbstractMIDlet {
 	
 	public XmlMIDlet() {
 		super();
-		init();
-	}
-
-	private void init() {
-		
 	}
 	
 	protected void destroyApp(boolean flag) {

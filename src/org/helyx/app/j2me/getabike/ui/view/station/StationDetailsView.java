@@ -236,7 +236,7 @@ public class StationDetailsView extends AbstractView {
 		Font mediumFont = FontUtil.MEDIUM;
 		Font mediumBoldFont = FontUtil.MEDIUM_BOLD;
 		
-		Rectangle clientArea = computeClientArea(g);
+		Rectangle clientArea = computeClientArea();
 		int width = clientArea.location.x + 1;
 		int height = clientArea.location.y + 1;
 		int smallFontHeight = smallFont.getHeight();

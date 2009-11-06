@@ -32,6 +32,8 @@ public class AboutView extends AbstractView {
 	private void init() {
 		setFullScreenMode(true);
 		setTitle("view.about.title");
+		setPaintScrollBar(true);
+		setScreenDragging(true);
 		loadLogoImage();
 		
 		initActions();

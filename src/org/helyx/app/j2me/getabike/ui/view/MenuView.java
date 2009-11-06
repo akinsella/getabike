@@ -50,6 +50,8 @@ public class MenuView extends AbstractView {
 		private void init() {
 			setFullScreenMode(true);
 			setTitle("view.menu.title");
+		    setPaintScrollBar(true);
+		    setScreenDragging(true);
 			loadLogoImage();
 			
 			createMenu();

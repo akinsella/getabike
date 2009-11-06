@@ -32,6 +32,8 @@ public class SplashScreenView extends AbstractView {
 	private void init() {
 		setFullScreenMode(true);
 		setTitle("view.splash.title");
+	    setPaintScrollBar(true);
+	    setScreenDragging(true);
 		loadLogoImage();
 	}
 	

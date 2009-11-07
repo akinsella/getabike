@@ -26,13 +26,9 @@ import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
-import org.helyx.helyx4me.ui.view.support.menu.MenuListView;
 import org.helyx.helyx4me.ui.view.support.task.LoadTaskView;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
-import org.helyx.helyx4me.ui.widget.ImageSet;
 import org.helyx.helyx4me.ui.widget.command.Command;
-import org.helyx.helyx4me.ui.widget.menu.Menu;
-import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
 
 
@@ -47,7 +43,16 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	
 	private boolean allowMenu = true;
 	private boolean allowNested = true;
+	private boolean showFavorites = false;
 	
+	public boolean isShowFavorites() {
+		return showFavorites;
+	}
+
+	public void setShowFavorites(boolean showFavorites) {
+		this.showFavorites = showFavorites;
+	}
+
 	private FilterBuilder filterBuilder;
 	
 	private City city;
@@ -90,47 +95,13 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	}
 
 	protected void showMenuView() {
-		MenuListView menuListView = new MenuListView(getMidlet(), "view.station.list.menu.title", false);
-		
-		Menu menu = new Menu();
-		
-		menu.addMenuItem(new MenuItem("view.station.list.item.station.search", new ImageSet(getTheme().getString("IMG_FIND")), new IAction() {
-			public void run(Object data) {
-				configureStationSearchFilters();
-			}
-		}));
-		
-		if (city.localization && getElementProvider().length() > 0) {
-			menu.addMenuItem(new MenuItem("view.station.list.item.view.map", new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
-				public void run(Object data) {
-					showGoogleMapsView();
-				}
-			}));
-		}
-		
-		if (city != null && city.webSite != null) {
-			menu.addMenuItem(new MenuItem("view.station.list.item.view.website", new ImageSet(getTheme().getString("IMG_WEB")), new IAction() {
-				
-				public void run(Object data) {
-					if (logger.isInfoEnabled()) {
-						logger.info("Open city ('" + city.name + "') web site URL: '" + city.webSite + "'");
-					}
-					try {
-						getMidlet().platformRequest(city.webSite);
-					}
-					catch(Throwable t) {
-						DialogUtil.showAlertMessage(StationListView.this, "dialog.title.error", getMessage("view.station.list.item.view.website.error.message", t.getMessage()));
-					}
-				}
-			}));
-		}
-		menuListView.setMenu(menu);
-		menuListView.setPreviousDisplayable(StationListView.this);
-		showDisplayable(menuListView, new BasicTransition());
+		StationMenuView stationMenuView = new StationMenuView(getMidlet(), this);
+		stationMenuView.setPreviousDisplayable(StationListView.this);
+		showDisplayable(stationMenuView, new BasicTransition());	
 	}
 
 
-	private void showGoogleMapsView() {
+	void showGoogleMapsView() {
 		POIInfoAccessor poiInfoAccessor = new StationPoiInfoAccessor();
 		Object stationSelected = getStationSelected();
 		
@@ -276,6 +247,10 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 
 	public void setFilterBuilder(FilterBuilder filterBuilder) {
 		this.filterBuilder = filterBuilder;
+	}
+
+	public boolean isEmpty() {
+		return getElementProvider().length() <= 0;
 	}
 	
 }

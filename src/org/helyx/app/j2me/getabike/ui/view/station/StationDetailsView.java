@@ -59,6 +59,8 @@ public class StationDetailsView extends AbstractView {
 	
 	private void init() {
 		setFullScreenMode(true);
+		setPaintScrollBar(true);
+		setScreenDragging(true);
 		setTitle("view.station.detail.title");
 		loadIconImage();
 		initActions();

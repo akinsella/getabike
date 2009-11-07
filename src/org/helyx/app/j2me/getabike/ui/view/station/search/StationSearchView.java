@@ -20,7 +20,7 @@ import org.helyx.logging4me.Logger;
 
 public class StationSearchView extends PrefBaseListView {
 
-	private static final Logger logger = Logger.getLogger("PREF_LIST_VIEW");
+	private static final Logger logger = Logger.getLogger("STATION_SEARCH_VIEW");
 	
 	private StationListView stationListView;
 

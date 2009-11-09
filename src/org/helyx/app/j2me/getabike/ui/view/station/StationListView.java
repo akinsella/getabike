@@ -4,7 +4,6 @@ import org.helyx.app.j2me.getabike.data.carto.accessor.StationPoiInfoAccessor;
 import org.helyx.app.j2me.getabike.data.carto.comparator.StationNameComparator;
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.filter.BookmarkStationFilterBuilder;
-import org.helyx.app.j2me.getabike.data.carto.filter.record.StationNumberFilter;
 import org.helyx.app.j2me.getabike.data.carto.task.StationLoadTask;
 import org.helyx.app.j2me.getabike.data.city.accessor.ICityAcessor;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
@@ -22,10 +21,8 @@ import org.helyx.helyx4me.model.list.IElementProvider;
 import org.helyx.helyx4me.model.list.impl.ArrayElementProvider;
 import org.helyx.helyx4me.model.list.impl.DynamicFilterableSortableElementProvider;
 import org.helyx.helyx4me.model.list.impl.RefElementProvider;
-import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.ProgressAdapter;
-import org.helyx.helyx4me.text.TextUtil;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
@@ -47,14 +44,14 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	
 	private boolean allowMenu = true;
 	private boolean allowNested = true;
-	private boolean showFavorites = false;
+	private boolean showBookmarks = false;
 	
-	public boolean isShowFavorites() {
-		return showFavorites;
+	public boolean isShowBookmarks() {
+		return showBookmarks;
 	}
 
-	public void setShowFavorites(boolean showFavorites) {
-		this.showFavorites = showFavorites;
+	public void setShowBookmarks(boolean showBookmarks) {
+		this.showBookmarks = showBookmarks;
 	}
 
 	private FilterBuilder filterBuilder;
@@ -99,7 +96,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	}
 
 	protected void showMenuView() {
-		StationMenuView stationMenuView = new StationMenuView(getMidlet(), this);
+		StationListMenuView stationMenuView = new StationListMenuView(getMidlet(), this);
 		stationMenuView.setPreviousDisplayable(StationListView.this);
 		showDisplayable(stationMenuView, new BasicTransition());	
 	}
@@ -151,7 +148,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	}
 	
 	public void filterAndSort() {
-		Filter filter = showFavorites ? new BookmarkStationFilterBuilder(city).buildFilter() : (filterBuilder != null ? filterBuilder.buildFilter() : null);
+		Filter filter = showBookmarks ? new BookmarkStationFilterBuilder(city).buildFilter() : (filterBuilder != null ? filterBuilder.buildFilter() : null);
 		
 		resetPosition();
 		filteredSortedElementProvider.setFilter(filter);

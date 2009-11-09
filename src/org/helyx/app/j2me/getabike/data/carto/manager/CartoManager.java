@@ -237,7 +237,7 @@ public class CartoManager {
 				return ;
 			}
 			
-			sbStationNumbersStr.append(station.number).append(";");
+			sbStationNumbersStr.append(stationNumbers[i]).append(";");
 		}
 		
 		sbStationNumbersStr.append(station.number);
@@ -273,7 +273,7 @@ public class CartoManager {
 		int stationNumbersCount = stationNumbers.length;
 		
 		for (int i = 0 ; i < stationNumbersCount ; i++) {
-			sbStationNumbersStr.append(station.number);
+			sbStationNumbersStr.append(stationNumbers[i]);
 			if (i + 1 < stationNumbersCount) {
 				sbStationNumbersStr.append(";");
 			}

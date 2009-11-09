@@ -37,21 +37,17 @@ public class StationSearchView extends PrefBaseListView {
 	 
 	private void init() {
 		initActions();
-		initData();
 		initComponents();
+		initData();
 		initCommands();
 	}
 	
 	private void initCommands() {
-		
 		setSecondaryCommand(new Command("command.back", true, getMidlet().getI18NTextRenderer(), new IAction() {
-
 			public void run(Object data) {
 				fireReturnCallback();
 			}
-			
 		}));
-
 	}
 
 	private String[] getZipCodes() {
@@ -136,10 +132,6 @@ public class StationSearchView extends PrefBaseListView {
 		menu.addMenuItem(cityFilterMenuItem);
 		
 		setMenu(menu);
-	}
-
-	protected void initData() {
-
 	}
 
 	public void beforeDisplayableSelection(AbstractDisplayable current, AbstractDisplayable next) {

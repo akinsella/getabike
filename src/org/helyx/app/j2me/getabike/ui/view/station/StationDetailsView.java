@@ -26,13 +26,8 @@ import org.helyx.helyx4me.ui.theme.ThemeConstants;
 import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.util.ImageUtil;
 import org.helyx.helyx4me.ui.view.AbstractView;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
-import org.helyx.helyx4me.ui.view.support.menu.MenuListView;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
-import org.helyx.helyx4me.ui.widget.ImageSet;
 import org.helyx.helyx4me.ui.widget.command.Command;
-import org.helyx.helyx4me.ui.widget.menu.Menu;
-import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
 
 
@@ -72,7 +67,7 @@ public class StationDetailsView extends AbstractView {
 		}
 	}
 		
-	private void showGoogleMapsView() {
+	void showGoogleMapsView() {
 		POIInfoAccessor poiInfoAccessor = new StationPoiInfoAccessor();
 		UtilManager.showGoogleMapsView(this, "view.station.detail.map.title", poiInfoAccessor, station, relatedStations, 15);
 	}
@@ -82,77 +77,10 @@ public class StationDetailsView extends AbstractView {
 		setThirdCommand(new Command("command.menu", true, getMidlet().getI18NTextRenderer(), new IAction() {
 
 			public void run(Object data) {
-	
-				final MenuListView menuListView = new MenuListView(getMidlet(), "view.station.detail.menu.title", false);
-
-				Menu menu = new Menu();
-
-				if (city.localization) {
-					menu.addMenuItem(new MenuItem("view.station.detail.menu.item.map", new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
-						
-						public void run(Object data) {
-							showGoogleMapsView();
-						}
-					}));
-				}
+				StationDetailsMenuView stationDetailsMenuView = new StationDetailsMenuView(getMidlet(), StationDetailsView.this);
+				stationDetailsMenuView.setPreviousDisplayable(StationDetailsView.this);
 				
-				if (allowSearchNearStation && city.localization) {
-					menu.addMenuItem(new MenuItem("view.station.detail.menu.item.near.station", new ImageSet(getTheme().getString("IMG_NEAR")), new IAction() {
-						
-						public void run(Object data) {
-							final MenuListView nearStationMenuListView = new MenuListView(getMidlet(), "view.station.detail.item.near.station.menu.title", false);
-
-							Menu nearStationMenu = new Menu();
-							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.250", new IAction() {
-								
-								public void run(Object data) {
-									CartoManager.showStationByDistance(nearStationMenuListView, city, relatedStations, station, 250, false, false);
-								}
-			
-							}));
-							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.500", new IAction() {
-								
-								public void run(Object data) {
-									CartoManager.showStationByDistance(nearStationMenuListView, city, relatedStations, station, 500, false, false);
-								}
-			
-							}));
-							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.1000", new IAction() {
-								
-								public void run(Object data) {
-									CartoManager.showStationByDistance(nearStationMenuListView, city, relatedStations, station, 1000, false, false);
-								}
-			
-							}));
-							nearStationMenu.addMenuItem(new MenuItem("view.station.detail.item.near.station.menu.2000", new IAction() {
-								
-								public void run(Object data) {
-									CartoManager.showStationByDistance(nearStationMenuListView, city, relatedStations, station, 2000, false, false);
-								}
-			
-							}));
-							
-							nearStationMenuListView.setMenu(nearStationMenu);
-							nearStationMenuListView.setPreviousDisplayable(menuListView);
-							showDisplayable(nearStationMenuListView);
-						}
-
-					}));
-				}
-				
-				
-				menu.addMenuItem(new MenuItem(CartoManager.isStationNumberBookmarked(city, station) ? "view.station.detail.menu.item.bookmark.remove" : "view.station.detail.menu.item.bookmark.add", new ImageSet(getTheme().getString("IMG_STAR")), new IAction() {
-					
-					public void run(Object data) {
-						CartoManager.addStationNumberToBookmarks(city, station);
-					}
-
-				}));
-
-				menuListView.setMenu(menu);
-				menuListView.setPreviousDisplayable(StationDetailsView.this);
-
-				showDisplayable(menuListView, new BasicTransition());
+				showDisplayable(stationDetailsMenuView, new BasicTransition());
 			}
 			
 		}));
@@ -405,6 +333,14 @@ public class StationDetailsView extends AbstractView {
 
 	public void setAllowSearchNearStation(boolean allowSearchNearStation) {
 		this.allowSearchNearStation = allowSearchNearStation;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public Station getStation() {
+		return station;
 	}
 
 }

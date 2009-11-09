@@ -181,18 +181,25 @@ public class MenuView extends AbstractView {
 			}
 		}
 		
-		private void showStationListView(City city) {
+		private void showStationListView(City city, boolean showOnlyBookmarks) {
 			if (stationListView == null || !stationListView.getCity().key.equals(city.key)) {
 				stationListView = CartoManager.createStationListView(this, city);
+				stationListView.setShowBookmarks(showOnlyBookmarks);
 				stationListView.loadListContent();
 			}
 			else {
 				stationListView.setCity(city);
+				stationListView.setShowBookmarks(showOnlyBookmarks);
+				stationListView.filterAndSort();
 				showDisplayable(stationListView, this);
 			}
 		}
 		
 		private void showStations() {
+			showStations(false);
+		}
+		
+		private void showStations(final boolean showOnlyBookmarks) {
 			City currentCity = CityManager.getCurrentCity();
 			if (currentCity == null) {
 				CityManager.selectCity(this, new IReturnCallback() {
@@ -200,7 +207,7 @@ public class MenuView extends AbstractView {
 						try {
 							City currentCity = (City)data;
 							if (currentCity != null) {
-								showStationListView(currentCity);
+								showStationListView(currentCity, showOnlyBookmarks);
 							}
 							else {
 								showDisplayable(MenuView.this);
@@ -214,7 +221,7 @@ public class MenuView extends AbstractView {
 				});
 			}
 			else {
-				showStationListView(currentCity);
+				showStationListView(currentCity, showOnlyBookmarks);
 			}
 		}
 
@@ -227,9 +234,9 @@ public class MenuView extends AbstractView {
 				}
 
 			}));
-			menu.addMenuItem(new MenuItem("view.menu.item.station.list.bookmark", false, new IAction() {
+			menu.addMenuItem(new MenuItem("view.menu.item.station.list.bookmark", true, new IAction() {
 				public void run(Object data) {
-					DialogUtil.showAlertMessage(MenuView.this, "dialog.title.information", getMessage("view.menu.item.station.list.bookmark.not.implemented"));
+					showStations(true);
 				}
 			}));
 //			menu.addMenuItem(new MenuItem("view.menu.item.itinerary", false, new IAction() {
@@ -245,7 +252,8 @@ public class MenuView extends AbstractView {
 				
 				private PrefListView getPrefListView() {
 					PrefListView prefListView = new PrefListView(getMidlet());
-						prefListView.setPreviousDisplayable(MenuView.this);
+					prefListView.setPreviousDisplayable(MenuView.this);
+					
 					return prefListView;
 				}
 			}));

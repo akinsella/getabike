@@ -13,8 +13,10 @@ import org.helyx.app.j2me.getabike.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
+import org.helyx.app.j2me.getabike.util.ErrorManager;
 import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
+import org.helyx.helyx4me.manager.TaskManager;
 import org.helyx.helyx4me.map.google.POIInfoAccessor;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.model.list.IElementProvider;
@@ -26,6 +28,9 @@ import org.helyx.helyx4me.ui.theme.ThemeConstants;
 import org.helyx.helyx4me.ui.util.FontUtil;
 import org.helyx.helyx4me.ui.util.ImageUtil;
 import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.helyx4me.ui.widget.command.Command;
 import org.helyx.logging4me.Logger;
@@ -132,17 +137,6 @@ public class StationDetailsView extends AbstractView {
 			IProgressTask progressTask = CartoManager.fetchStationDetails(CityManager.getCurrentCity(), station);
 			progressTask.addProgressListener(new ProgressAdapter(logger.getCategory().getName()) {
 
-				public void onSuccess(String eventMessage, Object eventData) {
-					StationDetailsView.this.logger.info("Station Details fetched for Station number: '" + station.number + "'");
-					StationDetailsView.this.stationDetails = (StationDetails)eventData;
-					StationDetailsView.this.repaint();
-				}
-
-			});
-			progressTask.execute();
-			
-			progressTask.addProgressListener(new ProgressAdapter(logger.getCategory().getName()) {
-
 				public void onStart() {
 					setPrimaryCommandEnabled(false);
 				}
@@ -150,8 +144,34 @@ public class StationDetailsView extends AbstractView {
 				public void onBeforeCompletion(int eventType, String eventMessage, Object eventData) {
 					setPrimaryCommandEnabled(true);
 				}
+
+				public void onSuccess(String eventMessage, Object eventData) {
+					StationDetailsView.this.logger.info("Station Details fetched for Station number: '" + station.number + "'");
+					StationDetailsView.this.stationDetails = (StationDetails)eventData;
+					StationDetailsView.this.repaint();
+				}
 				
+				public void onError(String eventMessage, Object eventData) {
+					if (StationDetailsView.this.logger.isInfoEnabled()) {
+						StationDetailsView.this.logger.info("Error: " + eventMessage + ", data: " + eventData);
+					}
+					
+					Throwable t = (Throwable)eventData;
+
+					DialogUtil.showMessageDialog(
+							StationDetailsView.this, 
+							"dialog.title.error", 
+							getMessage("connection.error") + ": " + ErrorManager.getErrorMessage(getMidlet(), t), 
+							new OkResultCallback() {
+								public void onOk(DialogView dialogView, Object data) {
+									StationDetailsView.this.showDisplayable(StationDetailsView.this);
+								}
+							});
+				}
+
 			});
+		
+			TaskManager.runLoadTaskView("Loading station details", progressTask, getMidlet(), this);
 		}
 		catch (Throwable t) {
 			logger.warn(t);

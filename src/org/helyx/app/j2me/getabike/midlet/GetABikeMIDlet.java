@@ -1,8 +1,5 @@
 package org.helyx.app.j2me.getabike.midlet;
 
-import java.io.IOException;
-
-import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
@@ -15,7 +12,6 @@ import org.helyx.helyx4me.constant.BooleanConstants;
 import org.helyx.helyx4me.i18n.Locale;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
-import org.helyx.helyx4me.stream.exception.HttpAccessException;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.view.AbstractView;

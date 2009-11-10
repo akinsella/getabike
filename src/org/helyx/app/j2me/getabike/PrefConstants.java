@@ -1,7 +1,11 @@
 package org.helyx.app.j2me.getabike;
 
 public class PrefConstants {
-	
+		
+	public static final String RUN_COUNT = "RUN_COUNT";
+	public static final String LAST_RUN_TIMESTAMP = "LAST_RUN_TIMESTAMP";
+	public static final String PREVIOUS_RUN_TIMESTAMP = "PREVIOUS_RUN_TIMESTAMP";
+
 	public static final String APP_UUID = "APP_UUID";
 	public static final String APP_KEY = "APP_NAME";
 	public static final String APP_VERSION = "APP_VERSION";

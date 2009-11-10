@@ -13,6 +13,7 @@ import org.helyx.app.j2me.getabike.data.app.exception.VersionException;
 import org.helyx.app.j2me.getabike.data.app.provider.ApplicationDataContentProvider;
 import org.helyx.app.j2me.getabike.data.app.util.PropertiesHelper;
 import org.helyx.app.j2me.getabike.data.provider.PropertiesContentProvider;
+import org.helyx.app.j2me.getabike.util.ErrorManager;
 import org.helyx.basics4me.util.Properties;
 import org.helyx.helyx4me.concurrent.Future;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
@@ -20,6 +21,14 @@ import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
+import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
+import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.YesNoResultCallback;
+import org.helyx.helyx4me.ui.view.support.task.LoadTaskView;
 import org.helyx.logging4me.Logger;
 
 public class AppManager {
@@ -28,11 +37,148 @@ public class AppManager {
 	
 	private static final String APPLICATION_UID = "GETABIKE";
 	private static final String APPLICATION_DATA_URL = "http://m.helyx.org/getabike/data/config.xml?key=${app.key}&amp;version=${app.version}&amp;uuid=${app.uuid}";
+	private static final String APPLICATION_UPDATE_CHECK_URL = "http://m.helyx.org/getabike/binaries/release.properties?key=${app.key}&amp;version=${app.version}&amp;uuid=${app.uuid}";
+	
+	private static final String APP_RELEASE_LAST_VERSION = "release.last.version";
+	private static final String APP_RELEASE_LAST_DATE = "release.last.date";
+	private static final String APP_RELEASE_LAST_URL = "release.last.url";
 	
 	private static Properties applicationProperties;
 	
 	private AppManager() {
 		super();
+	}
+
+	public static void updateApplication(final AbstractView view) {
+
+		try {
+			String propertiesUrl = APPLICATION_UPDATE_CHECK_URL;
+			IContentAccessor httpContentAccessor = new HttpGetABikeContentAccessor(propertiesUrl, true);
+			IContentProvider propertiesContentProvider = new PropertiesContentProvider(httpContentAccessor);
+			IProgressTask propertiesContentProviderProgressTask = new ContentProviderProgressTaskAdapter(propertiesContentProvider);
+			final LoadTaskView loadTaskView = new LoadTaskView(view.getMidlet(), "view.station.detail.load.message", propertiesContentProviderProgressTask);
+			loadTaskView.setReturnCallback(new BasicReturnCallback(view));
+			propertiesContentProviderProgressTask.addProgressListener(new ProgressAdapter("Loading station details") {
+
+				public void onError(String eventMessage, Object eventData) {
+					if (AppManager.logger.isInfoEnabled()) {
+						AppManager.logger.info("Error: " + eventMessage + ", data: " + eventData);
+					}
+					
+					Throwable t = (Throwable)eventData;
+
+					DialogUtil.showMessageDialog(
+							view, 
+							"dialog.title.error", 
+							view.getMessage("connection.error") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t), 
+							new OkResultCallback() {
+								public void onOk(DialogView dialogView, Object data) {
+									loadTaskView.fireReturnCallback();
+								}
+							});
+				}
+
+				public void onSuccess(String eventMessage, Object eventData) {
+					try {
+						final Properties updateProperties = (Properties)eventData;
+						AppManager.logger.info(updateProperties);
+						if (updateProperties.containsKey(APP_RELEASE_LAST_VERSION) && updateProperties.containsKey(APP_RELEASE_LAST_URL)) {
+							String appReleaseLastVersionStr = updateProperties.getProperty(APP_RELEASE_LAST_VERSION);
+							String currentVersionStr = PrefManager.readPrefString(PrefConstants.APP_VERSION);
+							Version appReleaseLastVersion = new Version(appReleaseLastVersionStr);
+							Version currentVersion = new Version(currentVersionStr);
+							VersionComparator vc = new VersionComparator();
+							if (vc.compare(appReleaseLastVersion, currentVersion) > 0) {
+								DialogUtil.showYesNoDialog(view, "dialog.question", view.getMessage("manager.app.check.update.question", new String[] { appReleaseLastVersionStr, currentVersionStr }), new YesNoResultCallback() {
+									
+									public void onYes(DialogView dialogView, Object data) {
+										
+										try {
+											String targetUrl = updateProperties.getProperty(APP_RELEASE_LAST_URL);
+											view.getMidlet().platformRequest(targetUrl);
+											view.getMidlet().exit();
+										}
+										catch(Throwable t) {
+											AppManager.logger.warn(t);
+											DialogUtil.showMessageDialog(
+													view, 
+													"dialog.title.error", 
+													view.getMessage("dialog.error.unexpected") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t),
+													new OkResultCallback() {
+														
+														public void onOk(DialogView dialogView, Object data) {
+															loadTaskView.fireReturnCallback();
+														}
+													});
+										}
+									}
+									
+									public void onNo(DialogView dialogView, Object data) {
+										DialogUtil.showMessageDialog(
+												view, 
+												"dialog.title.error", 
+												view.getMessage("manager.app.check.update.another.time"),
+												new OkResultCallback() {
+													
+													public void onOk(DialogView dialogView, Object data) {
+														loadTaskView.fireReturnCallback();
+													}
+												});
+									}
+								});
+							}
+							else {
+								DialogUtil.showMessageDialog(
+										view, 
+										"dialog.title.error", 
+										view.getMessage("manager.app.check.update.no.new.version"),
+										new OkResultCallback() {
+											
+											public void onOk(DialogView dialogView, Object data) {
+												loadTaskView.fireReturnCallback();
+											}
+										});
+							}
+						}
+						else {
+							DialogUtil.showMessageDialog(
+									view, 
+									"dialog.title.error", 
+									view.getMessage("manager.app.check.update.recheck.later"),
+									new OkResultCallback() {
+										
+										public void onOk(DialogView dialogView, Object data) {
+											loadTaskView.fireReturnCallback();
+										}
+									});
+						}
+					}
+					catch (Throwable t) {
+						AppManager.logger.warn(t);
+						DialogUtil.showMessageDialog(
+								view, 
+								"dialog.title.error", 
+								view.getMessage("dialog.error.unexpected") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t),
+								new OkResultCallback() {
+									
+									public void onOk(DialogView dialogView, Object data) {
+										loadTaskView.fireReturnCallback();
+									}
+								});
+					}
+				}
+				
+			});
+			view.showDisplayable(loadTaskView);
+			loadTaskView.startTask();
+		}
+		catch (Throwable t) {
+			logger.warn(t);
+			DialogUtil.showAlertMessage(
+					view, 
+					"dialog.title.error", 
+					view.getMessage("dialog.error.unexpected") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t));
+		}
 	}
 
 	public static String getProperty(String key) {

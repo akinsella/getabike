@@ -163,26 +163,6 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		}
 	}
 
-	private void onNormalRun(String currentVersion) {
-		if (logger.isInfoEnabled()) {
-			logger.info("This is a normal run. Current version is: '" + currentVersion + "'");
-		}
-		checkData(STEP_START);
-	}
-
-	private void onFirstRun(String newVersion) {
-		initPrefValues();
-		updateVersion(newVersion);
-		if (logger.isInfoEnabled()) {
-			logger.info("This is not an update of an older version. New version is: '" + newVersion + "'");
-		}
-		checkData(STEP_START);
-	}
-
-	private void updateVersion(String newVersion) {
-		PrefManager.writePref(PrefConstants.APP_VERSION, newVersion);
-	}
-
 	private void onAppUpdate(String oldVersion, String newVersion) {
 		if (logger.isInfoEnabled()) {
 			logger.info("This is  an update of an older version: '" + oldVersion + "'");
@@ -190,9 +170,50 @@ public class AppStartProgressTask extends AbstractProgressTask {
 
 			logger.info("Old version is different from new Version");
 		}
+		updateRunStats();
 		updateVersion(newVersion);
 		
 		checkData(STEP_START);
+	}
+
+	private void onFirstRun(String newVersion) {
+		initPrefValues();
+		updateRunStats();
+		updateVersion(newVersion);
+		if (logger.isInfoEnabled()) {
+			logger.info("This is not an update of an older version. New version is: '" + newVersion + "'");
+		}
+		checkData(STEP_START);
+	}
+
+	private void onNormalRun(String currentVersion) {
+		if (logger.isInfoEnabled()) {
+			logger.info("This is a normal run. Current version is: '" + currentVersion + "'");
+		}
+		updateRunStats();
+		checkData(STEP_START);
+	}
+	
+	private void updateRunStats() {
+		updateRunCount();
+		updateRunTimeStamp();
+	}
+
+	private void updateRunCount() {
+		int runCount = 0;
+		try { runCount = Integer.parseInt(PrefManager.readPrefString(PrefConstants.RUN_COUNT)); } catch(Throwable t) { logger.info("No 'RUN_COUNT' information"); }
+		PrefManager.writePref(PrefConstants.RUN_COUNT, String.valueOf(runCount + 1));
+	}
+
+	private void updateRunTimeStamp() {
+		long lastRunTimestamp = 0;
+		try { lastRunTimestamp = Long.parseLong(PrefManager.readPrefString(PrefConstants.LAST_RUN_TIMESTAMP)); } catch(Throwable t) { logger.info("No 'RUN_COUNT' information"); }
+		PrefManager.writePref(PrefConstants.LAST_RUN_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
+		PrefManager.writePref(PrefConstants.PREVIOUS_RUN_TIMESTAMP, String.valueOf(lastRunTimestamp));
+	}
+
+	private void updateVersion(String newVersion) {
+		PrefManager.writePref(PrefConstants.APP_VERSION, newVersion);
 	}
 	
 	private void checkData(int step) {

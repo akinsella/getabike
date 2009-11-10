@@ -1,6 +1,7 @@
 package org.helyx.app.j2me.getabike.ui.view;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.data.app.manager.AppManager;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
 import org.helyx.app.j2me.getabike.data.language.domain.Language;
@@ -29,6 +30,7 @@ public class PrefListView extends PrefBaseListView {
 	private MenuItem optionMenuItem;
 	private MenuItem resetMenuItem;
 	private MenuItem versionMenuItem;
+	private MenuItem updateMenuItem;
 	
 	private Throwable prefException;
 
@@ -211,6 +213,12 @@ public class PrefListView extends PrefBaseListView {
 		
 		versionMenuItem = new MenuItem("view.pref.item.version");
 		
+		updateMenuItem = new MenuItem("view.pref.item.check.update", new IAction() {
+			public void run(Object data) {
+				AppManager.updateApplication(PrefListView.this);
+			}
+		});
+		
 		resetMenuItem = new MenuItem("view.pref.item.reset", new IAction() {
 			public void run(Object data) {
 				UtilManager.reset(PrefListView.this);
@@ -222,6 +230,7 @@ public class PrefListView extends PrefBaseListView {
 		menu.addMenuItem(languageMenuItem);
 		menu.addMenuItem(optionMenuItem);
 		menu.addMenuItem(versionMenuItem);
+		menu.addMenuItem(updateMenuItem);
 		menu.addMenuItem(resetMenuItem);
 		
 		setMenu(menu);

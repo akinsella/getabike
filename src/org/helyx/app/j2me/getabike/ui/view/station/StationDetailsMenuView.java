@@ -20,7 +20,7 @@ public class StationDetailsMenuView extends PrefBaseListView {
 
 	public StationDetailsMenuView(AbstractMIDlet midlet, StationDetailsView stationDetailsView) {
 		super(midlet, "");
-		setTitle("view.station.details.menu.title");
+		setTitle("view.station.detail.menu.title");
 		this.stationDetailsView = stationDetailsView;
 		init();
 	}

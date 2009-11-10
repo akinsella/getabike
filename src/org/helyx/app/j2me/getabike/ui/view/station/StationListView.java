@@ -165,9 +165,8 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		StationDetailsView stationDetailsView = new StationDetailsView(getMidlet(), city, station);
 		stationDetailsView.setAllowSearchNearStation(allowNested);
 		stationDetailsView.setRelatedStations(refStationProvider.getElementProvider());
+		stationDetailsView.setPreviousDisplayable(this);
 		stationDetailsView.fetchStationDetails();
-
-//		showDisplayable(stationDetailsView, this);
 	}
 
 	public void loadListContent() {

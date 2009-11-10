@@ -67,8 +67,8 @@ public class CityManager {
 		
 		String citySelectedKeyPrefValue = citySelectedKeyPref.value;
 		
-		if (logger.isInfoEnabled()) {
-			logger.info("Current City key: " + citySelectedKeyPrefValue);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Current City key: " + citySelectedKeyPrefValue);
 		}
 		
 		Enumeration _enum = cityList.elements();

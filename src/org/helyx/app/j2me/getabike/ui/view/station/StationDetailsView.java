@@ -16,12 +16,12 @@ import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
 import org.helyx.app.j2me.getabike.util.ErrorManager;
 import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
-import org.helyx.helyx4me.manager.TaskManager;
 import org.helyx.helyx4me.map.google.POIInfoAccessor;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.model.list.IElementProvider;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.helyx4me.ui.geometry.Rectangle;
 import org.helyx.helyx4me.ui.graphics.Color;
 import org.helyx.helyx4me.ui.theme.ThemeConstants;
@@ -31,6 +31,7 @@ import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
 import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
+import org.helyx.helyx4me.ui.view.support.task.LoadTaskView;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
 import org.helyx.helyx4me.ui.widget.command.Command;
 import org.helyx.logging4me.Logger;
@@ -128,27 +129,18 @@ public class StationDetailsView extends AbstractView {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Fetching Station Details for Station number: '" + station.number + "'");
 		}
+		
+		
+
 		try {
 			IProgressTask progressTask = CartoManager.fetchStationDetails(CityManager.getCurrentCity(), station);
-			progressTask.addProgressListener(new ProgressAdapter(logger.getCategory().getName()) {
+			final LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "view.station.detail.load.message", progressTask);
+			loadTaskView.setReturnCallback(new BasicReturnCallback(this));
+			progressTask.addProgressListener(new ProgressAdapter("Loading station details") {
 
-				public void onStart() {
-					setPrimaryCommandEnabled(false);
-				}
-				
-				public void onBeforeCompletion(int eventType, String eventMessage, Object eventData) {
-					setPrimaryCommandEnabled(true);
-				}
-
-				public void onSuccess(String eventMessage, Object eventData) {
-					StationDetailsView.this.logger.info("Station Details fetched for Station number: '" + station.number + "'");
-					StationDetailsView.this.stationDetails = (StationDetails)eventData;
-					StationDetailsView.this.showDisplayable(StationDetailsView.this);
-				}
-				
 				public void onError(String eventMessage, Object eventData) {
-					if (StationDetailsView.this.logger.isInfoEnabled()) {
-						StationDetailsView.this.logger.info("Error: " + eventMessage + ", data: " + eventData);
+					if (StationDetailsView.logger.isInfoEnabled()) {
+						StationDetailsView.logger.info("Error: " + eventMessage + ", data: " + eventData);
 					}
 					
 					Throwable t = (Throwable)eventData;
@@ -159,17 +151,27 @@ public class StationDetailsView extends AbstractView {
 							getMessage("connection.error") + ": " + ErrorManager.getErrorMessage(getMidlet(), t), 
 							new OkResultCallback() {
 								public void onOk(DialogView dialogView, Object data) {
-									StationDetailsView.this.showDisplayable(StationDetailsView.this);
+									loadTaskView.fireReturnCallback();
 								}
 							});
 				}
 
+				public void onSuccess(String eventMessage, Object eventData) {
+					StationDetailsView.logger.info("Station Details fetched for Station number: '" + station.number + "'");
+					StationDetailsView.this.stationDetails = (StationDetails)eventData;
+					loadTaskView.fireReturnCallback();
+				}
+				
 			});
-		
-			TaskManager.runLoadTaskView("Loading station details", progressTask, getMidlet(), this);
+			showDisplayable(loadTaskView);
+			loadTaskView.startTask();
 		}
 		catch (Throwable t) {
 			logger.warn(t);
+			DialogUtil.showAlertMessage(
+					StationDetailsView.this, 
+					"dialog.title.error", 
+					getMessage("dialog.error.unexpected") + ": " + ErrorManager.getErrorMessage(getMidlet(), t));
 		}
 	}
 

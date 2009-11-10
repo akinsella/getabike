@@ -64,12 +64,7 @@ public class StationDetailsView extends AbstractView {
 		setTitle("view.station.detail.title");
 		loadIconImage();
 		initActions();
-		if (station.details == null) {
-			fetchStationDetails();
-		}
-		else {
-			stationDetails = station.details;
-		}
+		stationDetails = station.details;
 	}
 		
 	void showGoogleMapsView() {
@@ -129,7 +124,7 @@ public class StationDetailsView extends AbstractView {
 		}
 	}
 
-	private void fetchStationDetails() {
+	void fetchStationDetails() {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Fetching Station Details for Station number: '" + station.number + "'");
 		}
@@ -148,7 +143,7 @@ public class StationDetailsView extends AbstractView {
 				public void onSuccess(String eventMessage, Object eventData) {
 					StationDetailsView.this.logger.info("Station Details fetched for Station number: '" + station.number + "'");
 					StationDetailsView.this.stationDetails = (StationDetails)eventData;
-					StationDetailsView.this.repaint();
+					StationDetailsView.this.showDisplayable(StationDetailsView.this);
 				}
 				
 				public void onError(String eventMessage, Object eventData) {

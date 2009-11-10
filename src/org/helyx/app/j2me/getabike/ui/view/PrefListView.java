@@ -215,7 +215,7 @@ public class PrefListView extends PrefBaseListView {
 		
 		updateMenuItem = new MenuItem("view.pref.item.check.update", new IAction() {
 			public void run(Object data) {
-				AppManager.updateApplication(PrefListView.this);
+				AppManager.checkUpdateApplication(PrefListView.this, false, false);
 			}
 		});
 		

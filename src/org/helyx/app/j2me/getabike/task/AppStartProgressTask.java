@@ -170,7 +170,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 
 			logger.info("Old version is different from new Version");
 		}
-		updateRunStats();
+		updateRunStats(true);
 		updateVersion(newVersion);
 		
 		checkData(STEP_START);
@@ -178,7 +178,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 
 	private void onFirstRun(String newVersion) {
 		initPrefValues();
-		updateRunStats();
+		updateRunStats(true);
 		updateVersion(newVersion);
 		if (logger.isInfoEnabled()) {
 			logger.info("This is not an update of an older version. New version is: '" + newVersion + "'");
@@ -190,13 +190,13 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		if (logger.isInfoEnabled()) {
 			logger.info("This is a normal run. Current version is: '" + currentVersion + "'");
 		}
-		updateRunStats();
+		updateRunStats(false);
 		checkData(STEP_START);
 	}
 	
-	private void updateRunStats() {
+	private void updateRunStats(boolean updateUpdateTimestamp) {
 		updateRunCount();
-		updateRunTimeStamp();
+		updateRunTimeStamp(updateUpdateTimestamp);
 	}
 
 	private void updateRunCount() {
@@ -205,11 +205,14 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		PrefManager.writePref(PrefConstants.RUN_COUNT, String.valueOf(runCount + 1));
 	}
 
-	private void updateRunTimeStamp() {
+	private void updateRunTimeStamp(boolean updateUpdateTimestamp) {
 		long lastRunTimestamp = 0;
 		try { lastRunTimestamp = Long.parseLong(PrefManager.readPrefString(PrefConstants.LAST_RUN_TIMESTAMP)); } catch(Throwable t) { logger.info("No 'RUN_COUNT' information"); }
 		PrefManager.writePref(PrefConstants.LAST_RUN_TIMESTAMP, String.valueOf(System.currentTimeMillis()));
 		PrefManager.writePref(PrefConstants.PREVIOUS_RUN_TIMESTAMP, String.valueOf(lastRunTimestamp));
+		if (updateUpdateTimestamp) {
+			PrefManager.writePref(PrefConstants.UPDATE_RUN_TIMESTAMP, String.valueOf(lastRunTimestamp));
+		}
 	}
 
 	private void updateVersion(String newVersion) {

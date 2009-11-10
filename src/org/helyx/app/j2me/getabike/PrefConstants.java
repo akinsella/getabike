@@ -5,6 +5,7 @@ public class PrefConstants {
 	public static final String RUN_COUNT = "RUN_COUNT";
 	public static final String LAST_RUN_TIMESTAMP = "LAST_RUN_TIMESTAMP";
 	public static final String PREVIOUS_RUN_TIMESTAMP = "PREVIOUS_RUN_TIMESTAMP";
+	public static final String UPDATE_RUN_TIMESTAMP = "UPDATE_RUN_TIMESTAMP";
 
 	public static final String APP_UUID = "APP_UUID";
 	public static final String APP_KEY = "APP_NAME";

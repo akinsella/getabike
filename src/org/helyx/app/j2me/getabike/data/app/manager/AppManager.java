@@ -31,6 +31,8 @@ import org.helyx.helyx4me.ui.view.support.dialog.result.callback.YesNoResultCall
 import org.helyx.helyx4me.ui.view.support.task.LoadTaskView;
 import org.helyx.logging4me.Logger;
 
+import com.sun.j2me.global.DebugHelper;
+
 public class AppManager {
 	
 	private static final Logger logger = Logger.getLogger("APP_MANAGER");
@@ -49,9 +51,28 @@ public class AppManager {
 		super();
 	}
 
-	public static void updateApplication(final AbstractView view) {
+	public static boolean checkUpdateApplication(final AbstractView view, final boolean silent, boolean checkAppStats) {
 
 		try {
+			if (checkAppStats) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("Checking using app stats");
+				}
+				long updateRunTimestamp = 0;
+				try { updateRunTimestamp = Long.parseLong(PrefManager.readPrefString(PrefConstants.UPDATE_RUN_TIMESTAMP)); } catch(Throwable t) { logger.info("No 'RUN_COUNT' information"); }
+
+				long now = System.currentTimeMillis();
+				if (now - updateRunTimestamp > 7 * 24 * 60 * 60 * 1000) {
+					if (logger.isDebugEnabled()) {
+						logger.debug("Update check is needed");
+					}
+					PrefManager.writePref(PrefConstants.UPDATE_RUN_TIMESTAMP, String.valueOf(now));
+				}
+				else {
+					return false;
+				}				
+			}
+			
 			String propertiesUrl = APPLICATION_UPDATE_CHECK_URL;
 			IContentAccessor httpContentAccessor = new HttpGetABikeContentAccessor(propertiesUrl, true);
 			IContentProvider propertiesContentProvider = new PropertiesContentProvider(httpContentAccessor);
@@ -66,16 +87,21 @@ public class AppManager {
 					}
 					
 					Throwable t = (Throwable)eventData;
-
-					DialogUtil.showMessageDialog(
-							view, 
-							"dialog.title.error", 
-							view.getMessage("connection.error") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t), 
-							new OkResultCallback() {
-								public void onOk(DialogView dialogView, Object data) {
-									loadTaskView.fireReturnCallback();
-								}
-							});
+					AppManager.logger.warn(t);
+					if (!silent) {
+						DialogUtil.showMessageDialog(
+								view, 
+								"dialog.title.error", 
+								view.getMessage("connection.error") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t), 
+								new OkResultCallback() {
+									public void onOk(DialogView dialogView, Object data) {
+										loadTaskView.fireReturnCallback();
+									}
+								});
+					}
+					else {
+						loadTaskView.fireReturnCallback();
+					}
 				}
 
 				public void onSuccess(String eventMessage, Object eventData) {
@@ -100,7 +126,8 @@ public class AppManager {
 										}
 										catch(Throwable t) {
 											AppManager.logger.warn(t);
-											DialogUtil.showMessageDialog(
+											if (!silent) {
+												DialogUtil.showMessageDialog(
 													view, 
 													"dialog.title.error", 
 													view.getMessage("dialog.error.unexpected") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t),
@@ -110,11 +137,15 @@ public class AppManager {
 															loadTaskView.fireReturnCallback();
 														}
 													});
+											}
+											else {
+												loadTaskView.fireReturnCallback();
+											}
 										}
 									}
 									
 									public void onNo(DialogView dialogView, Object data) {
-										DialogUtil.showMessageDialog(
+											DialogUtil.showMessageDialog(
 												view, 
 												"dialog.title.error", 
 												view.getMessage("manager.app.check.update.another.time"),
@@ -128,19 +159,25 @@ public class AppManager {
 								});
 							}
 							else {
-								DialogUtil.showMessageDialog(
-										view, 
-										"dialog.title.error", 
-										view.getMessage("manager.app.check.update.no.new.version"),
-										new OkResultCallback() {
-											
-											public void onOk(DialogView dialogView, Object data) {
-												loadTaskView.fireReturnCallback();
-											}
-										});
+								if (!silent) {
+									DialogUtil.showMessageDialog(
+											view, 
+											"dialog.title.error", 
+											view.getMessage("manager.app.check.update.no.new.version"),
+											new OkResultCallback() {
+												
+												public void onOk(DialogView dialogView, Object data) {
+													loadTaskView.fireReturnCallback();
+												}
+											});
+								}
+								else {
+									loadTaskView.fireReturnCallback();
+								}
 							}
 						}
 						else {
+							if (!silent) {
 							DialogUtil.showMessageDialog(
 									view, 
 									"dialog.title.error", 
@@ -151,26 +188,36 @@ public class AppManager {
 											loadTaskView.fireReturnCallback();
 										}
 									});
+							}
+							else {
+								loadTaskView.fireReturnCallback();
+							}
 						}
 					}
 					catch (Throwable t) {
 						AppManager.logger.warn(t);
-						DialogUtil.showMessageDialog(
-								view, 
-								"dialog.title.error", 
-								view.getMessage("dialog.error.unexpected") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t),
-								new OkResultCallback() {
-									
-									public void onOk(DialogView dialogView, Object data) {
-										loadTaskView.fireReturnCallback();
-									}
-								});
+						if (!silent) {
+							DialogUtil.showMessageDialog(
+									view, 
+									"dialog.title.error", 
+									view.getMessage("dialog.error.unexpected") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t),
+									new OkResultCallback() {
+										
+										public void onOk(DialogView dialogView, Object data) {
+											loadTaskView.fireReturnCallback();
+										}
+									});
+						}
+						else {
+							loadTaskView.fireReturnCallback();							
+						}
 					}
 				}
 				
 			});
 			view.showDisplayable(loadTaskView);
 			loadTaskView.startTask();
+			return true;
 		}
 		catch (Throwable t) {
 			logger.warn(t);
@@ -179,6 +226,7 @@ public class AppManager {
 					"dialog.title.error", 
 					view.getMessage("dialog.error.unexpected") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t));
 		}
+		return false;
 	}
 
 	public static String getProperty(String key) {

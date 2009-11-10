@@ -3,6 +3,7 @@ package org.helyx.app.j2me.getabike.midlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.data.app.manager.AppManager;
 import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.getabike.task.AppStartProgressTask;
 import org.helyx.app.j2me.getabike.ui.view.MenuView;
@@ -86,7 +87,10 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 
 	private void onStartSuccess(AbstractView view) {
 		MenuView menuView = new MenuView(GetABikeMIDlet.this);
-		view.showDisplayable(menuView);
+		boolean checkUpdate = AppManager.checkUpdateApplication(menuView, true, true);
+		if (!checkUpdate) {
+			menuView.show();
+		}
 	}
 
 	private void onStartError(AbstractView view, String message, Throwable t) {

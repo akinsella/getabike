@@ -20,6 +20,7 @@ public class HttpGetABikeContentAccessor extends HttpContentAccessor {
 
 	public HttpGetABikeContentAccessor(String url, boolean forceReadBytePerByte, Hashtable httpHeaders) {
 		super(completeUrlWithAppUuid(url), forceReadBytePerByte, httpHeaders);
+		addHeader("Connection", "close");
 	}
 	
 	public static String completeUrlWithAppUuid(String url) {

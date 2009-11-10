@@ -1,5 +1,8 @@
 package org.helyx.app.j2me.getabike.midlet;
 
+import java.io.IOException;
+
+import javax.microedition.io.ConnectionNotFoundException;
 import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
@@ -7,16 +10,19 @@ import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.getabike.task.AppStartProgressTask;
 import org.helyx.app.j2me.getabike.ui.view.MenuView;
 import org.helyx.app.j2me.getabike.ui.view.SplashScreenView;
+import org.helyx.app.j2me.getabike.util.ErrorManager;
 import org.helyx.helyx4me.constant.BooleanConstants;
 import org.helyx.helyx4me.i18n.Locale;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.stream.exception.HttpAccessException;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
 import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
+import org.helyx.helyx4me.util.ErrorUtil;
 import org.helyx.logging4me.Logger;
 import org.helyx.logging4me.config.LoggerConfigurer;
 import org.helyx.logging4me.config.XmlConfigurer;
@@ -92,20 +98,37 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 			logger.info(message);
 		}
 		logger.warn(t);
+		
+		boolean tmpCleanUpCityData = false;
+
+		Throwable rootCause = ErrorUtil.getRootCause(t);
 		String errorMessage = t.getMessage() == null ? getMessage("dialog.error.unexpected") : t.getMessage();
+		
+		if (rootCause instanceof SecurityException) {
+			errorMessage = getMessage("security.api.access.error.message");
+		}
+		else {
+			tmpCleanUpCityData = true;
+		}
+
+		final boolean cleanUpCityData = tmpCleanUpCityData;
+
 		DialogUtil.showMessageDialog(
 				view, 
 				"dialog.title.error", 
-				getMessage("midlet.start.error.message.1") + ": " + errorMessage, 
+				getMessage("midlet.start.error.message.1") + ": " + ErrorManager.getErrorMessage(this, t), 
 				new OkResultCallback() {
 					public void onOk(DialogView dialogView, Object data) {
-						if (GetABikeMIDlet.this.logger.isInfoEnabled()) {
-							GetABikeMIDlet.this.logger.info("Writing reset demand to prefs");
+						if (cleanUpCityData) {
+							if (GetABikeMIDlet.this.logger.isInfoEnabled()) {
+								GetABikeMIDlet.this.logger.info("Writing reset demand to prefs");
+							}
+							PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 						}
-						PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 						GetABikeMIDlet.this.exit();								
 					}
-				});
+				});			
+
 	}
 
 	protected void onDestroy(boolean unconditional) throws MIDletStateChangeException {

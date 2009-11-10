@@ -24,7 +24,6 @@ import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.ui.view.renderer.DistanceStationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.renderer.StationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
-import org.helyx.app.j2me.getabike.util.ConverterUtil;
 import org.helyx.helyx4me.cache.Cache;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;
@@ -37,6 +36,7 @@ import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.text.TextUtil;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.helyx4me.util.ConverterUtil;
 import org.helyx.logging4me.Logger;
 
 public class CartoManager {

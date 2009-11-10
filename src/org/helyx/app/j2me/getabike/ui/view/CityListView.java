@@ -1,24 +1,33 @@
 package org.helyx.app.j2me.getabike.ui.view;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Vector;
+
+import javax.microedition.io.ConnectionNotFoundException;
 
 import org.helyx.app.j2me.getabike.data.carto.listener.StoreStationLoaderProgressListener;
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManagerException;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
+import org.helyx.app.j2me.getabike.util.ErrorManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.manager.TaskManager;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.renderer.text.DefaultTextRenderer;
+import org.helyx.helyx4me.stream.exception.HttpAccessException;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.ProgressTaskReturnCallback;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
 import org.helyx.helyx4me.ui.view.support.menu.MenuListView;
 import org.helyx.helyx4me.ui.widget.command.Command;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
+import org.helyx.helyx4me.util.ErrorUtil;
 import org.helyx.logging4me.Logger;
 
 
@@ -125,12 +134,25 @@ public class CityListView extends MenuListView {
 					getReturnCallback().onReturn(currentDisplayable, eventData);
 				}
 
-				public void onError(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
+				public void onError(final AbstractDisplayable currentDisplayable, final String eventMessage, final Object eventData) {
 					if (logger.isInfoEnabled()) {
 						logger.info("Error: " + eventMessage + ", data: " + eventData);
 					}
 					cleanUpCurrentCityData();
-					getReturnCallback().onReturn(currentDisplayable, eventData);
+					
+					Throwable t = (Throwable)eventData;
+
+					
+					DialogUtil.showMessageDialog(
+							CityListView.this, 
+							"dialog.title.error", 
+							getMessage("midlet.start.error.message.1") + ": " + ErrorManager.getErrorMessage(getMidlet(), t), 
+							new OkResultCallback() {
+								public void onOk(DialogView dialogView, Object data) {
+									CityListView.this.getReturnCallback().onReturn(currentDisplayable, eventData);
+								}
+							});			
+
 				}
 				
 			});

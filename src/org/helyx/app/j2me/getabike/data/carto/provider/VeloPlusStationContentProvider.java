@@ -67,10 +67,7 @@ public class VeloPlusStationContentProvider extends AbstractStationContentProvid
 				IStationInfoNormalizer stationNameNormalizer = getStationInfoNormalizer();
 				
 				while (XppUtil.readToNextElement(xpp, MARKER)) {
-					if (cancel) {
-						progressDispatcher.fireEvent(EventType.ON_CANCEL);
-						return ;
-					}
+
 					Station station = new Station();
 					station.localization = new Point();
 					

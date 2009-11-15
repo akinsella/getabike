@@ -31,8 +31,6 @@ import org.helyx.helyx4me.ui.view.support.dialog.result.callback.YesNoResultCall
 import org.helyx.helyx4me.ui.view.support.task.LoadTaskView;
 import org.helyx.logging4me.Logger;
 
-import com.sun.j2me.global.DebugHelper;
-
 public class AppManager {
 	
 	private static final Logger logger = Logger.getLogger("APP_MANAGER");
@@ -147,7 +145,7 @@ public class AppManager {
 									public void onNo(DialogView dialogView, Object data) {
 											DialogUtil.showMessageDialog(
 												view, 
-												"dialog.title.error", 
+												"dialog.title.information", 
 												view.getMessage("manager.app.check.update.another.time"),
 												new OkResultCallback() {
 													
@@ -162,7 +160,7 @@ public class AppManager {
 								if (!silent) {
 									DialogUtil.showMessageDialog(
 											view, 
-											"dialog.title.error", 
+											"dialog.title.information", 
 											view.getMessage("manager.app.check.update.no.new.version"),
 											new OkResultCallback() {
 												

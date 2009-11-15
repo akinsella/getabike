@@ -155,8 +155,16 @@ public class CityListView extends MenuListView {
 		catch (CartoManagerException e) {
 			logger.warn(e);
 			cleanUpCurrentCityData();
-			showAlertMessage(getMessage("dialog.title.error"), getMessage("view.city.load.error.1"));
-			fireReturnCallback();
+			DialogUtil.showMessageDialog(
+					CityListView.this, 
+					"dialog.title.error", 
+					CityListView.this.getMessage("view.city.load.error.1") + ": " + ErrorManager.getErrorMessage(getMidlet(), e),
+					new OkResultCallback() {
+						
+						public void onOk(DialogView dialogView, Object data) {
+							CityListView.this.fireReturnCallback();
+						}
+					});
 		}
 	}
 	

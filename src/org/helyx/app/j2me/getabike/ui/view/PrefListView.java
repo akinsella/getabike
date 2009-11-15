@@ -303,7 +303,7 @@ public class PrefListView extends PrefBaseListView {
 			String languageKey = PrefManager.readPrefString(PrefConstants.LANGUAGE_CURRENT_KEY);
 			if (languageKey != null) {
 				Language language = LanguageManager.getCurrentLanguage();
-				languageMenuItem.setData(PREF_VALUE, getMessage("getabike.country." + language.key));
+				languageMenuItem.setData(PREF_VALUE, getMessage("getabike.language." + language.key));
 			}
 			else {
 				languageMenuItem.removeData(PREF_VALUE);

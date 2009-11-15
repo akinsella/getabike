@@ -75,11 +75,7 @@ public class CityBikeStationContentProvider extends AbstractStationContentProvid
 				csvReader.readNext();
 				
 				while ((line = csvReader.readNext()) != null) {
-					if (cancel) {
-						progressDispatcher.fireEvent(EventType.ON_CANCEL);
-						return ;
-					}
-					
+
 					Station station = new Station();
 					station.localization = new Point();
 

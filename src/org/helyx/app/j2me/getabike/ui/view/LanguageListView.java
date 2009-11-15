@@ -81,7 +81,7 @@ public class LanguageListView extends MenuListView {
 		Enumeration _enum = languageList.elements();
 		while(_enum.hasMoreElements()) {
 			Language language = (Language)_enum.nextElement();
-			MenuItem languageMenuItem = new MenuItem("getabike.country." + language.key);
+			MenuItem languageMenuItem = new MenuItem("getabike.language." + language.key);
 			languageMenuItem.setImageSet(new ImageSet(getTheme().getString("getabike.country." + language.key + ".flag")));
 			languageMenuItem.setData(language);
 			menu.addMenuItem(languageMenuItem);

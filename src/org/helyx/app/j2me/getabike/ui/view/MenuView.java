@@ -120,7 +120,7 @@ public class MenuView extends AbstractView {
 
     	    	g.setColor(ColorUtil.DARK_GREY);
     	    	Rectangle  bRect2 = new Rectangle(bRect.location.x + 5 + 1, bRect.location.y + 2 + 1, bRect.size.width - 10 - 1, bRect.size.height - 4 - 1);
-    	    	Shade shade = i == selectedIndex ?
+    	    	Shade shade = i != selectedIndex ?
     	    		new Shade(getTheme().getColor(ThemeConstants.WIDGET_MENU_BG_SHADE_DARK), getTheme().getColor(ThemeConstants.WIDGET_MENU_BG_SHADE_LIGHT)) :
     	    		new Shade(getTheme().getColor(ThemeConstants.WIDGET_MENU_BG_SHADE_DARK_SELECTED), getTheme().getColor(ThemeConstants.WIDGET_MENU_BG_SHADE_LIGHT_SELECTED));
     	    	GraphicsUtil.fillShade(g, bRect2, shade, true);

@@ -15,10 +15,11 @@ import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.geometry.Rectangle;
 import org.helyx.helyx4me.ui.graphics.Color;
-import org.helyx.helyx4me.ui.theme.Theme;
+import org.helyx.helyx4me.ui.graphics.Shade;
 import org.helyx.helyx4me.ui.theme.ThemeConstants;
 import org.helyx.helyx4me.ui.util.ColorUtil;
 import org.helyx.helyx4me.ui.util.FontUtil;
+import org.helyx.helyx4me.ui.util.GraphicsUtil;
 import org.helyx.helyx4me.ui.util.ImageUtil;
 import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
@@ -64,53 +65,82 @@ public class MenuView extends AbstractView {
 			int y = clientArea.location.y;
 			int width = clientArea.size.width;
 	        int height = clientArea.size.height;
-	       
-//	        g.setColor(ColorUtil.WHITE);
-//	        g.fillRect(x, y, width, height);     
+  
 	        
-	        g.setColor(ColorUtil.BLACK);
-
-	        int _height = y + height / 3 - FontUtil.SMALL.getHeight();
-	        if (logoImage != null) {
-	        	g.drawImage(logoImage, x + width / 2, _height, Graphics.HCENTER | Graphics.VCENTER);
-	        	_height += logoImage.getHeight() / 2;
+ 	        if (logoImage != null) {
+	        	int imgHeight = logoImage.getHeight();
+	           	int imgAllowedHeight = height / 2;
+	           	logger.info("img height: " + imgHeight);
+	           	logger.info("img allowed height: " + imgAllowedHeight);
+	        	if (imgHeight < imgAllowedHeight) {
+		        	g.drawImage(logoImage, x + width / 2, y + (height / 2) / 2, Graphics.HCENTER | Graphics.VCENTER);
+	        	}
+	        	else {
+		        	logger.info("Image to big");
+			        g.setColor(ColorUtil.BLACK);
+		        	g.drawString(fallbackLogoImageStr, x + width / 2, y + (height / 2) / 2, Graphics.HCENTER | Graphics.BASELINE);        	
+	        	}
 	        }
 	        else if (fallbackLogoImageStr != null) {
-	        	logger.info(fallbackLogoImageStr);
-	        	g.drawString(fallbackLogoImageStr, x + width / 2, y + _height, Graphics.HCENTER | Graphics.BASELINE);        	
-	        	_height += FontUtil.LARGE_BOLD.getHeight() / 2;
+	        	logger.info("Image not found");
+		        g.setColor(ColorUtil.BLACK);
+	        	g.drawString(fallbackLogoImageStr, x + width / 2, y + (height / 2) / 2, Graphics.HCENTER | Graphics.BASELINE);        	
 	        }
 	        else {
 	        	logger.info("fallbackLogoImageStr error");
 	        }
 
 	        int menuItemCount = menu.menuItemCount();
+	        int _height = y + height / 2;
 	        
-	        _height += ( (height - _height) - (FontUtil.SMALL.getHeight() * menuItemCount) ) / 2;
+    	    Rectangle mRect = new Rectangle(x, _height, width, height / 2);
 	        
-	        Theme theme = getTheme();
 	        for (int i = 0 ; i < menuItemCount ; i++) {
 	        	MenuItem menuItem = (MenuItem)menu.getMenuItem(i);
-	           
+
+		        _height = y + height / 2 + i * (mRect.size.height / menuItemCount);
+	        	
 		        Font font = i == selectedIndex ? FontUtil.MEDIUM_BOLD : FontUtil.SMALL;
 
 	    	    Color menuItemColor;
 	    	    boolean isMenuEnabled = menuItem.isEnabled();
+	    	    Rectangle bRect = new Rectangle(
+	    	    		mRect.location.x, 
+	    	    		_height,
+	    	    		mRect.size.width,
+	    	    		(int)(mRect.size.height / menuItemCount));
+
 	    	    if (i == selectedIndex) {
-	    	    	menuItemColor = theme.getColor(isMenuEnabled ? ThemeConstants.WIDGET_MENU_FONT_SELECTED : ThemeConstants.WIDGET_MENU_FONT_SELECTED_DISABLED);
+	    	    	menuItemColor = getTheme().getColor(isMenuEnabled ? ThemeConstants.WIDGET_MENU_FONT_SELECTED : ThemeConstants.WIDGET_MENU_FONT_SELECTED_DISABLED);
 	    	    }
 	    	    else {
-	    	    	menuItemColor = theme.getColor(isMenuEnabled ? ThemeConstants.WIDGET_MENU_FONT : ThemeConstants.WIDGET_MENU_FONT_DISABLED);
+	    	    	menuItemColor = getTheme().getColor(isMenuEnabled ? ThemeConstants.WIDGET_MENU_FONT : ThemeConstants.WIDGET_MENU_FONT_DISABLED);
 	    	    }
-	    	    	
+	    	    
+
+    	    	g.setColor(ColorUtil.DARK_GREY);
+    	    	Rectangle  bRect2 = new Rectangle(bRect.location.x + 5 + 1, bRect.location.y + 2 + 1, bRect.size.width - 10 - 1, bRect.size.height - 4 - 1);
+    	    	Shade shade = i == selectedIndex ?
+    	    		new Shade(getTheme().getColor(ThemeConstants.WIDGET_MENU_BG_SHADE_DARK), getTheme().getColor(ThemeConstants.WIDGET_MENU_BG_SHADE_LIGHT)) :
+    	    		new Shade(getTheme().getColor(ThemeConstants.WIDGET_MENU_BG_SHADE_DARK_SELECTED), getTheme().getColor(ThemeConstants.WIDGET_MENU_BG_SHADE_LIGHT_SELECTED));
+    	    	GraphicsUtil.fillShade(g, bRect2, shade, true);
+    	    	g.setColor(ColorUtil.DARK_GREY);
+    	    	g.drawLine(bRect.location.x + 5 + 1, bRect.location.y + 2, bRect.location.x + 5 + bRect.size.width - 10 - 1, bRect.location.y + 2);
+     	    	g.drawLine(bRect.location.x + 5 + 1, bRect.location.y + 2 + bRect.size.height - 4, bRect.location.x + 5 + bRect.size.width - 10 - 1, bRect.location.y + 2 + bRect.size.height - 4);
+       	    	g.drawLine(bRect.location.x + 5, bRect.location.y + 2 + 1, bRect.location.x + 5, bRect.location.y + 2 + bRect.size.height - 4 - 1);
+       	    	g.drawLine(bRect.location.x + 5 + bRect.size.width - 10, bRect.location.y + 2 + 1, bRect.location.x + 5 + bRect.size.width - 10, bRect.location.y + 2 + bRect.size.height - 4 - 1);
+       	    	
 	    	    g.setColor(menuItemColor.intValue());
 		        g.setFont(font);
-		        g.drawString(getMessage(menuItem.getText()), x + width / 2, y + _height, Graphics.HCENTER | Graphics.BASELINE);
+		        g.drawString(
+		        		getMessage(menuItem.getText()), 
+		        		bRect.location.x + bRect.size.width / 2, 
+		        		bRect.location.y + bRect.size.height / 2 + (font.getHeight() - font.getBaselinePosition()), 
+		        		Graphics.HCENTER | Graphics.BASELINE);
 		        
-		        _height += FontUtil.SMALL.getHeight();
 	        }
 		}
-
+		
 		public void onKeyPressed(int keyCode) {
 			int gameAction = viewCanvas.getGameAction(keyCode);
 		    if (gameAction == GameCanvas.DOWN) {

@@ -140,7 +140,7 @@ public class MenuView extends AbstractView {
 		        
 	        }
 		}
-		
+	
 		public void onKeyPressed(int keyCode) {
 			int gameAction = viewCanvas.getGameAction(keyCode);
 		    if (gameAction == GameCanvas.DOWN) {

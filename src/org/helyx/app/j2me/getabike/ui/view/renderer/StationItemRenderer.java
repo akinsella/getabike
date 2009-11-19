@@ -19,6 +19,13 @@ public class StationItemRenderer implements ICellRenderer {
 	private static final int BASE_LEFT_POS = 5;
 	private static final int PADDING_TOP = 2;
 	private static final int LINE_SPACING = 0;
+
+	private int smallFontHeight = FontUtil.SMALL.getHeight();
+	private int smallBoldFontHeight = FontUtil.SMALL_BOLD.getHeight();
+    private static String stationSeparator = " - ";
+    private static String stationSeparatorEmpty = "";
+    private int stationSeparatorStrWidthSmallBold = FontUtil.SMALL_BOLD.stringWidth(stationSeparator);
+    private static String noNameStation = "Station sans nom";
 	
 	public StationItemRenderer() {
 		super();
@@ -29,7 +36,8 @@ public class StationItemRenderer implements ICellRenderer {
 		Station station = (Station)itemObject;
     	
     	boolean isSelected = view.isItemSelected(offset);
-    	
+		int listFontSecondSelectedColor = view.getTheme().getColor(isSelected ? ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED : ThemeConstants.WIDGET_LIST_FONT_SECOND).intValue();
+   	
      	if (isSelected) {
     		Color listFontSelectedColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_SELECTED);
     		g.setColor(listFontSelectedColor.intValue());
@@ -54,34 +62,29 @@ public class StationItemRenderer implements ICellRenderer {
             String stationNumber = String.valueOf(station.number);
             g.drawString(stationNumber, x + addToXPos, y + addToYPos, Graphics.LEFT | Graphics.TOP);
             addToXPos += FontUtil.SMALL_BOLD.stringWidth(stationNumber);
-            String stationSeparator = " - ";
-            g.drawString(stationSeparator, x + addToXPos, y + addToYPos, Graphics.LEFT | Graphics.TOP);
-            addToXPos += FontUtil.SMALL_BOLD.stringWidth(stationSeparator);
+             g.drawString(stationSeparator, x + addToXPos, y + addToYPos, Graphics.LEFT | Graphics.TOP);
+            addToXPos += stationSeparatorStrWidthSmallBold;
         }
         
-        String stationName = station.name != null ? station.name : "Station sans nom";
+        String stationName = station.name != null ? station.name : noNameStation;
         g.drawString(stationName, x + addToXPos, y + addToYPos, Graphics.LEFT | Graphics.TOP);
 
         addToXPos = BASE_LEFT_POS;
-    	addToYPos += LINE_SPACING + FontUtil.SMALL.getHeight();
+    	addToYPos += LINE_SPACING + smallFontHeight;
         if (station.fullAddress.length() > 0) {
 
-    		Color listFontSecondSelectedColor = view.getTheme().getColor(isSelected ? ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED : ThemeConstants.WIDGET_LIST_FONT_SECOND);
-    		g.setColor(listFontSecondSelectedColor.intValue());
-
+    		g.setColor(listFontSecondSelectedColor);
 	        g.setFont(FontUtil.SMALL);
 	    	g.drawString(station.fullAddress, x + addToXPos, y + addToYPos, Graphics.LEFT | Graphics.TOP);
 
-        	addToYPos += LINE_SPACING + FontUtil.SMALL.getHeight();
+        	addToYPos += LINE_SPACING + smallFontHeight;
         }
         
         if(station.zipCode.length() > 0 || station.city.length() > 0) {
+	        String secondaryStationInfo = (station.zipCode.length() > 0 ? (station.zipCode + stationSeparator) : stationSeparatorEmpty) + (station.city.length() > 0 ? station.city : "");
 
-    		Color listFontSecondSelectedColor = view.getTheme().getColor(isSelected ? ThemeConstants.WIDGET_LIST_FONT_SECOND_SELECTED : ThemeConstants.WIDGET_LIST_FONT_SECOND);
-    		g.setColor(listFontSecondSelectedColor.intValue());
-
+    		g.setColor(listFontSecondSelectedColor);
 	        g.setFont(FontUtil.SMALL);
-	        String secondaryStationInfo = (station.zipCode.length() > 0 ? (station.zipCode + " - ") : "") + (station.city.length() > 0 ? station.city : "");
 	    	g.drawString(secondaryStationInfo, x + addToXPos, y + addToYPos, Graphics.LEFT | Graphics.TOP);
         }
 	}
@@ -91,9 +94,6 @@ public class StationItemRenderer implements ICellRenderer {
 		Station station = (Station)itemObject;
     	
 //    	boolean isSelected = view.isItemSelected(offset);
-
-    	int smallFontHeight = FontUtil.SMALL.getHeight();
-        int smallBoldFontHeight = FontUtil.SMALL_BOLD.getHeight();
         
         int itemHeight = 
         	PADDING_TOP + 

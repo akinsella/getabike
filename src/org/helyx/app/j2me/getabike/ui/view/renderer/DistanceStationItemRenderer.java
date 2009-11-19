@@ -16,6 +16,8 @@ public class DistanceStationItemRenderer extends StationItemRenderer {
 
 	private Logger logger = Logger.getLogger("DISTANCE_STATION_ITEM_RENDERER");
 	
+	private static String distanceInMeter = " m";
+	
 	public DistanceStationItemRenderer() {
 		super();
 	}
@@ -34,20 +36,26 @@ public class DistanceStationItemRenderer extends StationItemRenderer {
 			station.distance = DistanceUtil.distance(referentStation.localization, station.localization, DistanceUtil.KM) * 1000;
 		}
     	
-		logger.info("Distance: " + new String((long)(station.distance) + " m"));
-		logger.info("itemClientArea: " + itemClientArea);
+		if (logger.isDebugEnabled()) {
+			logger.debug("Distance: " + new String((long)(station.distance) + distanceInMeter));
+			logger.debug("itemClientArea: " + itemClientArea);
+		}
+		
 		if (station.distance < Double.MAX_VALUE) {
-	        g.setFont(FontUtil.SMALL);
 
 	        int x = itemClientArea.location.x;
 	        int y = itemClientArea.location.y;
 	        int width = itemClientArea.size.width;
 	        int height = itemClientArea.size.height;
-			String distanceStr = new String((long)(station.distance) + " m");
+			String distanceStr = new String((long)(station.distance) + distanceInMeter);
 			
-			Color distanceFontColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_THIRD);
+			Color distanceFontColor = null;
+			
 			if (isSelected) {
 				distanceFontColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_THIRD_SELECTED);
+			}
+			else {
+				distanceFontColor = view.getTheme().getColor(ThemeConstants.WIDGET_LIST_FONT_THIRD);
 			}
 
 			g.setFont(FontUtil.SMALL);
@@ -55,7 +63,9 @@ public class DistanceStationItemRenderer extends StationItemRenderer {
 
 			g.drawString(distanceStr, x + width - FontUtil.SMALL.stringWidth(distanceStr) - 2, y + height - 2 - FontUtil.SMALL.getHeight(), Graphics.LEFT | Graphics.TOP);
 
-			logger.info("y + height - 2: " + (y + height - 2));
+			if (logger.isDebugEnabled()) {
+				logger.debug("y + height - 2: " + (y + height - 2));
+			}
 		}
 	}
 

@@ -11,6 +11,9 @@ public class StationTitleRenderer extends I18NTextRenderer {
 	
 	private static StationTitleRenderer instance;
 	
+	private static String stationSeparator = " - ";
+	private static String stationSeparatorEmpty = "";
+	
 	public StationTitleRenderer(AbstractMIDlet midlet, ICityAcessor cityAccessor) {
 		super(midlet);
 		this.cityAccessor = cityAccessor;
@@ -19,7 +22,7 @@ public class StationTitleRenderer extends I18NTextRenderer {
 	public String renderText(String textValue) {
 		City city =  cityAccessor.getCity();
 		String cityName = city != null ? city.name : null;
-		String title = (cityName != null ? (cityName + " - ") : "") + super.renderText(textValue);
+		String title = (cityName != null ? (cityName + stationSeparator) : stationSeparatorEmpty) + super.renderText(textValue);
 		 
 		return title;
 	}

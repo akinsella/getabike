@@ -113,7 +113,7 @@ public class AppManager {
 							Version currentVersion = new Version(currentVersionStr);
 							VersionComparator vc = new VersionComparator();
 							if (vc.compare(appReleaseLastVersion, currentVersion) > 0) {
-								DialogUtil.showYesNoDialog(view, "dialog.question", view.getMessage("manager.app.check.update.question", new String[] { appReleaseLastVersionStr, currentVersionStr }), new YesNoResultCallback() {
+								DialogUtil.showYesNoDialog(view, "dialog.title.question", view.getMessage("manager.app.check.update.question", new String[] { appReleaseLastVersionStr, currentVersionStr }), new YesNoResultCallback() {
 									
 									public void onYes(DialogView dialogView, Object data) {
 										

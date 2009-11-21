@@ -268,7 +268,7 @@ public class AppManager {
 		final String oldCountry = CityManager.getCurrentCountry();
 		final City oldCity = CityManager.getCurrentCity(); 
 		
-		final IProgressTask progressTask = new AbstractProgressTask("UPDATE_APP_META_DATA") {
+		final IProgressTask cartoUpdateProgressTask = new AbstractProgressTask("UPDATE_APP_META_DATA") {
 			
 			final private AbstractProgressTask _this = this;
 
@@ -276,8 +276,9 @@ public class AppManager {
 				return new Runnable() {
 					public void run() {
 						try {
+							logger.warn("Starting task");
+							getProgressDispatcher().fireEvent(EventType.ON_START);
 							getProgressDispatcher().fireEvent(EventType.ON_PROGRESS, view.getMessage("manager.app.metadata.update"));
-							
 							updateConfigurationMetaData();
 
 							IProgressTask cityProgressTask = CityManager.createUpdateCitiesTask();
@@ -319,6 +320,7 @@ public class AppManager {
 							cityProgressTask.execute();
 						}
 						catch(Throwable t) {
+							logger.warn(t);
 							_this.getProgressDispatcher().fireEvent(EventType.ON_ERROR, t.getMessage(), t);
 						}
 					}
@@ -326,10 +328,10 @@ public class AppManager {
 			}
 		};
 	
-		final LoadTaskView loadTaskView = new LoadTaskView(view.getMidlet(), "view.station.detail.load.message", progressTask);
+		final LoadTaskView loadTaskView = new LoadTaskView(view.getMidlet(), "view.station.detail.load.message", cartoUpdateProgressTask);
 		loadTaskView.setReturnCallback(new BasicReturnCallback(view));
 	
-		progressTask.addProgressListener(new ProgressAdapter("Loading station details") {
+		cartoUpdateProgressTask.addProgressListener(new ProgressAdapter("Loading station details") {
 
 			public void onSuccess(String eventMessage, Object eventData) {
 				loadTaskView.fireReturnCallback();
@@ -355,7 +357,6 @@ public class AppManager {
 			}
 			
 		});
-		
 		
 		view.showDisplayable(loadTaskView);
 		loadTaskView.startTask();

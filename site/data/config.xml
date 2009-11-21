@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<application uid="GETABIKE" default="http://m.helyx.org/velocite/data/config/config-1.0.0.properties?key=${app.key}&amp;version=${app.version}&amp;uuid=${app.uuid}">
-	<version min="1.0.0" url="http://m.helyx.org/velocite/data/config/config-1.0.0.properties?key=${app.key}&amp;version=${app.version}&amp;uuid=${app.uuid}" />
+<application uid="GETABIKE" default="http://m.helyx.org/getabike/data/config/config-1.0.0.properties?key=${app.key}&amp;version=${app.version}&amp;uuid=${app.uuid}">
+	<version min="1.0.0" max="1.4.0" url="http://m.helyx.org/getabike/data/config/config-1.0.0.properties?key=${app.key}&amp;version=${app.version}&amp;uuid=${app.uuid}" />
+	<version min="1.4.1" url="http://m.helyx.org/getabike/data/config/config-1.0.1.properties?key=${app.key}&amp;version=${app.version}&amp;uuid=${app.uuid}" />
 </application>

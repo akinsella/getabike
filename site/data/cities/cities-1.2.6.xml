@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<cities version="1.2.5">
+<cities version="1.2.6">
 
 	<!-- NextBike - http://nextbike.de/m/maps.php -->
 
@@ -150,6 +150,14 @@
 		  stationDetails="http://www.bicloo.nantesmetropole.fr/service/stationdetails/{1}">
 		  <support details="true" localization="true" bonus="true" tpe="false" state="false" />
 	</city>
+	
+	<city key="NICE" name="Nice" type="OYBIKE" country="FRANCE"
+		  serviceName="VeloBleu" normalizer="DEFAULT"
+		  webSite="http://www.velobleu.org" 
+		  stationList="http://www.velobleu.org/nice/nicecms.nsf/vStands?readviewentries&amp;count=999&amp;ms={1}" 
+		  stationDetails="">
+		  <support details="false" localization="true" bonus="false" tpe="false" state="false" />
+	</city>
  
 	<city key="ORLEANS" name="Orléans" type="VELO_PLUS" country="FRANCE"
 	      serviceName="Vélo+" normalizer="DEFAULT"
@@ -157,6 +165,14 @@
 		  stationList="http://www.agglo-veloplus.fr/component/data.xml" 
 		  stationDetails="http://www.agglo-veloplus.fr/getStatusBorne?idBorne={1}">	  
 		  <support details="true" localization="true" bonus="false" tpe="true" state="true" />
+	</city>
+ 
+	<city key="OYBIKE" name="OyBike" type="OYBIKE" country="ENGLAND"
+	      serviceName="OyBike" normalizer="DEFAULT"
+		  webSite="http://www.oybike.com/" 
+		  stationList="http://www.oybike.com/oybike/cms.nsf/vStands?readviewentries&amp;count=999&amp;ms={1}" 
+		  stationDetails="">	  
+		  <support details="false" localization="true" bonus="false" tpe="false" state="false" />
 	</city>
 		  
 	<city key="PARIS" name="Paris" type="VELIB" country="FRANCE" 

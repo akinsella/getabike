@@ -5,6 +5,6 @@ MIDlet-Info-URL: http://m.helyx.org/getabike
 MIDlet-Jar-URL: getabike.jar
 MIDlet-Name: Get A Bike
 MIDlet-Vendor: Helyx.org
-MIDlet-Version: 1.4.0
+MIDlet-Version: 1.4.1
 MicroEdition-Configuration: CLDC-1.1
 MicroEdition-Profile: MIDP-2.0

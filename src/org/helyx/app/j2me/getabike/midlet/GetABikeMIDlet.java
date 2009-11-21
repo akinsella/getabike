@@ -1,5 +1,7 @@
 package org.helyx.app.j2me.getabike.midlet;
 
+import java.io.IOException;
+
 import javax.microedition.midlet.MIDletStateChangeException;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
@@ -99,15 +101,8 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 		}
 		logger.warn(t);
 		
-		boolean tmpCleanUpCityData = false;
 
 		Throwable rootCause = ErrorUtil.getRootCause(t);
-
-		if (!(rootCause instanceof SecurityException)) {
-			tmpCleanUpCityData = true;
-		}
-
-		final boolean cleanUpCityData = tmpCleanUpCityData;
 
 		DialogUtil.showMessageDialog(
 				view, 
@@ -115,19 +110,10 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 				getMessage("dialog.title.warn") + ": " + ErrorManager.getErrorMessage(this, t), 
 				new OkResultCallback() {
 					public void onOk(DialogView dialogView, Object data) {
-						if (cleanUpCityData) {
-							if (GetABikeMIDlet.this.logger.isInfoEnabled()) {
-								GetABikeMIDlet.this.logger.info("Writing reset demand to prefs");
-							}
-							PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
-						}
-						GetABikeMIDlet.this.exit();
-						
+						onStartSuccess(view);
 					}
 				});	
 		
-		
-
 	}
 
 	protected void onDestroy(boolean unconditional) throws MIDletStateChangeException {

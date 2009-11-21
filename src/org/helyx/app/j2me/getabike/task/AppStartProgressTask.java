@@ -30,6 +30,8 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	
 	private String appUuidStr;
 	
+	private Throwable appStartThrowable;
+	
 	public AppStartProgressTask(AbstractView view) {
 		super(view.getMessage("task.app.start.title"));
 		this.view = view;
@@ -256,6 +258,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 				configureCities();
 			}
 			catch(Throwable t) {
+				appStartThrowable = t;
 				checkData(STEP_CITY_DATA_OK);
 			}
 		}
@@ -316,17 +319,22 @@ public class AppStartProgressTask extends AbstractProgressTask {
 				checkData(successStep);
 			}
 			catch(Throwable t) {
+				appStartThrowable = t;
 				AppStartProgressTask.this.logger.warn(t);
 				AppStartProgressTask.this.onError(t.getMessage(), t);
 			}
 		}
 		
 		public void onError(String eventMessage, Object eventData) {
+			if (eventData != null && (eventData instanceof Throwable)) {
+				appStartThrowable = (Throwable)eventData;
+			}
 			if (alwaysOk) {
 				try {
 					checkData(successStep);
 				}
 				catch(Throwable t) {
+					appStartThrowable = t;
 					AppStartProgressTask.this.logger.warn(t);
 					AppStartProgressTask.this.onError(t.getMessage(), t);
 				}
@@ -346,7 +354,12 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 	
 	private void onSuccess() {
-		progressDispatcher.fireEvent(EventType.ON_SUCCESS);
+		if (appStartThrowable != null) {
+			progressDispatcher.fireEvent(EventType.ON_ERROR, appStartThrowable);
+		}
+		else {
+			progressDispatcher.fireEvent(EventType.ON_SUCCESS);
+		}
 	}
 		
 	private void onProgress(String eventMessage) {

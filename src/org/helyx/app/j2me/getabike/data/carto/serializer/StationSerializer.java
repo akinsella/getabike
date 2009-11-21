@@ -113,6 +113,7 @@ public class StationSerializer extends AbstractObjectSerializer {
 				stationDetails.hs = dis.readInt();
 				stationDetails.total = dis.readInt();
 				stationDetails.date = new Date(dis.readLong());
+				station.details = stationDetails;
 			}
 		
 			return station;

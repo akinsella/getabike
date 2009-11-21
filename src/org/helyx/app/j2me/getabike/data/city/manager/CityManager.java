@@ -219,7 +219,7 @@ public class CityManager {
 	
 	public static void selectCountry(final AbstractView currentView, final IReturnCallback returnCallback) {
 		if (CityManager.countCities() == 0) {
-			DialogUtil.showAlertMessage(currentView, "dialog.title.error", currentView.getMessage("Pas de ville sélectionné"), new OkResultCallback() {
+			DialogUtil.showAlertMessage(currentView, "dialog.title.error", currentView.getMessage("manager.city.warn.reload.meta.data"), new OkResultCallback() {
 				
 				public void onOk(DialogView dialogView, Object data) {
 					returnCallback.onReturn(currentView, null);

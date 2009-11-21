@@ -76,9 +76,9 @@ public class SplashScreenView extends AbstractView {
         else {
         	logger.info("fallbackLogoImageStr error");
         }
-             
-        g.drawString(getMessage("view.splash.copyright"), width / 2, y + height - 2, Graphics.HCENTER | Graphics.BOTTOM);
-        g.drawString(getMessage("view.splash.website"), width / 2, y + height - 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.BOTTOM);
+//             
+//        g.drawString(getMessage("view.splash.copyright"), width / 2, y + height - 2, Graphics.HCENTER | Graphics.BOTTOM);
+//        g.drawString(getMessage("view.splash.website"), width / 2, y + height - 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.BOTTOM);
 
         int center = y + height / 2 + (logoImage != null ? logoImage.getHeight() : FontUtil.SMALL.getHeight()) / 2;
         int bottom = y + height - 2 - FontUtil.SMALL.getHeight() * 2;

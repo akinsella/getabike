@@ -126,5 +126,4 @@ public class VelibStationContentProvider extends AbstractStationContentProvider 
 		this.openValue = openValue;
 	}
 
-
 }

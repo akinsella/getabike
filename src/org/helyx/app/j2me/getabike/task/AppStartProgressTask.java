@@ -225,12 +225,12 @@ public class AppStartProgressTask extends AbstractProgressTask {
 				checkLanguages();
 				break;
 			case STEP_LANGUAGE_DATA_OK:
-				checkCities();
-				break;
-			case STEP_CITY_DATA_OK:
 				checkSoftKeys();
 				break;
 			case STEP_SOFTKEY_DATA_OK:
+				checkCities();
+				break;
+			case STEP_CITY_DATA_OK:
 				onSuccess();
 				break;
 			default:
@@ -252,7 +252,12 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	private void checkCities() {
 		int cityCount = CityManager.countCities();
 		if (cityCount <= 0) {
-			configureCities();
+			try {
+				configureCities();
+			}
+			catch(Throwable t) {
+				checkData(STEP_CITY_DATA_OK);
+			}
 		}
 		else {
 			checkData(STEP_CITY_DATA_OK);
@@ -267,7 +272,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		onProgress(view.getMessage("task.app.start.data.city.load.start"));
 		IProgressTask progressTask = CityManager.createUpdateCitiesTask();
 		progressTask.addProgressListener(new CityLoaderProgressListener(progressTask.getProgressDispatcher(), view));
-		progressTask.addProgressListener(new StartProgressAdapter(STEP_CITY_DATA_OK));
+		progressTask.addProgressListener(new StartProgressAdapter(STEP_CITY_DATA_OK, true));
 		progressTask.execute();
 	}
 	
@@ -294,10 +299,16 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	private class StartProgressAdapter extends ProgressAdapter {
 		
 		private int successStep;
+		private boolean alwaysOk = false;
 		
 		public StartProgressAdapter(int succesStep) {
+			this(succesStep, false);
+		}
+		
+		public StartProgressAdapter(int succesStep, boolean alwaysOk) {
 			super(AppStartProgressTask.logger.getCategory().getName());
 			this.successStep = succesStep;
+			this.alwaysOk = alwaysOk;
 		}
 
 		public void onSuccess(String eventMessage, Object eventData) {
@@ -311,7 +322,18 @@ public class AppStartProgressTask extends AbstractProgressTask {
 		}
 		
 		public void onError(String eventMessage, Object eventData) {
-			AppStartProgressTask.this.onError(eventMessage, eventData);
+			if (alwaysOk) {
+				try {
+					checkData(successStep);
+				}
+				catch(Throwable t) {
+					AppStartProgressTask.this.logger.warn(t);
+					AppStartProgressTask.this.onError(t.getMessage(), t);
+				}
+			}
+			else {
+				AppStartProgressTask.this.onError(eventMessage, eventData);
+			}
 		}
 		
 		public void onProgress(String eventMessage, Object eventData) {

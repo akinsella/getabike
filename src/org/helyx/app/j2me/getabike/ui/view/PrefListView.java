@@ -30,7 +30,8 @@ public class PrefListView extends PrefBaseListView {
 	private MenuItem optionMenuItem;
 	private MenuItem resetMenuItem;
 	private MenuItem versionMenuItem;
-	private MenuItem updateMenuItem;
+	private MenuItem updateAppMenuItem;
+	private MenuItem updateCartoMetaDataMenuItem;
 	
 	private Throwable prefException;
 
@@ -209,13 +210,20 @@ public class PrefListView extends PrefBaseListView {
 				showDisplayable(optionMenuListView);
 			}
 		});		
+		
 		optionMenuItem.setParentMenu(true);
 		
 		versionMenuItem = new MenuItem("view.pref.item.version");
 		
-		updateMenuItem = new MenuItem("view.pref.item.check.update", new IAction() {
+		updateAppMenuItem = new MenuItem("view.pref.item.check.update", new IAction() {
 			public void run(Object data) {
 				AppManager.checkUpdateApplication(PrefListView.this, false, false);
+			}
+		});
+		
+		updateCartoMetaDataMenuItem = new MenuItem("view.pref.item.check.update.metadata", new IAction() {
+			public void run(Object data) {
+				AppManager.updateCartoMetaData(PrefListView.this);
 			}
 		});
 		
@@ -230,7 +238,8 @@ public class PrefListView extends PrefBaseListView {
 		menu.addMenuItem(languageMenuItem);
 		menu.addMenuItem(optionMenuItem);
 		menu.addMenuItem(versionMenuItem);
-		menu.addMenuItem(updateMenuItem);
+		menu.addMenuItem(updateAppMenuItem);
+		menu.addMenuItem(updateCartoMetaDataMenuItem);
 		menu.addMenuItem(resetMenuItem);
 		
 		setMenu(menu);

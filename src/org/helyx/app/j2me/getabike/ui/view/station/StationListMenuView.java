@@ -1,5 +1,6 @@
 package org.helyx.app.j2me.getabike.ui.view.station;
 
+import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
@@ -80,6 +81,22 @@ public class StationListMenuView extends PrefBaseListView {
 				}
 			}));
 		}
+
+		menu.addMenuItem(new MenuItem(CartoManager.isStationNumberBookmarked(city, stationListView.getStationSelected()) ? "view.station.detail.menu.item.bookmark.remove" : "view.station.detail.menu.item.bookmark.add", new ImageSet(getTheme().getString("IMG_STAR")), new IAction() {
+			
+			public void run(Object data) {
+				boolean isStataionBookmarked = CartoManager.isStationNumberBookmarked(city, stationListView.getStationSelected());
+				if (isStataionBookmarked) {
+					CartoManager.removeStationNumberFromBookmarks(city, stationListView.getStationSelected());
+				}
+				else {
+					CartoManager.addStationNumberToBookmarks(city, stationListView.getStationSelected());
+				}
+				fireReturnCallback();
+			}
+
+		}));
+
 		
 		setMenu(menu);
 	}

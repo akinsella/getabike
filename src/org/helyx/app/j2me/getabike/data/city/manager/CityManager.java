@@ -22,6 +22,9 @@ import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
 import org.helyx.logging4me.Logger;
 
 public class CityManager {
@@ -38,6 +41,7 @@ public class CityManager {
 	}
 
 	public static IProgressTask createUpdateCitiesTask() {
+		cache.remove(CITY_LIST);
 		String cityDataUrl = AppManager.getProperty(DATA_CITY_URL);
 		IContentAccessor cityContentAccessor = new HttpGetABikeContentAccessor(cityDataUrl);
 		IContentProvider contentProvider = new DefaultCityContentProvider(cityContentAccessor);
@@ -214,6 +218,15 @@ public class CityManager {
 	}
 	
 	public static void selectCountry(final AbstractView currentView, final IReturnCallback returnCallback) {
+		if (CityManager.countCities() == 0) {
+			DialogUtil.showAlertMessage(currentView, "dialog.title.error", currentView.getMessage("Pas de ville sélectionné"), new OkResultCallback() {
+				
+				public void onOk(DialogView dialogView, Object data) {
+					returnCallback.onReturn(currentView, null);
+				}
+			});
+			return;
+		}
 		final CountryListView countryListView = new CountryListView(currentView.getMidlet(), true);
 		countryListView.setReturnCallback(new IReturnCallback() {
 
@@ -230,11 +243,22 @@ public class CityManager {
 		selectCity(currentView, returnCallback, false);
 	}
 
-	public static void selectCity(final AbstractView currentView, final IReturnCallback returnCallback, boolean forceLoadCityListView) {
+	public static void selectCity(final AbstractView currentView, final IReturnCallback returnCallback, boolean forceLoadCityListView) {		
+		
 		final City currentCity = CityManager.getCurrentCity();
 		if (currentCity != null && !forceLoadCityListView) {
 			returnCallback.onReturn(currentView, currentCity);	
 			return ;
+		}
+
+		if (CityManager.countCities() == 0) {
+			DialogUtil.showAlertMessage(currentView, "dialog.title.error", currentView.getMessage("manager.city.warn.reload.meta.data"), new OkResultCallback() {
+				
+				public void onOk(DialogView dialogView, Object data) {
+					returnCallback.onReturn(currentView, null);
+				}
+			});
+			return;
 		}
 		
 		final String currentCountry = CityManager.getCurrentCountry();
@@ -253,7 +277,7 @@ public class CityManager {
 			});
 			return ;
 		}
-			
+
 		final CityListView cityListView = new CityListView(currentView.getMidlet(), currentCountry, true);
 		cityListView.setReturnCallback(new IReturnCallback() {
 			public void onReturn(AbstractDisplayable currentDisplayable, Object data) {

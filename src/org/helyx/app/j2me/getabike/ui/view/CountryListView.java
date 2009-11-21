@@ -64,12 +64,13 @@ public class CountryListView extends MenuListView {
 			public void run(Object data) {
 				getMenu().setCheckedMenuItem(getMenu().getSelectedMenuItem());
 				MenuItem menuItem = getMenu().getCheckedMenuItem();
-				
-				final String country = (String)menuItem.getData();
-				
-				if (country != null && !country.equals(currentCountry)) {
-					CityManager.setCurrentCountry(country);
-					CityManager.clearCurrentCity(true);
+				if (menuItem != null) {
+					final String country = (String)menuItem.getData();
+					
+					if (country != null && !country.equals(currentCountry)) {
+						CityManager.setCurrentCountry(country);
+						CityManager.clearCurrentCity(true);
+					}
 				}
 				
 				fireReturnCallback();

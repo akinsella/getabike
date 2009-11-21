@@ -93,7 +93,7 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 		}
 	}
 
-	private void onStartError(AbstractView view, String message, Throwable t) {
+	private void onStartError(final AbstractView view, String message, Throwable t) {
 		if (logger.isInfoEnabled()) {
 			logger.info(message);
 		}
@@ -102,12 +102,8 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 		boolean tmpCleanUpCityData = false;
 
 		Throwable rootCause = ErrorUtil.getRootCause(t);
-		String errorMessage = t.getMessage() == null ? getMessage("dialog.error.unexpected") : t.getMessage();
-		
-		if (rootCause instanceof SecurityException) {
-			errorMessage = getMessage("security.api.access.error.message");
-		}
-		else {
+
+		if (!(rootCause instanceof SecurityException)) {
 			tmpCleanUpCityData = true;
 		}
 
@@ -116,7 +112,7 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 		DialogUtil.showMessageDialog(
 				view, 
 				"dialog.title.error", 
-				getMessage("midlet.start.error.message.1") + ": " + ErrorManager.getErrorMessage(this, t), 
+				getMessage("dialog.title.warn") + ": " + ErrorManager.getErrorMessage(this, t), 
 				new OkResultCallback() {
 					public void onOk(DialogView dialogView, Object data) {
 						if (cleanUpCityData) {
@@ -125,9 +121,12 @@ public class GetABikeMIDlet extends AbstractMIDlet {
 							}
 							PrefManager.writePref(PrefConstants.CITY_DATA_CLEAN_UP_NEEDED, BooleanConstants.TRUE);
 						}
-						GetABikeMIDlet.this.exit();								
+						GetABikeMIDlet.this.exit();
+						
 					}
-				});			
+				});	
+		
+		
 
 	}
 

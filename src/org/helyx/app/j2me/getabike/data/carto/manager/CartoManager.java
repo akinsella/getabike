@@ -6,6 +6,7 @@ import org.helyx.app.j2me.getabike.data.carto.comparator.StationDistanceComparat
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.filter.DefaultStationFilterBuilder;
 import org.helyx.app.j2me.getabike.data.carto.filter.StationDistanceFilter;
+import org.helyx.app.j2me.getabike.data.carto.listener.StoreStationLoaderProgressListener;
 import org.helyx.app.j2me.getabike.data.carto.provider.details.factory.VelibStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.details.factory.VeloPlusStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.details.factory.VeloVStationDetailsContentProviderFactory;
@@ -21,9 +22,11 @@ import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.SimpleStationI
 import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.VelibStationInfoNormalizer;
 import org.helyx.app.j2me.getabike.data.carto.service.StationPersistenceService;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
 import org.helyx.app.j2me.getabike.ui.view.renderer.DistanceStationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.renderer.StationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
+import org.helyx.app.j2me.getabike.util.ErrorManager;
 import org.helyx.helyx4me.cache.Cache;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;
@@ -31,11 +34,17 @@ import org.helyx.helyx4me.content.provider.IContentProviderFactory;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryException;
 import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryNotFoundExcepton;
 import org.helyx.helyx4me.filter.FilterHelper;
+import org.helyx.helyx4me.manager.TaskManager;
 import org.helyx.helyx4me.model.list.IElementProvider;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.text.TextUtil;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.helyx4me.ui.displayable.callback.ProgressTaskReturnCallback;
+import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
 import org.helyx.helyx4me.util.ConverterUtil;
 import org.helyx.logging4me.Logger;
 
@@ -331,4 +340,70 @@ public class CartoManager {
 
 	}
 	
+	
+	
+	public static void loadCityStations(final AbstractView view, final City city) {
+		
+		try {
+			IProgressTask progressTask = CartoManager.createUpdateCityStationsTask(city);
+			progressTask.addProgressListener(new StoreStationLoaderProgressListener(progressTask.getProgressDispatcher(), view));
+
+			TaskManager.runLoadTaskView("view.city.station.update.title", progressTask, view.getMidlet(), view, new ProgressTaskReturnCallback() {
+
+				public void onSuccess(AbstractDisplayable currentDisplayable, String eventMessage, Object eventData) {
+					if (logger.isDebugEnabled()) {
+						logger.debug("Success: " + eventMessage + ", data: " + eventData);
+					}
+					CityManager.setCurrentCity(city);
+					view.fireReturnCallback(eventData);
+				}
+
+				public void onError(final AbstractDisplayable currentDisplayable, final String eventMessage, final Object eventData) {
+					if (logger.isInfoEnabled()) {
+						logger.info("Error: " + eventMessage + ", data: " + eventData);
+					}
+					cleanUpCurrentCityData();
+					
+					Throwable t = (Throwable)eventData;
+
+					
+					DialogUtil.showMessageDialog(
+							view, 
+							"dialog.title.error", 
+							view.getMessage("connection.error") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t), 
+							new OkResultCallback() {
+								public void onOk(DialogView dialogView, Object data) {
+									view.fireReturnCallback(eventData);
+								}
+							});			
+
+				}
+				
+			});
+		}
+		catch (CartoManagerException e) {
+			logger.warn(e);
+			cleanUpCurrentCityData();
+			DialogUtil.showMessageDialog(
+					view, 
+					"dialog.title.error", 
+					view.getMessage("view.city.load.error.1") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), e),
+					new OkResultCallback() {
+						
+						public void onOk(DialogView dialogView, Object data) {
+							view.fireReturnCallback();
+						}
+					});
+		}
+	}
+	
+	public static void cleanUpCurrentCityData() {
+		try {
+			CityManager.clearCurrentCity(true);
+		}
+		catch(Throwable t) {
+			logger.warn(t);
+		}
+	}
+
 }

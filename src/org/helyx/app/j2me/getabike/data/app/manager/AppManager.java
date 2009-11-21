@@ -1,6 +1,7 @@
 package org.helyx.app.j2me.getabike.data.app.manager;
 
 import java.util.Enumeration;
+import java.util.Vector;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.app.j2me.getabike.content.accessor.HttpGetABikeContentAccessor;
@@ -12,6 +13,9 @@ import org.helyx.app.j2me.getabike.data.app.exception.ApplicationManagerExceptio
 import org.helyx.app.j2me.getabike.data.app.exception.VersionException;
 import org.helyx.app.j2me.getabike.data.app.provider.ApplicationDataContentProvider;
 import org.helyx.app.j2me.getabike.data.app.util.PropertiesHelper;
+import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.city.listener.CityLoaderProgressListener;
+import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
 import org.helyx.app.j2me.getabike.data.provider.PropertiesContentProvider;
 import org.helyx.app.j2me.getabike.util.ErrorManager;
 import org.helyx.basics4me.util.Properties;
@@ -20,6 +24,8 @@ import org.helyx.helyx4me.content.accessor.IContentAccessor;
 import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
 import org.helyx.helyx4me.content.provider.IContentProvider;
 import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.task.AbstractProgressTask;
+import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
@@ -226,6 +232,7 @@ public class AppManager {
 		}
 		return false;
 	}
+	
 
 	public static String getProperty(String key) {
 		return getProperties().getProperty(key);
@@ -256,7 +263,105 @@ public class AppManager {
 		}
 	}
 	
-	private static void updateConfigurationMetaData() {
+	public static void updateCartoMetaData(final AbstractView view) {
+		
+		final String oldCountry = CityManager.getCurrentCountry();
+		final City oldCity = CityManager.getCurrentCity(); 
+		
+		final IProgressTask progressTask = new AbstractProgressTask("UPDATE_APP_META_DATA") {
+			
+			final private AbstractProgressTask _this = this;
+
+			public Runnable getRunnable() {
+				return new Runnable() {
+					public void run() {
+						try {
+							getProgressDispatcher().fireEvent(EventType.ON_PROGRESS, view.getMessage("manager.app.metadata.update"));
+							
+							updateConfigurationMetaData();
+
+							IProgressTask cityProgressTask = CityManager.createUpdateCitiesTask();
+							cityProgressTask.addProgressListener(new CityLoaderProgressListener(cityProgressTask.getProgressDispatcher(), view));
+							
+							cityProgressTask.addProgressListener(new ProgressAdapter("UPDATE_CARTO_METADATA_PROGRESS_LISTENER") {
+
+								public void onError(String eventMessage, Object eventData) {
+									_this.getProgressDispatcher().fireEvent(EventType.ON_ERROR, eventMessage, eventData);
+								}
+
+								public void onSuccess(String eventMessage, Object eventData) {
+									if (oldCountry != null || !CityManager.findAllCountries().contains(oldCountry)) {
+										CityManager.clearCurrentCity(true);
+										CityManager.clearCurrentCountry();
+									}
+									else if (oldCity == null) {
+										CityManager.clearCurrentCity(true);
+									}
+									else {
+										Vector cities = CityManager.findCitiesByCountryName(oldCountry);
+										Enumeration _enum = cities.elements();
+										boolean cityFound = false;
+										while (_enum.hasMoreElements()) {
+											City city = (City)_enum.nextElement();
+											if (city.key.equals(oldCity.key)) {
+												break;
+											}
+										}
+										if (!cityFound) {
+											CityManager.clearCurrentCity(true);
+										}
+									}
+									_this.getProgressDispatcher().fireEvent(EventType.ON_SUCCESS, eventMessage, eventData);
+								}
+								
+							});
+							
+							cityProgressTask.execute();
+						}
+						catch(Throwable t) {
+							_this.getProgressDispatcher().fireEvent(EventType.ON_ERROR, t.getMessage(), t);
+						}
+					}
+				};
+			}
+		};
+	
+		final LoadTaskView loadTaskView = new LoadTaskView(view.getMidlet(), "view.station.detail.load.message", progressTask);
+		loadTaskView.setReturnCallback(new BasicReturnCallback(view));
+	
+		progressTask.addProgressListener(new ProgressAdapter("Loading station details") {
+
+			public void onSuccess(String eventMessage, Object eventData) {
+				loadTaskView.fireReturnCallback();
+			}
+
+			public void onError(String eventMessage, Object eventData) {
+				if (AppManager.logger.isInfoEnabled()) {
+					AppManager.logger.info("Error: " + eventMessage + ", data: " + eventData);
+				}
+				
+				Throwable t = (Throwable)eventData;
+				AppManager.logger.warn(t);
+				
+				DialogUtil.showMessageDialog(
+						view, 
+						"dialog.title.error", 
+						view.getMessage("dialog.title.error") + ": " + ErrorManager.getErrorMessage(view.getMidlet(), t), 
+						new OkResultCallback() {
+							public void onOk(DialogView dialogView, Object data) {
+								loadTaskView.fireReturnCallback();
+							}
+						});
+			}
+			
+		});
+		
+		
+		view.showDisplayable(loadTaskView);
+		loadTaskView.startTask();
+	}
+	
+	public static void updateConfigurationMetaData() {
 		try {
 			IContentAccessor dataCitiesContentAccessor = new HttpGetABikeContentAccessor(APPLICATION_DATA_URL);
 			IContentProvider contentProvider = new ApplicationDataContentProvider(dataCitiesContentAccessor);

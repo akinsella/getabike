@@ -241,6 +241,7 @@ public class MenuView extends MenuListView {
 								}
 
 								public void onSuccess(String eventMessage, Object eventData) {
+									location = (Point)eventData;	
 									showStations(2);
 								}
 								

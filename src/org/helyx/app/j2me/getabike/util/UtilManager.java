@@ -1,7 +1,5 @@
 package org.helyx.app.j2me.getabike.util;
 
-import javax.microedition.location.LocationProvider;
-
 import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.app.j2me.getabike.ui.theme.AppThemeConstants;
 import org.helyx.helyx4me.map.google.GoogleMapsView;
@@ -174,16 +172,6 @@ public class UtilManager {
 
 	}
 
-
-	public static boolean supportLocationApi() {
-	    try {
-		    LocationProvider locationProvider = LocationProvider.getInstance(null);
-	    	return true;
-	    }
-	    catch (Exception e) {
-	        return false;
-	    }
-	}
 	public static void changeHttpMode(final AbstractDisplayable currentDisplayable) {
 		final boolean httpModeActive = PrefManager.readPrefBoolean(PrefConstants.OPTIMIZED_HTTP_MODE_ENABLED);
 

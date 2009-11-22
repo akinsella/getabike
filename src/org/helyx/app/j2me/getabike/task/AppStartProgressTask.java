@@ -354,6 +354,7 @@ public class AppStartProgressTask extends AbstractProgressTask {
 	}
 	
 	private void onSuccess() {
+		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("task.app.start.success"));
 		if (appStartThrowable != null) {
 			progressDispatcher.fireEvent(EventType.ON_ERROR, appStartThrowable);
 		}

@@ -17,13 +17,8 @@ package org.helyx.app.j2me.getabike.ui.view;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
-import javax.microedition.location.Coordinates;
-import javax.microedition.location.Criteria;
-import javax.microedition.location.Location;
-import javax.microedition.location.LocationProvider;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
-import org.helyx.app.j2me.getabike.data.app.manager.AppManager;
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
@@ -32,6 +27,8 @@ import org.helyx.app.j2me.getabike.ui.view.renderer.MenuItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.renderer.StationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
 import org.helyx.app.j2me.getabike.util.ErrorManager;
+import org.helyx.app.j2me.getabike.util.LocationManager;
+import org.helyx.app.j2me.getabike.util.LocationUtil;
 import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.localization.Point;
@@ -39,10 +36,8 @@ import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.task.AbstractProgressTask;
 import org.helyx.helyx4me.task.EventType;
-import org.helyx.helyx4me.task.IProgressDispatcher;
 import org.helyx.helyx4me.task.IProgressTask;
 import org.helyx.helyx4me.task.ProgressAdapter;
-import org.helyx.helyx4me.task.ProgressListener;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
 import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
@@ -173,7 +168,7 @@ public class MenuView extends MenuListView {
 				}
 			}));
 
-			if (UtilManager.supportLocationApi()) {
+			if (LocationUtil.supportLocationApi()) {
 				menu.addMenuItem(new MenuItem("view.menu.item.station.list.nearby", true, new IAction() {
 					public void run(Object data) {
 			    		boolean opeModeSetted = PrefManager.containsPref(PrefConstants.COST_ALLOWED_GEO_LOCALIZATION);
@@ -203,29 +198,10 @@ public class MenuView extends MenuListView {
 										public void run() {
 											try {
 												getProgressDispatcher().fireEvent(EventType.ON_START);
-									    		// Criteria can be used to filter which GPS device to use.
-									    		Criteria criteria = new Criteria();
-									    		criteria.setCostAllowed(opeModeEnabled);
-									    		criteria.setPreferredPowerConsumption(Criteria.NO_REQUIREMENT);
 
-									    		// Get a location provider based on the aforementioned criteria.
-									    		LocationProvider provider = LocationProvider.getInstance(criteria);
-
-									    		// Try to fetch the current location (using a 3 minute timeout).
-									    		Location internalLocation = provider.getLocation(60);
-
-									    		// Get the coordinates of the current location.
-									    		Coordinates coordinates = internalLocation.getQualifiedCoordinates();
-
-									    		if (coordinates  != null) {
-									    		    // Get the latitude and longitude of the coordinates.
-									    		    double latitude = coordinates.getLatitude();
-									    		    double longitude = coordinates.getLongitude();
-									    		    
-									    		    logger.info("LAT: " + latitude);
-									    		    logger.info("LNG: " + longitude);
-									    		    location = new Point(longitude, latitude);
-									    		    //showStations(2);
+												Point location = LocationManager.getLocations(opeModeEnabled);
+												
+									    		if (location != null) {
 									    		    getProgressDispatcher().fireEvent(EventType.ON_SUCCESS, "LCOATION OK", location);
 									    		}
 									    		else {

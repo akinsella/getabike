@@ -4,6 +4,7 @@ import javax.microedition.lcdui.Graphics;
 
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
+import org.helyx.helyx4me.localization.Point;
 import org.helyx.helyx4me.math.DistanceUtil;
 import org.helyx.helyx4me.ui.geometry.Rectangle;
 import org.helyx.helyx4me.ui.graphics.Color;
@@ -17,9 +18,17 @@ public class DistanceStationItemRenderer extends StationItemRenderer {
 	private Logger logger = Logger.getLogger("DISTANCE_STATION_ITEM_RENDERER");
 	
 	private static String distanceInMeter = " m";
+	private static String distanceInKM = " km";
+	private boolean useLocation;
+
 	
 	public DistanceStationItemRenderer() {
+		this(false);
+	}
+	
+	public DistanceStationItemRenderer(boolean useLocation) {
 		super();
+		this.useLocation = useLocation;
 	}
 
 	public void paintItem(AbstractListView view, Graphics g, int offset, Rectangle itemClientArea, Object itemObject) {
@@ -29,11 +38,19 @@ public class DistanceStationItemRenderer extends StationItemRenderer {
 		boolean isSelected = view.isItemSelected(offset);
 
 		StationListView stationListView = (StationListView)view;
-		Station referentStation = stationListView.getReferentStation();
+		
+		Point location = null;
+		if (useLocation) {
+			location = stationListView.getLocation();
+		}
+		else {
+			location = stationListView.getReferentStation().localization;
+		}
+		
 		Station station = (Station)itemObject;
 		
-		if (station.distance == Double.MAX_VALUE) {
-			station.distance = DistanceUtil.distance(referentStation.localization, station.localization, DistanceUtil.KM) * 1000;
+		if (location != null) {
+			station.distance = DistanceUtil.distance(location, station.localization, DistanceUtil.KM) * 1000;
 		}
     	
 		if (logger.isDebugEnabled()) {
@@ -47,7 +64,15 @@ public class DistanceStationItemRenderer extends StationItemRenderer {
 	        int y = itemClientArea.location.y;
 	        int width = itemClientArea.size.width;
 	        int height = itemClientArea.size.height;
-			String distanceStr = new String((long)(station.distance) + distanceInMeter);
+	        
+			String distanceStr = null;
+			
+			if (station.distance < 10000) {
+				distanceStr = new String((long)(station.distance) + distanceInMeter);
+			}
+			else {
+				distanceStr = new String((long)(station.distance / 1000) + distanceInKM);
+			}
 			
 			Color distanceFontColor = null;
 			

@@ -184,11 +184,12 @@ public class StationDetailsView extends AbstractView {
 		Font mediumBoldFont = FontUtil.MEDIUM_BOLD;
 		
 		Rectangle clientArea = computeClientArea();
-		int width = clientArea.location.x + 1;
-		int height = clientArea.location.y + 1;
+		
+		int width = clientArea.location.x ;
+		int height = clientArea.location.y;
+		
 		int smallFontHeight = smallFont.getHeight();
 		int mediumFontHeight = mediumFont.getHeight();
-		int mediumBoldFontHeight = mediumBoldFont.getHeight();
 
         String stationNumber = String.valueOf(station.number);
 		
@@ -197,8 +198,8 @@ public class StationDetailsView extends AbstractView {
 			int iconImageHeight = iconImage.getHeight();
 
 	        int titleZoneHeight = 0;
-	        if (iconImageHeight < mediumBoldFontHeight + smallFontHeight) {
-	        	titleZoneHeight = mediumBoldFontHeight + smallFontHeight;
+	        if (iconImageHeight < mediumFontHeight * 2) {
+	        	titleZoneHeight = mediumFontHeight * 2;
 	        }
 	        else {
 		        titleZoneHeight = iconImageHeight;
@@ -206,23 +207,24 @@ public class StationDetailsView extends AbstractView {
 	        
 	        Color detailsBackgroundColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_BACKGROUND);
 	        g.setColor(detailsBackgroundColor.intValue());
-	        g.fillRect(0, 0, canvasWidth, height + titleZoneHeight + 1);
+	        g.fillRect(width, height, canvasWidth, titleZoneHeight);
 
 	        Color detailsFontTitleColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_FONT_TITLE);
 	        g.setColor(detailsFontTitleColor.intValue());
 	        
 	        g.drawImage(iconImage, width + iconImageWidth / 2, height + titleZoneHeight / 2, Graphics.VCENTER | Graphics.HCENTER);
+	   
 	        g.setFont(mediumFont);
-	        g.drawString(station.name, width + iconImageWidth + 5, height + titleZoneHeight / 2 + mediumFontHeight + 2 - mediumBoldFont.getBaselinePosition() - mediumFontHeight / 2, Graphics.BASELINE | Graphics.LEFT);
+	        g.drawString(station.name, width + iconImageWidth + 5, height + titleZoneHeight / 2 - mediumFontHeight, Graphics.TOP | Graphics.LEFT);
 	        
 	        g.setFont(smallFont);
-	        g.drawString(stationNumber, width + iconImageWidth + 5, height + titleZoneHeight / 2 + mediumFontHeight - mediumBoldFont.getBaselinePosition() + smallFontHeight / 2, Graphics.BASELINE | Graphics.LEFT);
+	        g.drawString(stationNumber, width + iconImageWidth + 5, height + titleZoneHeight / 2  + 1, Graphics.TOP | Graphics.LEFT);
 	        
 	        if (!station.open) {
 		        Color detailsErrorColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_ERROR);
 	        	g.setColor(detailsErrorColor.intValue());
 	        	g.setFont(smallBoldFont);
-		        g.drawString(" - " + getMessage("view.station.detail.station.closed"), width + iconImageWidth + 5 + smallFont.stringWidth(stationNumber), height + titleZoneHeight / 2 + mediumFontHeight - mediumBoldFont.getBaselinePosition() + smallFontHeight / 2, Graphics.BASELINE | Graphics.LEFT);
+		        g.drawString(" - " + getMessage("view.station.detail.station.closed"), width + iconImageWidth + 5 + smallFont.stringWidth(stationNumber), height + titleZoneHeight / 2 + mediumFontHeight + smallFontHeight / 2, Graphics.TOP | Graphics.LEFT);
 	        }
 	        height += titleZoneHeight + 2;
 		}
@@ -242,7 +244,7 @@ public class StationDetailsView extends AbstractView {
 	        if (!station.open) {
 		        Color detailsErrorColor = getTheme().getColor(ThemeConstants.WIDGET_DETAILS_ERROR);
 	        	g.setColor(detailsErrorColor.intValue());
-		        g.drawString(" - " + getMessage("view.station.detail.station.closed"), width + smallFont.stringWidth(stationNumber), height + mediumFontHeight + 1, Graphics.BASELINE | Graphics.LEFT);
+		        g.drawString(" - " + getMessage("view.station.detail.station.closed"), width + smallFont.stringWidth(stationNumber), height + mediumFontHeight + 1, Graphics.TOP | Graphics.LEFT);
 	        }
 
 	        height += mediumFontHeight + 1 + smallFontHeight + 1;
@@ -296,10 +298,10 @@ public class StationDetailsView extends AbstractView {
         g.setFont(mediumFont);
         int maxKeyWidth = mediumFont.stringWidth("Vélos disponibles: ") + 5 + mediumFont.stringWidth(String.valueOf("WWW"));
         
-        String total = stationDetails != null ? String.valueOf(stationDetails.total) : "ND"; 
-        String available = stationDetails != null ? String.valueOf(stationDetails.available) : "ND"; 
-        String free = stationDetails != null ? String.valueOf(stationDetails.free) : "ND"; 
-        String hs = stationDetails != null ? String.valueOf(stationDetails.total - stationDetails.available - stationDetails.free) : "ND"; 
+        String total = stationDetails != null && stationDetails.total >= 0 ? String.valueOf(stationDetails.total) : "ND"; 
+        String available = stationDetails != null && stationDetails.available >= 0 ? String.valueOf(stationDetails.available) : "ND"; 
+        String free = stationDetails != null && stationDetails.free >= 0 ? String.valueOf(stationDetails.free) : "ND"; 
+        String hs = stationDetails != null && stationDetails.hs >= 0 ? String.valueOf(stationDetails.total - stationDetails.available - stationDetails.free) : "ND"; 
         String tpe = stationDetails != null ? ((station.tpe || stationDetails.tpe) ? "Oui" : "Non") : "ND"; 
         String bonus = stationDetails != null ? (station.bonus ? "Oui" : "Non") : "ND"; 
          

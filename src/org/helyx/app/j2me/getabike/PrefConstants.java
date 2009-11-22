@@ -32,5 +32,12 @@ public class PrefConstants {
 	public static final String PREF_STATION_NAME_FILTER = "station.search.name";
 	public static final String PREF_STATION_ZIPCODE_FILTER = "station.search.zipcode";
 	public static final String PREF_STATION_CITY_FILTER = "station.search.city";
+	public static final String COST_ALLOWED_GEO_LOCALIZATION = "COST_ALLOWED_GEO_LOCALIZATION";
 	
+
+	public static final String DEBUG_MODE_ENABLED = "DEBUG_MODE_ENABLED";
+	public static final String OPTIMIZED_HTTP_MODE_ENABLED = "OPTIMIZED_HTTP_MODE_ENABLED";
+	public static final String MAP_MODE_ENABLED = "MAP_MODE_ENABLED";
+	public static final String PRE_LOAD_MODE_ENABLED = "PRE_LOAD_MODE_ENABLED";
+
 }

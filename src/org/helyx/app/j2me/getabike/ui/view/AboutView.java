@@ -18,7 +18,7 @@ import org.helyx.logging4me.Logger;
 
 public class AboutView extends AbstractView {
 
-	private static final Logger logger = Logger.getLogger("SPLASH_SCREEN_VIEW");
+	private static final Logger logger = Logger.getLogger("ABOUT_VIEW");
 	
 	private Image logoImage;
 	private String fallbackLogoImageStr;
@@ -85,7 +85,7 @@ public class AboutView extends AbstractView {
         	g.drawImage(logoImage, x + width / 2, y + height / 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.VCENTER);
         }
         else if (fallbackLogoImageStr != null){
-        	g.drawString(fallbackLogoImageStr, x + width / 2, y + height / 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.BASELINE);        	
+        	g.drawString(fallbackLogoImageStr, x + width / 2, y + height / 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.TOP);        	
         }
 
         g.setFont(FontUtil.SMALL);

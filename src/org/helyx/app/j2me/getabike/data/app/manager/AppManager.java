@@ -291,7 +291,7 @@ public class AppManager {
 								}
 
 								public void onSuccess(String eventMessage, Object eventData) {
-									if (oldCountry != null || !CityManager.findAllCountries().contains(oldCountry)) {
+									if (oldCountry == null || !CityManager.findAllCountries().contains(oldCountry)) {
 										CityManager.clearCurrentCity(true);
 										CityManager.clearCurrentCountry();
 									}
@@ -305,6 +305,7 @@ public class AppManager {
 										while (_enum.hasMoreElements()) {
 											City city = (City)_enum.nextElement();
 											if (city.key.equals(oldCity.key)) {
+												cityFound = true;
 												break;
 											}
 										}

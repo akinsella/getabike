@@ -14,6 +14,7 @@ import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.comparator.Comparator;
 import org.helyx.helyx4me.filter.Filter;
 import org.helyx.helyx4me.filter.FilterBuilder;
+import org.helyx.helyx4me.localization.Point;
 import org.helyx.helyx4me.map.google.POIInfoAccessor;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
 import org.helyx.helyx4me.model.list.IDynamicFilterableSortableElementProvider;
@@ -45,6 +46,8 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	private boolean allowMenu = true;
 	private boolean allowNested = true;
 	private boolean showBookmarks = false;
+	
+	private Point location;
 	
 	public boolean isShowBookmarks() {
 		return showBookmarks;
@@ -110,10 +113,16 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 	}
 	
 	protected Station getStationSelected() {
+		if (getElementProvider().length() <= 0) {
+			return null;
+		}
 		return (Station)getElementProvider().get(selectedOffset);
 	}
 	
 	protected void showItemSelected() {
+		if (getElementProvider().length() <= 0) {
+			return ;
+		}		
 		onShowItemSelected(getElementProvider().get(selectedOffset));
 	}
 
@@ -161,6 +170,10 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 
 	protected void showSelectedItem(Station object) {
 		Station station = (Station)object;
+		
+		if (station == null) {
+			return;
+		}
 		
 		StationDetailsView stationDetailsView = new StationDetailsView(getMidlet(), city, station);
 		stationDetailsView.setAllowSearchNearStation(allowNested);
@@ -252,6 +265,14 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 
 	public boolean isEmpty() {
 		return getElementProvider().length() <= 0;
+	}
+
+	public Point getLocation() {
+		return location;
+	}
+
+	public void setLocation(Point location) {
+		this.location = location;
 	}
 	
 }

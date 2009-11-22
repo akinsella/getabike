@@ -74,6 +74,7 @@ public class PrefListView extends PrefBaseListView {
 				PrefBaseListView optionMenuListView = new PrefBaseListView(getMidlet(), "view.pref.item.advanced.options") {
 					
 					private MenuItem mapModeMenuItem;
+					private MenuItem geoLocModeMenuItem;
 					private MenuItem httpModeMenuItem;
 					private MenuItem debugModeMenuItem;
 					private MenuItem platformMenuItem;
@@ -91,6 +92,12 @@ public class PrefListView extends PrefBaseListView {
 						mapModeMenuItem = new MenuItem("view.pref.item.google.maps", new IAction() {
 							public void run(Object data) {
 								UtilManager.changeMapMode(currentDisplayable);
+							}
+						});
+						
+						geoLocModeMenuItem = new MenuItem("view.pref.item.operator.geoloc", new IAction() {
+							public void run(Object data) {
+								UtilManager.changeGeoLocMode(currentDisplayable);
 							}
 						});
 						
@@ -131,6 +138,7 @@ public class PrefListView extends PrefBaseListView {
 						Menu optionMenu = new Menu();
 						
 						optionMenu.addMenuItem(mapModeMenuItem);
+						optionMenu.addMenuItem(geoLocModeMenuItem);
 						optionMenu.addMenuItem(httpModeMenuItem);
 						optionMenu.addMenuItem(debugModeMenuItem);
 						optionMenu.addMenuItem(appUuidMenuItem);
@@ -152,6 +160,7 @@ public class PrefListView extends PrefBaseListView {
 							fetchDebugMode();
 							fetchHttpMode();
 							fetchMapMode();
+							fetchGeoLocMode();
 							fetchSystemInformations();
 							fetchAppUuid();
 						}
@@ -189,7 +198,7 @@ public class PrefListView extends PrefBaseListView {
 					}
 
 					private void fetchHttpMode() {
-						boolean isOptimizedHttpModeActive = PrefManager.readPrefBoolean(UtilManager.OPTIMIZED_HTTP_MODE_ENABLED);
+						boolean isOptimizedHttpModeActive = PrefManager.readPrefBoolean(PrefConstants.OPTIMIZED_HTTP_MODE_ENABLED);
 						if (logger.isDebugEnabled()) {
 							logger.debug("Optimized Http mode active: " + isOptimizedHttpModeActive);	
 						}
@@ -197,11 +206,19 @@ public class PrefListView extends PrefBaseListView {
 					}
 
 					private void fetchMapMode() {
-						boolean isMapModeActive = PrefManager.readPrefBoolean(UtilManager.MAP_MODE_ENABLED);
+						boolean isMapModeActive = PrefManager.readPrefBoolean(PrefConstants.MAP_MODE_ENABLED);
 						if (logger.isDebugEnabled()) {
 							logger.debug("Map mode active: " + isMapModeActive);	
 						}
 						mapModeMenuItem.setData(PREF_VALUE, isMapModeActive ? getMessage("view.pref.value.activated") : getMessage("view.pref.value.deactivated"));
+					}
+					
+					private void fetchGeoLocMode() {
+						boolean isGeoLocModeActive = PrefManager.readPrefBoolean(PrefConstants.COST_ALLOWED_GEO_LOCALIZATION);
+						if (logger.isDebugEnabled()) {
+							logger.debug("Geo loc operator mode active: " + isGeoLocModeActive);	
+						}
+						geoLocModeMenuItem.setData(PREF_VALUE, isGeoLocModeActive ? getMessage("view.pref.value.activated") : getMessage("view.pref.value.deactivated"));
 					}
 					
 				};

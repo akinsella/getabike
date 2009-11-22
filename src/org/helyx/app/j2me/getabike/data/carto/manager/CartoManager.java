@@ -7,13 +7,16 @@ import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.filter.DefaultStationFilterBuilder;
 import org.helyx.app.j2me.getabike.data.carto.filter.StationDistanceFilter;
 import org.helyx.app.j2me.getabike.data.carto.listener.StoreStationLoaderProgressListener;
+import org.helyx.app.j2me.getabike.data.carto.provider.details.factory.LeVeloStarStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.details.factory.PreLoadedStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.details.factory.VelibStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.details.factory.VeloPlusStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.details.factory.VeloVStationDetailsContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.factory.CityBikeStationContentProviderFactory;
+import org.helyx.app.j2me.getabike.data.carto.provider.factory.LeVeloStarStationContentProviderFactory;
+import org.helyx.app.j2me.getabike.data.carto.provider.factory.NextBikeStationContentProviderFactory;
+import org.helyx.app.j2me.getabike.data.carto.provider.factory.OyBikeStationContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.factory.VelibStationContentProviderFactory;
-import org.helyx.app.j2me.getabike.data.carto.provider.factory.VeloBleuStationContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.factory.VeloPlusStationContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.factory.VeloStationContentProviderFactory;
 import org.helyx.app.j2me.getabike.data.carto.provider.factory.VeloVStationContentProviderFactory;
@@ -60,6 +63,8 @@ public class CartoManager {
 	public static final String VELO_V = "VELO_V";  // LYON
 	public static final String CITYBIKE = "CITYBIKE";  // VIENNE
 	public static final String OYBIKE = "OYBIKE";  // NICE
+	public static final String NEXTBIKE = "NEXTBIKE";  // NEXTBIKE
+	public static final String LE_VELO_STAR = "LE_VELO_STAR";  // RENNES
 	
 	private static final String DEFAULT_NORMALIZER = "DEFAULT";
 	private static final String SIMPLE_NORMALIZER = "SIMPLE";
@@ -93,7 +98,13 @@ public class CartoManager {
 				cpf = new CityBikeStationContentProviderFactory(city);
 			}
 			else if (OYBIKE.equals(city.type)) {
-				cpf = new VeloBleuStationContentProviderFactory(city);
+				cpf = new OyBikeStationContentProviderFactory(city);
+			}
+			else if (NEXTBIKE.equals(city.type)) {
+				cpf = new NextBikeStationContentProviderFactory(city);
+			}
+			else if (LE_VELO_STAR.equals(city.type)) {
+				cpf = new LeVeloStarStationContentProviderFactory(city);
 			}
 			else {
 				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");
@@ -160,6 +171,12 @@ public class CartoManager {
 			}
 			else if (OYBIKE.equals(city.type)) {
 				cpf = new PreLoadedStationDetailsContentProviderFactory(city, station);
+			}
+			else if (NEXTBIKE.equals(city.type)) {
+				cpf = new PreLoadedStationDetailsContentProviderFactory(city, station);
+			}
+			else if (LE_VELO_STAR.equals(city.type)) {
+				cpf = new LeVeloStarStationDetailsContentProviderFactory(city, station);
 			}
 			else {
 				throw new ContentProviderFactoryNotFoundExcepton("No ContentProviderFactory for city type: '" + city.type + "' and key: '" + city.key + "'");

@@ -71,7 +71,7 @@ public class SplashScreenView extends AbstractView {
         }
         else if (fallbackLogoImageStr != null) {
         	logger.info(fallbackLogoImageStr);
-        	g.drawString(fallbackLogoImageStr, x + width / 2, y + height / 2 - FontUtil.SMALL.getHeight(), Graphics.HCENTER | Graphics.BASELINE);        	
+        	g.drawString(fallbackLogoImageStr, x + width / 2, y + height / 2 - FontUtil.SMALL.getHeight() / 2, Graphics.HCENTER | Graphics.TOP);        	
         }
         else {
         	logger.info("fallbackLogoImageStr error");

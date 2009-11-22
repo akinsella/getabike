@@ -1,15 +1,12 @@
 package org.helyx.app.j2me.getabike.data.carto.provider;
 
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.util.Date;
 
 import org.helyx.app.j2me.getabike.data.carto.CartoConstants;
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.IStationInfoNormalizer;
-import org.helyx.app.j2me.getabike.data.carto.util.LocalizationUtil;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.helyx4me.constant.EncodingConstants;
 import org.helyx.helyx4me.content.accessor.IContentAccessor;
@@ -22,12 +19,10 @@ import org.helyx.helyx4me.xml.xpp.XppUtil;
 import org.helyx.logging4me.Logger;
 import org.xmlpull.v1.XmlPullParser;
 
-import au.com.bytecode.opencsv.CSVReader;
 
-
-public class VeloBleuStationContentProvider extends AbstractStationContentProvider {
+public class OyBikeStationContentProvider extends AbstractStationContentProvider {
 	
-	private static final Logger logger = Logger.getLogger("VELO_BLEU_STATION_CONTENT_PROVIDER");
+	private static final Logger logger = Logger.getLogger("OYBIKE_STATION_CONTENT_PROVIDER");
 	
 	private static final String VIEW_ENTRIES = "viewentries";
 	private static final String VIEW_ENTRY = "viewentry";
@@ -49,7 +44,7 @@ public class VeloBleuStationContentProvider extends AbstractStationContentProvid
 
 	private City city;
 
-	public VeloBleuStationContentProvider(City city, IContentAccessor stationContentAccessor) {
+	public OyBikeStationContentProvider(City city, IContentAccessor stationContentAccessor) {
 		super();
 		this.stationContentAccessor = stationContentAccessor;
 		this.city = city;
@@ -112,6 +107,7 @@ public class VeloBleuStationContentProvider extends AbstractStationContentProvid
 								XppUtil.readNextElement(xpp);
 								String content = XppUtil.readNextText(xpp).trim();
 								station.number = Integer.parseInt(content);
+								station.details.stationNumber = station.number;
 							}
 							else if (attrName.equals(ATTR_STAND_NAME)) {
 								XppUtil.readNextElement(xpp);

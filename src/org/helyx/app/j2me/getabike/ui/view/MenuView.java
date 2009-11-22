@@ -17,15 +17,34 @@ package org.helyx.app.j2me.getabike.ui.view;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
+import javax.microedition.location.Coordinates;
+import javax.microedition.location.Criteria;
+import javax.microedition.location.Location;
+import javax.microedition.location.LocationProvider;
 
+import org.helyx.app.j2me.getabike.PrefConstants;
+import org.helyx.app.j2me.getabike.data.app.manager.AppManager;
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
+import org.helyx.app.j2me.getabike.ui.view.renderer.DistanceStationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.renderer.MenuItemRenderer;
+import org.helyx.app.j2me.getabike.ui.view.renderer.StationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
+import org.helyx.app.j2me.getabike.util.ErrorManager;
+import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
+import org.helyx.helyx4me.localization.Point;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
+import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.helyx4me.task.AbstractProgressTask;
+import org.helyx.helyx4me.task.EventType;
+import org.helyx.helyx4me.task.IProgressDispatcher;
+import org.helyx.helyx4me.task.IProgressTask;
+import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.helyx4me.task.ProgressListener;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.geometry.Rectangle;
 import org.helyx.helyx4me.ui.theme.ThemeConstants;
@@ -33,8 +52,10 @@ import org.helyx.helyx4me.ui.util.ColorUtil;
 import org.helyx.helyx4me.ui.util.ImageUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
 import org.helyx.helyx4me.ui.view.support.dialog.result.callback.YesNoResultCallback;
 import org.helyx.helyx4me.ui.view.support.menu.MenuListView;
+import org.helyx.helyx4me.ui.view.support.task.LoadTaskView;
 import org.helyx.helyx4me.ui.widget.menu.Menu;
 import org.helyx.helyx4me.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
@@ -101,13 +122,13 @@ public class MenuView extends MenuListView {
 	        	else {
 		        	logger.info("Image to big");
 			        g.setColor(ColorUtil.BLACK);
-		        	g.drawString(fallbackLogoImageStr, x + width / 2, y + (height / 2) / 2, Graphics.HCENTER | Graphics.BASELINE);        	
+		        	g.drawString(fallbackLogoImageStr, x + width / 2, y + (height / 2) / 2, Graphics.HCENTER | Graphics.TOP);        	
 	        	}
 	        }
 	        else if (fallbackLogoImageStr != null) {
 	        	logger.info("Image not found");
 		        g.setColor(ColorUtil.BLACK);
-	        	g.drawString(fallbackLogoImageStr, x + width / 2, y + (height / 2) / 2, Graphics.HCENTER | Graphics.BASELINE);        	
+	        	g.drawString(fallbackLogoImageStr, x + width / 2, y + (height / 2) / 2, Graphics.HCENTER | Graphics.TOP);        	
 	        }
 	        else {
 	        	logger.info("fallbackLogoImageStr error");
@@ -142,16 +163,125 @@ public class MenuView extends MenuListView {
 			menu.addMenuItem(new MenuItem("view.menu.item.station.list", new IAction() {
 				
 				public void run(Object data) {
-					showStations();
+					showStations(0);
 				}
 
 			}));
 			menu.addMenuItem(new MenuItem("view.menu.item.station.list.bookmark", true, new IAction() {
 				public void run(Object data) {
-					showStations(true);
+					showStations(1);
 				}
 			}));
 
+			if (UtilManager.supportLocationApi()) {
+				menu.addMenuItem(new MenuItem("view.menu.item.station.list.nearby", true, new IAction() {
+					public void run(Object data) {
+			    		boolean opeModeSetted = PrefManager.containsPref(PrefConstants.COST_ALLOWED_GEO_LOCALIZATION);
+
+			    		if (!opeModeSetted) {
+							UtilManager.changeGeoLocMode(MenuView.this, new IReturnCallback() {
+								public void onReturn(AbstractDisplayable currentDisplayable, Object data) {
+									locateAndShowNearbyStations();
+								}
+							});
+			    		}
+			    		else {
+			    			locateAndShowNearbyStations();
+			    		}
+					}
+
+					private void locateAndShowNearbyStations() {
+					    try {
+					    	
+				    		final boolean opeModeEnabled = PrefManager.containsPref(PrefConstants.COST_ALLOWED_GEO_LOCALIZATION);
+
+				    		IProgressTask progressTask = new AbstractProgressTask("LOCATION_API") {
+								
+								public Runnable getRunnable() {
+									return new Runnable() {
+										
+										public void run() {
+											try {
+												getProgressDispatcher().fireEvent(EventType.ON_START);
+									    		// Criteria can be used to filter which GPS device to use.
+									    		Criteria criteria = new Criteria();
+									    		criteria.setCostAllowed(opeModeEnabled);
+									    		criteria.setPreferredPowerConsumption(Criteria.NO_REQUIREMENT);
+
+									    		// Get a location provider based on the aforementioned criteria.
+									    		LocationProvider provider = LocationProvider.getInstance(criteria);
+
+									    		// Try to fetch the current location (using a 3 minute timeout).
+									    		Location internalLocation = provider.getLocation(60);
+
+									    		// Get the coordinates of the current location.
+									    		Coordinates coordinates = internalLocation.getQualifiedCoordinates();
+
+									    		if (coordinates  != null) {
+									    		    // Get the latitude and longitude of the coordinates.
+									    		    double latitude = coordinates.getLatitude();
+									    		    double longitude = coordinates.getLongitude();
+									    		    
+									    		    logger.info("LAT: " + latitude);
+									    		    logger.info("LNG: " + longitude);
+									    		    location = new Point(longitude, latitude);
+									    		    //showStations(2);
+									    		    getProgressDispatcher().fireEvent(EventType.ON_SUCCESS, "LCOATION OK", location);
+									    		}
+									    		else {
+									    		    getProgressDispatcher().fireEvent(EventType.ON_ERROR, "LCOATION KO", new RuntimeException("Location enable to locate device actually"));
+									    		}
+											}
+											catch(Throwable t) {
+								    		    getProgressDispatcher().fireEvent(EventType.ON_ERROR, "LCOATION KO", t);
+											}
+										}
+									};
+								}
+							};
+							
+							final LoadTaskView loadTaskView = new LoadTaskView(MenuView.this.getMidlet(), "view.station.detail.load.message", progressTask);
+							loadTaskView.setReturnCallback(new BasicReturnCallback(MenuView.this));
+							progressTask.addProgressListener(new ProgressAdapter("LOCATION_ATTEMPT") {
+
+								public void onError(String eventMessage, Object eventData) {
+									if (MenuView.logger.isInfoEnabled()) {
+										MenuView.logger.info("Error: " + eventMessage + ", data: " + eventData);
+									}
+									
+									Throwable t = (Throwable)eventData;
+									MenuView.logger.warn(t);
+									
+									DialogUtil.showMessageDialog(
+											MenuView.this, 
+											"dialog.title.error", 
+											MenuView.this.getMessage("dialog.title.error") + ": " + ErrorManager.getErrorMessage(MenuView.this.getMidlet(), t), 
+											new OkResultCallback() {
+												public void onOk(DialogView dialogView, Object data) {
+													loadTaskView.fireReturnCallback();
+												}
+											});
+									
+								}
+
+								public void onSuccess(String eventMessage, Object eventData) {
+									showStations(2);
+								}
+								
+							});
+							
+							loadTaskView.startTask();
+					    }
+				    	catch(Throwable t) {
+				    		location = null;
+				    		logger.warn(t);
+							DialogUtil.showAlertMessage(MenuView.this, 
+									"dialog.title.warn", 
+									getMessage("view.menu.item.location.not.available"));
+				    	}
+					}
+				}));
+			}
 			menu.addMenuItem(new MenuItem("view.menu.item.pref", true, new IAction() {
 				
 				public void run(Object data) {
@@ -200,26 +330,30 @@ public class MenuView extends MenuListView {
 			setMenu(menu);
 		}
 
+
+		Point location;
 		
-		private void showStationListView(City city, boolean showOnlyBookmarks) {
+		private void showStationListView(City city, int type) {
 			if (stationListView == null || !stationListView.getCity().key.equals(city.key)) {
 				stationListView = CartoManager.createStationListView(this, city);
-				stationListView.setShowBookmarks(showOnlyBookmarks);
+				stationListView.setShowBookmarks(type == 1);
+				stationListView.setLocation(type == 2 ? location : null);
+				stationListView.setReferentStation(type == 2 ? null : null);
+				stationListView.setCellRenderer(type == 2 ? new DistanceStationItemRenderer(true) : new StationItemRenderer());
 				stationListView.loadListContent();
 			}
 			else {
 				stationListView.setCity(city);
-				stationListView.setShowBookmarks(showOnlyBookmarks);
+				stationListView.setShowBookmarks(type == 1);
+				stationListView.setLocation(type == 2 ? location : null);
+				stationListView.setReferentStation(type == 2 ? null : null);
+				stationListView.setCellRenderer(type == 2 ? new DistanceStationItemRenderer(true) : new StationItemRenderer());
 				stationListView.filterAndSort();
 				showDisplayable(stationListView, this);
 			}
 		}
 		
-		private void showStations() {
-			showStations(false);
-		}
-		
-		private void showStations(final boolean showOnlyBookmarks) {
+		private void showStations(final int type) {
 			City currentCity = CityManager.getCurrentCity();
 			if (currentCity == null) {
 				CityManager.selectCity(this, new IReturnCallback() {
@@ -227,7 +361,7 @@ public class MenuView extends MenuListView {
 						try {
 							City currentCity = (City)data;
 							if (currentCity != null) {
-								showStationListView(currentCity, showOnlyBookmarks);
+								showStationListView(currentCity, type);
 							}
 							else {
 								showDisplayable(MenuView.this);
@@ -241,7 +375,7 @@ public class MenuView extends MenuListView {
 				});
 			}
 			else {
-				showStationListView(currentCity, showOnlyBookmarks);
+				showStationListView(currentCity, type);
 			}
 		}
 

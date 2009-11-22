@@ -3,7 +3,6 @@ package org.helyx.app.j2me.getabike.content.accessor;
 import java.util.Hashtable;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
-import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.content.accessor.HttpContentAccessor;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.text.TextUtil;
@@ -11,7 +10,7 @@ import org.helyx.helyx4me.text.TextUtil;
 public class HttpGetABikeContentAccessor extends HttpContentAccessor {
 
 	public HttpGetABikeContentAccessor(String url) {
-		this(url, !PrefManager.readPrefBoolean(UtilManager.OPTIMIZED_HTTP_MODE_ENABLED));
+		this(url, !PrefManager.readPrefBoolean(PrefConstants.OPTIMIZED_HTTP_MODE_ENABLED));
 	}
 
 	public HttpGetABikeContentAccessor(String url, boolean forceReadBytePerByte) {

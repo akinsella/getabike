@@ -1,5 +1,7 @@
 package org.helyx.app.j2me.getabike.util;
 
+import javax.microedition.location.LocationProvider;
+
 import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.app.j2me.getabike.ui.theme.AppThemeConstants;
 import org.helyx.helyx4me.map.google.GoogleMapsView;
@@ -9,6 +11,7 @@ import org.helyx.helyx4me.pref.Pref;
 import org.helyx.helyx4me.pref.PrefHelper;
 import org.helyx.helyx4me.pref.PrefManager;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.view.AbstractView;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
@@ -23,15 +26,9 @@ public class UtilManager {
 	
 	private static final Logger logger = Logger.getLogger("UTIL_MANAGER");
 
-	public static final String DEBUG_MODE_ENABLED = "DEBUG_MODE_ENABLED";
-	public static final String OPTIMIZED_HTTP_MODE_ENABLED = "OPTIMIZED_HTTP_MODE_ENABLED";
-	public static final String MAP_MODE_ENABLED = "MAP_MODE_ENABLED";
-
 	public static final String GOOGLE_MAPS_KEY = "GOOGLE_MAPS_KEY";
 
 	public static final String DEFAULT_GOOGLE_MAPS_KEY = "ABQIAAAAm-1Nv9nWhCjQxC3a4v-lBBR9EQxSSSz8gi3qW-McXAXnYGN8YxSBOridiu5I3THzW-_0oY2DecnShA";
-
-	public static final String PRE_LOAD_MODE_ENABLED = "PRE_LOAD_MODE_ENABLED";
 	
 	private static LevelInformationHolder levelInformationHolder;
 	
@@ -49,7 +46,7 @@ public class UtilManager {
 			logger.warn(t);
 		}
 
-		Pref showGoogleMapsPref = PrefManager.readPref(UtilManager.MAP_MODE_ENABLED);
+		Pref showGoogleMapsPref = PrefManager.readPref(PrefConstants.MAP_MODE_ENABLED);
 		if (showGoogleMapsPref == null) {
 			DialogUtil.showYesNoDialog(
 				view, 
@@ -57,12 +54,12 @@ public class UtilManager {
 				view.getMessage("manager.util.google.maps.message"),
 				new YesNoResultCallback() {
 					public void onYes(DialogView dialogView, Object data) {
-						PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, true);
+						PrefManager.writePrefBoolean(PrefConstants.MAP_MODE_ENABLED, true);
 						showGoogleMapsViewInternal(view, title, poiInfoAccessor, elementSelected, elementProvider, zoom);
 					}
 		
 					public void onNo(DialogView dialogView, Object data) {
-						PrefManager.writePrefBoolean(UtilManager.MAP_MODE_ENABLED, false);
+						PrefManager.writePrefBoolean(PrefConstants.MAP_MODE_ENABLED, false);
 						dialogView.showDisplayable(view);
 					}
 				});
@@ -126,14 +123,14 @@ public class UtilManager {
 	}
 
 	public static void changeMapMode(final AbstractDisplayable currentDisplayable) {
-		final boolean mapModeActive = PrefManager.readPrefBoolean(MAP_MODE_ENABLED);
+		final boolean mapModeActive = PrefManager.readPrefBoolean(PrefConstants.MAP_MODE_ENABLED);
 
 		DialogUtil.showYesNoDialog(currentDisplayable,  "dialog.title.question", 
 				
 			currentDisplayable.getMessage(!mapModeActive ? "manager.util.map.mode.message.activate" : "manager.util.map.mode.message.deactivate"), 
 			new YesNoResultCallback() {
 				public void onYes(DialogView dialogView, Object data) {
-					PrefManager.writePrefBoolean(MAP_MODE_ENABLED, !mapModeActive);
+					PrefManager.writePrefBoolean(PrefConstants.MAP_MODE_ENABLED, !mapModeActive);
 					dialogView.showDisplayable(currentDisplayable);
 				}
 
@@ -141,17 +138,60 @@ public class UtilManager {
 					dialogView.showDisplayable(currentDisplayable);
 				}
 			});
+	}
+
+	public static void changeGeoLocMode(final AbstractDisplayable currentDisplayable) {
+		changeGeoLocMode(currentDisplayable, null);
+	}
+
+	public static void changeGeoLocMode(final AbstractDisplayable currentDisplayable, final IReturnCallback returnCallback) {
+
+		DialogUtil.showYesNoDialog(currentDisplayable,  "dialog.title.question", 
+				
+			currentDisplayable.getMessage("view.menu.item.location.cost.allow"), 
+			new YesNoResultCallback() {
+				public void onYes(DialogView dialogView, Object data) {
+					PrefManager.writePrefBoolean(PrefConstants.COST_ALLOWED_GEO_LOCALIZATION, true);
+					
+					if (returnCallback != null) {
+						returnCallback.onReturn(currentDisplayable, null);
+					}
+					else {
+						dialogView.showDisplayable(currentDisplayable);
+					}
+				}
+
+				public void onNo(DialogView dialogView, Object data) {
+					PrefManager.writePrefBoolean(PrefConstants.COST_ALLOWED_GEO_LOCALIZATION, false);
+					if (returnCallback != null) {
+						returnCallback.onReturn(currentDisplayable, null);
+					}
+					else {
+						dialogView.showDisplayable(currentDisplayable);
+					}
+				}
+			});
 
 	}
 
+
+	public static boolean supportLocationApi() {
+	    try {
+		    LocationProvider locationProvider = LocationProvider.getInstance(null);
+	    	return true;
+	    }
+	    catch (Exception e) {
+	        return false;
+	    }
+	}
 	public static void changeHttpMode(final AbstractDisplayable currentDisplayable) {
-		final boolean httpModeActive = PrefManager.readPrefBoolean(OPTIMIZED_HTTP_MODE_ENABLED);
+		final boolean httpModeActive = PrefManager.readPrefBoolean(PrefConstants.OPTIMIZED_HTTP_MODE_ENABLED);
 
 		DialogUtil.showYesNoDialog(currentDisplayable, "dialog.title.question", 
 				currentDisplayable.getMessage(!httpModeActive ? "manager.util.http.mode.message.activate" : "manager.util.http.mode.message.deactivate"), 			
 				new YesNoResultCallback() {
 					public void onYes(DialogView dialogView, Object data) {
-						PrefManager.writePrefBoolean(OPTIMIZED_HTTP_MODE_ENABLED, !httpModeActive);
+						PrefManager.writePrefBoolean(PrefConstants.OPTIMIZED_HTTP_MODE_ENABLED, !httpModeActive);
 						dialogView.showDisplayable(currentDisplayable);
 					}
 
@@ -187,5 +227,6 @@ public class UtilManager {
 	public static boolean isDebugModeActive() {
 		return debugModeActive;
 	}
+
 	
 }

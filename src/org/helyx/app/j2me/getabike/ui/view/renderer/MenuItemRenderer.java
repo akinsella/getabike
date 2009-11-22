@@ -78,8 +78,8 @@ public class MenuItemRenderer implements ICellRenderer {
         g.drawString(
         		menuListView.getMessage(menuItem.getText()), 
         		bRect.location.x + bRect.size.width / 2, 
-        		bRect.location.y + bRect.size.height / 2 + (font.getHeight() - font.getBaselinePosition()), 
-        		Graphics.HCENTER | Graphics.BASELINE);
+        		bRect.location.y + bRect.size.height / 2 - font.getHeight() / 2, 
+        		Graphics.HCENTER | Graphics.TOP);
 	}
 
 	public int computeHeight(AbstractListView view, Object itemObject, int offset) {

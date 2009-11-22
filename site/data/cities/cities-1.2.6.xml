@@ -5,6 +5,16 @@
 	<!-- NextBike - http://nextbike.de/m/maps.php -->
 
 	<!-- http://bike-sharing.blogspot.com -->
+	
+	<!-- VeloPop : Avignon -->
+	
+	<!-- Veol : Caen -->
+	
+	<!-- bicing: Barcelone -->
+	
+	<!-- Call a bike -->
+	
+	<!-- http://nextbike.de/m/maps.php -->
 
 	<city key="AMIENS" name="Amiens" type="VELIB" country="FRANCE"
 	      serviceName="Vélam" normalizer="SIMPLE"
@@ -193,15 +203,15 @@
 		  
 	<!-- Rennes - https://www.levelostar.fr/ -->
 	<!-- http://www.levelostar.fr/index.php?id=43&type=500 -->
-<!--
-	<city key="RENNES" name="Rennes" type="VELO_START" country="FRANCE"
+
+	<city key="RENNES" name="Rennes" type="LE_VELO_STAR" country="FRANCE"
 	      serviceName="LeVéloStar" normalizer="SIMPLE"
 		  webSite="https://www.levelostar.fr/" 
 		  stationList="http://www.levelostar.fr/index.php?id=43&amp;type=500" 
-		  stationDetails="http://www.levelostar.fr/index.php?id=43&amp;type=500">	  
-		  <support details="false" localization="true" bonus="false" tpe="false" state="true" />
+		  stationDetails="http://www.levelostar.fr/index.php?id=43&amp;type=500&amp;no_cache=1&amp;tx_rggooglemap_pi1[detail]={1}&amp;tx_rggooglemap_pi1[table]=tt_address">	  
+		  <support details="false" localization="true" bonus="false" tpe="true" state="true" />
 	</city>
--->
+
 
 	<city key="ROUEN" name="Rouen" type="VELIB" country="FRANCE"
 	      serviceName="Cyclic" normalizer="SIMPLE"
@@ -241,5 +251,532 @@
 		  stationList="http://www.citybikecard.at/Standortliste_csv.php">	  
 		  <support details="false" localization="false" bonus="false" tpe="false" state="true" />
 	</city>
-  		  
+  
+	<!-- NEXT BIKE -->
+	
+	
+	
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="LEIPZIG"
+          name="Leipzig">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="DRESDEN"
+          name="Dresden">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="ERLANGEN"
+          name="Erlangen">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="NÜRNBERG"
+          name="Nürnberg">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="FRANKFURT"
+          name="Frankfurt">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="KÖLN"
+          name="Köln">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="BERLIN"
+          name="Berlin">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="FRIEDRICHSHAFEN"
+          name="Friedrichshafen">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="OFFENBACH AM MAIN"
+          name="Offenbach am Main">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="MAGDEBURG"
+          name="Magdeburg">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="HAMBURG"
+          name="Hamburg">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="KOBLENZ"
+          name="Koblenz">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="DÜSSELDORF"
+          name="Düsseldorf">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="FÜRTH"
+          name="Fürth">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="LÜBECK"
+          name="Lübeck">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="COBURG"
+          name="Coburg">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="ASCHAFFENBURG"
+          name="Aschaffenburg">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="ERFURT"
+          name="Erfurt">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="HANNOVER"
+          name="Hannover">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="TÜBINGEN"
+          name="Tübingen">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="DEUTCHLAND"
+          key="BAD KREUZNACH"
+          name="Bad Kreuznach">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+	
+	
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="AUSTRIA"
+          key="NEUSIEDLER SEE"
+          name="Neusiedler See">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="AUSTRIA"
+          key="BREGENZERWALD"
+          name="Bregenzerwald">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+	
+	
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="NEWZEALAND"
+          key="AUCKLAND"
+          name="Auckland">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+	
+	
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="AUSTRIA"
+          key="WIEN"
+          name="Wien">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+	
+	
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="LUZERN"
+          name="Luzern">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="SURSEE"
+          name="Sursee">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="SEMPACH STATION"
+          name="Sempach Station">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="ZOFINGEN"
+          name="Zofingen">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="SCHÜPFHEIM"
+          name="Schüpfheim">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="SCHAFFHAUSEN"
+          name="Schaffhausen">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="STEIN AM RHEIN"
+          name="Stein am Rhein">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="ZÜRICH"
+          name="Zürich">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="ZUG"
+          name="Zug">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="BERN"
+          name="Bern">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="BADEN"
+          name="Baden">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="SOLOTHURN"
+          name="Solothurn">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="ROOT"
+          name="Root">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="ROTKREUZ"
+          name="Rotkreuz">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="BAAR"
+          name="Baar">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="MEGGEN"
+          name="Meggen">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="KÜSSNACHT AM RIGI"
+          name="Küssnacht am Rigi">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="ARTH-GOLDAU"
+          name="Arth-Goldau">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="SCHWYZ"
+          name="Schwyz">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="BRUNNEN"
+          name="Brunnen">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="HORW"
+          name="Horw">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="HERGISWIL"
+          name="Hergiswil">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="STANSSTAD"
+          name="Stansstad">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="SARNEN"
+          name="Sarnen">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="WOLHUSEN"
+          name="Wolhusen">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="MALTERS"
+          name="Malters">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="LANGENTHAL"
+          name="Langenthal">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="ENTLEBUCH"
+          name="Entlebuch">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="HOCHDORF"
+          name="Hochdorf">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="HITZKIRCH"
+          name="Hitzkirch">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="STANS"
+          name="Stans">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  <city type="NEXTBIKE" serviceName="NextBike" normalizer="SIMPLE"
+          webSite="http://nextbike.de"
+          stationList="http://nextbike.de/m/maps.php"
+          stationDetails=""
+          country="SWITZERLAND"
+          key="EMMEN"
+          name="Emmen">
+        <support details="false" localization="true" bonus="false" tpe="false" state="false"/>
+    </city>
+		  
+		  
 </cities>

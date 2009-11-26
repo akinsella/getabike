@@ -22,13 +22,14 @@ import org.helyx.app.j2me.getabike.PrefConstants;
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
+import org.helyx.app.j2me.getabike.ui.view.contact.ContactListView;
 import org.helyx.app.j2me.getabike.ui.view.renderer.DistanceStationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.renderer.MenuItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.renderer.StationItemRenderer;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
+import org.helyx.app.j2me.getabike.util.ApiUtil;
 import org.helyx.app.j2me.getabike.util.ErrorManager;
 import org.helyx.app.j2me.getabike.util.LocationManager;
-import org.helyx.app.j2me.getabike.util.LocationUtil;
 import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.localization.Point;
@@ -168,7 +169,7 @@ public class MenuView extends MenuListView {
 				}
 			}));
 
-			if (LocationUtil.supportLocationApi()) {
+			if (ApiUtil.supportLocationApi()) {
 				menu.addMenuItem(new MenuItem("view.menu.item.station.list.nearby", true, new IAction() {
 					public void run(Object data) {
 			    		boolean opeModeSetted = PrefManager.containsPref(PrefConstants.COST_ALLOWED_GEO_LOCALIZATION);
@@ -259,6 +260,7 @@ public class MenuView extends MenuListView {
 					}
 				}));
 			}
+
 			menu.addMenuItem(new MenuItem("view.menu.item.pref", true, new IAction() {
 				
 				public void run(Object data) {
@@ -270,6 +272,19 @@ public class MenuView extends MenuListView {
 					prefListView.setPreviousDisplayable(MenuView.this);
 					
 					return prefListView;
+				}
+			}));
+
+			menu.addMenuItem(new MenuItem("view.menu.item.pref", true, new IAction() {
+				
+				public void run(Object data) {
+					showDisplayable(getContactListView(), MenuView.this);
+				}
+				
+				private ContactListView getContactListView() {
+					ContactListView contactListView = new ContactListView(getMidlet(), "Liste des contacts");
+					
+					return contactListView;
 				}
 			}));
 

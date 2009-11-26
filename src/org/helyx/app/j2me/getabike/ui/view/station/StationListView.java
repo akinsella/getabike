@@ -1,7 +1,7 @@
 package org.helyx.app.j2me.getabike.ui.view.station;
 
 import org.helyx.app.j2me.getabike.data.carto.accessor.StationPoiInfoAccessor;
-import org.helyx.app.j2me.getabike.data.carto.comparator.StationNameComparator;
+import org.helyx.app.j2me.getabike.data.carto.comparator.ContactNameComparator;
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.filter.BookmarkStationFilterBuilder;
 import org.helyx.app.j2me.getabike.data.carto.task.StationLoadTask;
@@ -130,7 +130,7 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 		IElementProvider arrayStationsProvider = new ArrayElementProvider(new Station[0]);
 		refStationProvider = new RefElementProvider(arrayStationsProvider);
 		filteredSortedElementProvider = new DynamicFilterableSortableElementProvider(refStationProvider);
-		filteredSortedElementProvider.setComparator(new StationNameComparator());
+		filteredSortedElementProvider.setComparator(new ContactNameComparator());
 		setItems((IElementProvider)filteredSortedElementProvider);
 	}
 

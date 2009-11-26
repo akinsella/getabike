@@ -4,7 +4,7 @@ import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.helyx4me.comparator.Comparator;
 
 
-public class StationNameComparator implements Comparator {
+public class ContactNameComparator implements Comparator {
 
 	public int compare(Object object1, Object object2) {
 		if (object1 == null && object2 == null) {

@@ -4,7 +4,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import org.helyx.app.j2me.getabike.data.carto.CartoConstants;
-import org.helyx.app.j2me.getabike.data.carto.comparator.StationNameComparator;
+import org.helyx.app.j2me.getabike.data.carto.comparator.ContactNameComparator;
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.service.IStationPersistenceService;
 import org.helyx.app.j2me.getabike.data.carto.service.StationPersistenceService;
@@ -71,7 +71,7 @@ public class StoreStationLoaderProgressListener extends ProgressAdapter {
 			stationMap = null;
 			System.gc();
 	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.carto.data.sort"));
-			try { new FastQuickSort(new StationNameComparator()).sort(stationArray); } catch (Exception e) { logger.warn(e); }
+			try { new FastQuickSort(new ContactNameComparator()).sort(stationArray); } catch (Exception e) { logger.warn(e); }
 	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.carto.data.save"));
 			stationPersistenceService.saveStationArray(stationArray);
 	   		progressDispatcher.fireEvent(EventType.ON_PROGRESS, view.getMessage("progress.listener.loader.carto.data.end"));

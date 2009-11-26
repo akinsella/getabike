@@ -6,6 +6,7 @@ import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
 import org.helyx.app.j2me.getabike.data.language.domain.Language;
 import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
+import org.helyx.app.j2me.getabike.util.ApiUtil;
 import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.midlet.AbstractMIDlet;
@@ -81,7 +82,9 @@ public class PrefListView extends PrefBaseListView {
 					private MenuItem profilesMenuItem;
 					private MenuItem configurationMenuItem;
 					private MenuItem appUuidMenuItem;
-					private MenuItem fcVersionMenuItem;
+					private MenuItem fileApiVersionMenuItem;
+					private MenuItem locationApiVersionMenuItem;
+					private MenuItem pimApiVersionMenuItem;
 					private MenuItem encodingMenuItem;
 					private MenuItem screenSizeItem;
 
@@ -131,7 +134,9 @@ public class PrefListView extends PrefBaseListView {
 						profilesMenuItem = new MenuItem("view.pref.item.profiles");
 						configurationMenuItem = new MenuItem("view.pref.item.configuration");
 					
-						fcVersionMenuItem = new MenuItem("view.pref.item.file.support");
+						fileApiVersionMenuItem = new MenuItem("view.pref.item.api.file.support");
+						locationApiVersionMenuItem = new MenuItem("view.pref.item.api.location.support");
+						pimApiVersionMenuItem = new MenuItem("view.pref.item.api.pim.support");
 						encodingMenuItem = new MenuItem("view.pref.item.encoding");
 						screenSizeItem = new MenuItem("view.pref.item.screen");
 						
@@ -145,7 +150,9 @@ public class PrefListView extends PrefBaseListView {
 						optionMenu.addMenuItem(platformMenuItem);
 						optionMenu.addMenuItem(profilesMenuItem);
 						optionMenu.addMenuItem(configurationMenuItem);
-						optionMenu.addMenuItem(fcVersionMenuItem);
+						optionMenu.addMenuItem(fileApiVersionMenuItem);
+						optionMenu.addMenuItem(pimApiVersionMenuItem);
+						optionMenu.addMenuItem(locationApiVersionMenuItem);
 						optionMenu.addMenuItem(encodingMenuItem);
 						optionMenu.addMenuItem(screenSizeItem);
 						
@@ -192,8 +199,12 @@ public class PrefListView extends PrefBaseListView {
 						platformMenuItem.setData(PREF_VALUE_DETAILS, platform != null ? platform : getMessage("view.pref.value.unknown"));
 						String profiles = System.getProperty("microedition.profiles");
 						profilesMenuItem.setData(PREF_VALUE, profiles != null ? profiles : getMessage("view.pref.value.unknown"));
-						String fcVersion = System.getProperty("microedition.io.file.FileConnection.version");
-						fcVersionMenuItem.setData(PREF_VALUE, fcVersion != null ? fcVersion : getMessage("view.pref.value.no"));
+						String fileApiVersion = ApiUtil.getFileApiVersion();
+						fileApiVersionMenuItem.setData(PREF_VALUE, fileApiVersion != null ? fileApiVersion : getMessage("view.pref.value.no"));
+						String locationApiVersion = ApiUtil.getLocationApiVersion();
+						locationApiVersionMenuItem.setData(PREF_VALUE, locationApiVersion != null ? locationApiVersion : getMessage("view.pref.value.no"));
+						String pimApiVersion = ApiUtil.getPimApiVersion();
+						pimApiVersionMenuItem.setData(PREF_VALUE, pimApiVersion != null ? pimApiVersion : getMessage("view.pref.value.no"));
 						screenSizeItem.setData(PREF_VALUE, viewCanvas.getWidth() + "x" + viewCanvas.getHeight());
 					}
 

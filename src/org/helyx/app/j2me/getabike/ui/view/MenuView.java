@@ -283,7 +283,7 @@ public class MenuView extends MenuListView {
 					}
 					
 					private ContactListView getContactListView() {
-						ContactListView contactListView = new ContactListView(getMidlet(), "Liste des contacts");
+						ContactListView contactListView = new ContactListView(getMidlet(), "view.contact.list.title");
 						contactListView.setPreviousDisplayable(MenuView.this);
 						return contactListView;
 					}

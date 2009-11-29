@@ -48,6 +48,7 @@ public class StationListMenuView extends PrefBaseListView {
 	
 	protected void initComponents() {
 		Menu menu = new Menu();
+
 		if (!stationListView.isShowBookmarks()) {
 			stationSearchMenuItem = new MenuItem("view.station.list.item.station.search", new ImageSet(getTheme().getString("IMG_FIND")), new IAction() {
 				public void run(Object data) {
@@ -59,7 +60,7 @@ public class StationListMenuView extends PrefBaseListView {
 		
 		final City city = stationListView.getCity();
 		
-		if (city.localization && stationListView.isEmpty()) {
+		if (city.localization && !stationListView.isEmpty()) {
 			menu.addMenuItem(new MenuItem("view.station.list.item.view.map", new ImageSet(getTheme().getString("IMG_MAP")), new IAction() {
 				public void run(Object data) {
 					stationListView.showGoogleMapsView();

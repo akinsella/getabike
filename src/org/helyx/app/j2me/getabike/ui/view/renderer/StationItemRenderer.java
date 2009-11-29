@@ -25,7 +25,6 @@ public class StationItemRenderer implements ICellRenderer {
     private static String stationSeparator = " - ";
     private static String stationSeparatorEmpty = "";
     private int stationSeparatorStrWidthSmallBold = FontUtil.SMALL_BOLD.stringWidth(stationSeparator);
-    private static String noNameStation = "Station sans nom";
 	
 	public StationItemRenderer() {
 		super();
@@ -66,7 +65,7 @@ public class StationItemRenderer implements ICellRenderer {
             addToXPos += stationSeparatorStrWidthSmallBold;
         }
         
-        String stationName = station.name != null ? station.name : noNameStation;
+        String stationName = station.name != null ? station.name : view.getMessage("renderer.station.no.name");
         g.drawString(stationName, x + addToXPos, y + addToYPos, Graphics.LEFT | Graphics.TOP);
 
         addToXPos = BASE_LEFT_POS;

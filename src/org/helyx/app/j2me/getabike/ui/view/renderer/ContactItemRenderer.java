@@ -25,7 +25,6 @@ public class ContactItemRenderer implements ICellRenderer {
     private static String stationSeparator = " - ";
     private static String stationSeparatorEmpty = "";
     private int stationSeparatorStrWidthSmallBold = FontUtil.SMALL_BOLD.stringWidth(stationSeparator);
-    private static String noNameStation = "Non Renseigné";
 	
 	public ContactItemRenderer() {
 		super();
@@ -55,7 +54,7 @@ public class ContactItemRenderer implements ICellRenderer {
         int addToXPos = BASE_LEFT_POS;
         int addToYPos = PADDING_TOP;
 
-        String stationName = contact.getName() != null ? contact.getName() : noNameStation;
+        String stationName = contact.getName() != null ? contact.getName() : view.getMessage("renderer.contact.no.name");
         g.drawString(stationName, x + addToXPos, y + addToYPos, Graphics.LEFT | Graphics.TOP);
 
         addToXPos = BASE_LEFT_POS;

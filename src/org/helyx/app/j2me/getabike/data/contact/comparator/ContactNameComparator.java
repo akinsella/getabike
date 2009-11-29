@@ -16,7 +16,7 @@ public class ContactNameComparator implements Comparator {
 			return 1;
 		}
 
-		return ((Contact)object1).renderDefaultText().compareTo(((Contact)object2).renderDefaultText());
+		return ((Contact)object1).getName().toUpperCase().compareTo(((Contact)object2).getName().toUpperCase());
 	}
 
 }

@@ -130,8 +130,6 @@ public class StationDetailsView extends AbstractView {
 			logger.debug("Fetching Station Details for Station number: '" + station.number + "'");
 		}
 		
-		
-
 		try {
 			IProgressTask progressTask = CartoManager.fetchStationDetails(CityManager.getCurrentCity(), station);
 			final LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "view.station.detail.load.message", progressTask);

@@ -275,18 +275,20 @@ public class MenuView extends MenuListView {
 				}
 			}));
 
-			menu.addMenuItem(new MenuItem("view.menu.item.pref", true, new IAction() {
-				
-				public void run(Object data) {
-					showDisplayable(getContactListView(), MenuView.this);
-				}
-				
-				private ContactListView getContactListView() {
-					ContactListView contactListView = new ContactListView(getMidlet(), "Liste des contacts");
+			if (ApiUtil.supportPimApi()) {
+				menu.addMenuItem(new MenuItem("view.menu.item.send.to.contact", true, new IAction() {
 					
-					return contactListView;
-				}
-			}));
+					public void run(Object data) {
+						getContactListView().loadListContent();
+					}
+					
+					private ContactListView getContactListView() {
+						ContactListView contactListView = new ContactListView(getMidlet(), "Liste des contacts");
+						contactListView.setPreviousDisplayable(MenuView.this);
+						return contactListView;
+					}
+				}));
+			}
 
 			menu.addMenuItem(new MenuItem("view.menu.item.about", new IAction() {
 				

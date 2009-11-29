@@ -175,7 +175,7 @@ public class ContactListView extends AbstractListView {
 				
 			};
 			
-			final LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "view.station.detail.load.message", progressTask);
+			final LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "view.contact.sms.send", progressTask);
 			loadTaskView.setReturnCallback(new BasicReturnCallback(this));
 			progressTask.addProgressListener(new ProgressAdapter("Loading station details") {
 

@@ -54,15 +54,9 @@ public class ContactListView extends AbstractListView {
 		initComponents();
 	}
 
-	protected void initActions() {	
-		
-		setThirdCommand(new Command("command.menu", true, getMidlet().getI18NTextRenderer(), new IAction() {
-			public void run(Object data) {
-				showMenuView();
-			}
-		}));
+	protected void initActions() {
 
-		setPrimaryCommand(new Command("command.select", true, getMidlet().getI18NTextRenderer(), new IAction() {
+		setPrimaryCommand(new Command("command.validate", true, getMidlet().getI18NTextRenderer(), new IAction() {
 			public void run(Object data) {
 				checkSelectedItem();
 			}
@@ -74,12 +68,6 @@ public class ContactListView extends AbstractListView {
 			}
 		}));
 
-	}
-
-	protected void showMenuView() {
-		MenuListView menuListView = new MenuListView(getMidlet(), "view.menu.title", false);
-		menuListView.setPreviousDisplayable(ContactListView.this);
-		showDisplayable(menuListView, new BasicTransition());	
 	}
 	
 	protected Contact getContactSelected() {
@@ -132,7 +120,7 @@ public class ContactListView extends AbstractListView {
 		DialogUtil.showYesNoDialog(
 				ContactListView.this, 
 				"dialog.title.question", 
-				getMessage("Envoyer le SMS ?"), 
+				getMessage("view.contact.sms.send"), 
 				new YesNoResultCallback() {
 					
 					public void onYes(DialogView dialogView, Object data) {
@@ -160,7 +148,7 @@ public class ContactListView extends AbstractListView {
 
 							getProgressDispatcher().fireEvent(EventType.ON_START);
 
-							String message = "Votre ami souhaite vous faire connaître l'application 'Get A Bike': http://m.helyx.org/getabike";
+							String message = getMessage("view.contact.sms.message");
 
 							MessageConnection conn = null;
 							try {
@@ -214,7 +202,7 @@ public class ContactListView extends AbstractListView {
 					DialogUtil.showMessageDialog(
 							ContactListView.this, 
 							"dialog.title.error", 
-							"Message envoyé à '" + contact.getName() + "'", 
+							getMessage("view.contact.sms.sent.to", new Object[] { contact.getName() }), 
 							new OkResultCallback() {
 								public void onOk(DialogView dialogView, Object data) {
 									loadTaskView.fireReturnCallback();

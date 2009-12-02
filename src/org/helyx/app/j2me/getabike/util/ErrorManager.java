@@ -22,7 +22,7 @@ public class ErrorManager {
 		Throwable rootCause = org.helyx.helyx4me.util.ErrorUtil.getRootCause(t);
 		
 		if (rootCause.getMessage() == null) {
-			return midlet.getMessage("dialog.error.unexpected");			
+			return midlet.getMessage("dialog.error.unexpected") + ": " + rootCause.getClass().getName();			
 		}
 		
 		if (rootCause instanceof SecurityException) {

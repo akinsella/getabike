@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import javax.microedition.pim.ContactList;
 import javax.microedition.pim.PIM;
+import javax.microedition.pim.PIMItem;
 
 import org.helyx.app.j2me.getabike.data.contact.domain.Contact;
 import org.helyx.helyx4me.task.AbstractProgressTask;
@@ -32,8 +33,8 @@ public class ContactLoadTask extends AbstractProgressTask {
 				try {
 					getProgressDispatcher().fireEvent(EventType.ON_START);
 					getProgressDispatcher().fireEvent(EventType.ON_PROGRESS, "task.contact.load.data.read");
-
-					Enumeration _enumContact = ((ContactList)PIM.getInstance().openPIMList(PIM.CONTACT_LIST, PIM.READ_ONLY)).items();
+					ContactList pimContactList = (ContactList)PIM.getInstance().openPIMList(PIM.CONTACT_LIST, PIM.READ_ONLY);
+					Enumeration _enumContact = pimContactList.items();
 					int count = 0;
 					while (_enumContact.hasMoreElements()) {
 						javax.microedition.pim.Contact pimContact = (javax.microedition.pim.Contact) _enumContact.nextElement();
@@ -43,7 +44,7 @@ public class ContactLoadTask extends AbstractProgressTask {
 							String phoneNumber = pimContact.getString(javax.microedition.pim.Contact.TEL, i);
 
 							Contact contact = new Contact();
-							contact.setName(getContactName(pimContact));
+							contact.setName(getContactName(pimContactList, pimContact));
 							contact.setPhoneNumber(phoneNumber);
 							contactList.addElement(contact);
 							
@@ -64,10 +65,10 @@ public class ContactLoadTask extends AbstractProgressTask {
 			}
 			
 
-		   private String getContactName(javax.microedition.pim.Contact item) {
+		   private String getContactName(ContactList contactList, javax.microedition.pim.Contact item) {
 		        int fieldCode = javax.microedition.pim.Contact.FORMATTED_NAME;
 
-				if (item.countValues(fieldCode) != 0) {
+				if (contactList.isSupportedField(fieldCode) && item.countValues(fieldCode) != 0) {
 					String contactName = item.getString(fieldCode, 0);
 
 					if ((contactName != null) && (contactName.trim().length() > 0)) {
@@ -75,17 +76,20 @@ public class ContactLoadTask extends AbstractProgressTask {
 					}
 				}
 
-				if (item.countValues(javax.microedition.pim.Contact.NAME) != 0) {
-					String[] contactNames = item.getStringArray(javax.microedition.pim.Contact.NAME, 0);
+				if ( contactList.isSupportedField(javax.microedition.pim.Contact.NAME) && 
+						item.countValues(javax.microedition.pim.Contact.NAME) != 0 ) {
+					String[] contactNames = item.getStringArray(javax.microedition.pim.Contact.NAME, PIMItem.ATTR_NONE);
 
 					if (contactNames != null) {
 						StringBuffer sb = new StringBuffer();
 
-						if (contactNames[javax.microedition.pim.Contact.NAME_GIVEN] != null) {
+						if ( contactList.isSupportedField(javax.microedition.pim.Contact.NAME_GIVEN) &&
+								contactNames[javax.microedition.pim.Contact.NAME_GIVEN] != null ) {
 							sb.append(contactNames[javax.microedition.pim.Contact.NAME_GIVEN]);
 						}
 
-						if (contactNames[javax.microedition.pim.Contact.NAME_FAMILY] != null) {
+						if (contactList.isSupportedField(javax.microedition.pim.Contact.NAME_FAMILY) &&
+								contactNames[javax.microedition.pim.Contact.NAME_FAMILY] != null ) {
 							if (sb.length() > 0) {
 								sb.append(" ");
 							}

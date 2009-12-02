@@ -179,6 +179,18 @@ public class ContactListView extends AbstractListView {
 			loadTaskView.setReturnCallback(new BasicReturnCallback(this));
 			progressTask.addProgressListener(new ProgressAdapter("Loading station details") {
 
+				public void onSuccess(String eventMessage, Object eventData) {
+					DialogUtil.showMessageDialog(
+							ContactListView.this, 
+							"dialog.title.error", 
+							getMessage("view.contact.sms.sent.to", new Object[] { contact.getName() }), 
+							new OkResultCallback() {
+								public void onOk(DialogView dialogView, Object data) {
+									loadTaskView.fireReturnCallback();
+								}
+							});
+				}
+
 				public void onError(String eventMessage, Object eventData) {
 					if (ContactListView.logger.isInfoEnabled()) {
 						ContactListView.logger.info("Error: " + eventMessage + ", data: " + eventData);
@@ -190,18 +202,6 @@ public class ContactListView extends AbstractListView {
 							ContactListView.this, 
 							"dialog.title.error", 
 							getMessage("dialog.title.error") + ": " + ErrorManager.getErrorMessage(getMidlet(), t), 
-							new OkResultCallback() {
-								public void onOk(DialogView dialogView, Object data) {
-									loadTaskView.fireReturnCallback();
-								}
-							});
-				}
-
-				public void onSuccess(String eventMessage, Object eventData) {
-					DialogUtil.showMessageDialog(
-							ContactListView.this, 
-							"dialog.title.error", 
-							getMessage("view.contact.sms.sent.to", new Object[] { contact.getName() }), 
 							new OkResultCallback() {
 								public void onOk(DialogView dialogView, Object data) {
 									loadTaskView.fireReturnCallback();
@@ -226,36 +226,40 @@ public class ContactListView extends AbstractListView {
 
 	public void loadListContent() {
 		ContactLoadTask contactLoadTask = new ContactLoadTask(this);
+		final LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "view.contact.list.load.contact", contactLoadTask);
+		loadTaskView.setReturnCallback(new BasicReturnCallback(this));
 		contactLoadTask.addProgressListener(new ProgressAdapter("UI_CONTACT_PROGRESS_TAKS_LISTENER") {
-			
-			public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
-				ContactListView contactListView = ContactListView.this;
-				switch (eventType) {
-					case EventType.ON_SUCCESS:
-						setContactProvider(new ArrayElementProvider((Contact[])eventData));
-						
-						contactListView.showDisplayable(contactListView, new BasicTransition());
 
-						break;
-
-					case EventType.ON_ERROR:
-						Throwable throwable = (Throwable)eventData;
-						getLogger().warn(throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
-						DialogUtil.showAlertMessage(contactListView, "dialog.title.error", contactListView.getMessage("dialog.error.unexpected") + ": " + throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
-						contactListView.showDisplayable(contactListView, new BasicTransition());
-						break;
-						
-					default:
-						DialogUtil.showAlertMessage(contactListView, "dialog.title.error", contactListView.getMessage("dialog.result.unexpected"));
-						contactListView.showDisplayable(contactListView, new BasicTransition());
-						break;
-				}
+			public void onSuccess(String eventMessage, Object eventData) {
+				setContactProvider(new ArrayElementProvider((Contact[])eventData));
+				
+				loadTaskView.showDisplayable(ContactListView.this, new BasicTransition());
 			}
+			
+			public void onError(String eventMessage, Object eventData) {
+				if (ContactListView.logger.isInfoEnabled()) {
+					ContactListView.logger.info("Error: " + eventMessage + ", data: " + eventData);
+				}
+				
+				Throwable t = (Throwable)eventData;
+
+				DialogUtil.showMessageDialog(
+						ContactListView.this, 
+						"dialog.title.error", 
+						getMessage("dialog.title.error") + ": " + ErrorManager.getErrorMessage(getMidlet(), t), 
+						new OkResultCallback() {
+							public void onOk(DialogView dialogView, Object data) {
+								loadTaskView.fireReturnCallback();
+							}
+						});
+			}
+
 		});
+
+		showDisplayable(loadTaskView);
 		
-		LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "view.contact.list.load.contact", contactLoadTask);
-		showDisplayable(loadTaskView, this);
 		resetPosition();
+
 		logger.info("Load List Content...");
 		loadTaskView.startTask();
 	}

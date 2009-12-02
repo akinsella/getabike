@@ -7,8 +7,12 @@ import org.helyx.app.j2me.getabike.data.carto.filter.BookmarkStationFilterBuilde
 import org.helyx.app.j2me.getabike.data.carto.task.StationLoadTask;
 import org.helyx.app.j2me.getabike.data.city.accessor.ICityAcessor;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
+import org.helyx.app.j2me.getabike.data.contact.domain.Contact;
+import org.helyx.app.j2me.getabike.data.contact.task.ContactLoadTask;
+import org.helyx.app.j2me.getabike.ui.view.contact.ContactListView;
 import org.helyx.app.j2me.getabike.ui.view.renderer.StationTitleRenderer;
 import org.helyx.app.j2me.getabike.ui.view.station.search.StationSearchView;
+import org.helyx.app.j2me.getabike.util.ErrorManager;
 import org.helyx.app.j2me.getabike.util.UtilManager;
 import org.helyx.helyx4me.action.IAction;
 import org.helyx.helyx4me.comparator.Comparator;
@@ -25,8 +29,11 @@ import org.helyx.helyx4me.model.list.impl.RefElementProvider;
 import org.helyx.helyx4me.task.EventType;
 import org.helyx.helyx4me.task.ProgressAdapter;
 import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
+import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
 import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
 import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
+import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
+import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
 import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
 import org.helyx.helyx4me.ui.view.support.task.LoadTaskView;
 import org.helyx.helyx4me.ui.view.transition.BasicTransition;
@@ -184,35 +191,39 @@ public class StationListView extends AbstractListView implements ICityAcessor {
 
 	public void loadListContent() {
 		StationLoadTask stationLoadTask = new StationLoadTask(this);
-		stationLoadTask.addProgressListener(new ProgressAdapter("UI_PROGRESS_TAKS_LISTENER") {
-			
-			public void onAfterCompletion(int eventType, String eventMessage, Object eventData) {
-				StationListView stationListView = StationListView.this;
-				switch (eventType) {
-					case EventType.ON_SUCCESS:
-						setStationsProvider(new ArrayElementProvider((Station[])eventData));
-						
-						stationListView.showDisplayable(stationListView, new BasicTransition());
-
-						break;
-
-					case EventType.ON_ERROR:
-						Throwable throwable = (Throwable)eventData;
-						getLogger().warn(throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
-						DialogUtil.showAlertMessage(stationListView, "dialog.title.error", stationListView.getMessage("dialog.error.unexpected") + ": " + throwable.getMessage() == null ? throwable.toString() : throwable.getMessage());
-						stationListView.showDisplayable(stationListView, new BasicTransition());
-						break;
-						
-					default:
-						DialogUtil.showAlertMessage(stationListView, "dialog.title.error", stationListView.getMessage("dialog.result.unexpected"));
-						stationListView.showDisplayable(stationListView, new BasicTransition());
-						break;
-				}
-			}
-		});
 		
-		LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "view.station.list.load.station", stationLoadTask);
+		final LoadTaskView loadTaskView = new LoadTaskView(getMidlet(), "view.station.list.load.station", stationLoadTask);
+		loadTaskView.setReturnCallback(new BasicReturnCallback(this));
+		stationLoadTask.addProgressListener(new ProgressAdapter("UI_CONTACT_PROGRESS_TAKS_LISTENER") {
+
+			public void onSuccess(String eventMessage, Object eventData) {
+				setStationsProvider(new ArrayElementProvider((Station[])eventData));
+				
+				StationListView.this.showDisplayable(StationListView.this, new BasicTransition());
+			}
+			
+			public void onError(String eventMessage, Object eventData) {
+				if (StationListView.logger.isInfoEnabled()) {
+					StationListView.logger.info("Error: " + eventMessage + ", data: " + eventData);
+				}
+				
+				Throwable t = (Throwable)eventData;
+
+				DialogUtil.showMessageDialog(
+						StationListView.this, 
+						"dialog.title.error", 
+						getMessage("dialog.title.error") + ": " + ErrorManager.getErrorMessage(getMidlet(), t), 
+						new OkResultCallback() {
+							public void onOk(DialogView dialogView, Object data) {
+								loadTaskView.fireReturnCallback();
+							}
+						});
+			}
+
+		});
+
 		showDisplayable(loadTaskView, this);
+		
 		resetPosition();
 		logger.info("Load List Content...");
 		loadTaskView.startTask();

@@ -20,6 +20,7 @@ public class ContactLoadTask extends AbstractProgressTask {
 
 	public ContactLoadTask(AbstractView view) {
 		super("CONTACT_LIST_VIEW");
+		this.view = view;
 	}
 
 	public Runnable getRunnable() {
@@ -30,13 +31,15 @@ public class ContactLoadTask extends AbstractProgressTask {
 
 				try {
 					getProgressDispatcher().fireEvent(EventType.ON_START);
+					getProgressDispatcher().fireEvent(EventType.ON_PROGRESS, "task.contact.load.data.read");
 
 					Enumeration _enumContact = ((ContactList)PIM.getInstance().openPIMList(PIM.CONTACT_LIST, PIM.READ_ONLY)).items();
-
+					int count = 0;
 					while (_enumContact.hasMoreElements()) {
 						javax.microedition.pim.Contact pimContact = (javax.microedition.pim.Contact) _enumContact.nextElement();
 						int phoneNumbers = pimContact.countValues(javax.microedition.pim.Contact.TEL);
 						for (int i = 0; i < phoneNumbers; i++) {
+							count++;
 							String phoneNumber = pimContact.getString(javax.microedition.pim.Contact.TEL, i);
 
 							Contact contact = new Contact();
@@ -44,6 +47,9 @@ public class ContactLoadTask extends AbstractProgressTask {
 							contact.setPhoneNumber(phoneNumber);
 							contactList.addElement(contact);
 							
+							if (count % 5 == 0) {
+								getProgressDispatcher().fireEvent(EventType.ON_PROGRESS, count + " " + view.getMessage("task.contact.load.data.loaded"));
+							}
 						}
 					}
 

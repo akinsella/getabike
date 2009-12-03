@@ -17,6 +17,8 @@ public class ContactLoadTask extends AbstractProgressTask {
 
 	private static final Logger logger = Logger.getLogger("CONTACT_LOAD_TASK");
 
+	protected static final String CONTACT_UNKNOWN = "UNKNONWN";
+
 	private AbstractView view;
 
 	public ContactLoadTask(AbstractView view) {
@@ -58,7 +60,8 @@ public class ContactLoadTask extends AbstractProgressTask {
 					contactList.copyInto(contacts);
 					getProgressDispatcher().fireEvent(EventType.ON_SUCCESS, contacts);
 
-				} catch (Throwable t) {
+				}
+				catch (Throwable t) {
 					getProgressDispatcher().fireEvent(EventType.ON_ERROR, t);
 					logger.warn(t);
 				}
@@ -66,45 +69,58 @@ public class ContactLoadTask extends AbstractProgressTask {
 			
 
 		   private String getContactName(ContactList contactList, javax.microedition.pim.Contact item) {
-		        int fieldCode = javax.microedition.pim.Contact.FORMATTED_NAME;
+			   try {
+					if (contactList.isSupportedField(javax.microedition.pim.Contact.FORMATTED_NAME)) {
+						String contactName = item.getString(javax.microedition.pim.Contact.FORMATTED_NAME, PIMItem.ATTR_NONE);
 
-				if (contactList.isSupportedField(fieldCode) && item.countValues(fieldCode) != 0) {
-					String contactName = item.getString(fieldCode, 0);
-
-					if ((contactName != null) && (contactName.trim().length() > 0)) {
-						return contactName;
-					}
-				}
-
-				if ( contactList.isSupportedField(javax.microedition.pim.Contact.NAME) && 
-						item.countValues(javax.microedition.pim.Contact.NAME) != 0 ) {
-					String[] contactNames = item.getStringArray(javax.microedition.pim.Contact.NAME, PIMItem.ATTR_NONE);
-
-					if (contactNames != null) {
-						StringBuffer sb = new StringBuffer();
-
-						if ( contactList.isSupportedField(javax.microedition.pim.Contact.NAME_GIVEN) &&
-								contactNames[javax.microedition.pim.Contact.NAME_GIVEN] != null ) {
-							sb.append(contactNames[javax.microedition.pim.Contact.NAME_GIVEN]);
+						if ((contactName != null) && (contactName.trim().length() > 0)) {
+							return contactName;
 						}
+					}
+					
+					
+					if (item.countValues(javax.microedition.pim.Contact.NAME) > 0) {
+						String[] names = item.getStringArray(javax.microedition.pim.Contact.NAME, javax.microedition.pim.Contact.ATTR_NONE);
+						
+						String firstName = contactList.isSupportedArrayElement(javax.microedition.pim.Contact.NAME, javax.microedition.pim.Contact.NAME_GIVEN) ? 
+								names[javax.microedition.pim.Contact.NAME_GIVEN] : null;
+						String lastName = contactList.isSupportedArrayElement(javax.microedition.pim.Contact.NAME, javax.microedition.pim.Contact.NAME_GIVEN) ? 
+								names[javax.microedition.pim.Contact.NAME_FAMILY] : null;
 
-						if (contactList.isSupportedField(javax.microedition.pim.Contact.NAME_FAMILY) &&
-								contactNames[javax.microedition.pim.Contact.NAME_FAMILY] != null ) {
-							if (sb.length() > 0) {
-								sb.append(" ");
+						if (firstName != null || lastName != null) {
+							StringBuffer sb = new StringBuffer();
+			
+							if ( firstName != null ) {
+								sb.append(firstName);
+								if (firstName.length() > 0) {
+									sb.append(" ");
+								}
 							}
-
-							sb.append(contactNames[javax.microedition.pim.Contact.NAME_FAMILY]);
+			
+							if (lastName != null && sb.length() > 0) {
+								sb.append(lastName);
+							}
+			
+							String contactName = sb.toString().trim();
+			
+							return contactName;
 						}
-
-						String contactName = sb.toString().trim();
-
-						return contactName;
 					}
-				}
-				
-				return null;
+					
+					if (contactList.isSupportedField(javax.microedition.pim.Contact.NICKNAME)) {
+						String contactName = item.getString(javax.microedition.pim.Contact.NICKNAME, 0);
 
+						if ((contactName != null) && (contactName.trim().length() > 0)) {
+							return contactName;
+						}
+					}
+				   
+					return CONTACT_UNKNOWN;
+			   }
+			   catch(Throwable t) {
+				   logger.warn(t);
+				   return CONTACT_UNKNOWN;
+			   }
 			}
 
 		};

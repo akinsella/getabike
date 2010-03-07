@@ -8,12 +8,12 @@ import org.helyx.app.j2me.getabike.data.carto.CartoConstants;
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.provider.VelibStationContentProvider;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
-import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
-import org.helyx.helyx4me.content.accessor.ContentAccessorException;
-import org.helyx.helyx4me.content.accessor.IContentAccessor;
-import org.helyx.helyx4me.content.provider.IContentProvider;
-import org.helyx.helyx4me.content.provider.exception.ContentProviderException;
-import org.helyx.helyx4me.task.ProgressAdapter;
+import org.helyx.app.j2me.getabike.lib.content.accessor.ClasspathContentAccessor;
+import org.helyx.app.j2me.getabike.lib.content.accessor.ContentAccessorException;
+import org.helyx.app.j2me.getabike.lib.content.accessor.IContentAccessor;
+import org.helyx.app.j2me.getabike.lib.content.provider.IContentProvider;
+import org.helyx.app.j2me.getabike.lib.content.provider.exception.ContentProviderException;
+import org.helyx.app.j2me.getabike.lib.task.ProgressAdapter;
 import org.helyx.logging4me.Logger;
 import org.helyx.logging4me.config.BasicConfigurer;
 

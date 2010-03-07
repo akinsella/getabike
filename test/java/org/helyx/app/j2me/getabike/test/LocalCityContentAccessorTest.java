@@ -5,10 +5,10 @@ import java.io.InputStream;
 
 import junit.framework.TestCase;
 
-import org.helyx.helyx4me.content.accessor.ClasspathContentAccessor;
-import org.helyx.helyx4me.content.accessor.ContentAccessorException;
-import org.helyx.helyx4me.content.accessor.IContentAccessor;
-import org.helyx.helyx4me.stream.InputStreamProvider;
+import org.helyx.app.j2me.getabike.lib.content.accessor.ClasspathContentAccessor;
+import org.helyx.app.j2me.getabike.lib.content.accessor.ContentAccessorException;
+import org.helyx.app.j2me.getabike.lib.content.accessor.IContentAccessor;
+import org.helyx.app.j2me.getabike.lib.stream.InputStreamProvider;
 import org.helyx.logging4me.Logger;
 import org.helyx.logging4me.config.BasicConfigurer;
 

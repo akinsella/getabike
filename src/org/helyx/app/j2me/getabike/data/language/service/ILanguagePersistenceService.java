@@ -3,8 +3,8 @@ package org.helyx.app.j2me.getabike.data.language.service;
 import java.util.Vector;
 
 import org.helyx.app.j2me.getabike.data.language.domain.Language;
-import org.helyx.helyx4me.filter.record.RecordFilter;
-import org.helyx.helyx4me.rms.MultiRecordEnumeration;
+import org.helyx.app.j2me.getabike.lib.filter.record.RecordFilter;
+import org.helyx.app.j2me.getabike.lib.rms.MultiRecordEnumeration;
 
 public interface ILanguagePersistenceService {
 

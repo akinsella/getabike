@@ -1,7 +1,7 @@
 package org.helyx.app.j2me.getabike.data.carto.comparator;
 
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
-import org.helyx.helyx4me.comparator.Comparator;
+import org.helyx.app.j2me.getabike.lib.comparator.Comparator;
 
 
 public class StationDistanceComparator implements Comparator {

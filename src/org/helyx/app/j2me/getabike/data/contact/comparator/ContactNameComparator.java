@@ -1,7 +1,7 @@
 package org.helyx.app.j2me.getabike.data.contact.comparator;
 
 import org.helyx.app.j2me.getabike.data.contact.domain.Contact;
-import org.helyx.helyx4me.comparator.Comparator;
+import org.helyx.app.j2me.getabike.lib.comparator.Comparator;
 
 public class ContactNameComparator implements Comparator {
 

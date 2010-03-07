@@ -4,13 +4,13 @@ import javax.microedition.lcdui.Graphics;
 
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.ui.view.station.StationListView;
-import org.helyx.helyx4me.localization.Point;
-import org.helyx.helyx4me.math.DistanceUtil;
-import org.helyx.helyx4me.ui.geometry.Rectangle;
-import org.helyx.helyx4me.ui.graphics.Color;
-import org.helyx.helyx4me.ui.theme.ThemeConstants;
-import org.helyx.helyx4me.ui.util.FontUtil;
-import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
+import org.helyx.app.j2me.getabike.lib.localization.Point;
+import org.helyx.app.j2me.getabike.lib.math.DistanceUtil;
+import org.helyx.app.j2me.getabike.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.getabike.lib.ui.graphics.Color;
+import org.helyx.app.j2me.getabike.lib.ui.theme.ThemeConstants;
+import org.helyx.app.j2me.getabike.lib.ui.util.FontUtil;
+import org.helyx.app.j2me.getabike.lib.ui.view.support.list.AbstractListView;
 import org.helyx.logging4me.Logger;
 
 public class DistanceStationItemRenderer extends StationItemRenderer {

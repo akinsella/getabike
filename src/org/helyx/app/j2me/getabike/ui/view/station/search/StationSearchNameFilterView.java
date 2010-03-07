@@ -4,9 +4,9 @@ import javax.microedition.lcdui.Command;
 import javax.microedition.lcdui.Displayable;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
-import org.helyx.helyx4me.midlet.AbstractMIDlet;
-import org.helyx.helyx4me.pref.PrefManager;
-import org.helyx.helyx4me.ui.displayable.support.AbstractTextBox;
+import org.helyx.app.j2me.getabike.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.getabike.lib.pref.PrefManager;
+import org.helyx.app.j2me.getabike.lib.ui.displayable.support.AbstractTextBox;
 import org.helyx.logging4me.Logger;
 
 

@@ -1,8 +1,8 @@
 package org.helyx.app.j2me.getabike.data.carto.accessor;
 
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
-import org.helyx.helyx4me.localization.Point;
-import org.helyx.helyx4me.map.google.POIInfoAccessor;
+import org.helyx.app.j2me.getabike.lib.localization.Point;
+import org.helyx.app.j2me.getabike.lib.map.google.POIInfoAccessor;
 import org.helyx.logging4me.Logger;
 
 

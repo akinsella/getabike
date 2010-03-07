@@ -12,19 +12,19 @@ import org.helyx.app.j2me.getabike.data.city.provider.DefaultCityContentProvider
 import org.helyx.app.j2me.getabike.data.city.service.CityPersistenceService;
 import org.helyx.app.j2me.getabike.ui.view.CityListView;
 import org.helyx.app.j2me.getabike.ui.view.CountryListView;
-import org.helyx.helyx4me.cache.Cache;
-import org.helyx.helyx4me.content.accessor.IContentAccessor;
-import org.helyx.helyx4me.content.provider.ContentProviderProgressTaskAdapter;
-import org.helyx.helyx4me.content.provider.IContentProvider;
-import org.helyx.helyx4me.pref.Pref;
-import org.helyx.helyx4me.pref.PrefManager;
-import org.helyx.helyx4me.task.IProgressTask;
-import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
-import org.helyx.helyx4me.ui.displayable.callback.IReturnCallback;
-import org.helyx.helyx4me.ui.view.AbstractView;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
-import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
+import org.helyx.app.j2me.getabike.lib.cache.Cache;
+import org.helyx.app.j2me.getabike.lib.content.accessor.IContentAccessor;
+import org.helyx.app.j2me.getabike.lib.content.provider.ContentProviderProgressTaskAdapter;
+import org.helyx.app.j2me.getabike.lib.content.provider.IContentProvider;
+import org.helyx.app.j2me.getabike.lib.pref.Pref;
+import org.helyx.app.j2me.getabike.lib.pref.PrefManager;
+import org.helyx.app.j2me.getabike.lib.task.IProgressTask;
+import org.helyx.app.j2me.getabike.lib.ui.displayable.AbstractDisplayable;
+import org.helyx.app.j2me.getabike.lib.ui.displayable.callback.IReturnCallback;
+import org.helyx.app.j2me.getabike.lib.ui.view.AbstractView;
+import org.helyx.app.j2me.getabike.lib.ui.view.support.dialog.DialogUtil;
+import org.helyx.app.j2me.getabike.lib.ui.view.support.dialog.DialogView;
+import org.helyx.app.j2me.getabike.lib.ui.view.support.dialog.result.callback.OkResultCallback;
 import org.helyx.logging4me.Logger;
 
 public class CityManager {

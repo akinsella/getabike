@@ -4,7 +4,7 @@ import javax.microedition.location.Criteria;
 import javax.microedition.location.Location;
 import javax.microedition.location.LocationProvider;
 
-import org.helyx.helyx4me.localization.Point;
+import org.helyx.app.j2me.getabike.lib.localization.Point;
 import org.helyx.logging4me.Logger;
 
 public class LocationManager {

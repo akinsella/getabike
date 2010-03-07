@@ -6,10 +6,10 @@ import java.util.Vector;
 
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.serializer.CitySerializer;
-import org.helyx.helyx4me.filter.record.RecordFilter;
-import org.helyx.helyx4me.rms.IMultiRecordDao;
-import org.helyx.helyx4me.rms.MultiRecordDao;
-import org.helyx.helyx4me.rms.MultiRecordEnumeration;
+import org.helyx.app.j2me.getabike.lib.filter.record.RecordFilter;
+import org.helyx.app.j2me.getabike.lib.rms.IMultiRecordDao;
+import org.helyx.app.j2me.getabike.lib.rms.MultiRecordDao;
+import org.helyx.app.j2me.getabike.lib.rms.MultiRecordEnumeration;
 import org.helyx.logging4me.Logger;
 
 

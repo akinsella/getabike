@@ -3,8 +3,8 @@ package org.helyx.app.j2me.getabike.data.carto.provider.details;
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
-import org.helyx.helyx4me.content.provider.AbstractContentProvider;
-import org.helyx.helyx4me.task.EventType;
+import org.helyx.app.j2me.getabike.lib.content.provider.AbstractContentProvider;
+import org.helyx.app.j2me.getabike.lib.task.EventType;
 import org.helyx.logging4me.Logger;
 
 public class PreLoadedStationDetailsContentProvider extends AbstractContentProvider {

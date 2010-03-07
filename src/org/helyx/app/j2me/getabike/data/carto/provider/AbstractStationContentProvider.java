@@ -1,7 +1,7 @@
 package org.helyx.app.j2me.getabike.data.carto.provider;
 
 import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.IStationInfoNormalizer;
-import org.helyx.helyx4me.content.provider.AbstractContentProvider;
+import org.helyx.app.j2me.getabike.lib.content.provider.AbstractContentProvider;
 
 public abstract class AbstractStationContentProvider extends AbstractContentProvider {
 

@@ -3,7 +3,7 @@ package org.helyx.app.j2me.getabike.data.carto.filter.record;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-import org.helyx.helyx4me.filter.record.RecordFilter;
+import org.helyx.app.j2me.getabike.lib.filter.record.RecordFilter;
 import org.helyx.logging4me.Logger;
 
 

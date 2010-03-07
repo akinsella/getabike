@@ -1,7 +1,7 @@
 package org.helyx.app.j2me.getabike.data.app.util;
 
 import org.helyx.app.j2me.getabike.data.app.domain.Version;
-import org.helyx.helyx4me.text.TextUtil;
+import org.helyx.app.j2me.getabike.lib.text.TextUtil;
 import org.helyx.logging4me.Logger;
 
 public class VersionHelper {

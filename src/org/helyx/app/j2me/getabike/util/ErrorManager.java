@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import javax.microedition.io.ConnectionNotFoundException;
 
-import org.helyx.helyx4me.midlet.AbstractMIDlet;
-import org.helyx.helyx4me.stream.exception.HttpAccessException;
+import org.helyx.app.j2me.getabike.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.getabike.lib.stream.exception.HttpAccessException;
 
 public class ErrorManager {
 
@@ -19,7 +19,7 @@ public class ErrorManager {
 			return midlet.getMessage("dialog.error.unexpected");
 		}
 		
-		Throwable rootCause = org.helyx.helyx4me.util.ErrorUtil.getRootCause(t);
+		Throwable rootCause = org.helyx.app.j2me.getabike.lib.util.ErrorUtil.getRootCause(t);
 		
 		if (rootCause.getMessage() == null) {
 			return midlet.getMessage("dialog.error.unexpected") + ": " + rootCause.getClass().getName();			

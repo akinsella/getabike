@@ -1,7 +1,7 @@
 package org.helyx.app.j2me.getabike.data.carto.filter;
 
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
-import org.helyx.helyx4me.filter.Filter;
+import org.helyx.app.j2me.getabike.lib.filter.Filter;
 
 public class StationNameFilter implements Filter {
 

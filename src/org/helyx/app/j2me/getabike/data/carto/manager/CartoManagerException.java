@@ -1,6 +1,6 @@
 package org.helyx.app.j2me.getabike.data.carto.manager;
 
-import org.helyx.helyx4me.exception.NestedException;
+import org.helyx.app.j2me.getabike.lib.exception.NestedException;
 
 public class CartoManagerException extends NestedException {
 

@@ -1,6 +1,6 @@
 package org.helyx.app.j2me.getabike.data.app.exception;
 
-import org.helyx.helyx4me.exception.NestedRuntimeException;
+import org.helyx.app.j2me.getabike.lib.exception.NestedRuntimeException;
 
 public class ApplicationManagerException extends NestedRuntimeException {
 

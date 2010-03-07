@@ -5,8 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import org.helyx.app.j2me.getabike.data.city.domain.Quartier;
-import org.helyx.helyx4me.serializer.BasicObjectSerializer;
-import org.helyx.helyx4me.serializer.SerializerException;
+import org.helyx.app.j2me.getabike.lib.serializer.BasicObjectSerializer;
+import org.helyx.app.j2me.getabike.lib.serializer.SerializerException;
 import org.helyx.logging4me.Logger;
 
 

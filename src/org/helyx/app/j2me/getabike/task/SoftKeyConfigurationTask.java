@@ -1,13 +1,13 @@
 package org.helyx.app.j2me.getabike.task;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
-import org.helyx.helyx4me.pref.PrefManager;
-import org.helyx.helyx4me.task.AbstractProgressTask;
-import org.helyx.helyx4me.task.EventType;
-import org.helyx.helyx4me.ui.util.KeyMap;
-import org.helyx.helyx4me.ui.util.KeyMapConfig;
-import org.helyx.helyx4me.ui.util.KeyUtil;
-import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.app.j2me.getabike.lib.pref.PrefManager;
+import org.helyx.app.j2me.getabike.lib.task.AbstractProgressTask;
+import org.helyx.app.j2me.getabike.lib.task.EventType;
+import org.helyx.app.j2me.getabike.lib.ui.util.KeyMap;
+import org.helyx.app.j2me.getabike.lib.ui.util.KeyMapConfig;
+import org.helyx.app.j2me.getabike.lib.ui.util.KeyUtil;
+import org.helyx.app.j2me.getabike.lib.ui.view.AbstractView;
 import org.helyx.logging4me.Logger;
 
 

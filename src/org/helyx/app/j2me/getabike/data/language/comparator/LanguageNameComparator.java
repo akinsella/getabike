@@ -1,7 +1,7 @@
 package org.helyx.app.j2me.getabike.data.language.comparator;
 
 import org.helyx.app.j2me.getabike.data.language.domain.Language;
-import org.helyx.helyx4me.comparator.Comparator;
+import org.helyx.app.j2me.getabike.lib.comparator.Comparator;
 import org.helyx.logging4me.Logger;
 
 

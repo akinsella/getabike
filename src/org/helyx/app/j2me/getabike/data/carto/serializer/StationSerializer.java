@@ -5,9 +5,9 @@ import java.util.Date;
 
 import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.domain.StationDetails;
-import org.helyx.helyx4me.localization.Point;
-import org.helyx.helyx4me.serializer.AbstractObjectSerializer;
-import org.helyx.helyx4me.serializer.SerializerException;
+import org.helyx.app.j2me.getabike.lib.localization.Point;
+import org.helyx.app.j2me.getabike.lib.serializer.AbstractObjectSerializer;
+import org.helyx.app.j2me.getabike.lib.serializer.SerializerException;
 import org.helyx.logging4me.Logger;
 
 

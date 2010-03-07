@@ -10,10 +10,10 @@ import org.helyx.app.j2me.getabike.data.carto.domain.Station;
 import org.helyx.app.j2me.getabike.data.carto.domain.StationDetails;
 import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
-import org.helyx.helyx4me.content.accessor.IContentAccessor;
-import org.helyx.helyx4me.localization.Point;
-import org.helyx.helyx4me.stream.InputStreamProvider;
-import org.helyx.helyx4me.task.EventType;
+import org.helyx.app.j2me.getabike.lib.content.accessor.IContentAccessor;
+import org.helyx.app.j2me.getabike.lib.localization.Point;
+import org.helyx.app.j2me.getabike.lib.stream.InputStreamProvider;
+import org.helyx.app.j2me.getabike.lib.task.EventType;
 import org.helyx.logging4me.Logger;
 
 import au.com.bytecode.opencsv.CSVReader;

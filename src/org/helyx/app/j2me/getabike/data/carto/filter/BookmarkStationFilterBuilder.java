@@ -2,8 +2,8 @@ package org.helyx.app.j2me.getabike.data.carto.filter;
 
 import org.helyx.app.j2me.getabike.data.carto.manager.CartoManager;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
-import org.helyx.helyx4me.filter.Filter;
-import org.helyx.helyx4me.filter.FilterBuilder;
+import org.helyx.app.j2me.getabike.lib.filter.Filter;
+import org.helyx.app.j2me.getabike.lib.filter.FilterBuilder;
 import org.helyx.logging4me.Logger;
 
 public class BookmarkStationFilterBuilder implements FilterBuilder {

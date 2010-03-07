@@ -4,15 +4,15 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.game.GameCanvas;
 
-import org.helyx.helyx4me.action.IAction;
-import org.helyx.helyx4me.midlet.AbstractMIDlet;
-import org.helyx.helyx4me.ui.geometry.Rectangle;
-import org.helyx.helyx4me.ui.graphics.Color;
-import org.helyx.helyx4me.ui.theme.ThemeConstants;
-import org.helyx.helyx4me.ui.util.FontUtil;
-import org.helyx.helyx4me.ui.util.ImageUtil;
-import org.helyx.helyx4me.ui.view.AbstractView;
-import org.helyx.helyx4me.ui.widget.command.Command;
+import org.helyx.app.j2me.getabike.lib.action.IAction;
+import org.helyx.app.j2me.getabike.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.getabike.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.getabike.lib.ui.graphics.Color;
+import org.helyx.app.j2me.getabike.lib.ui.theme.ThemeConstants;
+import org.helyx.app.j2me.getabike.lib.ui.util.FontUtil;
+import org.helyx.app.j2me.getabike.lib.ui.util.ImageUtil;
+import org.helyx.app.j2me.getabike.lib.ui.view.AbstractView;
+import org.helyx.app.j2me.getabike.lib.ui.widget.command.Command;
 import org.helyx.logging4me.Logger;
 
 

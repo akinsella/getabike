@@ -7,13 +7,13 @@ import org.helyx.app.j2me.getabike.data.city.manager.CityManager;
 import org.helyx.app.j2me.getabike.data.language.listener.LanguageLoaderProgressListener;
 import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.getabike.util.UtilManager;
-import org.helyx.helyx4me.pref.PrefManager;
-import org.helyx.helyx4me.task.AbstractProgressTask;
-import org.helyx.helyx4me.task.EventType;
-import org.helyx.helyx4me.task.IProgressTask;
-import org.helyx.helyx4me.task.ProgressAdapter;
-import org.helyx.helyx4me.ui.view.AbstractView;
-import org.helyx.helyx4me.uuid.UUID;
+import org.helyx.app.j2me.getabike.lib.pref.PrefManager;
+import org.helyx.app.j2me.getabike.lib.task.AbstractProgressTask;
+import org.helyx.app.j2me.getabike.lib.task.EventType;
+import org.helyx.app.j2me.getabike.lib.task.IProgressTask;
+import org.helyx.app.j2me.getabike.lib.task.ProgressAdapter;
+import org.helyx.app.j2me.getabike.lib.ui.view.AbstractView;
+import org.helyx.app.j2me.getabike.lib.uuid.UUID;
 import org.helyx.logging4me.Logger;
 
 

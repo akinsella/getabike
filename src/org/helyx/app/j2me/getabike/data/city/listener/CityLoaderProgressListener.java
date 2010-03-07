@@ -7,11 +7,11 @@ import org.helyx.app.j2me.getabike.data.city.comparator.CityNameComparator;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
 import org.helyx.app.j2me.getabike.data.city.service.CityPersistenceService;
 import org.helyx.app.j2me.getabike.data.city.service.ICityPersistenceService;
-import org.helyx.helyx4me.sort.FastQuickSort;
-import org.helyx.helyx4me.task.EventType;
-import org.helyx.helyx4me.task.IProgressDispatcher;
-import org.helyx.helyx4me.task.ProgressAdapter;
-import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.app.j2me.getabike.lib.sort.FastQuickSort;
+import org.helyx.app.j2me.getabike.lib.task.EventType;
+import org.helyx.app.j2me.getabike.lib.task.IProgressDispatcher;
+import org.helyx.app.j2me.getabike.lib.task.ProgressAdapter;
+import org.helyx.app.j2me.getabike.lib.ui.view.AbstractView;
 import org.helyx.logging4me.Logger;
 
 

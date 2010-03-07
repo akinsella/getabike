@@ -1,10 +1,10 @@
 package org.helyx.app.j2me.getabike.data.carto.filter;
 
 import org.helyx.app.j2me.getabike.PrefConstants;
-import org.helyx.helyx4me.filter.ChainedFilter;
-import org.helyx.helyx4me.filter.Filter;
-import org.helyx.helyx4me.filter.FilterBuilder;
-import org.helyx.helyx4me.pref.PrefManager;
+import org.helyx.app.j2me.getabike.lib.filter.ChainedFilter;
+import org.helyx.app.j2me.getabike.lib.filter.Filter;
+import org.helyx.app.j2me.getabike.lib.filter.FilterBuilder;
+import org.helyx.app.j2me.getabike.lib.pref.PrefManager;
 
 public class DefaultStationFilterBuilder implements FilterBuilder {
 	

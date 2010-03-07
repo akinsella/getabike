@@ -1,6 +1,6 @@
 package org.helyx.app.j2me.getabike.data.app.domain;
 
-import org.helyx.helyx4me.comparator.Comparator;
+import org.helyx.app.j2me.getabike.lib.comparator.Comparator;
 
 public class VersionComparator implements Comparator {
 

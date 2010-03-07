@@ -3,10 +3,10 @@ package org.helyx.app.j2me.getabike.data.provider;
 import java.io.InputStream;
 
 import org.helyx.basics4me.util.Properties;
-import org.helyx.helyx4me.content.accessor.IContentAccessor;
-import org.helyx.helyx4me.content.provider.AbstractContentProvider;
-import org.helyx.helyx4me.stream.InputStreamProvider;
-import org.helyx.helyx4me.task.EventType;
+import org.helyx.app.j2me.getabike.lib.content.accessor.IContentAccessor;
+import org.helyx.app.j2me.getabike.lib.content.provider.AbstractContentProvider;
+import org.helyx.app.j2me.getabike.lib.stream.InputStreamProvider;
+import org.helyx.app.j2me.getabike.lib.task.EventType;
 import org.helyx.logging4me.Logger;
 
 public class PropertiesContentProvider extends AbstractContentProvider {

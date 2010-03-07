@@ -8,9 +8,9 @@ import javax.microedition.pim.PIM;
 import javax.microedition.pim.PIMItem;
 
 import org.helyx.app.j2me.getabike.data.contact.domain.Contact;
-import org.helyx.helyx4me.task.AbstractProgressTask;
-import org.helyx.helyx4me.task.EventType;
-import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.app.j2me.getabike.lib.task.AbstractProgressTask;
+import org.helyx.app.j2me.getabike.lib.task.EventType;
+import org.helyx.app.j2me.getabike.lib.ui.view.AbstractView;
 import org.helyx.logging4me.Logger;
 
 public class ContactLoadTask extends AbstractProgressTask {

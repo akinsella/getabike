@@ -1,6 +1,6 @@
 package org.helyx.app.j2me.getabike.data.app.exception;
 
-import org.helyx.helyx4me.exception.NestedException;
+import org.helyx.app.j2me.getabike.lib.exception.NestedException;
 
 public class VersionException extends NestedException {
 

@@ -8,17 +8,17 @@ import org.helyx.app.j2me.getabike.data.language.domain.Language;
 import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.getabike.util.ApiUtil;
 import org.helyx.app.j2me.getabike.util.UtilManager;
-import org.helyx.helyx4me.action.IAction;
-import org.helyx.helyx4me.midlet.AbstractMIDlet;
-import org.helyx.helyx4me.pref.PrefManager;
-import org.helyx.helyx4me.ui.displayable.AbstractDisplayable;
-import org.helyx.helyx4me.ui.displayable.callback.BasicReturnCallback;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogUtil;
-import org.helyx.helyx4me.ui.view.support.dialog.DialogView;
-import org.helyx.helyx4me.ui.view.support.dialog.result.callback.OkResultCallback;
-import org.helyx.helyx4me.ui.view.support.pref.PrefBaseListView;
-import org.helyx.helyx4me.ui.widget.menu.Menu;
-import org.helyx.helyx4me.ui.widget.menu.MenuItem;
+import org.helyx.app.j2me.getabike.lib.action.IAction;
+import org.helyx.app.j2me.getabike.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.getabike.lib.pref.PrefManager;
+import org.helyx.app.j2me.getabike.lib.ui.displayable.AbstractDisplayable;
+import org.helyx.app.j2me.getabike.lib.ui.displayable.callback.BasicReturnCallback;
+import org.helyx.app.j2me.getabike.lib.ui.view.support.dialog.DialogUtil;
+import org.helyx.app.j2me.getabike.lib.ui.view.support.dialog.DialogView;
+import org.helyx.app.j2me.getabike.lib.ui.view.support.dialog.result.callback.OkResultCallback;
+import org.helyx.app.j2me.getabike.lib.ui.view.support.pref.PrefBaseListView;
+import org.helyx.app.j2me.getabike.lib.ui.widget.menu.Menu;
+import org.helyx.app.j2me.getabike.lib.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
 
 public class PrefListView extends PrefBaseListView {

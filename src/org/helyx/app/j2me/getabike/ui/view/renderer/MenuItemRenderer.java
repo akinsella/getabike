@@ -18,18 +18,18 @@ package org.helyx.app.j2me.getabike.ui.view.renderer;
 import javax.microedition.lcdui.Font;
 import javax.microedition.lcdui.Graphics;
 
-import org.helyx.helyx4me.ui.geometry.Rectangle;
-import org.helyx.helyx4me.ui.graphics.Color;
-import org.helyx.helyx4me.ui.graphics.Shade;
-import org.helyx.helyx4me.ui.theme.ThemeConstants;
-import org.helyx.helyx4me.ui.util.ColorUtil;
-import org.helyx.helyx4me.ui.util.FontUtil;
-import org.helyx.helyx4me.ui.util.GraphicsUtil;
-import org.helyx.helyx4me.ui.view.support.list.AbstractListView;
-import org.helyx.helyx4me.ui.view.support.list.ICellRenderer;
-import org.helyx.helyx4me.ui.view.support.menu.MenuListView;
-import org.helyx.helyx4me.ui.widget.menu.Menu;
-import org.helyx.helyx4me.ui.widget.menu.MenuItem;
+import org.helyx.app.j2me.getabike.lib.ui.geometry.Rectangle;
+import org.helyx.app.j2me.getabike.lib.ui.graphics.Color;
+import org.helyx.app.j2me.getabike.lib.ui.graphics.Shade;
+import org.helyx.app.j2me.getabike.lib.ui.theme.ThemeConstants;
+import org.helyx.app.j2me.getabike.lib.ui.util.ColorUtil;
+import org.helyx.app.j2me.getabike.lib.ui.util.FontUtil;
+import org.helyx.app.j2me.getabike.lib.ui.util.GraphicsUtil;
+import org.helyx.app.j2me.getabike.lib.ui.view.support.list.AbstractListView;
+import org.helyx.app.j2me.getabike.lib.ui.view.support.list.ICellRenderer;
+import org.helyx.app.j2me.getabike.lib.ui.view.support.menu.MenuListView;
+import org.helyx.app.j2me.getabike.lib.ui.widget.menu.Menu;
+import org.helyx.app.j2me.getabike.lib.ui.widget.menu.MenuItem;
 import org.helyx.logging4me.Logger;
 
 

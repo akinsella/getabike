@@ -8,9 +8,9 @@ import org.helyx.app.j2me.getabike.data.carto.provider.LeVeloStarStationContentP
 import org.helyx.app.j2me.getabike.data.carto.provider.VelibStationContentProvider;
 import org.helyx.app.j2me.getabike.data.carto.provider.normalizer.IStationInfoNormalizer;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
-import org.helyx.helyx4me.content.provider.IContentProvider;
-import org.helyx.helyx4me.content.provider.IContentProviderFactory;
-import org.helyx.helyx4me.content.provider.exception.ContentProviderFactoryException;
+import org.helyx.app.j2me.getabike.lib.content.provider.IContentProvider;
+import org.helyx.app.j2me.getabike.lib.content.provider.IContentProviderFactory;
+import org.helyx.app.j2me.getabike.lib.content.provider.exception.ContentProviderFactoryException;
 import org.helyx.logging4me.Logger;
 
 

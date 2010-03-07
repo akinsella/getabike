@@ -3,8 +3,8 @@ package org.helyx.app.j2me.getabike.data.language.serializer;
 import java.io.IOException;
 
 import org.helyx.app.j2me.getabike.data.language.domain.Language;
-import org.helyx.helyx4me.serializer.AbstractObjectSerializer;
-import org.helyx.helyx4me.serializer.SerializerException;
+import org.helyx.app.j2me.getabike.lib.serializer.AbstractObjectSerializer;
+import org.helyx.app.j2me.getabike.lib.serializer.SerializerException;
 import org.helyx.logging4me.Logger;
 
 

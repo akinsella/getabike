@@ -2,8 +2,8 @@ package org.helyx.app.j2me.getabike.ui.view.renderer;
 
 import org.helyx.app.j2me.getabike.data.city.accessor.ICityAcessor;
 import org.helyx.app.j2me.getabike.data.city.domain.City;
-import org.helyx.helyx4me.midlet.AbstractMIDlet;
-import org.helyx.helyx4me.renderer.text.I18NTextRenderer;
+import org.helyx.app.j2me.getabike.lib.midlet.AbstractMIDlet;
+import org.helyx.app.j2me.getabike.lib.renderer.text.I18NTextRenderer;
 
 public class StationTitleRenderer extends I18NTextRenderer {
 

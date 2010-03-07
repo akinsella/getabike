@@ -8,11 +8,11 @@ import org.helyx.app.j2me.getabike.data.language.domain.Language;
 import org.helyx.app.j2me.getabike.data.language.manager.LanguageManager;
 import org.helyx.app.j2me.getabike.data.language.service.ILanguagePersistenceService;
 import org.helyx.app.j2me.getabike.data.language.service.LanguagePersistenceService;
-import org.helyx.helyx4me.sort.FastQuickSortVector;
-import org.helyx.helyx4me.task.EventType;
-import org.helyx.helyx4me.task.IProgressDispatcher;
-import org.helyx.helyx4me.task.ProgressAdapter;
-import org.helyx.helyx4me.ui.view.AbstractView;
+import org.helyx.app.j2me.getabike.lib.sort.FastQuickSortVector;
+import org.helyx.app.j2me.getabike.lib.task.EventType;
+import org.helyx.app.j2me.getabike.lib.task.IProgressDispatcher;
+import org.helyx.app.j2me.getabike.lib.task.ProgressAdapter;
+import org.helyx.app.j2me.getabike.lib.ui.view.AbstractView;
 import org.helyx.logging4me.Logger;
 
 
